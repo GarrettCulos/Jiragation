@@ -1,0 +1,68 @@
+<span>User: {{userNamePrefered}} {{userNameLast}}</span>
+
+<hr>
+<div ng-hide="viewUserUpdate"><button ng-click="updateUser()"> Update User Information </button></div>
+<div ng-show="viewUserUpdate">
+	<input type="text" ng-model="userNameFirst">
+	<input type="text" ng-model="userNameLast">
+	<input type="text" ng-model="userNamePrefered">
+	<button ng-click="closeUpdateUser()"> Close </button>
+</div>
+
+<hr>
+<div ng-hide="viewAccounts"><button ng-click="updateAccount()"> Update List of Jira Accounts </button></div>
+<div ng-show="viewAccounts"><button ng-click="closeAccountUpdater()"> Hide List</button></div>
+<div ng-show="viewAccounts">
+	<h4>Visible Accounts </h4>
+	<div ng-repeat="account in jiraAccounts">
+		<span>User Name: {{account['account']}} | </span>
+		<span>Password: {{account['password']}} | </span>
+		<span>URL: {{account['url']}}</span>
+		<button ng-click="hideAccount($index)"> Hide </button>
+		<button ng-click="delete($index)"> Remove </button>
+	</div>
+	<h4> Hidden Accounts </h4>
+	<div ng-repeat="account in hiddenJiraAccounts">
+		<span>User Name: {{account['account']}} | </span>
+		<span>Password: {{account['password']}} | </span>
+		<span>URL: {{account['url']}}</span>
+		<button ng-click="showAccount($index)"> Show </button>
+	</div>
+
+	<h4> Additional Accounts </h4>
+	<input type="text" ng-model="userName" placeholder="User Name">
+	<input type="text" ng-model="password" placeholder="Password">
+	<input type="text" ng-model="jiraURL" placeholder="Jira URL">
+	<button ng-click="addAccount(jiraURL, userName, password)"> Add Account </button>
+</div>
+
+<hr>
+<div class="col-xs-6">
+	<div class="account" ng-repeat="(accountNum, details) in usrAccountData">
+		<div class="task-item" ng-repeat="(taskNum, task) in details.issues | filter:task['fields']['status']['name']">
+			<img src="{{ task['fields']['priority']['iconUrl'] }}">
+			<a href="{{ task['self'] }}">
+				<span class="task-name">{{task.key}}</span>
+			</a>
+			<span>
+				{{ task['fields']['status']['name'] }} <img src="{{ task['fields']['status']['iconUrl'] }}">
+			</span>:
+			<button  ng-click="updateTaskView(accountNum, taskNum)"> View Task </button>
+			
+			<h4>{{ task['fields']['summary'] }}</h4>
+		</div>
+	</div> 
+</div>
+<div class="col-xs-6" ng-model="rightView">
+	<h2> {{ task['fields']['summary'] }} </h2>
+	<div class="col-xs-4"><img src="{{ task['fields']['type']['iconUrl']">{{ task['fields']['type']['name']}}</div>
+	<div class="col-xs-4"><img src="{{ task['fields']['status']['iconUrl']">{{ task['fields']['status']['name']}}</div>
+	<div class="col-xs-4"><img src="{{ task['fields']['priority']['iconUrl']">{{ task['fields']['priority']['name']}}</div>
+	<div class="col-sm-6 col-xs-12">
+		{{ task['fields']['description'] }} 
+	</div>
+	<div class="col-sm-6 col-xs-12">
+		{{ task['fields']['description'] }} 
+	</div>
+</div>
+		
