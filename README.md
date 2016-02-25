@@ -53,7 +53,7 @@ npm start
 
 Now browse to the app at `http://localhost:8000/app/index.html`.
 
-<!-- 
+
 ## Directory Layout
 
 ```
@@ -83,7 +83,6 @@ e2e-tests/            --> end-to-end tests
   protractor-conf.js    --> Protractor config file
   scenarios.js          --> end-to-end scenarios to be run by Protractor
 ```
--->
 
 ## Testing
 
