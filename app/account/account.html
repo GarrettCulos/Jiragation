@@ -1,0 +1,37 @@
+<span>User: {{userNamePrefered}} {{userNameLast}}</span>
+
+<hr>
+<div ng-hide="viewUserUpdate"><button ng-click="updateUser()"> Update User Information </button></div>
+<div ng-show="viewUserUpdate">
+	<input type="text" ng-model="userNameFirst">
+	<input type="text" ng-model="userNameLast">
+	<input type="text" ng-model="userNamePrefered">
+	<button ng-click="closeUpdateUser()"> Close </button>
+</div>
+
+<hr>
+<div ng-hide="viewAccounts"><button ng-click="updateAccount()"> Update List of Jira Accounts </button></div>
+<div ng-show="viewAccounts"><button ng-click="closeAccountUpdater()"> Hide List</button></div>
+<div ng-show="viewAccounts">
+	<h4>Visible Accounts </h4>
+	<div ng-repeat="account in jiraAccounts">
+		<span>User Name: {{account['account']}} | </span>
+		<span>Password: {{account['password']}} | </span>
+		<span>URL: {{account['url']}}</span>
+		<button ng-click="hideAccount($index)"> Hide </button>
+		<button ng-click="delete($index)"> Remove </button>
+	</div>
+	<h4> Hidden Accounts </h4>
+	<div ng-repeat="account in hiddenJiraAccounts">
+		<span>User Name: {{account['account']}} | </span>
+		<span>Password: {{account['password']}} | </span>
+		<span>URL: {{account['url']}}</span>
+		<button ng-click="showAccount($index)"> Show </button>
+	</div>
+
+	<h4> Additional Accounts </h4>
+	<input type="text" ng-model="userName" placeholder="User Name">
+	<input type="text" ng-model="password" placeholder="Password">
+	<input type="text" ng-model="jiraURL" placeholder="Jira URL">
+	<button ng-click="addAccount(jiraURL, userName, password)"> Add Account </button>
+</div>

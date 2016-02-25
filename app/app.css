@@ -1,9 +1,21 @@
 /* app css stylesheet */
+.top-nav {
+  border-bottom: 0.1em solid black;
+  margin-bottom:2em;
+}
+
+.top-nav ul {
+  display:inline-block;
+}
+
+.top-nav .align-right{
+  float:right;
+  list-style: none;
+}
+
 
 .menu {
   list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
   padding: 0 0 0.5em;
 }
 
@@ -15,16 +27,25 @@
   content: "]";
 }
 
-.menu > li {
-  display: inline;
+.menu li {
+  display: inline-block;
+}
+
+.menu li a {
+  padding-right: 0.3em;
+  padding-left: 0.3em;
+  padding-top:0.1em;
+  padding-bottom:0.1em;
 }
 
 .menu > li:before {
   content: "|";
-  padding-right: 0.3em;
 }
 
 .menu > li:nth-child(1):before {
   content: "";
-  padding: 0;
+}
+
+.task-item img {
+  height:1em;
 }
