@@ -6,7 +6,22 @@ angular.module('myApp', [
   'myApp.taskList',
   'myApp.account',
   'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/task-list'});
+])
+.config(['$routeProvider', function($routeProvider) {
+ 	$routeProvider
+	.when('/', {
+		templateUrl: 'common/task-list/taskList.html',
+    	controller: 'userController'
+	})
+	.when('/task-list', {
+		templateUrl: 'common/task-list/taskList.html',
+    	controller: 'userController'
+	})
+	.when('/account', {
+    	templateUrl: 'common/account/account.html',
+    	controller: 'accountCtrl'
+	})
+  	.otherwise({
+  		templateUrl: 'common/404.html',
+    });
 }]);
