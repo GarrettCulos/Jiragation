@@ -1,5 +1,7 @@
 var express 	= require('express'); 
-var sequelize	= db.sequelize;
+
+require('./creat_db.js');
+
 var app 		= express();
 
 app.set('port', 8000);
@@ -23,10 +25,6 @@ app.post('/', function(req, res, next) {
 
 
 app.use('/', express.static('../Jiragation/'));
-
-sequelize.sync().then(function() {
-    Cache.getCache(function(cache) {});
-});
 
 app.listen(app.get('port'), function(){
   console.log("Node app is running at localhost:" + app.get('port'));

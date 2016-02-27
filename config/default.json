@@ -1,0 +1,10 @@
+{
+	"dbConfig" : {
+		"connection_limit" : 100,
+		"host" : "localhost",
+		"user" : "root",
+		"password" : "",
+		"database" : "<database name>",
+        "logging" : false
+	}
+}

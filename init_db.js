@@ -1,14 +1,10 @@
+var config      =   require('config');
+
 var mysql       = 	require('mysql');
 
-var Sequelize 	= 	require("sequelize");
+var dbConfig 	= 	config.get('dbConfig');
 
-var dbConfig 	= 	{
-						database:'jiragation.db',
-						host:'127.0.0.1',
-						user:'root',
-						password:'',
-						connection_limit:10000,
-					};
+var Sequelize 	= 	require("sequelize");
 
 var pool 		=  	mysql.createPool({
 					    connectionLimit : dbConfig.get('connection_limit'),
@@ -18,9 +14,7 @@ var pool 		=  	mysql.createPool({
 					    database :        dbConfig.get('database')
 					});
 
-
 var db 			= {};
-
 
 var sequelize 	= 	new Sequelize(
 						dbConfig.get('database'),
@@ -29,14 +23,13 @@ var sequelize 	= 	new Sequelize(
 						{
 							host 	: dbConfig.get('host'),
 							dialect : 'mysql',
-                            logging	: dbConfig.get('logging'),
+                            logging	: dbConfig.logging,
 							pool 	: {
 									max : dbConfig.get('connection_limit'),
 									min : 0,
 									idle : 10000
 								}
 						});
-
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;

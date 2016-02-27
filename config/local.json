@@ -1,0 +1,10 @@
+{
+	"dbConfig" : {
+		"connection_limit" : 100,
+		"host" : "127.0.0.1",
+		"user" : "root",
+		"password" : "",
+		"database" : "jiratation.db",
+        "logging" : false
+	}
+}
