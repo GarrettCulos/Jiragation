@@ -1,6 +1,6 @@
 var express 	= require('express'); 
 
-require('./creat_db.js');
+require('./create_db.js');
 
 var app 		= express();
 
