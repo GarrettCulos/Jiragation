@@ -1,8 +1,10 @@
 var express 	= require('express'); 
+var db 			= require('./init_db.js');
+var Sequelize 	= db.Sequelize;
+var sequelize 	= db.sequelize;
+var app 		= express();
 
 require('./create_db.js');
-
-var app 		= express();
 
 app.set('port', 8000);
 
@@ -10,12 +12,17 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-  // console.log('Got there')
-  // res.json({data: [1,2,3,4]})
 });
 
-app.get('/', function(req, res, next) {
-	// Handle the get for this route
+app.get('/routing/fetch_accounts', function(req, res, next) { 
+ 	// var accounts = {};
+	
+	sequelize.query("SELECT user_name,url,password FROM jiraAccounts", { type: Sequelize.QueryTypes.SELECT })
+	.then(function(jiraAccounts){
+		// res.json(jiraAccounts);
+		// console.log(jiraAccounts+ 'got there'); //for testing
+		res.send(jiraAccounts);
+	});
 });
 
 app.post('/', function(req, res, next) {
