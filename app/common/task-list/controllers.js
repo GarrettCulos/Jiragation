@@ -7,7 +7,6 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 	$scope.userNameFirst = 'Garrett';
 	$scope.userNameLast = 'Culos';
 	
-	// PLEASE INSERT YOUR USER NAME AND PASSWORDW BELOW
 	$scope.jiraAccounts;
 	// 	{url:'http://jira.highwaythreesolutions.com', account:'gculos', password:''},
 	// 	{url:'https://vividsolutions.atlassian.net', account:'gculos', password:''},
@@ -15,16 +14,22 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 	// ];
 
 	$http({
+		
 		method: 'GET',
 		url: '/routing/fetch_accounts'
+
 	}).then(function successCallback(response){
+
 		$scope.jiraAccounts = response.data;
-		}, function errorCallback(response){
+
+	}, function errorCallback(response){
+
 	}).then(function(){
-		// basic access to jira via user name and password
+
 		$scope.usrAccountData=[];
 
 		angular.forEach($scope.jiraAccounts, function(account, key) {
+
 			console.log(account);
 			var base = account['url'];
 			var usr = account['user_name'];
@@ -33,11 +38,13 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 			// console.log(usrPassEncoded);
 
 			$http({
+			
 				method: 'GET',
-				url: base+'/rest/api/2/search?jql=assignee='+ usr + '+order+by+duedate',
-				headers: {'Content-Type':  'application/json', 'Authorization': 'Basic '+ usrPassEncoded }
+				url: ,
+				headers: {'Content-Type':  'application/json', 'Authorization': 'Basic '+ usrPassEncoded ,'url':base+'/rest/api/2/search?jql=assignee='+ usr + '+order+by+duedate'}
 
 			}).then(function successCallback(response) {
+			
 				// this callback will be called asynchronously
 				// when the response is available
 				// console.log('Success');

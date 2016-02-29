@@ -15,18 +15,18 @@ app.use(function(req, res, next) {
 });
 
 app.get('/routing/fetch_accounts', function(req, res, next) { 
- 	// var accounts = {};
-	
 	sequelize.query("SELECT user_name,url,password FROM jiraAccounts", { type: Sequelize.QueryTypes.SELECT })
 	.then(function(jiraAccounts){
-		// res.json(jiraAccounts);
-		// console.log(jiraAccounts+ 'got there'); //for testing
 		res.send(jiraAccounts);
 	});
 });
 
+app.get('/routing/jiraApi/' ,function(req,res,next){
+	
+
+});
+
 app.post('/', function(req, res, next) {
-	// Handle the post for this route
 });
 
 
