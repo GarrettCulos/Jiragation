@@ -1,6 +1,3 @@
-// ------------------------//
-//    CREATING DATABASES   //
-// ------------------------//
 var fs 					= require('fs');
 
 var db 					= require('./init_db.js');

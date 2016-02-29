@@ -16,7 +16,7 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 	$http({
 		
 		method: 'GET',
-		url: '/routing/fetch_accounts'
+		url: '/account/fetch_accounts'
 
 	}).then(function successCallback(response){
 
@@ -26,38 +26,47 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 
 	}).then(function(){
 
-		$scope.usrAccountData=[];
+		$http({
+		
+			method: 'GET',
+			url: '/pull_jiras/jira_accounts'
 
-		angular.forEach($scope.jiraAccounts, function(account, key) {
+		}).then(function successCallback(res){
 
-			console.log(account);
-			var base = account['url'];
-			var usr = account['user_name'];
-			var password = account['password'];
-			var usrPassEncoded = ($base64.encode(usr + ':' + password));// 
-			// console.log(usrPassEncoded);
+			$scope.usrAccountData = res.data;
 
-			$http({
-			
-				method: 'GET',
-				url: ,
-				headers: {'Content-Type':  'application/json', 'Authorization': 'Basic '+ usrPassEncoded ,'url':base+'/rest/api/2/search?jql=assignee='+ usr + '+order+by+duedate'}
+		}, function errorCallback(res){
 
-			}).then(function successCallback(response) {
-			
-				// this callback will be called asynchronously
-				// when the response is available
-				// console.log('Success');
-				$scope.usrAccountData.push(response.data);
-				
-			}, function errorCallback(response) {
-				// called asynchronously if an error occurs
-				// or server returns response with an error status.
-				console.log('http request failure');
-			});
-			
 		});
+		// angular.forEach($scope.jiraAccounts, function(account, key) {
 
+		// 	console.log(account);
+		// 	var base = account['url'];
+		// 	var usr = account['user_name'];
+		// 	var password = account['password'];
+		// 	var usrPassEncoded = ($base64.encode(usr + ':' + password));// 
+		// 	// console.log(usrPassEncoded);
+
+		// 	$http({
+			
+		// 		method: 'GET',
+		// 		url: base+'/rest/api/2/search?jql=assignee='+ usr + '+order+by+duedate',
+		// 		headers: {'Content-Type':  'application/json', 'Authorization': 'Basic '+ usrPassEncoded}
+
+		// 	}).then(function successCallback(response) {
+			
+		// 		// this callback will be called asynchronously
+		// 		// when the response is available
+		// 		// console.log('Success');
+		// 		$scope.usrAccountData.push(response.data);
+				
+		// 	}, function errorCallback(response) {
+		// 		// called asynchronously if an error occurs
+		// 		// or server returns response with an error status.
+		// 		console.log('http request failure');
+		// 	});
+			
+		// });
 
 	});
 	
