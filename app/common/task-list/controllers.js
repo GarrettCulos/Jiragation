@@ -17,7 +17,7 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 		
 		method: 'GET',
 		url: '/routing/fetch_accounts'
-
+		
 	}).then(function successCallback(response){
 
 		$scope.jiraAccounts = response.data;
@@ -25,11 +25,10 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 	}, function errorCallback(response){
 
 	}).then(function(){
-
+		// basic access to jira via user name and password
 		$scope.usrAccountData=[];
 
 		angular.forEach($scope.jiraAccounts, function(account, key) {
-
 			console.log(account);
 			var base = account['url'];
 			var usr = account['user_name'];
@@ -38,13 +37,11 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 			// console.log(usrPassEncoded);
 
 			$http({
-			
 				method: 'GET',
-				url: ,
-				headers: {'Content-Type':  'application/json', 'Authorization': 'Basic '+ usrPassEncoded ,'url':base+'/rest/api/2/search?jql=assignee='+ usr + '+order+by+duedate'}
+				url: base+'/rest/api/2/search?jql=assignee='+ usr + '+order+by+duedate',
+				headers: {'Content-Type':  'application/json', 'Authorization': 'Basic '+ usrPassEncoded }
 
 			}).then(function successCallback(response) {
-			
 				// this callback will be called asynchronously
 				// when the response is available
 				// console.log('Success');
