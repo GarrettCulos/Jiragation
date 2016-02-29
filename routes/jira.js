@@ -8,7 +8,7 @@ var fs 					= require('fs');
 
 const http 				= require('http');
 
-const https 				= require('https');
+const https 			= require('https');
 
 jira.get('/jira_accounts', function(req, res, next) { 
 	
@@ -31,37 +31,48 @@ jira.get('/jira_accounts', function(req, res, next) {
 				}
 			};
 
-   			// console.log(options);
-   			console.log(acct.url.substr(0,5))
-
-   			if(acct.url.substr(0,5) === 'https'){
+   			console.log(options);
+   			if(acct.protocal === 'https'){
 				
-				var jira_request =	https.request(options, function(res) {
+				var jira_request =	https.get(options, function(res) {
 
-				    // console.log("statusCode: ", res.statusCode);
+				    console.log("statusCode: ", res.statusCode);
 				    // console.log("headers: ", res.headers);
 
-				    result.on('data', function(d) {
-				
-				        process.stdout.write(d);
-				        console.log(d);
-	
+				    res.on('data', function(d) {
+		
+				        // process.stdout.write(d);
+				        // console.log(d);
 				    });
+
+				    res.on('done',function(r){
+				    	console.log('finished request');
+				    	tasks.push(r);
+				    });
+				}).on('error', (e) => {
+					console.error(e);	
 				});
-				
+
 	   		}else{
 
-	   			var jira_request =	http.request(options, function(result) {
+	   			var jira_request =	http.get(options, function(res) {
 
-				    console.log("statusCode: ", result.statusCode);
-				    console.log("headers: ", result.headers);
+				    console.log("statusCode: ", res.statusCode);
+				    // console.log("headers: ", res.headers);
 
-				    result.on('data', function(d) {
-				
-				        process.stdout.write(d);
-				        console.log(d);
-				
+				    res.on('data', function(d) {
+
+				        // process.stdout.write(d);
+				        // console.log(d);
 				    });
+
+				    res.on('done',function(r){
+				    	console.log('finished request');
+				    	tasks.push(r);
+				    });
+
+				}).on('error', (e) => {
+					console.error(e);	
 				});
 	
    			}

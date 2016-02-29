@@ -28,8 +28,9 @@ Accounts.setAccount = function(account, callback) {
 	user_name 	= 	account.user_name;
 	base_url 	= 	account.url;
 	password 	= 	account.password;
+	protocal	=	account.protocal;
 
-	var queryString = "INSERT user_name,url,password FROM jiraAccounts";
+	var queryString = "INSERT user_name,url,password,protocal FROM jiraAccounts";
 	/* Insert account into database table */
 }
 
