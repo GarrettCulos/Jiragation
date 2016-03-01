@@ -12,6 +12,10 @@ const https 			= require('https');
 
 jira.get('/jira_accounts', function(req, res, next) { 
 	
+	function jira_callback(res,tasks) { 
+		res.send(tasks); 
+	}
+
 	var user_accounts = [];
 	var tasks = [];
 
@@ -19,7 +23,7 @@ jira.get('/jira_accounts', function(req, res, next) {
 		// console.log('routes - accout');
 		user_accounts = result;
 
-		user_accounts.forEach(function(acct) { 		/* Loop Through accounts (user_accounts as acct) */
+		var loop = user_accounts.map(function(acct) { 		/* Loop Through accounts (user_accounts as acct) */
 
 			var options = {
 				method: 'GET',
@@ -31,8 +35,8 @@ jira.get('/jira_accounts', function(req, res, next) {
 				}
 			};
 
-   			console.log(options);
-   			if(acct.protocal === 'https'){
+   			// console.log(options);
+   			if(acct.protocal === "https"){
 				
 				var jira_request =	https.get(options, function(res) {
 
@@ -45,10 +49,6 @@ jira.get('/jira_accounts', function(req, res, next) {
 				        // console.log(d);
 				    });
 
-				    res.on('done',function(r){
-				    	console.log('finished request');
-				    	tasks.push(r);
-				    });
 				}).on('error', (e) => {
 					console.error(e);	
 				});
@@ -59,30 +59,36 @@ jira.get('/jira_accounts', function(req, res, next) {
 
 				    console.log("statusCode: ", res.statusCode);
 				    // console.log("headers: ", res.headers);
-
+				    var tasks = [];
+				    
 				    res.on('data', function(d) {
-
+				    	tasks.push(d);
+						// console.log(d);
 				        // process.stdout.write(d);
 				        // console.log(d);
-				    });
-
-				    res.on('done',function(r){
-				    	console.log('finished request');
-				    	tasks.push(r);
-				    });
+				    }).on('end', function() {
+						tasks=Buffer.concat(tasks).toString();
+						// console.log(task);
+					});
 
 				}).on('error', (e) => {
 					console.error(e);	
 				});
-	
+
    			}
+
 			
 		}, function(err) {
 		    
 		    console.log('iterating done');
 
-		}); 
-	});/* end loop */
+		})
+
+		loop.then(()=>{
+			console.log(tasks);
+			res.send(tasks);
+		}); /* end loop */
+	});
 });
 
 

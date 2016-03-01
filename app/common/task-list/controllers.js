@@ -32,7 +32,7 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 			url: '/pull_jiras/jira_accounts'
 
 		}).then(function successCallback(res){
-
+			console.log(res);
 			$scope.usrAccountData = res.data;
 
 		}, function errorCallback(res){
