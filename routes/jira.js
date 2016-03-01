@@ -12,18 +12,21 @@ const https 			= require('https');
 
 jira.get('/jira_accounts', function(req, res, next) { 
 	
-	function jira_callback(res,tasks) { 
-		res.send(tasks); 
-	}
-
 	var user_accounts = [];
 	var tasks = [];
+	
+	function return_tasks(t){
+		console.log(t);
+		res.send(t);
+		// console.log(res.send(t))
+	};
 
 	Accounts.getAccounts(function(result){
 		// console.log('routes - accout');
+		var loop_count = 0;
 		user_accounts = result;
 
-		var loop = user_accounts.map(function(acct) { 		/* Loop Through accounts (user_accounts as acct) */
+		user_accounts.forEach(function(acct) { 		/* Loop Through accounts (user_accounts as acct) */
 
 			var options = {
 				method: 'GET',
@@ -35,58 +38,34 @@ jira.get('/jira_accounts', function(req, res, next) {
 				}
 			};
 
-   			// console.log(options);
-   			if(acct.protocal === "https"){
-				
-				var jira_request =	https.get(options, function(res) {
+   			http.get(options, function(r) {
 
-				    console.log("statusCode: ", res.statusCode);
-				    // console.log("headers: ", res.headers);
-
-				    res.on('data', function(d) {
-		
-				        // process.stdout.write(d);
-				        // console.log(d);
-				    });
-
-				}).on('error', (e) => {
-					console.error(e);	
+			    // console.log("statusCode: ", res.statusCode);
+			    // console.log("headers: ", res.headers);
+			    var tasks = [];
+			    
+			    r.on('data', function(d) {
+			    	tasks.push(d);
+					// console.log(d);
+			        // process.stdout.write(d);
+			        // console.log(d);
+			    }).on('end', function() {
+					tasks=Buffer.concat(tasks).toString();
+					loop_count=loop_count+1;
+					if(loop_count == Object.keys(user_accounts).length){
+		   				console.log('Return tasks');
+		   				return_tasks(tasks);
+		   			}
 				});
 
-	   		}else{
-
-	   			var jira_request =	http.get(options, function(res) {
-
-				    console.log("statusCode: ", res.statusCode);
-				    // console.log("headers: ", res.headers);
-				    var tasks = [];
-				    
-				    res.on('data', function(d) {
-				    	tasks.push(d);
-						// console.log(d);
-				        // process.stdout.write(d);
-				        // console.log(d);
-				    }).on('end', function() {
-						tasks=Buffer.concat(tasks).toString();
-						// console.log(task);
-					});
-
-				}).on('error', (e) => {
-					console.error(e);	
-				});
-
-   			}
-
+			}).on('error', (e) => {
+				console.error(e);	
+			});
 			
 		}, function(err) {
 		    
 		    console.log('iterating done');
-
-		})
-
-		loop.then(()=>{
-			console.log(tasks);
-			res.send(tasks);
+		
 		}); /* end loop */
 	});
 });
