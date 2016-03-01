@@ -14,22 +14,13 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.get('/routing/fetch_accounts', function(req, res, next) { 
-	sequelize.query("SELECT user_name,url,password FROM jiraAccounts", { type: Sequelize.QueryTypes.SELECT })
-	.then(function(jiraAccounts){
-		res.send(jiraAccounts);
-	});
-});
+/* Routes */
+app.use('/account', require('./routes/accounts').accounts);
+app.use('/pull_jiras', require('./routes/jira').jira);
 
-app.get('/routing/jiraApi/' ,function(req,res,next){
-	
-
-});
 
 app.post('/', function(req, res, next) {
 });
-
-
 
 app.use('/', express.static('../Jiragation/'));
 

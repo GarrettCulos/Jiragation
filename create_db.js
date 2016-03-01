@@ -1,6 +1,3 @@
-// ------------------------//
-//    CREATING DATABASES   //
-// ------------------------//
 var fs 					= require('fs');
 
 var db 					= require('./init_db.js');
@@ -30,9 +27,10 @@ var sequelize 			= db.sequelize;
 //Create Item Table Structure
 var jiraAccounts = sequelize.define('jiraAccounts', {
 	id: {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+    protocal: {type: Sequelize.STRING, allowNull:false},
     user_name:{ type: Sequelize.STRING, allowNull: false},
     url: { type: Sequelize.STRING, allowNull: false},
-    password: Sequelize.STRING
+    password: Sequelize.STRING,
 });
 
 //Other way: Immediate insertion of data into database
@@ -45,7 +43,8 @@ sequelize.sync().then(function () {
 			id: i ,
 			user_name:value['user_name'],
 			url: value['host_url'],
-			password: value['password']
+			password: value['password'],
+			protocal: value['protocal']
 		}).then(function () {
 			console.log('... successful table entry');
 		}, function(err){
