@@ -10,7 +10,7 @@ var Accounts = function() {
 
 Accounts.getAccounts = function(callback) {
 	// console.log('model - accout');
-	var queryString = "SELECT user_name,url,password FROM jiraAccounts";
+	var queryString = "SELECT user_name,url,password,protocal FROM jiraAccounts";
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){

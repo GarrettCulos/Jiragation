@@ -13,18 +13,12 @@ const https 			= require('https');
 jira.get('/jira_accounts', function(req, res, next) { 
 	
 	var user_accounts = [];
-	var tasks = [];
-	
-	function return_tasks(t){
-		console.log(t);
-		res.send(t);
-		// console.log(res.send(t))
-	};
 
-	Accounts.getAccounts(function(result){
+	Accounts.getAccounts(function(accts){
 		// console.log('routes - accout');
+		var tasks_list = [];
 		var loop_count = 0;
-		user_accounts = result;
+		user_accounts = accts;
 
 		user_accounts.forEach(function(acct) { 		/* Loop Through accounts (user_accounts as acct) */
 
@@ -38,36 +32,70 @@ jira.get('/jira_accounts', function(req, res, next) {
 				}
 			};
 
-   			http.get(options, function(r) {
+	   		if(acct.protocal === "http"){
+	   			http.get(options, function(r) {
 
-			    // console.log("statusCode: ", res.statusCode);
-			    // console.log("headers: ", res.headers);
-			    var tasks = [];
-			    
-			    r.on('data', function(d) {
-			    	tasks.push(d);
-					// console.log(d);
-			        // process.stdout.write(d);
-			        // console.log(d);
-			    }).on('end', function() {
-					tasks=Buffer.concat(tasks).toString();
-					loop_count=loop_count+1;
-					if(loop_count == Object.keys(user_accounts).length){
-		   				console.log('Return tasks');
-		   				return_tasks(tasks);
-		   			}
+				    // console.log("statusCode: ", res.statusCode);
+				    // console.log("headers: ", res.headers);
+				    var tasks = [];
+				    
+				    r.on('data', function(d) {
+				    	tasks.push(d);
+				    }).on('end', function() {
+						
+						tasks_list.push(Buffer.concat(tasks).toString());
+						loop_count=loop_count+1;
+						
+						if(loop_count == Object.keys(user_accounts).length){
+			   				console.log('Return tasks');
+			   				// console.log(tasks_list);
+			   				res.json(tasks_list);
+			   			}
+			   				res.json(tasks_list);
+
+					});
+
+				}).on('error', (e) => {
+					console.error(e);	
 				});
+			}
+	   // 		}else {
+				// https.get(options, function(r) {
 
-			}).on('error', (e) => {
-				console.error(e);	
-			});
+				//     // console.log("statusCode: ", res.statusCode);
+				//     // console.log("headers: ", res.headers);
+				//     var tasks = [];
+				    
+				//     r.on('data', function(d) {
+				//     	tasks.push(d);
+				//     }).on('end', function() {
+						
+				// 		tasks_list.push(Buffer.concat(tasks).toString());
+				// 		loop_count=loop_count+1;
+						
+				// 		if(loop_count == Object.keys(user_accounts).length){
+			 //   				console.log('Return tasks');
+			 //   				// console.log(tasks_list);
+			 //   				res.json(tasks_list);
+			 //   			}
+
+				// 	});
+
+				// }).on('error', (e) => {
+				// 	console.error(e);	
+				// });
+	   // 		}
+	   			
 			
+
 		}, function(err) {
 		    
 		    console.log('iterating done');
 		
 		}); /* end loop */
+
 	});
+
 });
 
 
