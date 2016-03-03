@@ -48,4 +48,16 @@
 
 .task-item img {
   height:1em;
+  padding:20px;
+  border-bottom:1px solid rgba(0,0,0,0.1);
+}
+.task-priority,
+.task-status,
+.task-name,
+.task-summary {
+  display:inline-block;
+
+}
+.task-summary{
+  font-weight:600;
 }

@@ -9,22 +9,18 @@
 	<button type="checkbox" ng-click="filterStatus('Open')"> Open Tasks</button> <br>
 	<div class="account" ng-repeat="(accountNum, details) in usrAccountData">
 		<div class="task-item" ng-repeat="(taskNum, task) in details | filter: search.txt | filter:viewStatuses">
-			<img src="{{ task['fields']['priority']['iconUrl'] }}">
-			<a href="{{ task['self'] }}">
-				<span class="task-name">{{task.key}}</span>
-			</a>
-			<span>
-				<span>{{ task['fields']['status']['name']}}</span> <img src="{{ task['fields']['status']['iconUrl'] }}">
-			</span>:
-			<timer autostart="false" countdown="90061"> <span>{{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</span></timer>
-			<button  ng-click="updateTaskView(accountNum, taskNum)"><span> View Task </span></button>
+			<img class="task-priority" src="{{ task['fields']['priority']['iconUrl'] }}">
+			<div class="task-priority"> {{ task['fields']['priority']['name']}} </div>
+			<div class="task-status"> {{ task['fields']['status']['name']}} <!-- <img src="{{ task['fields']['status']['iconUrl'] }}"> --> </div>
+			<a href="{{ task['self'] }}"><div class="task-name">{{task.key}}</div></a>
+			<div class="task-summary">{{ task['fields']['summary'] }}</div>
 			
-			<h4>{{ task['fields']['summary'] }}</h4>
-			<hr>
+			<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
+			<!-- <button  ng-click="updateTaskView(accountNum, taskNum)"> View Task </button> -->
 		</div>
 	</div> 
 </div>
-<div class="col-xs-6" ng-model="rightView">
+<div class="col-xs-5" ng-model="rightView">
 	<h2> {{ task['fields']['summary'] }} </h2>
 	<div class="col-xs-4"><img src="{{ task['fields']['type']['iconUrl']"><span>{{ task['fields']['type']['name']}}</span></div>
 	<div class="col-xs-4"><img src="{{ task['fields']['status']['iconUrl']"><span>{{ task['fields']['status']['name']}}</span></div>
