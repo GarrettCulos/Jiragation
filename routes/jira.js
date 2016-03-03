@@ -47,44 +47,44 @@ jira.get('/jira_accounts', function(req, res, next) {
 						loop_count=loop_count+1;
 						
 						if(loop_count == Object.keys(user_accounts).length){
+			   				// console.log(tasks_list);
 			   				console.log('Return tasks');
 			   				// console.log(tasks_list);
 			   				res.json(tasks_list);
 			   			}
-			   				res.json(tasks_list);
 
 					});
 
 				}).on('error', (e) => {
 					console.error(e);	
 				});
-			}
-	   // 		}else {
-				// https.get(options, function(r) {
 
-				//     // console.log("statusCode: ", res.statusCode);
-				//     // console.log("headers: ", res.headers);
-				//     var tasks = [];
+	   		} else {
+				http.get(options, function(r) {
+
+				    // console.log("statusCode: ", res.statusCode);
+				    // console.log("headers: ", res.headers);
+				    var tasks = [];
 				    
-				//     r.on('data', function(d) {
-				//     	tasks.push(d);
-				//     }).on('end', function() {
+				    r.on('data', function(d) {
+				    	tasks.push(d);
+				    }).on('end', function() {
 						
-				// 		tasks_list.push(Buffer.concat(tasks).toString());
-				// 		loop_count=loop_count+1;
+						tasks_list.push(Buffer.concat(tasks).toString());
+						loop_count=loop_count+1;
 						
-				// 		if(loop_count == Object.keys(user_accounts).length){
-			 //   				console.log('Return tasks');
-			 //   				// console.log(tasks_list);
-			 //   				res.json(tasks_list);
-			 //   			}
+						if(loop_count == Object.keys(user_accounts).length){
+			   				console.log('Return tasks');
+			   				// console.log(tasks_list);
+			   				res.json(tasks_list);
+			   			}
 
-				// 	});
+					});
 
-				// }).on('error', (e) => {
-				// 	console.error(e);	
-				// });
-	   // 		}
+				}).on('error', (e) => {
+					console.error(e);	
+				});
+	   		}
 	   			
 			
 
