@@ -46,10 +46,13 @@
   content: "";
 }
 
-.task-item img {
-  height:1em;
+.task-item{
   padding:20px;
   border-bottom:1px solid rgba(0,0,0,0.1);
+}
+
+.task-item img {
+  height:1em;
 }
 .task-priority,
 .task-status,

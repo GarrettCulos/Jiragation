@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
+angular.module('myApp.taskList', ['ngRoute'])
 
-.controller('userController', ['$base64','$scope', '$http', function($base64,$scope, $http) {
+.controller('userController', ['$scope', '$http', function($scope, $http) {
 	$scope.userNamePrefered = 'Garrett';
 	$scope.userNameFirst = 'Garrett';
 	$scope.userNameLast = 'Culos';
@@ -18,16 +18,16 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 	$scope.viewStatuses=[];
 
 	$scope.filterStatus = function(status){
-		console.log(status);
+		// console.log(status);
 		var i = $scope.viewStatuses.indexOf(status);
-		console.log('first' + $scope.viewStatuses);
-		console.log(i);
+		// console.log('first' + $scope.viewStatuses);
+		// console.log(i);
 		if(i > -1){
 			$scope.viewStatuses.splice(i, 1);
-			console.log('2' + $scope.viewStatuses);
+			// console.log('2' + $scope.viewStatuses);
 		} else {
 			$scope.viewStatuses.push(status);
-			console.log('3' + $scope.viewStatuses);
+			// console.log('3' + $scope.viewStatuses);
 		}
 	};
 
@@ -50,8 +50,8 @@ angular.module('myApp.taskList', ['ngRoute', 'base64', 'tastFilters'])
 			url: '/pull_jiras/jira_accounts'
 
 		}).then(function successCallback(res){
-			console.log([JSON.parse(res.data)]);
-			$scope.usrAccountData = [JSON.parse(res.data).issues];
+			console.log(res.data);
+			$scope.usrAccountData = res.data;
 
 		}, function errorCallback(res){
 

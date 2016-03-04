@@ -3,12 +3,12 @@
 	<hr>
 </div>
 
-<div class="col-xs-6">
+<div class="col-xs-7">
 	<label>Search <input ng-model="search.txt"></label> 
 	<button type="checkbox" ng-click="filterStatus('Resolved')"> Resolved Tasks</button> 
 	<button type="checkbox" ng-click="filterStatus('Open')"> Open Tasks</button> <br>
 	<div class="account" ng-repeat="(accountNum, details) in usrAccountData">
-		<div class="task-item" ng-repeat="(taskNum, task) in details | filter: search.txt | filter:viewStatuses">
+		<div class="task-item" ng-repeat="(taskNum, task) in details.issues | filter: search.txt | filter:viewStatuses">
 			<img class="task-priority" src="{{ task['fields']['priority']['iconUrl'] }}">
 			<div class="task-priority"> {{ task['fields']['priority']['name']}} </div>
 			<div class="task-status"> {{ task['fields']['status']['name']}} <!-- <img src="{{ task['fields']['status']['iconUrl'] }}"> --> </div>
