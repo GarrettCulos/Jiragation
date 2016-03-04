@@ -1,7 +1,12 @@
 /* app css stylesheet */
+.version {
+  color:rgba(0,0,0,0.1);
+}
+
 .top-nav {
+  padding-top:20px;
   border-bottom: 0.1em solid black;
-  margin-bottom:2em;
+  
 }
 
 .top-nav ul {
@@ -13,6 +18,10 @@
   list-style: none;
 }
 
+.user-name {
+  margin-top:1px;
+  margin-bottom:30px;
+}
 
 .menu {
   list-style: none;
@@ -62,5 +71,6 @@
 
 }
 .task-summary{
+  display:inline-block;
   font-weight:600;
 }
