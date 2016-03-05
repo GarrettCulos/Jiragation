@@ -33,10 +33,23 @@ var jiraAccounts = sequelize.define('jiraAccounts', {
     password: Sequelize.STRING,
 });
 
+var timeSheet = sequelize.define('timeSheet', {
+	id: {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+    task_id: {type: Sequelize.STRING, allowNull:false},
+    start_time: { type: Sequelize.STRING, allowNull: false},
+    task_time:{ type: Sequelize.STRING, allowNull: false},
+});
+
+var user = sequelize.define('timeSheet', {
+	id: {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+    first_name: {type: Sequelize.STRING, allowNull:false},
+    given_time: { type: Sequelize.STRING, allowNull: false},
+});
+
+
 //Other way: Immediate insertion of data into database
 sequelize.sync().then(function () {
 	console.log('jiraAccounts table created successfully');
-		
 	var i = 1;
 	jira_account.forEach(function(value) {			
 		jiraAccounts.create({

@@ -46,12 +46,12 @@ jira.get('/jira_accounts', function(req, res, next) {
 				    }).on('end', function() {
 						
 						tasks_list.push(JSON.parse(Buffer.concat(tasks).toString()));
+						// console.log(tasks_list);
 						loop_count=loop_count+1;
-						// console.log('http request complete');
+						console.log('http request complete');
 						if(loop_count == Object.keys(user_accounts).length){
 			   				// console.log(tasks_list);
 			   				console.log('Return tasks');
-			   				// console.log(tasks_list);
 			   				res.json(tasks_list);
 			   			}
 
@@ -70,10 +70,12 @@ jira.get('/jira_accounts', function(req, res, next) {
 				    
 				    r.on('data', function(d) {
 				    	tasks.push(d);
+				    	// console.log(tasks);
 				    }).on('end', function() {
-						// console.log('https request complete');
-						tasks_list.push(JSON.parse(Buffer.concat(tasks).toString()));
+						// console.log(JSON.parse(Buffer.concat(tasks).toString()))
 						// console.log(tasks_list);
+						console.log('https request complete');
+						tasks_list.push(JSON.parse(Buffer.concat(tasks).toString()));
 						loop_count=loop_count+1;
 						
 						if(loop_count == Object.keys(user_accounts).length){
@@ -87,9 +89,8 @@ jira.get('/jira_accounts', function(req, res, next) {
 				}).on('error', (e) => {
 					console.error(e);	
 				});
+	   		
 	   		}
-	   			
-			
 
 		}, function(err) {
 		    
