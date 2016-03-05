@@ -29,7 +29,7 @@ angular.module('myApp.taskList', ['ngRoute'])
 				url: '/pull_jiras/jira_accounts'
 
 			}).then(function successCallback(res){
-				console.log(res.data);
+				// console.log(res.data);
 				$scope.usrAccountData = res.data;
 
 			}, function errorCallback(res){
@@ -73,12 +73,20 @@ angular.module('myApp.taskList', ['ngRoute'])
 
 		}
 
-		$scope.activeTask;
-		$scope.toggleClick = function(taskId){
-			console.log(taskId);
-			console.log(activeTask);
-			$scope.activeTask = '';
-			$scope.activeTask[taskId]="select-active";
+		$scope.activeTask=[];
+		function resetActiveTasks(){
+			angular.forEach($scope.usrAccountData, function(value,key1){
+				$scope.activeTask[key1]=[];
+				var acct = value.issues;
+				angular.forEach(acct, function(task,key2){
+					$scope.activeTask[key1][key2]='';
+				});
+			});	
+		}
+
+		$scope.toggleClick =  function(accountNumber, taskNumber) {
+			resetActiveTasks();
+			$scope.activeTask[accountNumber][taskNumber]='select-active';
 		}
 
 }]);

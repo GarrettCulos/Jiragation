@@ -16,22 +16,26 @@
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
-  <div class="container-fluid">
+  <div class="container-fluid nav-bg">
     <div class="container">
       <div class="top-nav">
         <ul class="menu">
           <li><a href="#/task-list">Task List</a></li>
           <li><a href="#/account">Account</a></li>
         </ul>
-        <ul class="align-right">
-          <li class="version align-right">Jiragation V.<span app-version></span></li>
+        <ul class="menu align-right">
+          <div class="version align-right">Jiragation V.<span app-version></span></div>
         </ul>
       </div>
-        
-        <!--[if lt IE 7]>
+    </div>
+  </div>
+
+  <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
+  <div class-"container-fluid">
+    <div class="container">
         <div class="main-content">
           <div ng-view></div>
         </div>  
