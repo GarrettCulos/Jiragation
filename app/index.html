@@ -18,7 +18,7 @@
 <body>
   <div class="container-fluid">
     <div class="container">
-      <div class="top-nav col-xs-12">
+      <div class="top-nav">
         <ul class="menu">
           <li><a href="#/task-list">Task List</a></li>
           <li><a href="#/account">Account</a></li>
@@ -32,8 +32,9 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <div ng-view></div>
-      
+        <div class="main-content">
+          <div ng-view></div>
+        </div>  
     </div>
   </div>
 
@@ -44,6 +45,7 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="../bower_components/angular-base64/angular-base64.js"></script>
   <script src="app.js"></script>
+  <script src="js/main.js"></script>
   <script src="common/account/account.js"></script>
   <script src="common/task-list/controllers.js"></script>
   <script src="common/task-list/filters.js"></script>

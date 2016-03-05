@@ -23,6 +23,7 @@ jira.get('/jira_accounts', function(req, res, next) {
 		user_accounts.forEach(function(acct) { 		/* Loop Through accounts (user_accounts as acct) */
 
 			var options = {
+				rejectUnauthorized: false,
 				method: 'GET',
 				host: acct.url,
 				path: '/rest/api/latest/search?jql=assignee='+ acct.user_name + '+order+by+duedate',
