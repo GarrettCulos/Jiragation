@@ -13,8 +13,17 @@
 	<div class="account-list">
 		<div class="account" ng-repeat="(accountNum, details) in usrAccountData">
 			<div ng-repeat="(taskNum, task) in details.issues | filter:search.txt">
-				<div ng-class="activeTask[accountNum][taskNum]" class="select-default task-item" ng-click="updateRightView(accountNum, taskNum); toggleClick(accountNum, taskNum); startTimer(accountNum, taskNum)">
-					<timer ng-class="activeTask[accountNum][taskNum]" class="timer select-default"> CLOCK </timer>
+				<div class="select-default task-item" 
+					ng-class="activeTask[accountNum][taskNum]"
+					ng-controller ="timeController"  
+					ng-click="updateRightView(accountNum, taskNum); toggleClick(accountNum, taskNum); pauseAllTimers(accountNum, taskNum); startPauseResumeTimer();">
+					<div class="timer select-default" ng-class="activeTask[accountNum][taskNum]" > 
+						<timer autostart="false"> {{mminutes}} : {{sseconds}}</timer>
+						<!-- <button ng-click="pauseTimer()">pause/start</button> -->
+			        </div>
+			        <!-- <button ng-click="startTimer()" ng-disabled="timerRunning">Start Timer</button>
+				    <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop Timer</button> -->
+
 					<img class="task-priority" src="{{ task.fields.priority.iconUrl }}">
 					<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
 					<div class="task-status"> {{ task.fields.status.name }}</div>
