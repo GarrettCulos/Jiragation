@@ -13,11 +13,13 @@
 	<div class="account-list">
 		<div class="account" ng-repeat="(accountNum, details) in usrAccountData">
 			<div ng-repeat="(taskNum, task) in details.issues | filter:search.txt">
-				<div ng-class="activeTask[accountNum][taskNum]" class="select-default task-item" ng-click="updateRightView(accountNum, taskNum); toggleClick(accountNum, taskNum); startTimer(accountNum, taskNum)">
-					<div ng-controller ="timeController" ng-class="activeTask[accountNum][taskNum]" class="timer select-default"> 
-				        <timer autostart="false"> {{mminutes}} : {{sseconds}}</timer>
-				        <button ng-click="pauseTimer()">pause/start</button>
-				        
+				<div class="select-default task-item" 
+					ng-class="activeTask[accountNum][taskNum]"
+					ng-controller ="timeController"  
+					ng-click="updateRightView(accountNum, taskNum); toggleClick(accountNum, taskNum); pauseAllTimers(accountNum, taskNum); startPauseResumeTimer();">
+					<div class="timer select-default" ng-class="activeTask[accountNum][taskNum]" > 
+						<timer autostart="false"> {{mminutes}} : {{sseconds}}</timer>
+						<!-- <button ng-click="pauseTimer()">pause/start</button> -->
 			        </div>
 			        <!-- <button ng-click="startTimer()" ng-disabled="timerRunning">Start Timer</button>
 				    <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop Timer</button> -->

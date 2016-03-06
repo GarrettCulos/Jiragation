@@ -70,67 +70,65 @@ angular.module('myApp.taskList', ['ngRoute','timer'])
 	}
 
 	$scope.activeTask=[];
-	$scope.timerRunning=[];
 	function resetActiveTasks(){
+		$scope.allTimerPaused = false;
 		angular.forEach($scope.usrAccountData, function(value,key1){
 			$scope.activeTask[key1]=[];
-			$scope.timerRunning[key1]=[];
 			var acct = value.issues;
 			angular.forEach(acct, function(task,key2){
 				$scope.activeTask[key1][key2]='';
-				$scope.timerRunning[key1][key2]=false;
 			});
 		});	
+	}
+
+	$scope.pauseAllTimers=function(accountNumber,taskNumber) {
+		// if($scope.activeTask[accountNumber][taskNumber]==''){
+			$scope.$broadcast('timer-clear');	
+			console.log('All-Pause');
+		// }
 	}
 
 	$scope.toggleClick =  function(accountNumber, taskNumber) {
 		resetActiveTasks();
 		$scope.activeTask[accountNumber][taskNumber]='select-active';
-		$scope.timerRunning[accountNumber][taskNumber]=true;
-
 	}
 
-	// Timer 
-	// $scope.$on('timer-stopped', function (event, data){
-	// 	console.log('Timer Stopped - data = ', data);
-	// });
-	// $scope.startTimer = function (){
-	// 	$scope.$broadcast('timer-start');
-	// 	$scope.timerRunning = true;
-	// };
-
-	// $scope.stopTimer = function (){
-	// 	$scope.$broadcast('timer-stop');
-	// 	$scope.timerRunning = false;
-	// };
-
-	// $scope.$on('timer-stopped', function (event, data){
-	// 	console.log('Timer Stopped - data = ', data);
-	// });
-
 }])
+
+
 .controller('timeController', ['$scope', '$http', function($scope, $http) {
 	$scope.timerRunning = false;
+	$scope.timerPaused = false;
 
-	// Timer 
-	$scope.$on('timer-stopped', function (event, data){
-		console.log('Timer Stopped - data = ', data);
-	});
+			$scope.$on('timer-stopped', function (event, data){
+				console.log('Timer Stopped - data = ', data);
+			});
 
-	$scope.pauseTimer = function (){
-		if($scope.timerRunning){
-			$scope.$broadcast('timer-stop');
-			console.log('timer Stoped')
-			$scope.timerRunning = false;
-		} else {
+	$scope.startPauseResumeTimer = function(){
+		if(!$scope.timerRunning && !$scope.timerPaused){
 			$scope.$broadcast('timer-start');
-			console.log('timer started')
-			$scope.timerRunning = true;
+			$scope.timerRunning=true;	
+			console.log('Timer Started')
+		} else if($scope.timerPaused) {
+			$scope.$broadcast('timer-resume');
+			$scope.timerPaused = false;
+			console.log('Timer Resumed')
+		}else{
+			$scope.$broadcast('timer-stop');
+			$scope.timerPaused = true;
+			console.log('Timer Paused')
 		}
-	};
+	}
 
-	$scope.$on('timer-stopped', function (event, data){
-		console.log('Timer Stopped - data = ', data);
-	});
-
+	// $scope.pauseTimer = function (){
+	// 	if(!$scope.timerPaused){
+	// 		$scope.$broadcast('timer-stop');
+	// 		$scope.timerPaused = true;
+	// 		console.log('Timer Paused')
+	// 	} else {
+	// 		$scope.$broadcast('timer-resume');
+	// 		$scope.timerPaused = false;
+	// 		console.log('Timer Resumed')
+ // 		}
+	// };
 }]);
