@@ -123,6 +123,7 @@ ul.menu{
 
 }
 .task-summary{
+  padding-left:20px;
   display:inline-block;
   font-weight:600;
   max-width:450px;
