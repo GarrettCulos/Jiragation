@@ -26,11 +26,11 @@ TimeSheet.getTaskTime = function(callback) {
 };
 
 // Pull time log for towards task_id
-TimeSheet.logTaskTime = function(start_time, logged_time, task_id, callback) {
+TimeSheet.logTaskTime = function(req, callback) {
 
-	var queryString = "INSERT task_id, start_time , logged_time FROM timeSheet";
+	var queryString = "INSERT req.ask_id, req.start_time , req.logged_time FROM timeSheet";
 	/* Insert account into database table */
-	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.INSERT })
 		.then(function(results){
 			callback(results);
 			// console.log(results);

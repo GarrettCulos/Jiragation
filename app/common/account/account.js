@@ -2,18 +2,36 @@
 
 angular.module('myApp.account', ['ngRoute'])
 
-.controller('accountCtrl', ['$scope', function($scope) {
+.controller('accountCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.userNamePrefered = 'Garrett';
 	$scope.userNameFirst = 'Garrett';
 	$scope.userNameLast = 'Culos';
-	
+	$scope.jiraAccounts	=[];
 	$scope.message = 'Welcome ' + $scope.userNamePrefered;
 	
 	
 	$scope.viewUserUpdate=false;
 	$scope.viewAccounts=false;
 
+	function syncAccounts(){
+		$scope.hiddenJiraAccounts = [];
+		$http({
+		
+			method: 'GET',
+			url: '/account/fetch_accounts'
+
+		}).then(function successCallback(response){
+
+			console.log(response.data);
+			$scope.jiraAccounts = response.data;
+
+		}, function errorCallback(response){
+
+		});
+	}
+
 	$scope.updateUser = function(){
+		syncAccounts();
 		$scope.viewUserUpdate = true;
 	}
 
@@ -22,6 +40,7 @@ angular.module('myApp.account', ['ngRoute'])
 	}
 
 	$scope.updateAccount = function(){
+		syncAccounts();
 		$scope.viewAccounts = true;
 	}
 
@@ -29,13 +48,22 @@ angular.module('myApp.account', ['ngRoute'])
 		$scope.viewAccounts = false;
 	}
 	// PLEASE INSERT YOUR USER NAME AND PASSWORDW BELOW
-	$scope.jiraAccounts = [
-		{url:'http://jira.highwaythreesolutions.com', account:'', password:''},
-	];
 	$scope.hiddenJiraAccounts = [];
 
 	$scope.addAccount = function(URL,usr,pass){
-		$scope.jiraAccounts=$scope.jiraAccounts.concat({url:URL, account:usr, password:pass});
+		$http({
+		
+			method: 'POST',
+			url: '/account/add_accounts',
+			data: {url:URL, account:usr, password:pass}
+		})
+		.then(function successCallback(response){
+
+			syncAccounts();
+		}, function errorCallback(response){
+
+		});
+		$scope.jiraAccounts=$scope.jiraAccounts.concat();
 	}
 	$scope.hideAccount = function( idx ){
 		$scope.hiddenJiraAccounts.push($scope.jiraAccounts[ idx ]);
@@ -49,4 +77,6 @@ angular.module('myApp.account', ['ngRoute'])
 	$scope.delete = function ( idx ) {
 		$scope.jiraAccounts.splice(idx,1);
 	}
+
+
 }]);

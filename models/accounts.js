@@ -25,13 +25,16 @@ Accounts.getAccounts = function(callback) {
 };
 
 Accounts.setAccount = function(account, callback) {
-	user_name 	= 	account.user_name;
-	base_url 	= 	account.url;
-	password 	= 	account.password;
-	protocal	=	account.protocal;
-
-	var queryString = "INSERT user_name,url,password,protocal FROM jiraAccounts";
-	/* Insert account into database table */
+	jiraAccounts.create({
+		user_name:account.user_name,
+		url: account.url,
+		password: account.password,
+		protocal: account.protocal
+	}).then(function () {
+		console.log('... Successfully added account');
+	}, function(err){
+		console.log('... Error adding account')
+	});	
 }
 
 module.exports = Accounts;

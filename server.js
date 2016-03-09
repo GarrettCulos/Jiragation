@@ -15,6 +15,7 @@ app.use(function(req, res, next) {
 });
 
 /* Routes */
+app.use('/task', require('./routes/taskManager').taskManager);
 app.use('/account', require('./routes/accounts').accounts);
 app.use('/pull_jiras', require('./routes/jira').jira);
 

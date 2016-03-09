@@ -15,17 +15,17 @@
 <div ng-show="viewAccounts">
 	<h4>Visible Accounts </h4>
 	<div ng-repeat="account in jiraAccounts">
-		<span>User Name: {{account['account']}} | </span>
-		<span>Password: {{account['password']}} | </span>
-		<span>URL: {{account['url']}}</span>
+		<span>User Name: {{account.user_name}} | </span>
+		<span>Password: {{account.password}} | </span>
+		<span>URL: {{account.url}}</span>
 		<button ng-click="hideAccount($index)"> Hide </button>
 		<button ng-click="delete($index)"> Remove </button>
 	</div>
 	<h4> Hidden Accounts </h4>
 	<div ng-repeat="account in hiddenJiraAccounts">
-		<span>User Name: {{account['account']}} | </span>
-		<span>Password: {{account['password']}} | </span>
-		<span>URL: {{account['url']}}</span>
+		<span>User Name: {{account.user_name}} | </span>
+		<span>Password: {{account.password}} | </span>
+		<span>URL: {{account.url}}</span>
 		<button ng-click="showAccount($index)"> Show </button>
 	</div>
 
