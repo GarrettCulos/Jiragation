@@ -18,8 +18,8 @@
 					ng-controller ="timeController"  
 					ng-click="updateRightView(accountNum, taskNum); toggleClick(accountNum, taskNum); pauseAllTimers(accountNum, taskNum); startPauseResumeTimer();">
 					<div class="timer select-default" ng-class="activeTask[accountNum][taskNum]" > 
-						<timer autostart="false"> {{mminutes}} : {{sseconds}}</timer>
-						<!-- <button ng-click="pauseTimer()">pause/start</button> -->
+						<timer autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer>
+						<!-- <button ng-click="startPauseResumeTimer();">pause/start</button> -->
 			        </div>
 			        <!-- <button ng-click="startTimer()" ng-disabled="timerRunning">Start Timer</button>
 				    <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop Timer</button> -->
