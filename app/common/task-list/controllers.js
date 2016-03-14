@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.taskList', ['ngRoute','timer'])
+angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 .controller('userController', ['$scope', '$http', function($scope, $http) {
 

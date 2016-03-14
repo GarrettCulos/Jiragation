@@ -20,7 +20,7 @@
 					<div class="timer" ng-class="pausedClass" > 
 						<timer autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer>
 			        </div>
-					<img class="task-priority" src="{{ task.fields.priority.name }}">
+					<img class="task-priority" src="{{ task.fields.priority.name | priority }}">
 					<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
 					<div class="task-status"> {{ task.fields.status.name }}</div>
 					<a href="{{ task.self }}"><div class="task-name align-left">{{ task.key }}</div></a>

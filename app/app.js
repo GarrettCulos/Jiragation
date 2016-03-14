@@ -6,7 +6,8 @@ angular.module('myApp', [
   'myApp.taskList',
   'myApp.account',
   'myApp.version',
-  'timer'
+  'timer',
+  'appFilters'
 ])
 .config(['$routeProvider', function($routeProvider) {
  	$routeProvider
