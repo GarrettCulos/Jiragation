@@ -86,7 +86,7 @@ ul.menu{
   width:33%;*/
 }
 .task-item img {
-  height:1em;
+  height:1.5em;
   position:relative;
 }
 .right-view img{
@@ -133,6 +133,10 @@ ul.menu{
   vertical-align:middle;
   display: inline-block;
 }
+img.task-priority { 
+  line-height:1.5em;  
+}
+
 .task-summary{
   padding-left:20px;
   display:inline-block;
