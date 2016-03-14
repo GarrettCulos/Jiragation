@@ -88,10 +88,12 @@ ul.menu{
 .task-item img {
   height:1.5em;
   position:relative;
+  vertical-align:middle;
 }
 .right-view img{
   height:1em;
   margin-right:5px;
+  vertical-align:middle;
 }
 
 .timer{
@@ -142,4 +144,25 @@ img.task-priority {
   display:inline-block;
   font-weight:600;
   max-width:450px;
+}
+
+button{
+  opacity:0.6;
+  padding:4px 15px;
+  border:none;
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
+  user-select: none;
+}
+input{
+  height:28px;
+  margin-left:10px;
+  margin-right:10px;
+}
+
+.active-button {
+  opacity:1;
+  background-color:rgba(50,50,100,1);
+  color:white;
 }
