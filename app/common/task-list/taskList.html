@@ -3,8 +3,10 @@
 		<div class="user-name">User: {{userNamePrefered}} {{userNameLast}}</div>
 		<div class="search-bar">
 			<label>Search <input ng-model="search.txt"></label> 
-			<button type="checkbox" ng-click="filterStatus('Resolved')"> Resolved Tasks</button> 
-			<button type="checkbox" ng-click="filterStatus('Open')"> Open Tasks</button>
+			<!-- <button type="checkbox" ng-click="filterStatus('Resolved')"> Resolved Tasks</button>  -->
+			<span ng-repeat="status in taskStatuses">
+				<button type="checkbox" ng-click="filterStatus(status.name)"> {{ status.name }} Tasks</button>
+			</span>
 		</div>
 	</div>
 </div>
@@ -12,6 +14,7 @@
 <div class="col-xs-7">
 	<div class="account-list">
 		<div class="account" ng-repeat="(accountNum, details) in usrAccountData">
+		<!-- | statusF:taskStatuses  -->
 			<div ng-repeat="(taskNum, task) in details.issues | filter:search.txt">
 				<div class="select-default task-item" 
 					ng-class="activeTask[accountNum][taskNum]"
@@ -20,7 +23,7 @@
 					<div class="timer" ng-class="pausedClass" > 
 						<timer autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer>
 			        </div>
-					<img class="task-priority" src="{{ task.fields.priority.name | priority }}">
+					<img class="task-priority" src="{{ task.fields.priority | priorityF }}"> <!-- Pass in pririty object -->
 					<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
 					<div class="task-status"> {{ task.fields.status.name }}</div>
 					<a href="{{ task.self }}"><div class="task-name align-left">{{ task.key }}</div></a>
@@ -35,13 +38,14 @@
 </div>
 
 <div class="right-view">
-	<div class="col-xs-5" ng-model="rightView">
+	<div class="col-xs-5" ng-model="rightView" ng-if="rightView != null">
+
 		<!-- <h2> {{ rightView.fields.summary }} </h2> -->
 		<div class="right-view-title">
 			<div class="row">
 				<div class="col-xs-4"><img class="task-type" src="{{ rightView.fields.issuetype.iconUrl }}"><span>{{ rightView.fields.issuetype.name }}</span></div>
 				<div class="col-xs-4"><img class="task-status" src="{{ rightView.fields.status.iconUrl }}"><span>{{ rightView.fields.status.name }}</span></div>
-				<div class="col-xs-4"><img class="task-priority" src="{{ rightView.fields.priority.iconUrl }}"><span>{{ rightView.fields.priority.name }}</span></div>	
+				<div class="col-xs-4"><img class="task-priority" src="{{ rightView.fields.priority | priorityF }}"><span>{{ rightView.fields.priority.name }}</span></div>	
 			</div>
 		</div>
 		<div class="row">

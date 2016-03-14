@@ -41,24 +41,35 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	// Filters
 	$scope.taskStatuses = [
-		{"name":"Open"},
-		{"name":"Resolved"},
-		{"name":"Closed"}
-	];
+		{	"name": 	"Open",
+			"isActive": "true"},
+			
+		{	"name": 	"Resolved",
+			"isActive": "false"},
 
+		{	"name": 	"Closed",
+			"isActive": "false"}
+	];
+			
 	$scope.viewStatuses=[];
 
 	$scope.filterStatus = function(status){
 		// console.log(status);
 		var i = $scope.viewStatuses.indexOf(status);
-		// console.log('first' + $scope.viewStatuses);
+		console.log('first' + $scope.viewStatuses);
 		// console.log(i);
 		if(i > -1){
-			$scope.viewStatuses.splice(i, 1);
+			// $scope.viewStatuses.splice(i, 1);
 			// console.log('2' + $scope.viewStatuses);
 		} else {
 			$scope.viewStatuses.push(status);
-			// console.log('3' + $scope.viewStatuses);
+			if($scope.viewStatuses(i).isAcitve === false){
+				$scope.viewStatuses(i).isAcitve = true;
+			}else{
+				$scope.viewStatuses(i).isAcitve =false;
+				console.log('3' + $scope.viewStatuses(i));
+			}
+			
 		}
 	};
 
