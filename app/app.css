@@ -97,7 +97,13 @@ ul.menu{
 .timer{
   position:absolute;
   left:0;
-  transform:translateX(-100%);
+  transform:translateX(-50%);
+  padding-right:40px;
+}
+
+.paused{
+  color:red;
+  opacity:0.5;
 }
 
 .right-view-title{
@@ -114,13 +120,18 @@ ul.menu{
   opacity:0.3;
 }
 
-.task-priority,
 .task-status,
 .task-name,
 .task-summary {
   vertical-align:top;
   display:inline-block;
 
+}
+
+.task-priority {
+  vertical-align:-webkit-baseline-middle;
+  vertical-align:middle;
+  display: inline-block;
 }
 .task-summary{
   padding-left:20px;

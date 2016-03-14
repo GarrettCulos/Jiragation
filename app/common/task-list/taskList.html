@@ -16,15 +16,11 @@
 				<div class="select-default task-item" 
 					ng-class="activeTask[accountNum][taskNum]"
 					ng-controller ="timeController"  
-					ng-click="updateRightView(accountNum, taskNum); toggleClick(accountNum, taskNum); pauseAllTimers(accountNum, taskNum); startPauseResumeTimer();">
-					<div class="timer select-default" ng-class="activeTask[accountNum][taskNum]" > 
+					ng-click="updateRightView(accountNum, taskNum); toggleClick(accountNum, taskNum); timerControl()">
+					<div class="timer" ng-class="pausedClass" > 
 						<timer autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer>
-						<!-- <button ng-click="startPauseResumeTimer();">pause/start</button> -->
 			        </div>
-			        <!-- <button ng-click="startTimer()" ng-disabled="timerRunning">Start Timer</button>
-				    <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop Timer</button> -->
-
-					<img class="task-priority" src="{{ task.fields.priority.iconUrl }}">
+					<img class="task-priority" src="{{ task.fields.priority.name }}">
 					<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
 					<div class="task-status"> {{ task.fields.status.name }}</div>
 					<a href="{{ task.self }}"><div class="task-name align-left">{{ task.key }}</div></a>

@@ -7,7 +7,8 @@ angular.module('myApp.taskList', ['ngRoute','timer'])
 	$scope.userNamePrefered = 'Garrett';
 	$scope.userNameFirst = 'Garrett';
 	$scope.userNameLast = 'Culos';
-	
+	$scope.isActive = false;
+
 	$scope.jiraAccounts;
 
 	// Fetch Jira Data
@@ -82,10 +83,10 @@ angular.module('myApp.taskList', ['ngRoute','timer'])
 	}
 
 	$scope.pauseAllTimers=function(accountNumber,taskNumber) {
-		// if($scope.activeTask[accountNumber][taskNumber]==''){
 			$scope.$broadcast('timer-clear');	
-			console.log('All-Pause');
-		// }
+			$scope.isActive = false;
+			// console.log('All-Pause');
+			// console.log('isActive:'+$scope.isActive);
 	}
 
 	$scope.toggleClick =  function(accountNumber, taskNumber) {
@@ -97,38 +98,63 @@ angular.module('myApp.taskList', ['ngRoute','timer'])
 
 
 .controller('timeController', ['$scope', '$http', function($scope, $http) {
-	$scope.timerRunning = false;
+	$scope.isActive=false;
 	$scope.timerPaused = false;
+	$scope.timerStarted=false;
+	$scope.pausedClass='paused';
+	
+	$scope.stateLog = function(){
+		console.log('Timer started:'+$scope.timerStarted);
+		console.log('Timer paused:'+$scope.timerPaused);
+		console.log('Active state:'+$scope.isActive);
+	}
 
-			$scope.$on('timer-stopped', function (event, data){
-				console.log('Timer Stopped - data = ', data);
-			});
-
-	$scope.startPauseResumeTimer = function(){
-		if(!$scope.timerRunning && !$scope.timerPaused){
+	$scope.$on('timer-stopped', function (event, data){
+		console.log('Timer Stopped - data = ', data);
+	});
+	
+	$scope.timerControl = function(){
+		if(!$scope.timerStarted){
 			$scope.$broadcast('timer-start');
-			$scope.timerRunning=true;	
-			console.log('Timer Started')
-		} else if($scope.timerPaused) {
-			$scope.$broadcast('timer-resume');
-			$scope.timerPaused = false;
-			console.log('Timer Resumed')
+			$scope.timerStarted=true;
+			$scope.isActive=true;
+			$scope.pausedClass='';
 		}else{
-			$scope.$broadcast('timer-stop');
-			$scope.timerPaused = true;
-			console.log('Timer Paused')
+			if($scope.isActive ){
+				$scope.isActive=true;
+				if($scope.timerPaused){
+					$scope.$broadcast('timer-resume');
+					$scope.timerPaused = false;
+					$scope.pausedClass='';
+					
+					console.log('Resumed');
+				}else{
+					$scope.$broadcast('timer-stop');
+					$scope.timerPaused = true;
+					$scope.pausedClass='paused';
+
+					console.log('Paused');
+				}
+				// console.log('isActive:'+$scope.isActive);
+			}else{
+				$scope.isActive = true;	
+				
+				if($scope.timerPaused){
+					// $scope.$broadcast('timer-resume');
+					// $scope.pausedClass='';
+					// $scope.timerPaused = false;
+					
+					// console.log('Timer Resumed');
+				}else{
+					$scope.$broadcast('timer-stop');
+					$scope.timerPaused = true;
+					$scope.pausedClass='paused';
+
+					console.log('Paused');
+				}
+			// console.log('isActive:'+$scope.isActive);
+			}
 		}
 	}
 
-	// $scope.pauseTimer = function (){
-	// 	if(!$scope.timerPaused){
-	// 		$scope.$broadcast('timer-stop');
-	// 		$scope.timerPaused = true;
-	// 		console.log('Timer Paused')
-	// 	} else {
-	// 		$scope.$broadcast('timer-resume');
-	// 		$scope.timerPaused = false;
-	// 		console.log('Timer Resumed')
- // 		}
-	// };
 }]);
