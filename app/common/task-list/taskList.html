@@ -5,7 +5,7 @@
 			<label>Search <input ng-model="search.txt"></label> 
 			<!-- <button type="checkbox" ng-click="filterStatus('Resolved')"> Resolved Tasks</button>  -->
 			<span ng-repeat="status in taskStatuses">
-				<button type="checkbox" ng-click="filterStatus(status.name)"> {{ status.name }} Tasks</button>
+				<button ng-class="{'active-button' : status.isActive}" type="checkbox" ng-click="changeStatus(status.name)"> {{ status.name }} Tasks</button>
 			</span>
 		</div>
 	</div>
@@ -15,7 +15,7 @@
 	<div class="account-list">
 		<div class="account" ng-repeat="(accountNum, details) in usrAccountData">
 		<!-- | statusF:taskStatuses  -->
-			<div ng-repeat="(taskNum, task) in details.issues | filter:search.txt">
+			<div ng-repeat="(taskNum, task) in details.issues | statusF:taskStatuses | filter:search.txt">
 				<div class="select-default task-item" 
 					ng-class="activeTask[accountNum][taskNum]"
 					ng-controller ="timeController"  

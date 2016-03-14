@@ -42,35 +42,33 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	// Filters
 	$scope.taskStatuses = [
 		{	"name": 	"Open",
-			"isActive": "true"},
-			
+			"isActive": true},
 		{	"name": 	"Resolved",
-			"isActive": "false"},
-
+			"isActive": false},
 		{	"name": 	"Closed",
-			"isActive": "false"}
+			"isActive": false},
+		{	"name": 	"To Do",
+			"isActive": true},
+		{	"name": 	"Reopened",
+			"isActive": true},
+		// {	"name": 	"To Do",
+		// 	"isActive": true},
+		// {	"name": 	"To Do",
+		// 	"isActive": true}
 	];
-			
-	$scope.viewStatuses=[];
 
-	$scope.filterStatus = function(status){
-		// console.log(status);
-		var i = $scope.viewStatuses.indexOf(status);
-		console.log('first' + $scope.viewStatuses);
-		// console.log(i);
-		if(i > -1){
-			// $scope.viewStatuses.splice(i, 1);
-			// console.log('2' + $scope.viewStatuses);
-		} else {
-			$scope.viewStatuses.push(status);
-			if($scope.viewStatuses(i).isAcitve === false){
-				$scope.viewStatuses(i).isAcitve = true;
-			}else{
-				$scope.viewStatuses(i).isAcitve =false;
-				console.log('3' + $scope.viewStatuses(i));
+	$scope.changeStatus = function(status){
+		// console.log($scope.taskStatuses);
+		for(var i=0; i<$scope.taskStatuses.length; i++){
+			// console.log($scope.taskStatuses[i]);
+			if(status == $scope.taskStatuses[i].name){
+				if($scope.taskStatuses[i].isActive === false){
+					$scope.taskStatuses[i].isActive = true;
+				}else{
+					$scope.taskStatuses[i].isActive =false;
+				}		
 			}
-			
-		}
+		}	
 	};
 
 	// Toggle active task		

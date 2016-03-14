@@ -21,15 +21,18 @@ angular.module('appFilters', [])
 .filter('statusF', function() {
   return function(input, taskList) {
     
-    // console.log(input);
-
-    // angular.forEach(status, function(taskList, key) {
-    //   if(status.isActive == true){
-    //     if(status.name == input.fields.status.name){
-    //       return true;
-    //     }
-    //   }
-    // })
-    return true;
+    var output = [];
+    angular.forEach(input, function(task, key1) {
+      angular.forEach(taskList, function(status, key2) {
+        if(status.isActive == true){
+          if(status.name == task.fields.status.name){
+          // console.log(status.name + ' VS ' + task.fields.status.name);
+             output.push(task);
+          }
+        }
+      });
+    });
+    
+    return output;
   };
 });
