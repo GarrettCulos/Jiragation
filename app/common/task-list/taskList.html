@@ -3,7 +3,6 @@
 		<div class="user-name">User: {{userNamePrefered}} {{userNameLast}}</div>
 		<div class="search-bar">
 			<label>Search <input ng-model="search.txt"></label> 
-			<!-- <button type="checkbox" ng-click="filterStatus('Resolved')"> Resolved Tasks</button>  -->
 			<span ng-repeat="status in taskStatuses">
 				<button ng-class="{'active-button' : status.isActive}" type="checkbox" ng-click="changeStatus(status.name)"> {{ status.name }} Tasks</button>
 			</span>
@@ -14,7 +13,6 @@
 <div class="col-xs-7">
 	<div class="account-list">
 		<div class="account" ng-repeat="(accountNum, details) in usrAccountData">
-		<!-- | statusF:taskStatuses  -->
 			<div ng-repeat="(taskNum, task) in details.issues | statusF:taskStatuses | filter:search.txt">
 				<div class="select-default task-item" 
 					ng-class="activeTask[accountNum][taskNum]"
@@ -51,10 +49,13 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<h4> Description </h4>
-					<span>{{ rightView.fields.description }} </span>
+					<p>{{ rightView.fields.description }} </p>
+				<div ng-if="rightView.fields.comments">
+					<h4> Comments </h4>
+					{{ rightView.fields.comments }}
+				</div>
 
-				<!-- <h4> Comments </h4> -->
-					<!-- {{ rightView.fields.description }} -->
+				
 			</div>
 			<!-- <div class="col-sm-6 col-xs-12"> -->
 				<!-- <span>{{ rightView['fields']['description'] }} </span> -->
