@@ -28,7 +28,7 @@ TimeSheet.getTaskTime = function(callback) {
 // Pull time log for towards task_id
 TimeSheet.logTaskTime = function(req, callback) {
 
-	var queryString = "INSERT req.ask_id, req.start_time , req.logged_time FROM timeSheet";
+	var queryString = "INSERT req.task_id, req.end_time , req.logged_time FROM timeSheet";
 	/* Insert account into database table */
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.INSERT })
 		.then(function(results){

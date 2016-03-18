@@ -97,15 +97,23 @@ ul.menu{
 }
 
 .timer{
-  position:absolute;
+  /*position:absolute;
   left:0;
   transform:translateX(-50%);
-  padding-right:40px;
+  padding-right:40px;*/
+  display:inline-block;
+  vertical-align: middle;
 }
 
 .paused{
   color:red;
   opacity:0.5;
+}
+.no-padding {
+  padding:0;
+}
+.padding-bottom {
+  padding-bottom:10px;
 }
 
 .right-view-title{
@@ -124,17 +132,26 @@ ul.menu{
 
 .task-status,
 .task-name,
+.task-date,
 .task-summary {
   vertical-align:top;
   display:inline-block;
-
+}
+.task-date{
+  float:right;
 }
 
 .task-priority {
   vertical-align:-webkit-baseline-middle;
   vertical-align:middle;
   display: inline-block;
+  margin:0 10px;
 }
+.task-date-title{
+  font-weight: 700;
+  text-align: center;
+}
+
 img.task-priority { 
   line-height:1.5em;  
 }

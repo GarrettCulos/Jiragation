@@ -13,7 +13,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	// Fetch Jira Data
 	$http({
-		
+			
 		method: 'GET',
 		url: '/account/fetch_accounts'
 
@@ -30,7 +30,8 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			url: '/pull_jiras/jira_accounts'
 
 		}).then(function successCallback(res){
-			// console.log(res.data);
+			
+			// This should be proprocessed server side
 			$scope.usrAccountData = res.data;
 
 		}, function errorCallback(res){
@@ -39,7 +40,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	});
 
-	// Filters
+	// Task Status Filters
 	$scope.taskStatuses = [
 		{	"name": 	"Open",
 			"isActive": true},
@@ -51,12 +52,13 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			"isActive": true},
 		{	"name": 	"Reopened",
 			"isActive": true},
-		// {	"name": 	"To Do",
-		// 	"isActive": true},
+		{	"name": 	"In Progress",
+			"isActive": true},
 		// {	"name": 	"To Do",
 		// 	"isActive": true}
 	];
 
+	// Task Status Filter Toggle
 	$scope.changeStatus = function(status){
 		// console.log($scope.taskStatuses);
 		for(var i=0; i<$scope.taskStatuses.length; i++){
@@ -70,6 +72,11 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			}
 		}	
 	};
+
+	// Return Task Url
+	$scope.taskUrl = function(taskKey, taskUrl) {
+		return taskUrl.substring(0,taskUrl.indexOf('/rest/'))+'/browse/'+taskKey;
+	}
 
 	// Toggle active task		
 	var accountNumber = 0;
@@ -91,12 +98,21 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		});	
 	}
 
-	$scope.pauseAllTimers=function(accountNumber,taskNumber) {
-			$scope.$broadcast('timer-clear');	
-			$scope.isActive = false;
-			// console.log('All-Pause');
-			// console.log('isActive:'+$scope.isActive);
-	}
+	// $scope.pauseAllTimers=function(accountNumber,taskNumber) {
+	// 		$scope.$broadcast('timer-clear');	
+	// 		$scope.isActive = false;
+	// 		// console.log('All-Pause');
+	// 		// console.log('isActive:'+$scope.isActive);
+	// }
+
+
+	// sort list by predicate
+	$scope.predicate = 'task.fields.created';
+	$scope.reverse = true;
+	$scope.order = function(predicate) {
+		$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+		$scope.predicate = predicate;
+	};
 
 	$scope.toggleClick =  function(accountNumber, taskNumber) {
 		resetActiveTasks();
@@ -106,64 +122,3 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 }])
 
 
-.controller('timeController', ['$scope', '$http', function($scope, $http) {
-	$scope.isActive=false;
-	$scope.timerPaused = false;
-	$scope.timerStarted=false;
-	$scope.pausedClass='paused';
-	
-	$scope.stateLog = function(){
-		console.log('Timer started:'+$scope.timerStarted);
-		console.log('Timer paused:'+$scope.timerPaused);
-		console.log('Active state:'+$scope.isActive);
-	}
-
-	$scope.$on('timer-stopped', function (event, data){
-		console.log('Timer Stopped - data = ', data);
-	});
-	
-	$scope.timerControl = function(){
-		if(!$scope.timerStarted){
-			$scope.$broadcast('timer-start');
-			$scope.timerStarted=true;
-			$scope.isActive=true;
-			$scope.pausedClass='';
-		}else{
-			if($scope.isActive ){
-				$scope.isActive=true;
-				if($scope.timerPaused){
-					$scope.$broadcast('timer-resume');
-					$scope.timerPaused = false;
-					$scope.pausedClass='';
-					
-					console.log('Resumed');
-				}else{
-					$scope.$broadcast('timer-stop');
-					$scope.timerPaused = true;
-					$scope.pausedClass='paused';
-
-					console.log('Paused');
-				}
-				// console.log('isActive:'+$scope.isActive);
-			}else{
-				$scope.isActive = true;	
-				
-				if($scope.timerPaused){
-					// $scope.$broadcast('timer-resume');
-					// $scope.pausedClass='';
-					// $scope.timerPaused = false;
-					
-					// console.log('Timer Resumed');
-				}else{
-					$scope.$broadcast('timer-stop');
-					$scope.timerPaused = true;
-					$scope.pausedClass='paused';
-
-					console.log('Paused');
-				}
-			// console.log('isActive:'+$scope.isActive);
-			}
-		}
-	}
-
-}]);

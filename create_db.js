@@ -36,7 +36,7 @@ var jiraAccounts = sequelize.define('jiraAccounts', {
 var timeSheet = sequelize.define('timeSheet', {
 	id: {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
     task_id: {type: Sequelize.STRING, allowNull:false},
-    start_time: { type: Sequelize.STRING, allowNull: false},
+    end_time: { type: Sequelize.STRING, allowNull: false},
     task_time:{ type: Sequelize.STRING, allowNull: false},
 });
 

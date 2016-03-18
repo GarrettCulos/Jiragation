@@ -1,4 +1,8 @@
-angular.module('appFilters', [])
+'use strict';
+
+angular.module('appFilters',[])
+
+.constant("moment", moment)
 
 .filter('priorityF', function() {
   return function(input) {
@@ -10,6 +14,9 @@ angular.module('appFilters', [])
       case 'Critical': 
       	return rageface_icon;
       	break;
+      case 'Minor': 
+        return low_icon;
+        break;
       case 'Low': 
       	return low_icon;
       	break;
@@ -18,6 +25,7 @@ angular.module('appFilters', [])
   	}
   };
 })
+
 .filter('statusF', function() {
   return function(input, taskList) {
     
@@ -34,5 +42,22 @@ angular.module('appFilters', [])
     });
     
     return output;
+  };
+})
+
+.filter('dateF', function() {
+  return function(input) {
+    var unixtime = Date.parse(input)/1000;
+    var dateObj = new Date(unixtime*1000);
+    var year = dateObj.getFullYear();
+    var month = dateObj.getMonth()
+    // var monthWords = months[month];
+    var date = dateObj.getDate();
+    var hour = dateObj.getHours();
+    // var min = dateObj.getMinutes();
+    // var sec = dateObj.getSeconds();
+    var res = date + '.' + month + '.' + year + ' h:' + hour;
+    console.log(res);
+    return res;
   };
 });

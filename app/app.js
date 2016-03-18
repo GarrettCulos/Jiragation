@@ -6,6 +6,7 @@ angular.module('myApp', [
   'myApp.taskList',
   'myApp.account',
   'myApp.version',
+  'myApp.task',
   'timer',
   'appFilters'
 ])

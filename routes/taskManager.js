@@ -6,15 +6,17 @@ var TimeSheet			= require('../models/time_sheet');
 
 var fs 					= require('fs');
 
-taskManager.post('/trackTime', function(req, res, next) { 
-	TimeSheet.logTaskTime(function(req, result){
+taskManager.post('/trackTime', function(req, res, next) {
+	console.log(req.data); 
+	console.log(res.data); 
+	TimeSheet.logTaskTime(function(req, result) {
 		res.send(result);		
 	});
 });
 
 taskManager.post('/add_accounts',function(req,res,next) {
 	var account = req.account;
-	Accounts.setAccount(account, function(result){
+	Accounts.setAccount(account, function(result) {
 		// console.log('Account Set');
 		res.send(result);		
 	});

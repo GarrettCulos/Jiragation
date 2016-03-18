@@ -99,6 +99,7 @@ jira.get('/jira_accounts', function(req, res, next) {
 		}); /* end loop */
 
 	});
+	
 
 });
 
