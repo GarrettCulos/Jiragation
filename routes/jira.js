@@ -10,6 +10,15 @@ const http 				= require('http');
 
 const https 			= require('https');
 
+function taskListToArray(array){
+	var res =[];
+	array.forEach(function(taskList){
+		res = res.concat(taskList.issues);
+		// console.log(res);
+	});
+	return res;
+};
+
 jira.get('/jira_accounts', function(req, res, next) { 
 	
 	var user_accounts = [];
@@ -50,9 +59,9 @@ jira.get('/jira_accounts', function(req, res, next) {
 						loop_count=loop_count+1;
 						console.log('http request complete');
 						if(loop_count == Object.keys(user_accounts).length){
-			   				// console.log(tasks_list);
+			   				// console.log(taskListToArray(tasks_list));
 			   				console.log('Return tasks');
-			   				res.json(tasks_list);
+			   				res.json(taskListToArray(tasks_list));
 			   			}
 
 					});
@@ -79,9 +88,9 @@ jira.get('/jira_accounts', function(req, res, next) {
 						loop_count=loop_count+1;
 						
 						if(loop_count == Object.keys(user_accounts).length){
+			   				// console.log(taskListToArray(tasks_list));
 			   				console.log('Return tasks');
-			   				// console.log(tasks_list);
-			   				res.json(tasks_list);
+			   				res.json(taskListToArray(tasks_list));
 			   			}
 
 					});
