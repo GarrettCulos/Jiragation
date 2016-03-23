@@ -19,6 +19,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	$scope.timerPaused = false;
 	$scope.timerStarted=false;
 	$scope.pausedClass='paused';
+	
 
 	$scope.taskLink = function(){
 		
@@ -40,22 +41,22 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		}
 		console.log(response)
 		//send data to databse
-		// $http({
-		// 	method: 'POST',
-		// 	url: '/task/trackTime',
-		// 	headers: {
-		// 	  'Content-Type': 'application/json'
-		// 	},
-		// 	data: JSON.stringify(response)
+		$http({
+			method: 'POST',
+			url: '/task/trackTime',
+			headers: {
+			  'Content-Type': 'application/json'
+			},
+			data: JSON.stringify(response)
 
-		// }).then(function successCallback(res){
-		// 	// console.log(res.data);
-		// 	// console.log('Timer Stopped - data = ', data);
-		// 	$scope.usrAccountData = res.data;
+		}).then(function successCallback(res){
+			console.log(res.data);
+			// console.log('Timer Stopped - data = ', data);
+			$scope.usrAccountData = res.data;
 
-		// }, function errorCallback(res){
-
-		// });
+		}, function errorCallback(res){
+			console.log('Warning Will Robinson');
+		});
 	});
 	
 	$scope.timerControl = function(){

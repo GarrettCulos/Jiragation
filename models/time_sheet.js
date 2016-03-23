@@ -27,8 +27,32 @@ TimeSheet.getTaskTime = function(callback) {
 
 // Pull time log for towards task_id
 TimeSheet.logTaskTime = function(req, callback) {
+	// Role.add = function(role, callback) {
+	//    sequelize.transaction(function (t) {
+	//         return model.Role.create(role, {transaction: t}).then(function(newRole) {
+	//             if(role.permissionIds && role.permissionIds.length > 0) {
+	//                     //associate permissions for newly added role
+	//                     var whereClause = {where: {id: {$in: role.permissionIds}}};
+	//                     return model.Permission.findAll(whereClause, {transaction: t}).then(function(perms){
+	//                         return newRole.setPermissions(perms, {transaction: t}).then(function(addedPerms) {
+	//                             return newRole; 
+	//                         });
+	//                     });
+	//             }
+	//             else {
+	//                 return newRole;
+	//             }
+	//         });
+	//     }).then(function (role) {
+	//         return Role.findById(role.id, function(err, finalRole) {
+	//             return callback(null, finalRole);
+	//         });
+	//     }).catch(function (error) {
+	//         return callback(error, null);
+	//     });
 
-	var queryString = "INSERT req.task_id, req.end_time , req.logged_time FROM timeSheet";
+	    
+	var queryString = "INSERT req.task_id, req.end_time , req.logged_time INTO timeSheet";
 	/* Insert account into database table */
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.INSERT })
 		.then(function(results){

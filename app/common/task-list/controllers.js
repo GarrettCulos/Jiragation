@@ -30,10 +30,9 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			url: '/pull_jiras/jira_accounts'
 
 		}).then(function successCallback(res){
-			
 			// This should be proprocessed server side
 			$scope.taskList = res.data;
-			console.log(res.data);
+			// console.log(res.data);
 		}, function errorCallback(res){
 
 		});
@@ -87,9 +86,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		$scope.activeTask=[];
 		function resetActiveTasks(){
 			$scope.allTimerPaused = false;
-			angular.forEach($scope.taskList, function(value,key1){
-				$scope.activeTask[key1]='';
-			});	
 		}
 
 		// $scope.pauseAllTimers=function(accountNumber,taskNumber) {
@@ -107,11 +103,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
 			$scope.predicate = predicate;
 		};
-
-		$scope.toggleClick =  function(taskNumber) {
-			resetActiveTasks();
-			$scope.activeTask[taskNumber]='select-active';
-		}
 
 }])
 

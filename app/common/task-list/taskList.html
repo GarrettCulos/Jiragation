@@ -35,10 +35,10 @@
 		<!-- <div class="account" ng-repeat="(accountNum, details) in usrAccountData"> -->
 			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse">
 				<div class="select-default task-item" 
-					ng-class="activeTask[taskNum]"
+					ng-class="{'select-active':( !timerPaused && isActive)}"
 					ng-controller ="taskController"  
 					ng-click="updateRightView(taskNum); toggleClick(taskNum); timerControl()">
-					<div class="row">
+					<div  class="row">
 						<div class="col-xs-4 no-padding">
 							<div class="timer" ng-class="pausedClass" > 
 								<timer autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer>
