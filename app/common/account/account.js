@@ -6,7 +6,7 @@ angular.module('myApp.account', ['ngRoute'])
 	$scope.userNamePrefered = 'Garrett';
 	$scope.userNameFirst = 'Garrett';
 	$scope.userNameLast = 'Culos';
-	$scope.jiraAccounts	=[];
+	$scope.JiraAccounts	=[];
 	$scope.message = 'Welcome ' + $scope.userNamePrefered;
 	
 	
@@ -23,7 +23,7 @@ angular.module('myApp.account', ['ngRoute'])
 		}).then(function successCallback(response){
 
 			console.log(response.data);
-			$scope.jiraAccounts = response.data;
+			$scope.JiraAccounts = response.data;
 
 		}, function errorCallback(response){
 
@@ -63,19 +63,19 @@ angular.module('myApp.account', ['ngRoute'])
 		}, function errorCallback(response){
 
 		});
-		$scope.jiraAccounts=$scope.jiraAccounts.concat();
+		$scope.JiraAccounts=$scope.JiraAccounts.concat();
 	}
 	$scope.hideAccount = function( idx ){
-		$scope.hiddenJiraAccounts.push($scope.jiraAccounts[ idx ]);
-		$scope.jiraAccounts.splice(idx,1);
+		$scope.hiddenJiraAccounts.push($scope.JiraAccounts[ idx ]);
+		$scope.JiraAccounts.splice(idx,1);
 	}
 	$scope.showAccount = function( idx ){
-		$scope.jiraAccounts.push($scope.hiddenJiraAccounts[ idx ]);
+		$scope.JiraAccounts.push($scope.hiddenJiraAccounts[ idx ]);
 		$scope.hiddenJiraAccounts.splice(idx,1);
 	}
 
 	$scope.delete = function ( idx ) {
-		$scope.jiraAccounts.splice(idx,1);
+		$scope.JiraAccounts.splice(idx,1);
 	}
 
 

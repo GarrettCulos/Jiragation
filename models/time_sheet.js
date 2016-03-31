@@ -1,4 +1,5 @@
-var db 					= require('../init_db.js');
+var db 					= require('../init_db');
+var model 				= require('./jiragation');
 
 var Sequelize 			= db.Sequelize;
 
@@ -11,7 +12,7 @@ var TimeSheet = function() {
 // Pull Time Sheet
 TimeSheet.getTaskTime = function(callback) {
 	// console.log('model - accout');
-	var queryString = "SELECT * FROM timeSheet";
+	var queryString = "SELECT * FROM TimeSheet";
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){
@@ -27,49 +28,24 @@ TimeSheet.getTaskTime = function(callback) {
 
 // Pull time log for towards task_id
 TimeSheet.logTaskTime = function(req, callback) {
-	// Role.add = function(role, callback) {
-	//    sequelize.transaction(function (t) {
-	//         return model.Role.create(role, {transaction: t}).then(function(newRole) {
-	//             if(role.permissionIds && role.permissionIds.length > 0) {
-	//                     //associate permissions for newly added role
-	//                     var whereClause = {where: {id: {$in: role.permissionIds}}};
-	//                     return model.Permission.findAll(whereClause, {transaction: t}).then(function(perms){
-	//                         return newRole.setPermissions(perms, {transaction: t}).then(function(addedPerms) {
-	//                             return newRole; 
-	//                         });
-	//                     });
-	//             }
-	//             else {
-	//                 return newRole;
-	//             }
-	//         });
-	//     }).then(function (role) {
-	//         return Role.findById(role.id, function(err, finalRole) {
-	//             return callback(null, finalRole);
-	//         });
-	//     }).catch(function (error) {
-	//         return callback(error, null);
-	//     });
-
-	    
-	var queryString = "INSERT req.task_id, req.end_time , req.logged_time INTO timeSheet";
-	/* Insert account into database table */
-	sequelize.query(queryString, { type: Sequelize.QueryTypes.INSERT })
-		.then(function(results){
-			callback(results);
-			// console.log(results);
-		})
-		.catch(function(err){
-	  		console.log(err);
-	  		throw err;
-	  	});
-
+	console.log(req);
+	// model.TimeSheet.sync().then(function () {
+		model.TimeSheet.create({
+			task_id: req['task_id'],
+			end_time: req['end_time'],
+			logged_time: req['logged_time'],
+		}).then(function () {
+			console.log('logged time');
+		}, function(err){
+			console.log('~logged time');
+		});
+	// });
 };
 
 //pull time log for specific task_id
 TimeSheet.getTaskTime = function(taskID, callback) {
 	// console.log('model - accout');
-	var queryString = "SELECT * FROM timeSheet WHERE task_id as taskID";
+	var queryString = "SELECT * FROM TimeSheet WHERE task_id as taskID";
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){

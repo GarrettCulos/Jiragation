@@ -51,12 +51,14 @@ angular.module('appFilters',[])
     var dateObj = new Date(unixtime*1000);
     var year = dateObj.getFullYear();
     var month = dateObj.getMonth()
+    if(month<10){month='0'+month};
     // var monthWords = months[month];
     var date = dateObj.getDate();
+    if(date<10){date='0'+date};
     var hour = dateObj.getHours();
     // var min = dateObj.getMinutes();
     // var sec = dateObj.getSeconds();
-    var res = date + '.' + month + '.' + year + ' h:' + hour;
+    var res = year + '.' + month + '.' + date + ' h:' + hour;
     console.log(res);
     return res;
   };

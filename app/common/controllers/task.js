@@ -35,19 +35,22 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	$scope.$on('timer-stopped', function (event, data){
 		var date = new Date();
 		var response = {
+			// task_id: $scope.task.key,
+			// end_time: date.getTime(),
+			// task_time: timerDataToUnix(data)
 			task_id: $scope.task.key,
-			end_time: date.getTime(),
-			task_time: timerDataToUnix(data)
+			end_time: 1231,
+			task_time: 145123412
 		}
 		console.log(response)
-		//send data to databse
+		// send data to databse
 		$http({
 			method: 'POST',
-			url: '/task/trackTime',
+			url: 	'/task/trackTime',
+			data: 	response,
 			headers: {
-			  'Content-Type': 'application/json'
-			},
-			data: JSON.stringify(response)
+			  	'Content-Type': 'application/javascript'
+			}
 
 		}).then(function successCallback(res){
 			console.log(res.data);

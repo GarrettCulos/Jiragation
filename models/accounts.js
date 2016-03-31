@@ -1,4 +1,4 @@
-var db 					= require('../init_db.js');
+var db 					= require('../init_db');
 
 var Sequelize 			= db.Sequelize;
 
@@ -10,7 +10,7 @@ var Accounts = function() {
 
 Accounts.getAccounts = function(callback) {
 	// console.log('model - accout');
-	var queryString = "SELECT user_name,url,password,protocal FROM jiraAccounts";
+	var queryString = "SELECT user_name,url,password,protocal FROM jira_accounts";
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){
@@ -25,7 +25,7 @@ Accounts.getAccounts = function(callback) {
 };
 
 Accounts.setAccount = function(account, callback) {
-	jiraAccounts.create({
+	JiraAccounts.create({
 		user_name:account.user_name,
 		url: account.url,
 		password: account.password,

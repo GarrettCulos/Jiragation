@@ -9,7 +9,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	$scope.userNameLast = 'Culos';
 	$scope.isActive = false;
 
-	$scope.jiraAccounts;
+	$scope.JiraAccounts;
 
 	// Fetch Jira Data
 	$http({
@@ -19,7 +19,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	}).then(function successCallback(response){
 
-		$scope.jiraAccounts = response.data;
+		$scope.JiraAccounts = response.data;
 
 	}, function errorCallback(response){
 
