@@ -47,9 +47,9 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		$http({
 			method: 'POST',
 			url: 	'/task/trackTime',
-			data: 	response,
+			data: 	JSON.stringify(response),
 			headers: {
-			  	'Content-Type': 'application/javascript'
+			  	'Content-Type': 'application/json',
 			}
 
 		}).then(function successCallback(res){

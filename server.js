@@ -2,11 +2,15 @@ var express 	= require('express');
 var db 			= require('./init_db.js');
 var Sequelize 	= db.Sequelize;
 var sequelize 	= db.sequelize;
+
 var app 		= express();
+var bodyParser  = require('body-parser');
 
 require('./create_db.js');
 
 app.set('port', 8000);
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" })); // for parsing application/x-www-form-urlencoded
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

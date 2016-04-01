@@ -8,6 +8,7 @@ var fs 					= require('fs');
 
 taskManager.post('/trackTime', function(req, res, next) {
 	// console.log(req);
+
 	TimeSheet.logTaskTime(function(req, result) {
 		// console.log(result); 
 		res.send(result);		
