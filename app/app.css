@@ -75,9 +75,12 @@ ul.menu{
 }
 
 .task-item{
-  padding:20px 20px 20px 10px;
-  border-bottom:1px solid rgba(0,0,0,0.1);
+  padding:15px 20px 15px 10px;
+  /*border-bottom:1px solid rgba(0,0,0,0.1);*/
   border-top:1px solid rgba(0,0,0,0.1);
+  border-left:3px solid rgba(0,0,0,0.1);
+  border-right:1px solid rgba(0,0,0,0.1);
+  
 }
 .right-view {
   /*position:fixed;
@@ -125,9 +128,10 @@ ul.menu{
 }
 .select-default.select-active{
   opacity:1;
+  border-left:3px solid rgba(50,50,100,1);
 }
 .select-default{
-  opacity:0.3;
+  /*opacity:0.3; */
 }
 
 .task-status,
@@ -160,7 +164,7 @@ img.task-priority {
   padding-left:20px;
   display:inline-block;
   font-weight:600;
-  max-width:450px;
+  /*max-width:450px;*/
 }
 
 button{

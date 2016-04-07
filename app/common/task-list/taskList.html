@@ -11,87 +11,79 @@
 	</div>
 </div>
 <div class="row">
-<div class="col-xs-8">
-	<div class="row">
-		<div class="col-xs-4 no-padding">
-			<div style="text-align: center"> 
-				<label>Stuff</label>
-	        </div>
-		</div>
-		<div class="col-xs-2 no-padding">
-			<div ng-click="order(task.fields.created)" ng-class="{reverse:reverse}" class="task-date-title">
-				Date
-			</div>	
-		</div>
-		<div class="col-xs-6 no-padding">
-			<div class="task-summary-title">
-
-			</div>			
-			<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
-			<!-- <button  ng-click="updateTaskView(accountNum, taskNum)"> View Task </button> -->		
-		</div>
+	<div class="col-xs-4">
+		<div style="text-align: center"> 
+			<label>Stuff</label>
+        </div>
 	</div>
-	<div class="account-list">
-		<!-- <div class="account" ng-repeat="(accountNum, details) in usrAccountData"> -->
-			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse">
-				<div class="select-default task-item" 
-					ng-class="{'select-active':( !timerPaused && isActive)}"
-					ng-controller ="taskController"  
-					ng-click="updateRightView(taskNum); toggleClick(taskNum); timerControl()">
-					<div  class="row">
-						<div class="col-xs-4 no-padding">
-							<div class="timer" ng-class="pausedClass" > 
-								<timer autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer>
-					        </div>
-							<img class="task-priority" src="{{ task.fields.priority | priorityF }}"> <!-- Pass in pririty object -->
-							<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
-							<div class="task-status">  {{ task.fields.status.name }}</div>
-							<a href="{{ taskUrl(task.key, task.self) }}" target="_blank" ><div class="task-name align-left">{{ task.key }}</div></a>
-						</div>
-						<div class="col-xs-2 no-padding">
-							<div class="task-date">  {{  task.fields.created | dateF  }}  </div>	
-						</div>
-						<div class="col-xs-6 no-padding">
-							<div class="task-summary">{{ task.fields.summary }}</div>			
-							<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
-							<!-- <button  ng-click="updateTaskView(taskNum)"> View Task </button> -->		
-						</div>
+	<div class="col-xs-2 no-padding">
+		<div ng-click="order(task.fields.created)" ng-class="{reverse:reverse}" class="task-date-title">
+			Date
+		</div>	
+	</div>
+	<div class="col-xs-6 no-padding">
+		<div class="task-summary-title">
+
+		</div>			
+		<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
+		<!-- <button  ng-click="updateTaskView(accountNum, taskNum)"> View Task </button> -->		
+	</div>
+</div>
+<div class="account-list">
+	<!-- <div class="account" ng-repeat="(accountNum, details) in usrAccountData"> -->
+		<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse">
+			<div class="select-default task-item" 
+				ng-class="{'select-active':( !timerPaused && isActive)}"
+				ng-controller ="taskController"  
+				ng-click="updateRightView(taskNum); toggleClick(taskNum); timerControl()">
+				<div  class="row">
+					<div class="col-xs-4 ">
+						<div class="timer" ng-class="pausedClass" > 
+							<timer autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer>
+				        </div>
+						<img class="task-priority" src="{{ task.fields.priority | priorityF }}"> <!-- Pass in pririty object -->
+						<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
+						<div class="task-status">  {{ task.fields.status.name }}</div>
+						<a href="{{ taskUrl(task.key, task.self) }}" target="_blank" ><div class="task-name align-left">{{ task.key }}</div></a>
+					</div>
+					<div class="col-xs-2 no-padding">
+						<div class="task-date">  {{  task.fields.created | dateF  }}  </div>	
+					</div>
+					<div class="col-xs-6 no-padding">
+						<div class="task-summary">{{ task.fields.summary }}</div>			
+						<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
+						<!-- <button  ng-click="updateTaskView(taskNum)"> View Task </button> -->		
 					</div>
 				</div>
 			</div>
-		<!-- </div>  -->
-	</div>
+		</div>
+	<!-- </div>  -->
 </div>
 
-<div class="right-view">
-	<div class="col-xs-4" ng-model="rightView" ng-if="rightView != null">
-		<div class="row">
-			<div class="col-xs-12 no-padding">
-				<div class="task-summary no-padding padding-bottom"> {{ rightView.fields.summary }} </div>	
-			</div>
+<!-- <div class="right-view">
+<div class="col-xs-4" ng-model="rightView" ng-if="rightView != null">
+	<div class="row">
+		<div class="col-xs-12 no-padding">
+			<div class="task-summary no-padding padding-bottom"> {{ rightView.fields.summary }} </div>	
 		</div>
-		<div class="right-view-title">
-			<div class="row">
-				<div class="col-xs-4"><img class="task-type" src="{{ rightView.fields.issuetype.iconUrl }}"><span>{{ rightView.fields.issuetype.name }}</span></div>
-				<div class="col-xs-4"><img class="task-status" src="{{ rightView.fields.status.iconUrl }}"><span>{{ rightView.fields.status.name }}</span></div>
-				<div class="col-xs-4"><img class="task-priority" src="{{ rightView.fields.priority | priorityF }}"><span>{{ rightView.fields.priority.name }}</span></div>	
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12">
-				<p> {{ rightView.key }} </p>
-				<h4> Description </h4>
-					<p>{{ rightView.fields.description }} </p>
-				<div ng-if="rightView.fields.comments">
-					<h4> Comments </h4>
-					{{ rightView.fields.comments }}
-				</div>
-			</div>
-			<!-- <div class="col-sm-6 col-xs-12"> -->
-				<!-- <span>{{ rightView['fields']['description'] }} </span> -->
-			<!-- </div>	 -->
-		</div>	
 	</div>
+	<div class="right-view-title">
+		<div class="row">
+			<div class="col-xs-4"><img class="task-type" src="{{ rightView.fields.issuetype.iconUrl }}"><span>{{ rightView.fields.issuetype.name }}</span></div>
+			<div class="col-xs-4"><img class="task-status" src="{{ rightView.fields.status.iconUrl }}"><span>{{ rightView.fields.status.name }}</span></div>
+			<div class="col-xs-4"><img class="task-priority" src="{{ rightView.fields.priority | priorityF }}"><span>{{ rightView.fields.priority.name }}</span></div>	
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<p> {{ rightView.key }} </p>
+			<h4> Description </h4>
+				<p>{{ rightView.fields.description }} </p>
+			<div ng-if="rightView.fields.comments">
+				<h4> Comments </h4>
+				{{ rightView.fields.comments }}
+			</div>
+		</div>
+	</div>	
 </div>
-			
-</div>
+</div> -->
