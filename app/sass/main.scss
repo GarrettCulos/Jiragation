@@ -1,0 +1,10 @@
+// Variables
+@import "variables";
+
+// Import bootstrap and boilerplate
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../../bower_components/html5-boilerplate/dist/css/normalize.css";
+@import "../../bower_components/html5-boilerplate/dist/css/main.css";
+
+// Main Stylesheets
+@import "task_list";

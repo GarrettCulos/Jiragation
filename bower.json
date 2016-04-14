@@ -12,6 +12,9 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "angular-moment": "^0.10.3",
-    "moment": "^2.12.0"
+    "moment": "^2.12.0",
+    "grunt": "~1.0.1",
+    "viscompass": "compass#~0.6.2",
+    "bootstrap-sass": "boostrap-sass#~3.3.6"
   }
 }
