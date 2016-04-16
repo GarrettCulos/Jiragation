@@ -8793,19 +8793,83 @@ button.close {
     display: none !important;
   }
 }
-/* app css stylesheet */
-/* line 3, ../sass/_task_list.scss */
-.version {
-  color: rgba(0, 0, 0, 0.1);
-}
-
-/* line 7, ../sass/_task_list.scss */
-.account {
+/* line 1, ../sass/_navbar.scss */
+.nav-bg {
+  z-index: 9;
   width: 100%;
+  position: fixed;
+  color: whitesmoke;
+  background-color: #323264;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
+  box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
 }
-
-/* line 11, ../sass/_task_list.scss */
-.top-nav {
+/* line 9, ../sass/_navbar.scss */
+.nav-bg .nav-item {
+  text-align: center;
+  line-height: 3.5em;
+}
+/* line 14, ../sass/_navbar.scss */
+.nav-bg a {
+  line-height: 1em;
+  font-size: 1em;
+  color: whitesmoke;
+  text-decoration: none;
+}
+/* line 20, ../sass/_mixins.scss */
+.nav-bg a:hover {
+  color: #cdcdcd;
+}
+/* line 18, ../sass/_navbar.scss */
+.nav-bg .search-bar {
+  line-height: 2.5em;
+  display: inline-block;
+}
+/* line 22, ../sass/_navbar.scss */
+.nav-bg .search-bar input {
+  line-height: 2em;
+  padding: 3px 10px;
+  background-color: white;
+  color: #0a0a0a;
+  border: none;
+}
+/* line 30, ../sass/_navbar.scss */
+.nav-bg .search-bar .search-label {
+  margin-left: 10px;
+  margin-right: 10px;
+  line-height: 2em;
+  border: none;
+  outline: none;
+  display: inline-block;
+  padding: 0 15px;
+}
+/* line 40, ../sass/_navbar.scss */
+.nav-bg .search-bar button {
+  background-color: transparent;
+  padding: 0 15px;
+  border: none;
+  color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-top: 2px solid transparent;
+  line-height: 3.5em;
+}
+/* line 10, ../sass/_mixins.scss */
+.nav-bg .search-bar button:focus {
+  outline: none;
+}
+/* line 46, ../sass/_navbar.scss */
+.nav-bg .search-bar .active-button {
+  border-top: 2px solid white;
+}
+/* line 51, ../sass/_navbar.scss */
+.nav-bg .version {
+  line-height: 3.5em;
+  color: rgba(225, 225, 225, 0.3);
+}
+/* line 56, ../sass/_navbar.scss */
+.nav-bg .top-nav {
   position: fixed;
   top: 0;
   width: inherit;
@@ -8816,51 +8880,67 @@ button.close {
   background-color: white;
 }
 
-/* line 22, ../sass/_task_list.scss */
-.nav-bg {
-  background-color: white;
-  height: 55px;
-  z-index: 9;
-}
-
-/* line 28, ../sass/_task_list.scss */
+/* app css stylesheet */
+/* line 3, ../sass/_task_list.scss */
 .main-content {
-  margin-top: 55px;
+  margin-top: 60px;
 }
-
-/* line 33, ../sass/_task_list.scss */
-.top-nav ul {
+/* line 6, ../sass/_task_list.scss */
+.main-content .center {
+  text-align: center;
+}
+/* line 11, ../sass/_task_list.scss */
+.main-content .account-list div:last-child .task-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+/* line 15, ../sass/_task_list.scss */
+.main-content .account-list .task-item {
+  padding: 15px 20px 15px 10px;
+  /*border-bottom:1px solid rgba(0,0,0,0.1);*/
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: 3px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+/* line 21, ../sass/_task_list.scss */
+.main-content .account-list .task-item img {
+  height: 1.5em;
+  position: relative;
+  vertical-align: middle;
+}
+/* line 30, ../sass/_task_list.scss */
+.main-content .top-nav ul {
   display: inline-block;
 }
-/* line 36, ../sass/_task_list.scss */
-.top-nav .align-right {
+/* line 33, ../sass/_task_list.scss */
+.main-content .top-nav .align-right {
   float: right;
   list-style: none;
 }
-
-/* line 42, ../sass/_task_list.scss */
-.user-name {
+/* line 39, ../sass/_task_list.scss */
+.main-content .user-name {
   margin-top: 1px;
   margin-bottom: 30px;
 }
-
-/* line 47, ../sass/_task_list.scss */
-ul.menu {
+/* line 44, ../sass/_task_list.scss */
+.main-content .account {
+  width: 100%;
+}
+/* line 48, ../sass/_task_list.scss */
+.main-content ul.menu {
   height: 55px;
 }
-
-/* line 51, ../sass/_task_list.scss */
-.menu {
+/* line 52, ../sass/_task_list.scss */
+.main-content .menu {
   list-style: none;
 }
-/* line 53, ../sass/_task_list.scss */
-.menu li {
+/* line 54, ../sass/_task_list.scss */
+.main-content .menu li {
   display: inline-block;
   height: 55px;
   line-height: 55px;
 }
-/* line 57, ../sass/_task_list.scss */
-.menu li a {
+/* line 58, ../sass/_task_list.scss */
+.main-content .menu li a {
   vertical-align: middle;
   padding-right: 0.3em;
   padding-left: 0.3em;
@@ -8869,168 +8949,89 @@ ul.menu {
   border-right: 1px solid blue;
   border-left: 1px solid blue;
 }
-/* line 65, ../sass/_task_list.scss */
-.menu li a:last-child {
+/* line 66, ../sass/_task_list.scss */
+.main-content .menu li a:last-child {
   border-right: 1px solid transparent;
 }
-/* line 68, ../sass/_task_list.scss */
-.menu li a:first-child {
+/* line 69, ../sass/_task_list.scss */
+.main-content .menu li a:first-child {
   border-left: 1px solid transparent;
 }
-
-/* line 75, ../sass/_task_list.scss */
-.search-bar {
-  margin-bottom: 20px;
-}
-
-/* line 79, ../sass/_task_list.scss */
-.task-item {
-  padding: 15px 20px 15px 10px;
-  /*border-bottom:1px solid rgba(0,0,0,0.1);*/
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  border-left: 3px solid rgba(0, 0, 0, 0.1);
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-/* line 87, ../sass/_task_list.scss */
-.right-view {
-  /*position:fixed;
-  right:0;
-  top:150px;
-  width:33%;*/
-}
-
-/* line 94, ../sass/_task_list.scss */
-.task-item img {
-  height: 1.5em;
-  position: relative;
-  vertical-align: middle;
-}
-
-/* line 100, ../sass/_task_list.scss */
-.right-view img {
+/* line 78, ../sass/_task_list.scss */
+.main-content .right-view img {
   height: 1em;
   margin-right: 5px;
   vertical-align: middle;
 }
-
-/* line 106, ../sass/_task_list.scss */
-.timer {
-  /*position:absolute;
-  left:0;
-  transform:translateX(-50%);
-  padding-right:40px;*/
+/* line 84, ../sass/_task_list.scss */
+.main-content .timer {
   display: inline-block;
   vertical-align: middle;
 }
-
-/* line 115, ../sass/_task_list.scss */
-.paused {
+/* line 89, ../sass/_task_list.scss */
+.main-content .paused {
   color: red;
   opacity: 0.5;
 }
-
-/* line 120, ../sass/_task_list.scss */
-.no-padding {
+/* line 94, ../sass/_task_list.scss */
+.main-content .no-padding {
   padding: 0;
 }
-
-/* line 124, ../sass/_task_list.scss */
-.padding-bottom {
+/* line 98, ../sass/_task_list.scss */
+.main-content .padding-bottom {
   padding-bottom: 10px;
 }
-
-/* line 128, ../sass/_task_list.scss */
-.right-view-title {
+/* line 102, ../sass/_task_list.scss */
+.main-content .right-view-title {
   padding-bottom: 10px;
   padding-top: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
-
-/* line 136, ../sass/_task_list.scss */
-.select-default {
+/* line 110, ../sass/_task_list.scss */
+.main-content .select-default {
   /*opacity:0.3; */
 }
-/* line 137, ../sass/_task_list.scss */
-.select-default.select-active {
+/* line 111, ../sass/_task_list.scss */
+.main-content .select-default.select-active {
   opacity: 1;
   border-left: 3px solid #323264;
 }
-
-/* line 144, ../sass/_task_list.scss */
-.task-status, .task-name, .task-date, .task-summary {
+/* line 118, ../sass/_task_list.scss */
+.main-content .task-status, .main-content .task-name, .main-content .task-date, .main-content .task-summary {
   vertical-align: top;
   display: inline-block;
 }
-
-/* line 149, ../sass/_task_list.scss */
-.task-date {
-  float: right;
-}
-
-/* line 153, ../sass/_task_list.scss */
-.task-priority {
+/* line 127, ../sass/_task_list.scss */
+.main-content .task-priority {
   vertical-align: -webkit-baseline-middle;
   vertical-align: middle;
   display: inline-block;
   margin: 0 10px;
 }
-
-/* line 160, ../sass/_task_list.scss */
-.task-date-title {
+/* line 134, ../sass/_task_list.scss */
+.main-content .task-date-title {
   font-weight: 700;
   text-align: center;
 }
-
-/* line 165, ../sass/_task_list.scss */
-img.task-priority {
+/* line 139, ../sass/_task_list.scss */
+.main-content img.task-priority {
   line-height: 1.5em;
 }
-
-/* line 169, ../sass/_task_list.scss */
-.task-summary {
+/* line 143, ../sass/_task_list.scss */
+.main-content .task-summary {
   padding-left: 20px;
   display: inline-block;
   font-weight: 600;
   /*max-width:450px;*/
 }
-
-/* line 176, ../sass/_task_list.scss */
-button {
-  opacity: 0.6;
-  padding: 4px 15px;
-  border: none;
-  -webkit-user-select: none;
-  /* Chrome all / Safari all */
-  -moz-user-select: none;
-  /* Firefox all */
-  -ms-user-select: none;
-  /* IE 10+ */
-  user-select: none;
-}
-
-/* line 189, ../sass/_task_list.scss */
-input {
-  height: 28px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-/* line 195, ../sass/_task_list.scss */
-.active-button {
-  opacity: 1;
-  background-color: #323264;
-  color: white;
-}
-
-/* line 201, ../sass/_task_list.scss */
-.task-title-date {
+/* line 150, ../sass/_task_list.scss */
+.main-content .task-title-date {
   padding-right: 20px;
 }
-/* line 203, ../sass/_task_list.scss */
-.task-title-date:after {
+/* line 152, ../sass/_task_list.scss */
+.main-content .task-title-date:after {
   background-image: url("./img/down-arrow.png");
   background-size: cover;
   width: 20px;

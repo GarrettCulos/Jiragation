@@ -1,0 +1,66 @@
+.nav-bg {
+  z-index: 9;
+  width:100%;
+  position:fixed;
+  color:$my_white;
+  background-color: $my_purple;
+	@include box-shadow(rgba(black,0.5) -5px 0 10px);
+	
+	.nav-item {
+		text-align:center;
+		line-height:3.5em;
+	}
+
+	a {
+		@include link-style;
+	}
+
+  .search-bar {
+  	line-height:2.5em;
+  	display:inline-block;
+
+		input{
+		  line-height: 2em;
+		  padding:3px 10px;
+		  background-color:white;
+		  color:$my_black;
+    	border: none;
+		}
+
+  	.search-label{
+  		margin-left: 10px;
+	    margin-right: 10px;
+	    line-height: 2em;
+	    border: none;
+	    outline: none;
+  		display: inline-block;
+			padding:0 15px;
+  	}
+
+  	button{
+			@include button-style;
+			border-top:2px solid transparent;	
+  		line-height:3.5em;
+  	}
+
+		.active-button {
+			border-top:2px solid white;	
+		}	
+	}
+
+	.version {
+	  line-height:3.5em;
+	  color: rgba(225, 225, 225, 0.3);
+	}
+
+	.top-nav {
+	  position: fixed;
+	  top: 0;
+	  width: inherit;
+	  height: 55px;
+	  border-bottom: 0.1em solid black;
+	  z-index: 10;
+	  vertical-align: middle;
+	  background-color: white;
+	}
+}
