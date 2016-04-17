@@ -13,6 +13,8 @@ angular.module('myApp.account', ['ngRoute'])
 	$scope.viewUserUpdate=false;
 	$scope.viewAccounts=false;
 
+  syncAccounts();
+  
 	function syncAccounts(){
 		$scope.hiddenJiraAccounts = [];
 		$http({
@@ -65,6 +67,7 @@ angular.module('myApp.account', ['ngRoute'])
 		});
 		$scope.JiraAccounts=$scope.JiraAccounts.concat();
 	}
+
 	$scope.hideAccount = function( idx ){
 		$scope.hiddenJiraAccounts.push($scope.JiraAccounts[ idx ]);
 		$scope.JiraAccounts.splice(idx,1);

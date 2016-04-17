@@ -1,37 +1,118 @@
-<span>User: {{userNamePrefered}} {{userNameLast}}</span>
+<div class="nav-bg">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-2 nav-item" > 
 
-<hr>
-<div ng-hide="viewUserUpdate"><button ng-click="updateUser()"> Update User Information </button></div>
-<div ng-show="viewUserUpdate">
-	<input type="text" ng-model="userNameFirst">
-	<input type="text" ng-model="userNameLast">
-	<input type="text" ng-model="userNamePrefered">
-	<button ng-click="closeUpdateUser()"> Close </button>
-</div>
+        <a href="#/task-list">Tasks</a>
+      </div>
+      <div class="col-xs-8">
+				<div class="prefered-name">
+					Welcome {{userNamePrefered}}
+				</div>
+      </div>
+      <div class="col-xs-2 version">
+        <div class="align-right">Jiragation <span app-version></span></div>
+      </div>
+    </div>
+  </div>
+</div> 
 
-<hr>
-<div ng-hide="viewAccounts"><button ng-click="updateAccount()"> Update List of Jira Accounts </button></div>
-<div ng-show="viewAccounts"><button ng-click="closeAccountUpdater()"> Hide List</button></div>
-<div ng-show="viewAccounts">
-	<h4>Visible Accounts </h4>
-	<div ng-repeat="account in JiraAccounts">
-		<span>User Name: {{account.user_name}} | </span>
-		<span>Password: {{account.password}} | </span>
-		<span>URL: {{account.url}}</span>
-		<button ng-click="hideAccount($index)"> Hide </button>
-		<button ng-click="delete($index)"> Remove </button>
-	</div>
-	<h4> Hidden Accounts </h4>
-	<div ng-repeat="account in hiddenJiraAccounts">
-		<span>User Name: {{account.user_name}} | </span>
-		<span>Password: {{account.password}} | </span>
-		<span>URL: {{account.url}}</span>
-		<button ng-click="showAccount($index)"> Show </button>
-	</div>
+<div class="container">
+	<div class="account-settings">
+		<h4> Update User Information </h4>	
+		<div class="user-information"> 
+				<div class="row">
+					<div class="col-xs-3"><b>First Name</b></div>
+					<div class="col-xs-3"><b>Last Name</b></div>
+					<div class="col-xs-3"><b>Prefered Name</b></div>
+				</div>
+				<div class="row">
+					<div class="col-xs-3"><input type="text" ng-model="userNameFirst"></div>
+					<div class="col-xs-3"><input type="text" ng-model="userNameLast"></div>
+					<div class="col-xs-3"><input type="text" ng-model="userNamePrefered"></div>
+				</div>			
+		</div>
 
-	<h4> Additional Accounts </h4>
-	<input type="text" ng-model="userName" placeholder="User Name">
-	<input type="text" ng-model="password" placeholder="Password">
-	<input type="text" ng-model="jiraURL" placeholder="Jira URL">
-	<button ng-click="addAccount(jiraURL, userName, password)"> Add Account </button>
+		
+		<h4> Update List of Jira Accounts </h4>
+		<div class="user-accounts">
+			<div class="visible-account">
+				<div class="user-account">
+					<div class="row">
+						<div class="col-xs-3">
+							<b>User Name</b>
+						</div>
+						<div class="col-xs-3">
+							<b>Password</b>
+						</div>
+						<div class="col-xs-3">
+							<b>URL</b>
+						</div>
+					</div>
+				</div>
+				<div ng-repeat="account in JiraAccounts">
+					<div class="user-account">
+						<div class="row">
+							<div class="col-xs-3">
+								{{account.user_name}}
+							</div>
+							<div class="col-xs-3">
+								{{account.password}}
+							</div>
+							<div class="col-xs-3">
+								{{account.url}}
+							</div>
+							<div class="col-xs-3">
+								<button class="button" ng-click="hideAccount($index)"> Hide </button>
+								<button class="button" ng-click="delete($index)"> Remove </button>		
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- <div class="hidden-accounts">
+				
+			</div> -->
+			<!-- <h4> Hidden Accounts </h4>
+			<div ng-repeat="account in hiddenJiraAccounts">
+				<div class="user-account">
+					<div class="row">
+						<div class="col-xs-3">
+							{{account.user_name}}
+						</div>
+						<div class="col-xs-3">
+							{{account.password}}
+						</div>
+						<div class="col-xs-3">
+							{{account.url}}
+						</div>
+						<div class="col-xs-3">
+							<button class="button" ng-click="showAccount($index)"> Show </button>		
+						</div>
+					</div>
+				</div>
+			</div> -->
+			<div class="add-account">
+				<h4> Add Account </h4>
+				<div class="user-add-account">
+					<div class="row">
+						<div class="col-xs-3">
+							<input type="text" ng-model="userName" placeholder="User Name">
+						</div>
+						<div class="col-xs-3">
+							<input type="text" ng-model="password" placeholder="Password">
+						</div>
+						<div class="col-xs-3">
+							<input type="text" ng-model="jiraURL" placeholder="Jira URL">
+						</div>
+						<div class="col-xs-3">
+							<button class="button" ng-click="addAccount(jiraURL, userName, password)"> Add Account </button>		
+						</div>
+					</div>
+				</div>							
+			</div>
+
+		</div>
+	</div>	
 </div>

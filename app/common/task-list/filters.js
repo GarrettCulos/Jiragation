@@ -58,7 +58,7 @@ angular.module('appFilters',[])
     var hour = dateObj.getHours();
     // var min = dateObj.getMinutes();
     // var sec = dateObj.getSeconds();
-    var res = year + '.' + month + '.' + date + ' h:' + hour;
+    var res = year + '.' + month + '.' + date + '.' + hour;
     console.log(res);
     return res;
   };

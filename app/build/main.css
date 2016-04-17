@@ -8793,13 +8793,73 @@ button.close {
     display: none !important;
   }
 }
+/* line 1, ../sass/_account_settings.scss */
+.account-settings {
+  margin-top: 60px;
+}
+/* line 4, ../sass/_account_settings.scss */
+.account-settings .user-accounts,
+.account-settings .user-information {
+  margin-bottom: 40px;
+  padding: 15px;
+  background-color: white;
+  -webkit-box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
+  box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
+}
+/* line 12, ../sass/_account_settings.scss */
+.account-settings .user-account {
+  margin-bottom: 10px;
+}
+/* line 17, ../sass/_account_settings.scss */
+.account-settings .user-information input {
+  width: 100%;
+  padding: 0 5px;
+  line-height: 2em;
+}
+/* line 25, ../sass/_account_settings.scss */
+.account-settings .user-add-account input {
+  width: 100%;
+  padding: 0 5px;
+  line-height: 2em;
+}
+
+/* line 1, ../sass/_base.scss */
+body {
+  background-color: whitesmoke;
+}
+
+/* line 4, ../sass/_base.scss */
+.button {
+  background-color: transparent;
+  padding: 0 15px;
+  border: none;
+  color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #620098;
+  padding: 5px 20px;
+}
+/* line 10, ../sass/_mixins.scss */
+.button:focus {
+  outline: none;
+}
+/* line 8, ../sass/_base.scss */
+.button:hover {
+  background-color: #3a0084;
+  color: #cdcdcd;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
+}
+
 /* line 1, ../sass/_navbar.scss */
 .nav-bg {
   z-index: 9;
   width: 100%;
   position: fixed;
   color: whitesmoke;
-  background-color: #323264;
+  background-color: #620098;
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
   box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
 }
@@ -8807,8 +8867,9 @@ button.close {
 .nav-bg .nav-item {
   text-align: center;
   line-height: 3.5em;
+  border-top: 2px solid transparent;
 }
-/* line 14, ../sass/_navbar.scss */
+/* line 15, ../sass/_navbar.scss */
 .nav-bg a {
   line-height: 1em;
   font-size: 1em;
@@ -8819,20 +8880,25 @@ button.close {
 .nav-bg a:hover {
   color: #cdcdcd;
 }
-/* line 18, ../sass/_navbar.scss */
+/* line 19, ../sass/_navbar.scss */
+.nav-bg .prefered-name {
+  line-height: 3.5em;
+  border-top: 2px solid transparent;
+}
+/* line 24, ../sass/_navbar.scss */
 .nav-bg .search-bar {
   line-height: 2.5em;
   display: inline-block;
 }
-/* line 22, ../sass/_navbar.scss */
+/* line 28, ../sass/_navbar.scss */
 .nav-bg .search-bar input {
-  line-height: 2em;
+  line-height: 1.8em;
   padding: 3px 10px;
   background-color: white;
   color: #0a0a0a;
   border: none;
 }
-/* line 30, ../sass/_navbar.scss */
+/* line 36, ../sass/_navbar.scss */
 .nav-bg .search-bar .search-label {
   margin-left: 10px;
   margin-right: 10px;
@@ -8842,7 +8908,7 @@ button.close {
   display: inline-block;
   padding: 0 15px;
 }
-/* line 40, ../sass/_navbar.scss */
+/* line 46, ../sass/_navbar.scss */
 .nav-bg .search-bar button {
   background-color: transparent;
   padding: 0 15px;
@@ -8859,16 +8925,16 @@ button.close {
 .nav-bg .search-bar button:focus {
   outline: none;
 }
-/* line 46, ../sass/_navbar.scss */
+/* line 52, ../sass/_navbar.scss */
 .nav-bg .search-bar .active-button {
   border-top: 2px solid white;
 }
-/* line 51, ../sass/_navbar.scss */
+/* line 57, ../sass/_navbar.scss */
 .nav-bg .version {
   line-height: 3.5em;
   color: rgba(225, 225, 225, 0.3);
 }
-/* line 56, ../sass/_navbar.scss */
+/* line 62, ../sass/_navbar.scss */
 .nav-bg .top-nav {
   position: fixed;
   top: 0;
@@ -8889,11 +8955,17 @@ button.close {
 .main-content .center {
   text-align: center;
 }
-/* line 11, ../sass/_task_list.scss */
+/* line 10, ../sass/_task_list.scss */
+.main-content .account-list {
+  background-color: white;
+  -webkit-box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
+  box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
+}
+/* line 13, ../sass/_task_list.scss */
 .main-content .account-list div:last-child .task-item {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-/* line 15, ../sass/_task_list.scss */
+/* line 17, ../sass/_task_list.scss */
 .main-content .account-list .task-item {
   padding: 15px 20px 15px 10px;
   /*border-bottom:1px solid rgba(0,0,0,0.1);*/
@@ -8901,45 +8973,45 @@ button.close {
   border-left: 3px solid rgba(0, 0, 0, 0.1);
   border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
-/* line 21, ../sass/_task_list.scss */
+/* line 23, ../sass/_task_list.scss */
 .main-content .account-list .task-item img {
   height: 1.5em;
   position: relative;
   vertical-align: middle;
 }
-/* line 30, ../sass/_task_list.scss */
+/* line 32, ../sass/_task_list.scss */
 .main-content .top-nav ul {
   display: inline-block;
 }
-/* line 33, ../sass/_task_list.scss */
+/* line 35, ../sass/_task_list.scss */
 .main-content .top-nav .align-right {
   float: right;
   list-style: none;
 }
-/* line 39, ../sass/_task_list.scss */
+/* line 41, ../sass/_task_list.scss */
 .main-content .user-name {
   margin-top: 1px;
   margin-bottom: 30px;
 }
-/* line 44, ../sass/_task_list.scss */
+/* line 46, ../sass/_task_list.scss */
 .main-content .account {
   width: 100%;
 }
-/* line 48, ../sass/_task_list.scss */
+/* line 50, ../sass/_task_list.scss */
 .main-content ul.menu {
   height: 55px;
 }
-/* line 52, ../sass/_task_list.scss */
+/* line 54, ../sass/_task_list.scss */
 .main-content .menu {
   list-style: none;
 }
-/* line 54, ../sass/_task_list.scss */
+/* line 56, ../sass/_task_list.scss */
 .main-content .menu li {
   display: inline-block;
   height: 55px;
   line-height: 55px;
 }
-/* line 58, ../sass/_task_list.scss */
+/* line 60, ../sass/_task_list.scss */
 .main-content .menu li a {
   vertical-align: middle;
   padding-right: 0.3em;
@@ -8949,39 +9021,39 @@ button.close {
   border-right: 1px solid blue;
   border-left: 1px solid blue;
 }
-/* line 66, ../sass/_task_list.scss */
+/* line 68, ../sass/_task_list.scss */
 .main-content .menu li a:last-child {
   border-right: 1px solid transparent;
 }
-/* line 69, ../sass/_task_list.scss */
+/* line 71, ../sass/_task_list.scss */
 .main-content .menu li a:first-child {
   border-left: 1px solid transparent;
 }
-/* line 78, ../sass/_task_list.scss */
+/* line 80, ../sass/_task_list.scss */
 .main-content .right-view img {
   height: 1em;
   margin-right: 5px;
   vertical-align: middle;
 }
-/* line 84, ../sass/_task_list.scss */
+/* line 86, ../sass/_task_list.scss */
 .main-content .timer {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 89, ../sass/_task_list.scss */
+/* line 91, ../sass/_task_list.scss */
 .main-content .paused {
   color: red;
   opacity: 0.5;
 }
-/* line 94, ../sass/_task_list.scss */
+/* line 96, ../sass/_task_list.scss */
 .main-content .no-padding {
   padding: 0;
 }
-/* line 98, ../sass/_task_list.scss */
+/* line 100, ../sass/_task_list.scss */
 .main-content .padding-bottom {
   padding-bottom: 10px;
 }
-/* line 102, ../sass/_task_list.scss */
+/* line 104, ../sass/_task_list.scss */
 .main-content .right-view-title {
   padding-bottom: 10px;
   padding-top: 10px;
@@ -8989,48 +9061,48 @@ button.close {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
-/* line 110, ../sass/_task_list.scss */
+/* line 112, ../sass/_task_list.scss */
 .main-content .select-default {
   /*opacity:0.3; */
 }
-/* line 111, ../sass/_task_list.scss */
+/* line 113, ../sass/_task_list.scss */
 .main-content .select-default.select-active {
   opacity: 1;
   border-left: 3px solid #323264;
 }
-/* line 118, ../sass/_task_list.scss */
+/* line 120, ../sass/_task_list.scss */
 .main-content .task-status, .main-content .task-name, .main-content .task-date, .main-content .task-summary {
   vertical-align: top;
   display: inline-block;
 }
-/* line 127, ../sass/_task_list.scss */
+/* line 129, ../sass/_task_list.scss */
 .main-content .task-priority {
   vertical-align: -webkit-baseline-middle;
   vertical-align: middle;
   display: inline-block;
   margin: 0 10px;
 }
-/* line 134, ../sass/_task_list.scss */
+/* line 136, ../sass/_task_list.scss */
 .main-content .task-date-title {
   font-weight: 700;
   text-align: center;
 }
-/* line 139, ../sass/_task_list.scss */
+/* line 141, ../sass/_task_list.scss */
 .main-content img.task-priority {
   line-height: 1.5em;
 }
-/* line 143, ../sass/_task_list.scss */
+/* line 145, ../sass/_task_list.scss */
 .main-content .task-summary {
   padding-left: 20px;
   display: inline-block;
   font-weight: 600;
   /*max-width:450px;*/
 }
-/* line 150, ../sass/_task_list.scss */
+/* line 152, ../sass/_task_list.scss */
 .main-content .task-title-date {
   padding-right: 20px;
 }
-/* line 152, ../sass/_task_list.scss */
+/* line 154, ../sass/_task_list.scss */
 .main-content .task-title-date:after {
   background-image: url("./img/down-arrow.png");
   background-size: cover;

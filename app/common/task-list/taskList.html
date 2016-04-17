@@ -1,44 +1,38 @@
 <div class="nav-bg">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-2 nav-item" > 
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-2 nav-item" > 
 
-				<a href="#/account">Account</a>
-			</div>
-			<div class="col-xs-8 search-bar">
-				
-					<div class="search-label">Search</div> 
-					<input ng-model="search.txt">
-					<div class="search-label">Task Type:</div>
-					<span ng-repeat="status in taskStatuses">
-					  <button ng-class="{'active-button' : status.isActive}" type="checkbox" ng-click="changeStatus(status.name)"> {{ status.name }}</button>
-					</span>
-				
-			</div>
-			<div class="col-xs-2 version">
-				<div class="align-right">Jiragation <span app-version></span></div>
-			</div>
-		</div>
-	</div>
-</div> 	
+        <a href="#/account">Account</a>
+      </div>
+      <div class="col-xs-8 search-bar">
+        
+          <div class="search-label">Search</div> 
+          <input ng-model="search.txt">
+          <div class="search-label">Task Type:</div>
+          <span ng-repeat="status in taskStatuses">
+            <button ng-class="{'active-button' : status.isActive}" type="checkbox" ng-click="changeStatus(status.name)"> {{ status.name }}</button>
+          </span>
+        
+      </div>
+      <div class="col-xs-2 version">
+        <div class="align-right">Jiragation <span app-version></span></div>
+      </div>
+    </div>
+  </div>
+</div> 
 
 <div class="container">
 	<div class="main-content">
 		<div class="row">
 			<div class="col-xs-1 center">
-				<div> 
 					<label>Time</label>
-				</div>
 			</div>
 			<div class="col-xs-1 no-padding center">
-				<div> 
 					<label>Status</label>
-				</div>
 			</div>
 			<div class="col-xs-2 no-padding center">
-				<div> 
 					<label>Task ID</label>
-				</div>
 			</div>
 			<div class="col-xs-2 no-padding">
 				<div ng-click="order(task.fields.created)" ng-class="{reverse:reverse}" class="task-date-title">
@@ -56,11 +50,7 @@
 		<div class="account-list">
 			<!-- <div class="account" ng-repeat="(accountNum, details) in usrAccountData"> -->
 				<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse">
-					<div class="select-default task-item" 
-						ng-class="{'select-active':( !timerPaused && isActive)}"
-						ng-controller ="taskController"  
-						ng-click="updateRightView(taskNum); toggleClick(taskNum); timerControl()">
-						
+					<div class="select-default task-item" ng-class="{'select-active':( !timerPaused && isActive)}" ng-controller ="taskController" ng-click="updateRightView(taskNum); toggleClick(taskNum); timerControl()">
 						<div  class="row">
 
 							<div class="col-xs-1 center">

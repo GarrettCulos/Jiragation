@@ -88,13 +88,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			$scope.allTimerPaused = false;
 		}
 
-		// $scope.pauseAllTimers=function(accountNumber,taskNumber) {
-		// 		$scope.$broadcast('timer-clear');	
-		// 		$scope.isActive = false;
-		// 		// console.log('All-Pause');
-		// 		// console.log('isActive:'+$scope.isActive);
-		// }
-
 
 	// sort list by predicate
 		$scope.predicate = 'task.fields.created';

@@ -1,0 +1,13 @@
+body{
+	background-color:$bg_color;
+}
+.button{
+	@include button-style;
+	background-color:$my_purple;
+	padding:5px 20px;
+	&:hover{
+		background-color:$my_purple_alt;
+		color:$my_white_alt;
+		@include box-shadow(rgba(black,0.5) 0 0 5px);
+	}
+}

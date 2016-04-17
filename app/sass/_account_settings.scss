@@ -1,0 +1,31 @@
+.account-settings {
+	margin-top:60px;
+
+	.user-accounts,
+	.user-information{
+		margin-bottom:40px;
+		padding:15px;
+		background-color:white;
+		@include box-shadow(rgba(20,20,20,0.3) 0 0 5px);
+	}
+	
+	.user-account{
+		margin-bottom:10px;
+	}
+	
+	.user-information{
+		input{
+			width:100%;
+			padding:0 5px;
+			line-height:2em;
+		}
+	}
+
+	.user-add-account{
+		input{
+			width:100%;
+			padding:0 5px;
+			line-height:2em;
+		}
+	}
+}

@@ -8,6 +8,8 @@
   }
 
   .account-list{
+    background-color:$bg_color_tasks;
+    @include box-shadow(rgba(20,20,20,0.3) 0 0 5px);
     div:last-child .task-item{
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);    
     }  

@@ -12,15 +12,11 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		return data.millis + msPsec*data.seconds + msPsec*secPmin*data.minutes + msPsec*secPmin*minPhr*data.hours + msPsec*secPmin*minPhr*hrPday *data.days;
 	}
 
-	
-
-
 	$scope.isActive=false;
 	$scope.timerPaused = false;
 	$scope.timerStarted=false;
 	$scope.pausedClass='paused';
 	
-
 	$scope.taskLink = function(){
 		
 	}

@@ -9,10 +9,16 @@
 	.nav-item {
 		text-align:center;
 		line-height:3.5em;
+		border-top:2px solid transparent;
 	}
 
 	a {
 		@include link-style;
+	}
+
+	.prefered-name{
+		line-height: 3.5em;
+    border-top: 2px solid transparent;
 	}
 
   .search-bar {
@@ -20,7 +26,7 @@
   	display:inline-block;
 
 		input{
-		  line-height: 2em;
+		  line-height: 1.8em;
 		  padding:3px 10px;
 		  background-color:white;
 		  color:$my_black;
