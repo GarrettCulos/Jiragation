@@ -4,6 +4,32 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 .controller('userController', ['$scope', '$http', function($scope, $http) {
 
+	$scope.getJiraAccounts = function(){
+		// Fetch Jira Data
+		$http({
+			method: 'GET',
+			url: '/account/fetch_accounts'
+		}).then(function successCallback(response){
+			$scope.JiraAccounts = response.data;
+		}, function errorCallback(response){
+			console.log(response);
+		}).then(function(){
+
+			$http({
+				method: 'GET',
+				url: '/pull_jiras/jira_accounts'
+			}).then(function successCallback(res){
+				$scope.taskList = res.data;
+			}, function errorCallback(res){
+
+			});
+		});
+	}
+	
+	$scope.getJiraAccounts();
+
+
+
 	$scope.userNamePrefered = 'Garrett';
 	$scope.userNameFirst = 'Garrett';
 	$scope.userNameLast = 'Culos';
@@ -11,33 +37,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	$scope.JiraAccounts;
 
-	// Fetch Jira Data
-	$http({
-			
-		method: 'GET',
-		url: '/account/fetch_accounts'
-
-	}).then(function successCallback(response){
-
-		$scope.JiraAccounts = response.data;
-
-	}, function errorCallback(response){
-
-	}).then(function(){
-
-		$http({
-			method: 'GET',
-			url: '/pull_jiras/jira_accounts'
-
-		}).then(function successCallback(res){
-			// This should be proprocessed server side
-			$scope.taskList = res.data;
-			// console.log(res.data);
-		}, function errorCallback(res){
-
-		});
-
-	});
 
 	// Task Status Filters
 		$scope.taskStatuses = [

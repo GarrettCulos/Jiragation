@@ -2,10 +2,20 @@
   z-index: 9;
   width:100%;
   position:fixed;
+  text-align: center;
   color:$my_white;
   background-color: $my_purple;
 	@include box-shadow(rgba(black,0.5) -5px 0 10px);
 	
+	
+	.nav-item,
+	.search-bar,
+	.version{
+		display:inline-block;
+		margin-left:30px;
+		margin-right:30px;
+	}
+
 	.nav-item {
 		text-align:center;
 		line-height:3.5em;
@@ -25,13 +35,20 @@
   	line-height:2.5em;
   	display:inline-block;
 
-		input{
-		  line-height: 1.8em;
-		  padding:3px 10px;
-		  background-color:white;
-		  color:$my_black;
-    	border: none;
+	input{
+	  line-height: 1.8em;
+	  padding:3px 10px;
+	  background-color:white;
+	  color:$my_black;
+      border: none;
+	}
+	.pull-jiras{
+		color:teal;
+		display:inline-block;
+		&:hover{
+			color:red;
 		}
+	}
 
   	.search-label{
   		margin-left: 10px;

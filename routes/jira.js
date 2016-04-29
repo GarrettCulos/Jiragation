@@ -1,13 +1,8 @@
 var express 			= require('express');
-
 var jira				= express.Router();
-
 var Accounts 			= require('../models/accounts');
-
 var fs 					= require('fs');
-
 const http 				= require('http');
-
 const https 			= require('https');
 
 function taskListToArray(array){
@@ -57,7 +52,7 @@ jira.get('/jira_accounts', function(req, res, next) {
 						tasks_list.push(JSON.parse(Buffer.concat(tasks).toString()));
 						// console.log(tasks_list);
 						loop_count=loop_count+1;
-						console.log('http request complete');
+						// console.log('http request complete');
 						if(loop_count == Object.keys(user_accounts).length){
 			   				// console.log(taskListToArray(tasks_list));
 			   				console.log('Return tasks');
@@ -83,7 +78,7 @@ jira.get('/jira_accounts', function(req, res, next) {
 				    }).on('end', function() {
 						// console.log(JSON.parse(Buffer.concat(tasks).toString()))
 						// console.log(tasks_list);
-						console.log('https request complete');
+						// console.log('https request complete');
 						tasks_list.push(JSON.parse(Buffer.concat(tasks).toString()));
 						loop_count=loop_count+1;
 						

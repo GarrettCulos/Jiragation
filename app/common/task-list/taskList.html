@@ -1,22 +1,20 @@
 <div class="nav-bg">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-2 nav-item" > 
-
+      <div class="nav-item" > 
         <a href="#/account">Account</a>
       </div>
-      <div class="col-xs-8 search-bar">
-        
-          <div class="search-label">Search</div> 
-          <input ng-model="search.txt">
-          <div class="search-label">Task Type:</div>
-          <span ng-repeat="status in taskStatuses">
-            <button ng-class="{'active-button' : status.isActive}" type="checkbox" ng-click="changeStatus(status.name)"> {{ status.name }}</button>
-          </span>
-        
+      <div class="search-bar">
+      	<div class="pull-jiras" ng-click="getJiraAccounts()">PULL</div>
+	      <div class="search-label">Search</div> 
+	      <input ng-model="search.txt">
+	      <div class="search-label">Task Type:</div>
+	      <span ng-repeat="status in taskStatuses">
+	        <button ng-class="{'active-button' : status.isActive}" type="checkbox" ng-click="changeStatus(status.name)"> {{ status.name }}</button>
+	      </span>
       </div>
-      <div class="col-xs-2 version">
-        <div class="align-right">Jiragation <span app-version></span></div>
+      <div class="version">
+        <div class="align-right"><span app-version></span></div>
       </div>
     </div>
   </div>
@@ -25,19 +23,21 @@
 <div class="container">
 	<div class="main-content">
 		<div class="row">
-			<div class="col-xs-1 center">
-					<label>Time</label>
-			</div>
-			<div class="col-xs-1 no-padding center">
-					<label>Status</label>
-			</div>
-			<div class="col-xs-2 no-padding center">
-					<label>Task ID</label>
-			</div>
-			<div class="col-xs-2 no-padding">
-				<div ng-click="order(task.fields.created)" ng-class="{reverse:reverse}" class="task-date-title">
-					Date
-				</div>	
+			<div class="col-xs-6">
+				<div class="col-xs-2 center">
+						<label>Time</label>
+				</div>
+				<div class="col-xs-3 no-padding center">
+						<label>Status</label>
+				</div>
+				<div class="col-xs-3 no-padding center">
+						<label>Task ID</label>
+				</div>
+				<div class="col-xs-4 no-padding">
+					<div ng-click="order(task.fields.created)" ng-class="{reverse:reverse}" class="task-date-title">
+						Date
+					</div>	
+				</div>
 			</div>
 			<div class="col-xs-6 no-padding">
 				<div class="task-summary-title">
@@ -52,29 +52,29 @@
 				<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse">
 					<div class="select-default task-item" ng-class="{'select-active':( !timerPaused && isActive)}" ng-controller ="taskController" ng-click="updateRightView(taskNum); toggleClick(taskNum); timerControl()">
 						<div  class="row">
-
-							<div class="col-xs-1 center">
-								<div class="timer" ng-class="pausedClass" > 
-									<timer autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer>
-						    </div>
-						  </div>
-						
-						  <div class="col-xs-1 no-padding center">
-								<img class="task-priority" src="{{ task.fields.priority | priorityF }}"> <!-- Pass in pririty object -->
-								<div class="task-status">  {{ task.fields.status.name }}</div>
-							</div>
-						
-						  <div class="col-xs-2 no-padding center">
-								<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
-								<a href="{{ taskUrl(task.key, task.self) }}" target="_blank" >
-									<div class="task-name align-left">{{ task.key }}</div>
-								</a>
-							</div>
-						
-							<div class="col-xs-2 no-padding center">
-								<div class="task-date">  {{  task.fields.created | dateF  }}  </div>	
-							</div>
+							<div class="col-xs-6">
+								<div class="col-xs-2 center ">
+									<!-- <div style="display:block;">{{timerStart}}</div> -->
+									<div class="logged-time">{{ timeLogged | returnTime }}</div>
+									<timer class="timer" autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer> <!-- ng-attr-start-time="timerStart" -->
+							    </div>
 							
+								<div class="col-xs-3 no-padding center">
+									<img class="task-priority" src="{{ task.fields.priority | priorityF }}"> <!-- Pass in pririty object -->
+									<div class="task-status">  {{ task.fields.status.name }}</div>
+								</div>
+
+								<div class="col-xs-3 no-padding center">
+									<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
+									<a href="{{ taskUrl(task.key, task.self) }}" target="_blank" >
+										<div class="task-name align-left">{{ task.key }}</div>
+									</a>
+								</div>
+							
+								<div class="col-xs-4 no-padding center">
+									<div class="task-date">  {{  task.fields.created | dateF  }}  </div>	
+								</div>
+							</div>
 							<div class="col-xs-6 no-padding">
 								<div class="task-summary">{{ task.fields.summary }}</div>			
 								<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->

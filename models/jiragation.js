@@ -1,11 +1,7 @@
 var fs 					= require('fs');
-
 var db 					= require('../init_db');
-
 var Sequelize 			= db.Sequelize;
-
 var sequelize 			= db.sequelize;
-
 var models = {};
 
 //Create Item Table Structure
@@ -18,10 +14,9 @@ var JiraAccounts = sequelize.define('jira_accounts', {
 });
 
 var TimeSheet = sequelize.define('time_sheet', {
-	// id: {type : Sequelize.INTEGER, autoIncrement: true,},
     task_id: {type: Sequelize.STRING, allowNull:false},
-    end_time: { type: Sequelize.STRING, allowNull: false},
-    task_time:{ type: Sequelize.STRING, allowNull: false},
+    start_time:{ type: Sequelize.STRING, allowNull: false},
+    logged_time: { type: Sequelize.STRING, allowNull: false},
 });
 
 var User = sequelize.define('user', {

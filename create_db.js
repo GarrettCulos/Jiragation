@@ -1,13 +1,8 @@
 var fs 					= require('fs');
-
 var db 					= require('./init_db.js');
-
 var model				= require('./models/jiragation.js');
-
 var Sequelize 			= db.Sequelize;
-
 var sequelize 			= db.sequelize;
-
 
 var file_path = './db/';
 var jira_account = [];

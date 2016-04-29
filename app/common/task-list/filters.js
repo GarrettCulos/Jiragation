@@ -62,4 +62,23 @@ angular.module('appFilters',[])
     console.log(res);
     return res;
   };
+})
+
+.filter('returnTime', function() {
+  return function(input) {    
+    var hour = Math.floor(input/1000/60/60);
+    var min = Math.floor((input-hour)/1000/60);
+    var sec = Math.floor((input-hour-min)/1000);
+    if(hour>0){
+      var res = hour+' hr '+min+' min '+sec+" sec";      
+    }else if (min>0){
+      var res = min+' min '+sec+" sec";      
+    }else if(sec>0){
+      var res =sec+" sec";      
+    } else  {
+      var res = ""
+    }
+    console.log(res);
+    return res;
+  };
 });

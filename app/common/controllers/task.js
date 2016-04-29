@@ -17,9 +17,37 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	$scope.timerStarted=false;
 	$scope.pausedClass='paused';
 	
-	$scope.taskLink = function(){
-		
+	$scope.taskLink = function(){	
 	}
+
+	$scope.getTaskTime = function(){
+		if($scope.task.key){
+			// var taskID = ;
+			$http({
+				method: 'GET',
+				url: 	'/task/getTaskTime',
+				params: 	{ task_id: $scope.task.key},
+				headers: {
+				  	'Content-Type': 'application/json',
+				}
+
+			}).then(function successCallback(res){
+				var logged_time = 0;
+				res.data.forEach(function(log){
+					logged_time = logged_time+ parseInt(log.logged_time);
+				});
+
+				console.log(logged_time);
+				$scope.timeLogged = logged_time;
+		
+				// console.log('Timer Stopped - data = ', data);
+			}, function errorCallback(res){
+				console.log(res);
+			});	
+		}
+	}
+
+	$scope.getTaskTime();
 	
 	$scope.stateLog = function(){
 		console.log('Timer started:'+$scope.timerStarted);
@@ -31,14 +59,10 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	$scope.$on('timer-stopped', function (event, data){
 		var date = new Date();
 		var response = {
-			// task_id: $scope.task.key,
-			// end_time: date.getTime(),
-			// task_time: timerDataToUnix(data)
 			task_id: $scope.task.key,
-			end_time: 1231,
-			task_time: 145123412
+			start_time: date.getTime(),
+			logged_time: timerDataToUnix(data)
 		}
-		console.log(response)
 		// send data to databse
 		$http({
 			method: 'POST',

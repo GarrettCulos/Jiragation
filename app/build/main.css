@@ -8858,18 +8858,27 @@ body {
   z-index: 9;
   width: 100%;
   position: fixed;
+  text-align: center;
   color: whitesmoke;
   background-color: #620098;
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
   box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
 }
-/* line 9, ../sass/_navbar.scss */
+/* line 11, ../sass/_navbar.scss */
+.nav-bg .nav-item,
+.nav-bg .search-bar,
+.nav-bg .version {
+  display: inline-block;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+/* line 19, ../sass/_navbar.scss */
 .nav-bg .nav-item {
   text-align: center;
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 15, ../sass/_navbar.scss */
+/* line 25, ../sass/_navbar.scss */
 .nav-bg a {
   line-height: 1em;
   font-size: 1em;
@@ -8880,17 +8889,17 @@ body {
 .nav-bg a:hover {
   color: #cdcdcd;
 }
-/* line 19, ../sass/_navbar.scss */
+/* line 29, ../sass/_navbar.scss */
 .nav-bg .prefered-name {
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 24, ../sass/_navbar.scss */
+/* line 34, ../sass/_navbar.scss */
 .nav-bg .search-bar {
   line-height: 2.5em;
   display: inline-block;
 }
-/* line 28, ../sass/_navbar.scss */
+/* line 38, ../sass/_navbar.scss */
 .nav-bg .search-bar input {
   line-height: 1.8em;
   padding: 3px 10px;
@@ -8898,7 +8907,16 @@ body {
   color: #0a0a0a;
   border: none;
 }
-/* line 36, ../sass/_navbar.scss */
+/* line 45, ../sass/_navbar.scss */
+.nav-bg .search-bar .pull-jiras {
+  color: teal;
+  display: inline-block;
+}
+/* line 48, ../sass/_navbar.scss */
+.nav-bg .search-bar .pull-jiras:hover {
+  color: red;
+}
+/* line 53, ../sass/_navbar.scss */
 .nav-bg .search-bar .search-label {
   margin-left: 10px;
   margin-right: 10px;
@@ -8908,7 +8926,7 @@ body {
   display: inline-block;
   padding: 0 15px;
 }
-/* line 46, ../sass/_navbar.scss */
+/* line 63, ../sass/_navbar.scss */
 .nav-bg .search-bar button {
   background-color: transparent;
   padding: 0 15px;
@@ -8925,16 +8943,16 @@ body {
 .nav-bg .search-bar button:focus {
   outline: none;
 }
-/* line 52, ../sass/_navbar.scss */
+/* line 69, ../sass/_navbar.scss */
 .nav-bg .search-bar .active-button {
   border-top: 2px solid white;
 }
-/* line 57, ../sass/_navbar.scss */
+/* line 74, ../sass/_navbar.scss */
 .nav-bg .version {
   line-height: 3.5em;
   color: rgba(225, 225, 225, 0.3);
 }
-/* line 62, ../sass/_navbar.scss */
+/* line 79, ../sass/_navbar.scss */
 .nav-bg .top-nav {
   position: fixed;
   top: 0;
@@ -9037,23 +9055,27 @@ body {
 }
 /* line 86, ../sass/_task_list.scss */
 .main-content .timer {
-  display: inline-block;
+  display: none;
   vertical-align: middle;
 }
 /* line 91, ../sass/_task_list.scss */
+.main-content .logged-time {
+  display: inline-block;
+}
+/* line 95, ../sass/_task_list.scss */
 .main-content .paused {
   color: red;
   opacity: 0.5;
 }
-/* line 96, ../sass/_task_list.scss */
+/* line 100, ../sass/_task_list.scss */
 .main-content .no-padding {
   padding: 0;
 }
-/* line 100, ../sass/_task_list.scss */
+/* line 104, ../sass/_task_list.scss */
 .main-content .padding-bottom {
   padding-bottom: 10px;
 }
-/* line 104, ../sass/_task_list.scss */
+/* line 108, ../sass/_task_list.scss */
 .main-content .right-view-title {
   padding-bottom: 10px;
   padding-top: 10px;
@@ -9061,48 +9083,56 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
-/* line 112, ../sass/_task_list.scss */
+/* line 116, ../sass/_task_list.scss */
 .main-content .select-default {
   /*opacity:0.3; */
 }
-/* line 113, ../sass/_task_list.scss */
+/* line 117, ../sass/_task_list.scss */
 .main-content .select-default.select-active {
   opacity: 1;
   border-left: 3px solid #323264;
 }
-/* line 120, ../sass/_task_list.scss */
+/* line 121, ../sass/_task_list.scss */
+.main-content .select-default.select-active .timer {
+  display: inline-block;
+}
+/* line 124, ../sass/_task_list.scss */
+.main-content .select-default.select-active .logged-time {
+  display: none;
+}
+/* line 131, ../sass/_task_list.scss */
 .main-content .task-status, .main-content .task-name, .main-content .task-date, .main-content .task-summary {
   vertical-align: top;
   display: inline-block;
 }
-/* line 129, ../sass/_task_list.scss */
+/* line 140, ../sass/_task_list.scss */
 .main-content .task-priority {
   vertical-align: -webkit-baseline-middle;
   vertical-align: middle;
   display: inline-block;
   margin: 0 10px;
 }
-/* line 136, ../sass/_task_list.scss */
+/* line 147, ../sass/_task_list.scss */
 .main-content .task-date-title {
   font-weight: 700;
   text-align: center;
 }
-/* line 141, ../sass/_task_list.scss */
+/* line 152, ../sass/_task_list.scss */
 .main-content img.task-priority {
   line-height: 1.5em;
 }
-/* line 145, ../sass/_task_list.scss */
+/* line 156, ../sass/_task_list.scss */
 .main-content .task-summary {
   padding-left: 20px;
   display: inline-block;
   font-weight: 600;
   /*max-width:450px;*/
 }
-/* line 152, ../sass/_task_list.scss */
+/* line 163, ../sass/_task_list.scss */
 .main-content .task-title-date {
   padding-right: 20px;
 }
-/* line 154, ../sass/_task_list.scss */
+/* line 165, ../sass/_task_list.scss */
 .main-content .task-title-date:after {
   background-image: url("./img/down-arrow.png");
   background-size: cover;
