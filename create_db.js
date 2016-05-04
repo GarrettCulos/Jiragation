@@ -33,9 +33,9 @@ sequelize.sync().then(function () {
 			password: value['password'],
 			protocal: value['protocal']
 		}).then(function () {
-			console.log('... successful table entry');
+			// console.log('... successful table entry');
 		}, function(err){
-			console.log('... entry already exists')
+			// console.log('... entry already exists')
 		});	
 		i = i + 1;
 	});

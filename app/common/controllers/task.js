@@ -24,12 +24,10 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		if($scope.task.key){
 			// var taskID = ;
 			$http({
-				method: 'GET',
-				url: 	'/task/getTaskTime',
-				params: 	{ task_id: $scope.task.key},
-				headers: {
-				  	'Content-Type': 'application/json',
-				}
+				method:  'GET',
+				url: 	 '/task/getTaskTime',
+				params:  { task_id: $scope.task.key},
+				headers: {'Content-Type': 'application/json'}
 
 			}).then(function successCallback(res){
 				var logged_time = 0;
@@ -56,12 +54,13 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	}
 
 	
-	$scope.$on('timer-stopped', function (event, data){
+	$scope.$on('timer-stopped', function (event, logged_time){
+		console.log(timerDataToUnix(logged_time));
 		var date = new Date();
 		var response = {
 			task_id: $scope.task.key,
 			start_time: date.getTime(),
-			logged_time: timerDataToUnix(data)
+			end_time: date.getTime()+timerDataToUnix(logged_time)
 		}
 		// send data to databse
 		$http({

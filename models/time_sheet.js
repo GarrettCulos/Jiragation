@@ -28,7 +28,7 @@ TimeSheet.logTaskTime = function(req, callback) {
 	model.TimeSheet.create({
 		task_id: req.task_id,
 		start_time: req.start_time,
-		logged_time: req.logged_time,
+		end_time: req.end_time,
 	}).then(function() {
 
 	}, function(err){

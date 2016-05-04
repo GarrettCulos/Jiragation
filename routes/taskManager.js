@@ -11,8 +11,8 @@ taskManager.post('/trackTime', function(req, res, next) {
 });
 
 taskManager.get('/getTaskTime',function(req, res, next) {
-	// console.log(JSON.parse(req.query));
 	TimeSheet.getTaskTime(req.query, function(result) {
+		console.log(result);
 		res.send(result);
 	});
 })
