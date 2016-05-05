@@ -70,7 +70,7 @@ angular.module('appFilters',[])
     var min = Math.floor((input-hour)/1000/60);
     var sec = Math.floor((input-hour-min)/1000);
     if(hour>0){
-      var res = hour+' hr '+min+' min '+sec+" sec";      
+      var res = hour+' hr '+min+' min';      
     }else if (min>0){
       var res = min+' min '+sec+" sec";      
     }else if(sec>0){

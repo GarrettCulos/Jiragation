@@ -1,9 +1,6 @@
 var express 			= require('express');
-
 var accounts 			= express.Router();
-
 var Accounts 			= require('../models/accounts');
-
 var fs 					= require('fs');
 
 accounts.get('/fetch_accounts', function(req, res, next) { 
@@ -14,12 +11,11 @@ accounts.get('/fetch_accounts', function(req, res, next) {
 });
 
 accounts.post('/add_accounts',function(req,res,next) {
-
 	var account = req.account;
 	Accounts.setAccount(account, function(result){
 		// console.log('Account Set');
 		res.send(result);		
 	});
-})
+});
 
 module.exports.accounts = accounts;

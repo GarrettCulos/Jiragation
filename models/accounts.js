@@ -1,5 +1,5 @@
 var db 					= require('../init_db');
-
+var model 				= require('./jiragation');
 var Sequelize 			= db.Sequelize;
 
 var sequelize 			= db.sequelize;
@@ -21,20 +21,34 @@ Accounts.getAccounts = function(callback) {
   		console.log(err);
   		throw err;
   	});
-
 };
 
+// NEEDS TESTING
 Accounts.setAccount = function(account, callback) {
-	JiraAccounts.create({
-		user_name:account.user_name,
-		url: account.url,
-		password: account.password,
-		protocal: account.protocal
-	}).then(function () {
-		console.log('... Successfully added account');
+	model.JiraAccounts.update(account, {
+		where: {
+			user_name:account.user_name,
+			url: account.url		
+		}
+	}).then(function (rows) {
+		if(rows < 0){
+			model.JiraAccountss.create({
+				user_name:account.user_name,
+				url: account.url,
+				password: account.password,
+				protocal: account.protocal
+			}).then(function(table){
+				callback(null,table);
+			});
+		} else{
+			callback(null,rows);			
+		}
+
 	}, function(err){
-		console.log('... Error adding account')
+		console.log(err);
 	});	
-}
+};
+
+
 
 module.exports = Accounts;
