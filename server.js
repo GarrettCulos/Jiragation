@@ -6,7 +6,7 @@ var sequelize 	= db.sequelize;
 var app 		= express();
 var bodyParser  = require('body-parser');
 
-// require('./create_db.js');
+require('./create_db.js');
 
 app.set('port', 8000);
 app.use(bodyParser.json({limit: "50mb"}));

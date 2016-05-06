@@ -28,10 +28,10 @@ sequelize.sync().then(function () {
 
 		model.JiraAccounts.create({
 			id: i ,
-			user_name:value['user_name'],
-			url: value['host_url'],
-			password: value['password'],
-			protocal: value['protocal']
+			user_name:account['user_name'],
+			url: account['host_url'],
+			password: account['password'],
+			protocal: account['protocal']
 		}).then(function () {
 			// console.log('... successful table entry');
 		}, function(err){

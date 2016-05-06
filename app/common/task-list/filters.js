@@ -67,8 +67,8 @@ angular.module('appFilters',[])
 .filter('returnTime', function() {
   return function(input) {    
     var hour = Math.floor(input/1000/60/60);
-    var min = Math.floor((input-hour)/1000/60);
-    var sec = Math.floor((input-hour-min)/1000);
+    var min = Math.floor((input-hour*60*60*1000)/1000/60);
+    var sec = Math.floor((input-hour*60*60*1000-min*1000*60)/1000);
     if(hour>0){
       var res = hour+' hr '+min+' min';      
     }else if (min>0){
@@ -78,7 +78,7 @@ angular.module('appFilters',[])
     } else  {
       var res = ""
     }
-    console.log(res);
+    // console.log(res);
     return res;
   };
 });

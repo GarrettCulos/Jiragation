@@ -67,6 +67,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			console.log('Warning Will Robinson');
 		});
 	});
+	
 	$scope.timerToggle = function(){
 		if(!$scope.timerStarted){
 			$scope.$broadcast('timer-start');
