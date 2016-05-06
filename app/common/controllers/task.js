@@ -43,32 +43,32 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	}
 
 	$scope.$on('timer-stopped', function (event, logged_time){
+		console.log('logged');
 		var date = new Date();
 		var response = {
 			task_id: $scope.task.key,
 			start_time: date.getTime(),
 			end_time: date.getTime()+timerDataToUnix(logged_time)
 		}
+
 		// send data to databse
 		$http({
 			method: 'POST',
 			url: 	'/task/trackTime',
 			data: 	JSON.stringify(response),
-			headers: {
-			  	'Content-Type': 'application/json',
-			}
+			headers: {'Content-Type': 'application/json'}
 
 		}).then(function successCallback(res){
 			console.log(res.data);
-			// console.log('Timer Stopped - data = ', data);
 			$scope.usrAccountData = res.data;
 
 		}, function errorCallback(res){
 			console.log('Warning Will Robinson');
 		});
 	});
-	
+
 	$scope.timerToggle = function(){
+
 		if(!$scope.timerStarted){
 			$scope.$broadcast('timer-start');
 			$scope.timerStarted=true;
