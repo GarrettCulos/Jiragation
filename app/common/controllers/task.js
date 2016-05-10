@@ -9,7 +9,8 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		var secPmin = 60;
 		var minPhr = 60;
 		var hrPday = 24;
-		return data.millis + msPsec*data.seconds + msPsec*secPmin*data.minutes + msPsec*secPmin*minPhr*data.hours + msPsec*secPmin*minPhr*hrPday *data.days;
+		// + msPsec*data.seconds + msPsec*secPmin*data.minutes + msPsec*secPmin*minPhr*data.hours + msPsec*secPmin*minPhr*hrPday *data.days;
+		return data.millis 
 	}
 
 	$scope.isActive=false;
@@ -45,12 +46,14 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	$scope.$on('timer-stopped', function (event, logged_time){
 		console.log('logged');
 		var date = new Date();
+		var current_date = date.getTime();
 		var response = {
 			task_id: $scope.task.key,
-			start_time: date.getTime(),
-			end_time: date.getTime()+timerDataToUnix(logged_time)
+			start_time: current_date,
+			end_time: current_date+timerDataToUnix(logged_time)
 		}
-
+		console.log(response);
+		console.log(logged_time);
 		// send data to databse
 		$http({
 			method: 'POST',

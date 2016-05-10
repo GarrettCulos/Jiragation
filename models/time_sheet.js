@@ -29,10 +29,11 @@ TimeSheet.logTaskTime = function(req, callback) {
 		task_id: req.task_id,
 		start_time: req.start_time,
 		end_time: req.end_time,
-	}).then(function() {
-
+	}).then(function(results) {
+		callback(results);
 	}, function(err){
 		console.log(err);
+		throw err;
 	});
 };
 
