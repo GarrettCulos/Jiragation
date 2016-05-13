@@ -25,8 +25,8 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			"isActive": true},
 		{	"name": 	"In Progress",
 			"isActive": true},
-		// {	"name": 	"To Do",
-		// 	"isActive": true}
+		{	"name": 	"Done",
+			"isActive": false}
 	];
 
 	$scope.getJiraTasks = function(){

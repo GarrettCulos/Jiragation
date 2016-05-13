@@ -28,17 +28,22 @@ angular.module('appFilters',[])
 
 .filter('statusF', function() {
   return function(input, taskList) {
-    
+
     var output = [];
-    angular.forEach(input, function(task, key1) {
-      angular.forEach(taskList, function(status, key2) {
-        if(status.isActive == true){
-          if(status.name == task.fields.status.name){
-          // console.log(status.name + ' VS ' + task.fields.status.name);
-             output.push(task);
-          }
-        }
-      });
+    var notAllowed = [];
+
+    angular.forEach(taskList, function(status, key) {
+      if(status.isActive != true){
+        notAllowed.push(status.name);
+      }
+    });
+    console.log(notAllowed);
+
+    angular.forEach(input, function(task, key) {
+
+      if(notAllowed.indexOf(task.fields.status.name) == -1){
+         output.push(task);
+      }
     });
     
     return output;
@@ -72,11 +77,9 @@ angular.module('appFilters',[])
     if(hour>0){
       var res = hour+' hr '+min+' min';      
     }else if (min>0){
-      var res = min+' min '+sec+" sec";      
-    }else if(sec>0){
-      var res =sec+" sec";      
+      var res = min+' min';      
     } else  {
-      var res = ""
+      var res = "--"
     }
     // console.log(res);
     return res;
