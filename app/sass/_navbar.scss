@@ -11,8 +11,6 @@
 	.search-bar,
 	.version{
 		display:inline-block;
-		margin-left:30px;
-		margin-right:30px;
 	}
 
 	.nav-item {
@@ -42,11 +40,10 @@
       border: none;
 	}
 	.pull-jiras{
-		color:white;
-		display:inline-block;
-		&:hover{
-			color:red;
-		}
+		cursor: pointer;
+		color: white;
+		margin-left: 20px;
+		display: inline-block;
 	}
 
   	.search-label{

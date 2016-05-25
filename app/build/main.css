@@ -8793,6 +8793,79 @@ button.close {
     display: none !important;
   }
 }
+/* line 1, ../sass/_icons.scss */
+svg {
+  display: inline-block;
+  height: 27px;
+  width: 27px;
+  font-size: inherit;
+  vertical-align: middle;
+}
+/* line 8, ../sass/_icons.scss */
+svg circle,
+svg polygon,
+svg rect,
+svg path {
+  fill: whitesmoke;
+}
+/* line 15, ../sass/_icons.scss */
+svg:hover circle,
+svg:hover polygon,
+svg:hover rect,
+svg:hover path {
+  fill: #cdcdcd;
+}
+
+/* line 23, ../sass/_icons.scss */
+.disabled {
+  display: none;
+}
+
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* line 39, ../sass/_icons.scss */
+.spinner {
+  -webkit-animation-name: spin;
+  -webkit-animation-duration: 4000ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-name: spin;
+  -moz-animation-duration: 4000ms;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -ms-animation-name: spin;
+  -ms-animation-duration: 4000ms;
+  -ms-animation-iteration-count: infinite;
+  -ms-animation-timing-function: linear;
+  animation-name: spin;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation: spin 1s infinite linear;
+}
+
 /* line 1, ../sass/_account_settings.scss */
 .account-settings {
   margin-top: 60px;
@@ -8869,16 +8942,14 @@ body {
 .nav-bg .search-bar,
 .nav-bg .version {
   display: inline-block;
-  margin-left: 30px;
-  margin-right: 30px;
 }
-/* line 18, ../sass/_navbar.scss */
+/* line 16, ../sass/_navbar.scss */
 .nav-bg .nav-item {
   text-align: center;
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 24, ../sass/_navbar.scss */
+/* line 22, ../sass/_navbar.scss */
 .nav-bg a {
   line-height: 1em;
   font-size: 1em;
@@ -8889,17 +8960,17 @@ body {
 .nav-bg a:hover {
   color: #cdcdcd;
 }
-/* line 28, ../sass/_navbar.scss */
+/* line 26, ../sass/_navbar.scss */
 .nav-bg .prefered-name {
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 33, ../sass/_navbar.scss */
+/* line 31, ../sass/_navbar.scss */
 .nav-bg .search-bar {
   line-height: 2.5em;
   display: inline-block;
 }
-/* line 37, ../sass/_navbar.scss */
+/* line 35, ../sass/_navbar.scss */
 .nav-bg .search-bar input {
   line-height: 1.8em;
   padding: 3px 10px;
@@ -8907,16 +8978,14 @@ body {
   color: #0a0a0a;
   border: none;
 }
-/* line 44, ../sass/_navbar.scss */
+/* line 42, ../sass/_navbar.scss */
 .nav-bg .search-bar .pull-jiras {
+  cursor: pointer;
   color: white;
+  margin-left: 20px;
   display: inline-block;
 }
-/* line 47, ../sass/_navbar.scss */
-.nav-bg .search-bar .pull-jiras:hover {
-  color: red;
-}
-/* line 52, ../sass/_navbar.scss */
+/* line 49, ../sass/_navbar.scss */
 .nav-bg .search-bar .search-label {
   margin-left: 10px;
   margin-right: 10px;
@@ -8926,7 +8995,7 @@ body {
   display: inline-block;
   padding: 0 15px;
 }
-/* line 62, ../sass/_navbar.scss */
+/* line 59, ../sass/_navbar.scss */
 .nav-bg .search-bar button {
   background-color: transparent;
   padding: 0 15px;
@@ -8943,16 +9012,16 @@ body {
 .nav-bg .search-bar button:focus {
   outline: none;
 }
-/* line 68, ../sass/_navbar.scss */
+/* line 65, ../sass/_navbar.scss */
 .nav-bg .search-bar .active-button {
   border-top: 2px solid white;
 }
-/* line 73, ../sass/_navbar.scss */
+/* line 70, ../sass/_navbar.scss */
 .nav-bg .version {
   line-height: 3.5em;
   color: rgba(225, 225, 225, 0.3);
 }
-/* line 78, ../sass/_navbar.scss */
+/* line 75, ../sass/_navbar.scss */
 .nav-bg .top-nav {
   position: fixed;
   top: 0;

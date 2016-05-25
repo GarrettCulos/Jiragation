@@ -5,7 +5,12 @@
         <a href="#/account">Account</a>
       </div>
       <div class="search-bar">
-      	<div class="pull-jiras" ng-click="getJiraTaskss()"><span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="glyphicon glyphicon-cloud-download"></span></div>
+      	<div class="pull-jiras" ng-click="getJiraTasks()">
+      		<div class="{{!fetching_tasks ? '': 'disabled' }}"><img class="svg" src="img/svg/download.svg"></div>
+      		<div class="{{!fetching_tasks ? 'disabled': '' }}"><img class="svg spinner" src="img/svg/spinner.svg"></div>
+      		<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+      		<span class="glyphicon glyphicon-cloud-download"></span> -->
+      	</div>
 	      <div class="search-label">Search</div> 
 	      <input ng-model="search.txt">
 	      <div class="search-label">Task Type:</div>

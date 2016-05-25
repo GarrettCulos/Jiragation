@@ -3,7 +3,36 @@
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 .controller('userController', ['$scope', '$http', function($scope, $http) {
+	// ---------------------------
+	// This should be a directive
+	$('img.svg').each(function(){
+    var $img = $(this);
+    var imgID = $img.attr('id');
+    var imgClass = $img.attr('class');
+    var imgURL = $img.attr('src');
 
+    $.get(imgURL, function(data) {
+        // Get the SVG tag, ignore the rest
+        var $svg = $(data).find('svg');
+
+        // Add replaced image's ID to the new SVG
+        if(typeof imgID !== 'undefined') {
+            $svg = $svg.attr('id', imgID);
+        }
+        // Add replaced image's classes to the new SVG
+        if(typeof imgClass !== 'undefined') {
+            $svg = $svg.attr('class', imgClass+' replaced-svg');
+        }
+
+        // Remove any invalid XML tags as per http://validator.w3.org
+        $svg = $svg.removeAttr('xmlns:a');
+
+        // Replace image with new SVG
+        $img.replaceWith($svg);
+
+    }, 'xml');
+	});    
+	// ---------------------------
 
 	$scope.userNamePrefered = 'Garrett';
 	$scope.userNameFirst = 'Garrett';
@@ -28,26 +57,37 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		{	"name": 	"Done",
 			"isActive": false}
 	];
-
+	$scope.fetching_tasks = false;
 	$scope.getJiraTasks = function(){
-		// Fetch Jira Data
+
+		// Fetch Jira Data`
+		$scope.fetching_tasks = true;
+		
 		$http({
 			method: 'GET',
 			url: '/account/fetch_accounts'
+		
 		}).then(function successCallback(response){
+
 			$scope.JiraAccounts = response.data;
+		
 		}, function errorCallback(response){
 			console.log(response);
+			$scope.fetching_tasks = false;
+		
 		}).then(function(){
-
 			$http({
 				method: 'GET',
 				url: '/pull_jiras/jira_accounts'
+			
 			}).then(function successCallback(res){
 				$scope.taskList = res.data;
-			}, function errorCallback(res){
+				$scope.fetching_tasks = false;
 
+			}, function errorCallback(res){
+				$scope.fetching_tasks = false;
 			});
+		
 		});
 	}
 

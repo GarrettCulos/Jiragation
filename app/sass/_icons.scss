@@ -1,0 +1,57 @@
+svg{
+	display:inline-block;
+	height:27px;
+	width:27px;
+	font-size:inherit;
+  vertical-align: middle;
+
+	circle,
+	polygon,
+	rect,
+	path{
+		fill:$my_white;
+	}
+	&:hover{
+		circle,
+		polygon,
+		rect,
+		path{
+			fill:$my_white_alt;
+		}
+	}	
+}
+.disabled{
+	display:none;
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+.spinner{
+	-webkit-animation-name: spin;
+  -webkit-animation-duration: 2000ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -moz-animation-name: spin;
+  -moz-animation-duration: 4000ms;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-timing-function: linear;
+  -ms-animation-name: spin;
+  -ms-animation-duration: 4000ms;
+  -ms-animation-iteration-count: infinite;
+  -ms-animation-timing-function: linear;
+  animation-name: spin;
+  animation-duration: 2000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+	animation: spin 1s infinite linear;
+}
