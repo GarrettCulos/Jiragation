@@ -15,7 +15,6 @@ Accounts.getAccounts = function(callback) {
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){
 		callback(results);
-		// console.log(results);
 	})
 	.catch(function(err){
   		console.log(err);
@@ -30,9 +29,10 @@ Accounts.setAccount = function(account, callback) {
 			user_name:account.user_name,
 			url: account.url		
 		}
-	}).then(function (rows) {
-		if(rows < 0){
-			model.JiraAccountss.create({
+	})
+	.then(function (rows) {
+		if(rows < 1){
+			model.JiraAccounts.create({
 				user_name:account.user_name,
 				url: account.url,
 				password: account.password,
@@ -44,6 +44,21 @@ Accounts.setAccount = function(account, callback) {
 			callback(null,rows);			
 		}
 
+	}, function(err){
+		console.log(err);
+	});	
+};
+
+Accounts.removeAccount = function(account, callback) {
+	console.log(account)
+	model.JiraAccounts.destroy({
+		where: {
+			user_name:account.user_name,
+			url: account.url		
+		}
+	})
+	.then(function (rows) {
+		callback(null,table);
 	}, function(err){
 		console.log(err);
 	});	

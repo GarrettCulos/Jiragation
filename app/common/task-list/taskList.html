@@ -6,8 +6,7 @@
       </div>
       <div class="search-bar">
       	<div class="pull-jiras" ng-click="getJiraTasks()">
-      		<div class="{{!fetching_tasks ? '': 'disabled' }}"><img class="svg" src="img/svg/download.svg"></div>
-      		<div class="{{!fetching_tasks ? 'disabled': '' }}"><img class="svg spinner" src="img/svg/spinner.svg"></div>
+      		<div class="{{!fetching_tasks ? '': 'spinner' }}"><img class="svg" src="img/svg/hot-drink.svg"></div>
       		<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       		<span class="glyphicon glyphicon-cloud-download"></span> -->
       	</div>
@@ -19,7 +18,9 @@
 	      </span>
       </div>
       <div class="version">
-        <div class="align-right"><span app-version></span></div>
+        <div class="align-right">
+        	Jiragation <span app-version></span>
+        </div>
       </div>
     </div>
   </div>
