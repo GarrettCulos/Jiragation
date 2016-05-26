@@ -50,7 +50,6 @@ Accounts.setAccount = function(account, callback) {
 };
 
 Accounts.removeAccount = function(account, callback) {
-	console.log(account)
 	model.JiraAccounts.destroy({
 		where: {
 			user_name:account.user_name,
