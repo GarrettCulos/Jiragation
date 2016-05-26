@@ -5,7 +5,7 @@ var Sequelize 			= db.Sequelize;
 var sequelize 			= db.sequelize;
 
 var file_path = './db/';
-var jira_account = [];
+// var jira_account = [];
 
 // fs.readdir(file_path,function(err,files){
 //     if(err){ 
@@ -21,25 +21,26 @@ var jira_account = [];
 // 	}
 // });
 
-// //Other way: Immediate insertion of data into database
-// sequelize.sync().then(function () {
-// 	var i = 1;
-// 	jira_account.forEach(function(account) {
+//Other way: Immediate insertion of data into database
+sequelize.sync().then(function () {
+	console.log('Table Created');
+	// var i = 1;
+	// jira_account.forEach(function(account) {
 
-// 		model.JiraAccounts.create({
-// 			id: i ,
-// 			user_name:account['user_name'],
-// 			url: account['host_url'],
-// 			password: account['password'],
-// 			protocal: account['protocal']
-// 		}).then(function () {
-// 			// console.log('... successful table entry');
-// 		}, function(err){
-// 			console.log(err);
-// 		});	
-// 		i = i + 1;
-// 	});
+	// 	model.JiraAccounts.create({
+	// 		id: i ,
+	// 		user_name:account['user_name'],
+	// 		url: account['host_url'],
+	// 		password: account['password'],
+	// 		protocal: account['protocal']
+	// 	}).then(function () {
+	// 		// console.log('... successful table entry');
+	// 	}, function(err){
+	// 		console.log(err);
+	// 	});	
+	// 	i = i + 1;
+	// });
 
-// }, function(err) {
-// 	console.log('An error occur while creating table');		
-// });
+}, function(err) {
+	console.log('An error occur while creating table');		
+});

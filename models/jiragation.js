@@ -23,7 +23,7 @@ var TimeSheet = sequelize.define('time_sheet', {
     end_time: { type: Sequelize.STRING, allowNull: false},
 },
 {
-   timestamps : false,
+   timestamps : true,
    freezeTableName: true
 });
 

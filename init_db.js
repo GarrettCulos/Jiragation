@@ -11,6 +11,7 @@ var pool 		=  	mysql.createPool({
 					});
 
 var db 			= {};
+
 var sequelize 	= 	new Sequelize(
 						dbConfig.get('database'),
 						dbConfig.get('user'),
