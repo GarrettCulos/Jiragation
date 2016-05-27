@@ -4,6 +4,7 @@
 angular.module('myApp', [
   'ngRoute',
   'myApp.taskList',
+  'myApp.logs',
   'myApp.account',
   'myApp.version',
   'myApp.task',
@@ -24,7 +25,11 @@ angular.module('myApp', [
     	templateUrl: 'common/account/account.html',
     	controller: 'accountCtrl'
 	})
-  	.otherwise({
-  		templateUrl: 'common/404.html',
-    });
+  .when('/logs', {
+      templateUrl: 'common/logs/logs.html',
+      controller: 'logsCtrl'
+  })
+  .otherwise({
+    	templateUrl: 'common/404.html',
+  });
 }]);

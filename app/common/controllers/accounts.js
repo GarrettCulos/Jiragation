@@ -13,12 +13,11 @@ angular.module('myApp.account', ['ngRoute'])
 	$scope.viewUserUpdate=false;
 	$scope.viewAccounts=false;
 
-  syncAccounts();
+  	syncAccounts();
   
 	function syncAccounts(){
 		$scope.hiddenJiraAccounts = [];
 		$http({
-		
 			method: 'GET',
 			url: '/account/fetch_accounts'
 
