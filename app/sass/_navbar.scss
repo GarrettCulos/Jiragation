@@ -7,13 +7,27 @@
   background-color: $my_purple;
 	@include box-shadow(rgba(black,0.5) -5px 0 10px);
 	
+	ul.nav.navbar-nav{
+		li{
+			border-top:2px solid transparent;
+			&:hover{
+				a{
+					background-color:transparent;
+				}
+			}
+		}
+
+		li.active {
+			border-top:2px solid white;	
+		}
+	}
+
 	.nav-item,
 	.search-bar,
 	.version{
 		display:inline-block;
 	}
 	.version{
-		padding:0 30px;
 		float:right;
 	}
 

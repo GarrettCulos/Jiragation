@@ -2,7 +2,7 @@
 
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
-.controller('userController', ['$scope', '$http', function($scope, $http) {
+.controller('userController', ['$scope', '$http', '$q', function($scope, $http, $q) {
 	// ---------------------------
 	// This should be a directive
 	$('img.svg').each(function(){
@@ -57,7 +57,9 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		{	"name": 	"Done",
 			"isActive": false}
 	];
+
 	$scope.fetching_tasks = false;
+	
 	$scope.getJiraTasks = function(){
 
 		// Fetch Jira Data`
@@ -70,25 +72,47 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		}).then(function successCallback(response){
 
 			$scope.JiraAccounts = response.data;
-		
-		}, function errorCallback(response){
-			console.log(response);
-			$scope.fetching_tasks = false;
-		
-		}).then(function(){
+
 			$http({
 				method: 'GET',
 				url: '/pull_jiras/jira_accounts'
 			
 			}).then(function successCallback(res){
-				$scope.taskList = res.data;
+				
 				$scope.fetching_tasks = false;
+				
+				modifyTaskList(
+					res.data
+				).then(function(response){		
+					$scope.taskList = response;
+					console.log($scope.taskList);
+				});
 
 			}, function errorCallback(res){
 				$scope.fetching_tasks = false;
 			});
 		
+		}, function errorCallback(response){
+			// console.log(response);
+			$scope.fetching_tasks = false;
+		
 		});
+	}
+
+	function modifyTaskList(taskList) {
+		var res = []
+ 		var deferred = $q.defer();
+
+		taskList.forEach(function(task, key){	
+			// convert created date to unix time
+			task.fields.created = parseInt(Date.parse(task.fields.created));
+			
+			// push data
+			res.push(task);
+			deferred.resolve(res);
+		});
+
+		return deferred.promise;
 	}
 
 	// Task Status Filter Toggle
@@ -108,12 +132,14 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	// Return Task Url
 	$scope.taskUrl = function(taskKey, taskUrl) {
+		
 		return taskUrl.substring(0,taskUrl.indexOf('/rest/'))+'/browse/'+taskKey;
 	}
 
 	// Toggle active task		
 	var taskNumber = 0;
 	$scope.updateRightView = function(taskNumber) {
+	
 		$scope.rightView = $scope.taskList[taskNumber];
 	}
 
@@ -125,6 +151,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	// sort list by predicate
 	$scope.predicate = 'task.fields.created';
+	$scope.predicate = 'task.key'
 	$scope.reverse = true;
 	$scope.order = function(predicate) {
 		$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;

@@ -8,6 +8,7 @@ angular.module('myApp', [
   'myApp.account',
   'myApp.version',
   'myApp.task',
+  'myApp.headerNav',
   'timer',
   'appFilters'
 ])

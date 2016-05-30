@@ -37,8 +37,7 @@ angular.module('appFilters',[])
         notAllowed.push(status.name);
       }
     });
-    console.log(notAllowed);
-
+    
     angular.forEach(input, function(task, key) {
 
       if(notAllowed.indexOf(task.fields.status.name) == -1){
@@ -52,7 +51,7 @@ angular.module('appFilters',[])
 
 .filter('dateF', function() {
   return function(input) {
-    var unixtime = Date.parse(input)/1000;
+    var unixtime = input/1000;
     var dateObj = new Date(unixtime*1000);
     var year = dateObj.getFullYear();
     var month = dateObj.getMonth()
@@ -64,7 +63,7 @@ angular.module('appFilters',[])
     // var min = dateObj.getMinutes();
     // var sec = dateObj.getSeconds();
     var res = year + '.' + month + '.' + date + '.' + hour;
-    console.log(res);
+    // console.log(res);
     return res;
   };
 })

@@ -8972,18 +8972,29 @@ body {
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
   box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
 }
-/* line 10, ../sass/_navbar.scss */
+/* line 11, ../sass/_navbar.scss */
+.nav-bg ul.nav.navbar-nav li {
+  border-top: 2px solid transparent;
+}
+/* line 14, ../sass/_navbar.scss */
+.nav-bg ul.nav.navbar-nav li:hover a {
+  background-color: transparent;
+}
+/* line 20, ../sass/_navbar.scss */
+.nav-bg ul.nav.navbar-nav li.active {
+  border-top: 2px solid white;
+}
+/* line 25, ../sass/_navbar.scss */
 .nav-bg .nav-item,
 .nav-bg .search-bar,
 .nav-bg .version {
   display: inline-block;
 }
-/* line 15, ../sass/_navbar.scss */
+/* line 30, ../sass/_navbar.scss */
 .nav-bg .version {
-  padding: 0 30px;
   float: right;
 }
-/* line 20, ../sass/_navbar.scss */
+/* line 34, ../sass/_navbar.scss */
 .nav-bg .nav-item {
   padding: 0 30px;
   float: left;
@@ -8991,7 +9002,7 @@ body {
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 28, ../sass/_navbar.scss */
+/* line 42, ../sass/_navbar.scss */
 .nav-bg a {
   line-height: 1em;
   font-size: 1em;
@@ -9002,17 +9013,17 @@ body {
 .nav-bg a:hover {
   color: #cdcdcd;
 }
-/* line 32, ../sass/_navbar.scss */
+/* line 46, ../sass/_navbar.scss */
 .nav-bg .prefered-name {
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 37, ../sass/_navbar.scss */
+/* line 51, ../sass/_navbar.scss */
 .nav-bg .search-bar {
   line-height: 2.5em;
   display: inline-block;
 }
-/* line 41, ../sass/_navbar.scss */
+/* line 55, ../sass/_navbar.scss */
 .nav-bg .search-bar input {
   line-height: 1.8em;
   padding: 3px 10px;
@@ -9020,14 +9031,14 @@ body {
   color: #0a0a0a;
   border: none;
 }
-/* line 48, ../sass/_navbar.scss */
+/* line 62, ../sass/_navbar.scss */
 .nav-bg .search-bar .pull-jiras {
   cursor: pointer;
   color: white;
   margin-left: 20px;
   display: inline-block;
 }
-/* line 55, ../sass/_navbar.scss */
+/* line 69, ../sass/_navbar.scss */
 .nav-bg .search-bar .search-label {
   margin-left: 10px;
   margin-right: 10px;
@@ -9037,7 +9048,7 @@ body {
   display: inline-block;
   padding: 0 15px;
 }
-/* line 65, ../sass/_navbar.scss */
+/* line 79, ../sass/_navbar.scss */
 .nav-bg .search-bar button {
   background-color: transparent;
   padding: 0 15px;
@@ -9054,16 +9065,16 @@ body {
 .nav-bg .search-bar button:focus {
   outline: none;
 }
-/* line 71, ../sass/_navbar.scss */
+/* line 85, ../sass/_navbar.scss */
 .nav-bg .search-bar .active-button {
   border-top: 2px solid white;
 }
-/* line 76, ../sass/_navbar.scss */
+/* line 90, ../sass/_navbar.scss */
 .nav-bg .version {
   line-height: 3.5em;
   color: rgba(225, 225, 225, 0.3);
 }
-/* line 81, ../sass/_navbar.scss */
+/* line 95, ../sass/_navbar.scss */
 .nav-bg .top-nav {
   position: fixed;
   top: 0;

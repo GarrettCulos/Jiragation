@@ -4,6 +4,9 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 
 .controller('taskController', ['$scope', '$http', function($scope, $http) {
 
+	$scope.isActive=false;
+	$scope.timerStarted=false;
+
 	function timerDataToUnix(data) {
 		var msPsec = 1000;
 		var secPmin = 60;
@@ -12,9 +15,6 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		// + msPsec*data.seconds + msPsec*secPmin*data.minutes + msPsec*secPmin*minPhr*data.hours + msPsec*secPmin*minPhr*hrPday *data.days;
 		return data.millis 
 	}
-
-	$scope.isActive=false;
-	$scope.timerStarted=false;
 	
 	$scope.taskLink = function(){	
 	}
@@ -35,12 +35,25 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			});	
 		}
 	}
-
-	$scope.getTaskTime();
 	
 	$scope.stateLog = function(){
 		console.log('Timer started:'+$scope.timerStarted);
 		console.log('Active state:'+$scope.isActive);
+	}
+
+	$scope.timerToggle = function(){
+
+		if(!$scope.timerStarted){
+			$scope.$broadcast('timer-start');
+			$scope.timerStarted=true;
+			$scope.isActive=true;
+			$scope.getTaskTime();
+		}else{
+			$scope.$broadcast('timer-stop');
+			$scope.timerStarted=false;
+			$scope.isActive=false;
+			$scope.getTaskTime();
+		}
 	}
 
 	$scope.$on('timer-stopped', function (event, logged_time){
@@ -69,20 +82,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			console.log('Warning Will Robinson');
 		});
 	});
-
-	$scope.timerToggle = function(){
-
-		if(!$scope.timerStarted){
-			$scope.$broadcast('timer-start');
-			$scope.timerStarted=true;
-			$scope.isActive=true;
-			$scope.getTaskTime();
-		}else{
-			$scope.$broadcast('timer-stop');
-			$scope.timerStarted=false;
-			$scope.isActive=false;
-			$scope.getTaskTime();
-		}
-	}
+	
+	$scope.getTaskTime();
 
 }]);

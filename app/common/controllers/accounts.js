@@ -13,8 +13,11 @@ angular.module('myApp.account', ['ngRoute'])
 	$scope.viewUserUpdate=false;
 	$scope.viewAccounts=false;
 
-  	syncAccounts();
+  syncAccounts();
   
+  // PLEASE INSERT YOUR USER NAME AND PASSWORDW BELOW
+	$scope.hiddenJiraAccounts = [];
+
 	function syncAccounts(){
 		$scope.hiddenJiraAccounts = [];
 		$http({
@@ -30,30 +33,33 @@ angular.module('myApp.account', ['ngRoute'])
 	}
 
 	$scope.updateUser = function(){
+		
 		syncAccounts();
 		$scope.viewUserUpdate = true;
 	}
 
 	$scope.closeUpdateUser = function(){
+		
 		$scope.viewUserUpdate = false;
 	}
 
 	$scope.updateAccount = function(){
+		
 		syncAccounts();
 		$scope.viewAccounts = true;
 	}
 
 	$scope.closeAccountUpdater = function(){
+		
 		$scope.viewAccounts = false;
 	}
-	// PLEASE INSERT YOUR USER NAME AND PASSWORDW BELOW
-	$scope.hiddenJiraAccounts = [];
-
-	$scope.addAccount = function(URL,usr,pass,prot){
+	
+	$scope.addAccount = function(URL,usr,pass){
+		var url_prot = URL.split('://');
 		$http({
 			method: 'POST',
 			url: '/account/add_account',
-			data: {url:URL, user_name:usr, password:pass, protocal:prot}
+			data: {url:url_prot[1], user_name:usr, password:pass, protocal:url_prot[0]}
 		}).then(function successCallback(response){
 			syncAccounts();
 		}, function errorCallback(response){
@@ -61,7 +67,9 @@ angular.module('myApp.account', ['ngRoute'])
 		});
 		$scope.JiraAccounts=$scope.JiraAccounts.concat();
 	}
+	
 	$scope.delete = function(id){
+		
 		var account = $scope.JiraAccounts[id];
 		$http({
 			method: 'POST',
@@ -75,13 +83,14 @@ angular.module('myApp.account', ['ngRoute'])
 		$scope.JiraAccounts=$scope.JiraAccounts.concat();
 	}
 
-	
-
 	$scope.hideAccount = function( idx ){
+		
 		$scope.hiddenJiraAccounts.push($scope.JiraAccounts[ idx ]);
 		$scope.JiraAccounts.splice(idx,1);
 	}
+
 	$scope.showAccount = function( idx ){
+	
 		$scope.JiraAccounts.push($scope.hiddenJiraAccounts[ idx ]);
 		$scope.hiddenJiraAccounts.splice(idx,1);
 	}
