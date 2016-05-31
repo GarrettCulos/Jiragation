@@ -8932,11 +8932,17 @@ svg:hover path {
 }
 
 /* line 1, ../sass/_base.scss */
-body {
-  background-color: whitesmoke;
+html {
+  height: 100%;
 }
 
-/* line 4, ../sass/_base.scss */
+/* line 5, ../sass/_base.scss */
+body {
+  background-color: whitesmoke;
+  height: 100%;
+}
+
+/* line 9, ../sass/_base.scss */
 .button {
   background-color: transparent;
   padding: 0 15px;
@@ -8953,12 +8959,17 @@ body {
 .button:focus {
   outline: none;
 }
-/* line 8, ../sass/_base.scss */
+/* line 13, ../sass/_base.scss */
 .button:hover {
   background-color: #3a0084;
   color: #cdcdcd;
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
+}
+
+/* line 1, ../sass/_logs.scss */
+.logs-control-bar {
+  margin-top: 80px;
 }
 
 /* line 1, ../sass/_navbar.scss */

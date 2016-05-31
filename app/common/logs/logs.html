@@ -6,12 +6,31 @@
 		  </div>
 		  
       <div class="col-xs-9">
-				<div class="prefered-name">
-					Work Log from
-				</div>
+			<div class="prefered-name">
+				Work Log from
+			</div>
       </div>
     </div>
   </div>
 </div>
 
 
+<div class="container">
+	<div class="logs-control-bar">
+		<form name="queryLogTimes" ng-submit="getlogs(startDate, endDate)" >
+			<div>Query logged time from:</div>
+			<formgroup>
+				
+				Starting Date: <md-datepicker ng-model="startingDate" md-placeholder="Enter Date" md-max-date="maxDate"></md-datepicker>
+				<span class="error" ng-show="queryLogTimes.startingDate.$error.required">Required Field</span>
+			</formgroup>
+			<formgroup>
+				Ending Date: <md-datepicker ng-model="endDate" md-placeholder="Enter Date" md-max-date="maxDate"></md-datepicker>
+				<span class="error" ng-show="queryLogTimes.endDate.$error.required">Required Field</span>
+			</formgroup>
+			<formgroup> 
+				<input ng-disabled="queryLogTimes.$error"" type="submit" id="submit" value="Query" />
+			</formgroup>
+		</form>
+	</div>
+</div>

@@ -10,7 +10,10 @@ angular.module('myApp', [
   'myApp.task',
   'myApp.headerNav',
   'timer',
-  'appFilters'
+  'appFilters',
+  'ngMaterial'
+  // 'ngAnimate',
+  // 'ngAria'
 ])
 .config(['$routeProvider', function($routeProvider) {
  	$routeProvider

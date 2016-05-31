@@ -15,6 +15,7 @@
     "moment": "^2.12.0",
     "grunt": "~1.0.1",
     "viscompass": "compass#~0.6.2",
-    "bootstrap-sass": "boostrap-sass#~3.3.6"
+    "bootstrap-sass": "boostrap-sass#~3.3.6",
+    "angular-material": "^1.0.9"
   }
 }

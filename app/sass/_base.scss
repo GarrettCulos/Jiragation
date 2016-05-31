@@ -1,5 +1,10 @@
+html{
+	height:100%;
+}
+
 body{
 	background-color:$bg_color;
+	height:100%;
 }
 .button{
 	@include button-style;
