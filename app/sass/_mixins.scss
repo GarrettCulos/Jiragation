@@ -21,3 +21,8 @@
 	 	color:$my_white_alt;
 	 }
 }
+
+@mixin font-style{
+	font-size:1em;
+	color:black;
+}

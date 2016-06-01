@@ -52,19 +52,19 @@
   	line-height:2.5em;
   	display:inline-block;
 
-	input{
-	  line-height: 1.8em;
-	  padding:3px 10px;
-	  background-color:white;
-	  color:$my_black;
-      border: none;
-	}
-	.pull-jiras{
-		cursor: pointer;
-		color: white;
-		margin-left: 20px;
-		display: inline-block;
-	}
+		input{
+		  line-height: 1.8em;
+		  padding:3px 10px;
+		  background-color:white;
+		  color:$my_black;
+	      border: none;
+		}
+		.pull-jiras{
+			cursor: pointer;
+			color: white;
+			margin-left: 20px;
+			display: inline-block;
+		}
 
   	.search-label{
   		margin-left: 10px;

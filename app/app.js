@@ -11,9 +11,9 @@ angular.module('myApp', [
   'myApp.headerNav',
   'timer',
   'appFilters',
-  'ngMaterial'
-  // 'ngAnimate',
-  // 'ngAria'
+  'ngMaterial',
+  'ngAnimate',
+  'ngAria'
 ])
 .config(['$routeProvider', function($routeProvider) {
  	$routeProvider
