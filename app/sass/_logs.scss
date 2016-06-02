@@ -38,7 +38,10 @@
 			}
 			.md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle, 
 			.md-datepicker-triangle-button .md-datepicker-expand-triangle{
-				color:$my_white;
+				border-top-color:rgba($my_white,0.5);
+				&:hover{
+					border-top-color:rgba($my_white,1);
+				}
 			}
 		}		
 	}

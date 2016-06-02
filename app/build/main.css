@@ -37401,10 +37401,15 @@ svg:hover path {
 /* line 39, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle,
 .logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle {
-  color: whitesmoke;
+  border-top-color: rgba(245, 245, 245, 0.5);
+}
+/* line 42, ../sass/_logs.scss */
+.logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover,
+.logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover {
+  border-top-color: whitesmoke;
 }
 
-/* line 48, ../sass/_logs.scss */
+/* line 51, ../sass/_logs.scss */
 #logs-display {
   margin-top: 50px;
 }
