@@ -37120,6 +37120,96 @@ md-tooltip.md-show {
     display: none !important;
   }
 }
+@font-face {
+  font-family: 'raleway';
+  font-weight: 100;
+  src: url("fonts/Raleway/Raleway-Regular.ttf");
+}
+@font-face {
+  font-family: 'raleway';
+  font-weight: 400;
+  src: url("fonts/Raleway/Raleway-Light.ttf");
+}
+@font-face {
+  font-family: 'raleway';
+  font-weight: 600;
+  src: url("fonts/Raleway/Raleway-SemiBold.ttf");
+}
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 100;
+  src: url("fonts/Ubuntu/Ubuntu-Light.ttf");
+}
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 400;
+  src: url("fonts/Ubuntu/Ubuntu-Regular.ttf");
+}
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 600;
+  src: url("fonts/Ubuntu/Ubuntu-Bold.ttf");
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-weight: 100;
+  src: url("fonts/Quicksand/Quicksand-Light.ttf");
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-weight: 400;
+  src: url("fonts/Quicksand/Quicksand-Regular.ttf");
+}
+@font-face {
+  font-family: 'Quicksand';
+  font-weight: 600;
+  src: url("fonts/Quicksand/Quicksand-Bold.ttf");
+}
+@font-face {
+  font-family: 'Poiret-One';
+  font-weight: 400;
+  src: url("fonts/Poiret_one/PoiretOne-Regular.ttf");
+}
+/* line 1, ../sass/_base.scss */
+html,
+body,
+.main-container {
+  height: 100%;
+  background-color: whitesmoke;
+}
+
+/* line 7, ../sass/_base.scss */
+.button {
+  background-color: transparent;
+  padding: 0 15px;
+  border: none;
+  color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #620098;
+  padding: 5px 20px;
+}
+/* line 10, ../sass/_mixins.scss */
+.button:focus {
+  outline: none;
+}
+/* line 11, ../sass/_base.scss */
+.button:hover {
+  background-color: #3a0084;
+  color: #cdcdcd;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
+}
+
+/* line 18, ../sass/_base.scss */
+.datepickerdemoBasicUsage .validation-messages {
+  font-size: 12px;
+  color: #dd2c00;
+  margin: 10px 0 0 25px;
+}
+
 /* line 1, ../sass/_icons.scss */
 svg {
   display: inline-block;
@@ -37258,68 +37348,65 @@ svg:hover path {
   line-height: 2em;
 }
 
-/* line 1, ../sass/_base.scss */
-html,
-body,
-.main-container {
-  height: 100%;
-  background-color: whitesmoke;
+/* line 1, ../sass/_logs.scss */
+.logs-control-bar {
+  margin-top: 4px;
 }
-
-/* line 7, ../sass/_base.scss */
-.button {
-  background-color: transparent;
-  padding: 0 15px;
-  border: none;
-  color: white;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-color: #620098;
-  padding: 5px 20px;
-}
-/* line 10, ../sass/_mixins.scss */
-.button:focus {
-  outline: none;
-}
-/* line 11, ../sass/_base.scss */
-.button:hover {
-  background-color: #3a0084;
-  color: #cdcdcd;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
-  box-shadow: rgba(0, 0, 0, 0.5) 0 0 5px;
-}
-
-/* line 18, ../sass/_base.scss */
-.datepickerdemoBasicUsage .validation-messages {
-  font-size: 12px;
-  color: #dd2c00;
-  margin: 10px 0 0 25px;
-}
-
-/* line 2, ../sass/_logs.scss */
+/* line 3, ../sass/_logs.scss */
 .logs-control-bar formgroup {
   display: inline-block;
 }
-/* line 6, ../sass/_logs.scss */
+/* line 7, ../sass/_logs.scss */
 .logs-control-bar .title {
   display: inline-block;
   font-size: 1.0em;
   color: whitesmoke;
 }
-/* line 12, ../sass/_logs.scss */
+/* line 13, ../sass/_logs.scss */
 .logs-control-bar md-content {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
   padding-right: 10px;
   overflow: inherit;
+  background-color: transparent;
 }
-/* line 17, ../sass/_logs.scss */
-.logs-control-bar md-content textarea,
-.logs-control-bar md-content select {
+/* line 18, ../sass/_logs.scss */
+.logs-control-bar md-content md-datepicker {
+  background-color: transparent;
+}
+/* line 20, ../sass/_logs.scss */
+.logs-control-bar md-content md-datepicker .md-button.md-icon-button {
+  padding: 0;
+  height: inherit;
+}
+/* line 25, ../sass/_logs.scss */
+.logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input,
+.logs-control-bar md-content md-datepicker .md-datepicker-input-container input {
   font-size: 1em;
   color: black;
+  color: whitesmoke;
+}
+/* line 29, ../sass/_logs.scss */
+.logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input textarea,
+.logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input select,
+.logs-control-bar md-content md-datepicker .md-datepicker-input-container input textarea,
+.logs-control-bar md-content md-datepicker .md-datepicker-input-container input select {
+  font-size: 1em;
+  color: black;
+  color: whitesmoke;
+}
+/* line 35, ../sass/_logs.scss */
+.logs-control-bar md-content md-datepicker .md-datepicker-input-container.md-datepicker-input-focused {
+  border-bottom-width: 1px;
+}
+/* line 39, ../sass/_logs.scss */
+.logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle,
+.logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle {
+  color: whitesmoke;
+}
+
+/* line 48, ../sass/_logs.scss */
+#logs-display {
+  margin-top: 50px;
 }
 
 /* line 1, ../sass/_navbar.scss */

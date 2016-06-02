@@ -1,4 +1,5 @@
 .logs-control-bar{
+	margin-top:4px;
 	formgroup{
 		display:inline-block;
 	}
@@ -10,13 +11,40 @@
 	}
 
 	md-content{
-		margin-top:10px;
-		margin-bottom:10px;
+		margin-top:5px;
 		padding-right:10px;
 		overflow:inherit;
-		textarea, 
-		select{
-			@include font-style;
-		}
+		background-color: transparent;
+		md-datepicker{
+			background-color: transparent;
+			.md-button.md-icon-button{
+				padding:0;
+				height:inherit;
+			}
+			.md-datepicker-input-container{
+				.md-datepicker-input,
+				input{
+					@include font-style;
+					color:$my_white;
+					textarea, 
+					select{
+						@include font-style;
+						color:$my_white;
+					}	
+				}
+				&.md-datepicker-input-focused{
+					border-bottom-width:1px;
+				}
+			}
+			.md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle, 
+			.md-datepicker-triangle-button .md-datepicker-expand-triangle{
+				color:$my_white;
+			}
+		}		
 	}
+}
+
+
+#logs-display{
+	margin-top:50px;
 }

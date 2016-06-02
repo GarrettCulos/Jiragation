@@ -11,9 +11,10 @@
 @import "../../bower_components/angular-material/angular-material.scss";
 
 // Main Stylesheets
+@import "fonts";
+@import "base";
 @import "icons";
 @import "account_settings";
-@import "base";
 @import "logs";
 @import "navbar";
 @import "task_list";
