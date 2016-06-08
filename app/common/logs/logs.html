@@ -35,4 +35,14 @@
 	<div id="logs-display">
 		{{startDate}} -- {{endDate}}
 	</div>
+	<div ng-click="getlogs(startDate,endDate)">Get Logs</div>
+	
+	<!-- {{queryLog}} -->
+	Tasks
+	<div ng-repeat="(key1, days) in queryLog">
+		{{days.date}}
+		<ul ng-repeat="(key2, log) in days.logs">
+			<li>Task id: {{log.task_id}} -- Logged Time: {{log.end_time - log.start_time}}</li>
+		</ul>
+	</div>
 </div>

@@ -53,8 +53,10 @@ TimeSheet.getTaskTime = function(res, callback) {
 };
 
 TimeSheet.getTrackedTime = function(res, callback) {
-	console.log(res)
-		var queryString = "SELECT * FROM time_sheet WHERE createdAt >= '" + res.earlier_time + "' AND createdAt <= '" + res.earlier_time + "'";
+	console.log(res);
+	// var earlier_Date =  new Date( res.earlier_time);
+	// var later_Date  new Date ( res.later_time);
+	var queryString = "SELECT * FROM time_sheet WHERE createdAt >= '" + res.earlier_time + "' AND createdAt <= '" + res.later_time + "'";
 
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){
