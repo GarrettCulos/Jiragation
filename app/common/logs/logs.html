@@ -21,7 +21,7 @@
 						</formgroup> 
 
 						<formgroup>
-							<input ng-disabled="queryLogTimes.$error"" type="submit" id="submit" value="Query" />
+							<input type="submit" id="submit" value="Query" />
 						</formgroup>
 					</form>
 				</div>
@@ -32,17 +32,15 @@
 
 
 <div class="container">
-	<div id="logs-display">
-		{{startDate}} -- {{endDate}}
-	</div>
-	<div ng-click="getlogs(startDate,endDate)">Get Logs</div>
-	
-	<!-- {{queryLog}} -->
-	Tasks
-	<div ng-repeat="(key1, days) in queryLog">
-		{{days.date}}
-		<ul ng-repeat="(key2, log) in days.logs">
-			<li>Task id: {{log.task_id}} -- Logged Time: {{log.end_time - log.start_time}}</li>
-		</ul>
+	<div id="logs-display" style="margin-top:100px;">
+		<button ng-click="get_todays_logs()">Get Todays Logs</button>
+		
+		Tasks summary
+		<div ng-repeat="(key1, days) in queryLog">
+			{{days.date}}: Total time logged - {{days.time_logged | returnTime}}
+			<ul ng-repeat="(key2, task) in days.tasks">
+				<li>Task id: {{task.task_id}} -- <span class="logged-time"> {{ task.total_time | returnTime }}</span</li>
+			</ul>
+		</div>
 	</div>
 </div>
