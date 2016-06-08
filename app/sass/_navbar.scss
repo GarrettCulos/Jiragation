@@ -1,3 +1,17 @@
+.small-text{
+	display:block;
+	font-size:9px;
+	color:$my_white;
+	text-align:center;
+	line-height:1em;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+.navigation-block{
+	display:block;
+	height:100%;
+}
+
 .nav-bg {
   z-index: 9;
   width:100%;

@@ -2,7 +2,7 @@
 
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
-.controller('userController', ['$scope', '$http', '$q', function($scope, $http, $q) {
+.controller('userController', ['$scope', '$http', '$q', '$mdDialog', function($scope, $http, $q, $mdDialog) {
 
 	// ---------------------------
 	// This should be a directive
@@ -130,6 +130,21 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			}
 		}	
 	};
+
+	$scope.showTabDialog = function(ev) {
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: '../account/acount.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true
+    })
+    .then(function(answer) {
+      $scope.status = 'You said the information was "' + answer + '".';
+    }, function() {
+      $scope.status = 'You cancelled the dialog.';
+    });
+  };
 
 	// Return Task Url
 	$scope.taskUrl = function(taskKey, taskUrl) {

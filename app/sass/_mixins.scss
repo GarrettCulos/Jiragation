@@ -1,25 +1,25 @@
 @mixin button-style {
-	  background-color:transparent;
-	  padding: 0 15px;
-	  border: none;
-	  color: white;
-	  -webkit-user-select: none;
-	  -moz-user-select: none;
-	  -ms-user-select: none;
-	  user-select: none;
-	  &:focus{
-			outline: none;
-	  }
+	  // background-color:transparent;
+	  // padding: 0 15px;
+	  // border: none;
+	  // color: white;
+	  // -webkit-user-select: none;
+	  // -moz-user-select: none;
+	  // -ms-user-select: none;
+	  // user-select: none;
+	  // &:focus{
+			// outline: none;
+	  // }
 }
 
 @mixin link-style {
-	line-height:1em;
-	font-size:1em;
-	color:$my_white;
-	text-decoration:none;
-	 &:hover{
-	 	color:$my_white_alt;
-	 }
+	// line-height:1em;
+	// font-size:1em;
+	// color:$my_white;
+	// text-decoration:none;
+	//  &:hover{
+	//  	color:$my_white_alt;
+	//  }
 }
 
 @mixin font-style{
