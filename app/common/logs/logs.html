@@ -39,7 +39,14 @@
 		<div ng-repeat="(key1, days) in queryLog">
 			{{days.date}}: Total time logged - {{days.time_logged | returnTime}}
 			<ul ng-repeat="(key2, task) in days.tasks">
-				<li>Task id: {{task.task_id}} -- <span class="logged-time"> {{ task.total_time | returnTime }}</span</li>
+				<li>
+					<div class="col-xs-6">
+						Task id: {{task.task_id}} -- <span class="logged-time"> {{ task.total_time | returnTime }}</span>
+					</div>
+					<div class="col-xs-6">
+						<logbar data="{{task}}"></logbar>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>

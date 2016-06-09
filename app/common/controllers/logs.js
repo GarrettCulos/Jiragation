@@ -114,7 +114,7 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 					});
 					response[day_key].time_logged += logged_time;
 					deferred.resolve(response);
-					
+
 				} else {
 					var logged_time = task.end_time-task.start_time;
 					
@@ -133,4 +133,15 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 	}
 	 	
 	// $scope.getlogs('2016-06-06T07:00:00.000Z','2016-06-07T07:00:00.000Z');
-}]);
+}]).directive('logbar', function() {
+  return {
+  	restrict: 'E',
+  	scope: true,
+    replace: true,
+    templateUrl: './common/logs/log_bar.html',
+    link: function(scope, elem, attrs){
+      scope.task_log = JSON.parse(attrs.data);
+      console.log(scope.task_log.task_id);
+    }
+  };
+});
