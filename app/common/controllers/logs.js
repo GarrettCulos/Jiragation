@@ -49,7 +49,6 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 				filter_data(day_array,res).then(function(response){
 
 					summarize_data(response).then(function(res){
-						console.log(res);
 						$scope.queryLog=res;
 					})
 
@@ -132,16 +131,65 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 		return deferred.promise;
 	}
 	 	
-	// $scope.getlogs('2016-06-06T07:00:00.000Z','2016-06-07T07:00:00.000Z');
-}]).directive('logbar', function() {
-  return {
-  	restrict: 'E',
-  	scope: true,
-    replace: true,
-    templateUrl: './common/logs/log_bar.html',
-    link: function(scope, elem, attrs){
-      scope.task_log = JSON.parse(attrs.data);
-      console.log(scope.task_log.task_id);
-    }
-  };
-});
+}]).directive('logbar', ['$q', function($q) {
+	return {
+		restrict: 'E',
+		scope: true,
+		replace: true,
+		templateUrl: './common/logs/log_bar.html',
+		link: function(scope, elem, attrs){
+			scope.task_log = JSON.parse(attrs.data);
+			var oneDay = 24*60*60*1000;
+			var day_start = (new Date(scope.task_log.date)).getTime()
+
+			linearize(scope.task_log.tasks).then(function(response){
+				console.log(response);
+				scope.task_lines = response;
+			});
+			
+			scope.inactive = true;
+			scope.isActive = function(){
+				scope.inactive = !scope.inactive;
+			}
+
+			function linearize(data) {
+
+				var response = [];
+				var deferred = $q.defer();
+				var colors = [
+					'#FFB429'
+					, '#BBFF29'
+					, '#29FF3B'
+					, '#29FFF4'
+					, '#2986FF'
+					, '#6D29FF'
+					, '#FF2942'
+					, '#C57BE0'
+					, '#7BC7E0'
+				]
+
+				angular.forEach(data, function(task, task_key){
+					response.push({
+						task_id: task.task_id,
+						color: colors[task_key],
+						lines : []
+					})
+
+					angular.forEach(task.logged_time, function(log, log_key){
+						response[task_key].lines.push({
+							day_start: day_start,
+							width: (parseInt(log.end_time) - parseInt(log.start_time))*100/oneDay,
+							start_time: log.start_time,
+							end_time:log.end_time,
+							start: (parseInt(log.start_time) - day_start)/oneDay*100,
+							end: (parseInt(log.end_time) - day_start)/oneDay*100
+						});
+						deferred.resolve(response);
+					});
+				});
+
+				return deferred.promise;
+			}
+		}
+	};
+}]);

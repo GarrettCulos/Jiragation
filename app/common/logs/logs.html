@@ -35,19 +35,25 @@
 	<div id="logs-display" style="margin-top:100px;">
 		<button ng-click="get_todays_logs()">Get Todays Logs</button>
 		
-		Tasks summary
-		<div ng-repeat="(key1, days) in queryLog">
-			{{days.date}}: Total time logged - {{days.time_logged | returnTime}}
-			<ul ng-repeat="(key2, task) in days.tasks">
-				<li>
-					<div class="col-xs-6">
-						Task id: {{task.task_id}} -- <span class="logged-time"> {{ task.total_time | returnTime }}</span>
-					</div>
-					<div class="col-xs-6">
-						<logbar data="{{task}}"></logbar>
-					</div>
-				</li>
-			</ul>
+		<div class="row">
+			<h2 ng-if="queryLog">Query Summarys:</h2>
+		</div>
+		<div class="row day-log" ng-repeat="(key1, days) in queryLog">
+			 
+			<div class="col-xs-4">
+				<h3 style="border-bottom: 1px solid black; text-align:center; padding:10px 0;">{{ days.date | readableDateF }}</h3>
+				<h4 style="text-align:center; padding:10px 0;">{{days.time_logged | returnTime}} Tracked</h4>
+				 
+				<ul ng-repeat="(key2, task) in days.tasks">
+					<li style="list-style-type: none;">
+						{{task.task_id}} : <span class="logged-time"> {{ task.total_time | returnTime }}</span>
+					</li>
+				</ul>
+			</div>
+			<div class="col-xs-8">
+				<logbar ng-if="days" data="{{days}}"></logbar>
+			</div>
+		
 		</div>
 	</div>
 </div>

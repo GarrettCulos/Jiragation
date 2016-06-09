@@ -49,12 +49,24 @@ angular.module('appFilters',[])
   };
 })
 
+.filter('readableDateF', function() {
+  return function(input) {
+    var dateObj = new Date(input);
+    var year = dateObj.getFullYear();
+    var month = dateObj.getMonth();
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var date = dateObj.getDate();
+    return monthNames[month] + ' ' + date +  ', ' + year;
+    
+  };
+})
+
 .filter('dateF', function() {
   return function(input) {
     var unixtime = input/1000;
     var dateObj = new Date(unixtime*1000);
     var year = dateObj.getFullYear();
-    var month = dateObj.getMonth()
+    var month = dateObj.getMonth();
     if(month<10){month='0'+month};
     // var monthWords = months[month];
     var date = dateObj.getDate();
@@ -78,7 +90,7 @@ angular.module('appFilters',[])
     }else if (min>0){
       var res = min+' min';      
     } else  {
-      var res = "--"
+      var res = "--";
     }
     // console.log(res);
     return res;

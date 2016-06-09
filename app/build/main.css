@@ -37318,6 +37318,38 @@ svg:hover path {
   animation: spin 1s infinite linear;
 }
 
+/* line 2, ../sass/_log_bar.scss */
+.log-bar {
+  position: relative;
+  padding-top: 2px;
+  margin-top: 40px;
+  border-top: 1px solid black;
+}
+/* line 8, ../sass/_log_bar.scss */
+.log-bar .task-line {
+  position: absolute;
+  left: 0;
+  height: 15px;
+  width: 100%;
+  transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+}
+/* line 14, ../sass/_log_bar.scss */
+.log-bar .task-line.inactive {
+  top: 0 !important;
+}
+/* line 18, ../sass/_log_bar.scss */
+.log-bar .task-line .time-marker {
+  position: absolute;
+  height: 15px;
+  opacity: 0.5;
+  top: 0;
+}
+/* line 26, ../sass/_log_bar.scss */
+.log-bar .scale .time {
+  position: absolute;
+  transform: translateX(-50%) translateY(-250%) rotate(-90deg);
+}
+
 /* line 1, ../sass/_account_settings.scss */
 .account-settings {
   margin-top: 60px;
@@ -37349,43 +37381,49 @@ svg:hover path {
 }
 
 /* line 1, ../sass/_logs.scss */
+.day-log {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 20px 0;
+}
+
+/* line 6, ../sass/_logs.scss */
 .logs-control-bar {
   margin-top: 4px;
 }
-/* line 3, ../sass/_logs.scss */
+/* line 8, ../sass/_logs.scss */
 .logs-control-bar formgroup {
   display: inline-block;
 }
-/* line 7, ../sass/_logs.scss */
+/* line 12, ../sass/_logs.scss */
 .logs-control-bar .title {
   display: inline-block;
   font-size: 1.0em;
   color: whitesmoke;
 }
-/* line 13, ../sass/_logs.scss */
+/* line 18, ../sass/_logs.scss */
 .logs-control-bar md-content {
   margin-top: 5px;
   padding-right: 10px;
   overflow: inherit;
   background-color: transparent;
 }
-/* line 18, ../sass/_logs.scss */
+/* line 23, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker {
   background-color: transparent;
 }
-/* line 20, ../sass/_logs.scss */
+/* line 25, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-button.md-icon-button {
   padding: 0;
   height: inherit;
 }
-/* line 25, ../sass/_logs.scss */
+/* line 30, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container input {
   font-size: 1em;
   color: black;
   color: whitesmoke;
 }
-/* line 29, ../sass/_logs.scss */
+/* line 34, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input textarea,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input select,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container input textarea,
@@ -37394,22 +37432,22 @@ svg:hover path {
   color: black;
   color: whitesmoke;
 }
-/* line 35, ../sass/_logs.scss */
+/* line 40, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container.md-datepicker-input-focused {
   border-bottom-width: 1px;
 }
-/* line 39, ../sass/_logs.scss */
+/* line 44, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle,
 .logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle {
   border-top-color: rgba(245, 245, 245, 0.5);
 }
-/* line 42, ../sass/_logs.scss */
+/* line 47, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover,
 .logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover {
   border-top-color: whitesmoke;
 }
 
-/* line 51, ../sass/_logs.scss */
+/* line 56, ../sass/_logs.scss */
 #logs-display {
   margin-top: 50px;
 }
