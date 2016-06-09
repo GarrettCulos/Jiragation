@@ -7,21 +7,31 @@
 
 			<div class="col-xs-9">
 				<div class="logs-control-bar">
-					<form name="queryLogTimes" ng-submit="getlogs(startDate, endDate)" >
+					<form name="queryLogTimes" ng-submit="getlogs(startDate, endDate)" novalidate>
 						<div class="title">
 							Query logged time from
 						</div>
 
 						<formgroup>
-							<md-content><md-datepicker id="startingDate" ng-model="startDate" md-placeholder="Start Date" md-max-date="maxDate"></md-datepicker></md-content>
+							<md-content>
+								<md-datepicker id="startingDate" ng-model="startDate" md-placeholder="Start Date" md-max-date="maxDate" required="" name="startDate"></md-datepicker>
+								<div ng-show="queryLogTimes.$submitted || queryLogTimes.startDate.$touched">
+							      <span ng-show="queryLogTimes.startDate.$error.required">Select a Date.</span>
+							    </div>
+							</md-content>
 						</formgroup>
 
 						<formgroup>
-							<md-content><md-datepicker id="endDate" ng-model="endDate" md-placeholder="End Date" md-max-date="maxDate"></md-datepicker></md-content>
+							<md-content>
+								<md-datepicker id="endDate" ng-model="endDate" md-placeholder="End Date" md-max-date="maxDate" required="" name="endDate"></md-datepicker>
+								<div ng-show="queryLogTimes.$submitted || queryLogTimes.endDate.$touched">
+							      <span ng-show="queryLogTimes.endDate.$error.required">Select a Date.</span>
+							    </div>
+							</md-content>
 						</formgroup> 
 
 						<formgroup>
-							<input type="submit" id="submit" value="Query" />
+							<input type="submit" id="submit" value="Query"  ng-disabled="queryLogTimes.startDate.$error.required || queryLogTimes.endDate.$error.required" disabled/>
 						</formgroup>
 					</form>
 				</div>

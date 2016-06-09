@@ -58,7 +58,38 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			"isActive": false}
 	];
 
+	// sort list by predicate
+	$scope.predicate = 'task.fields.created';
+	$scope.predicate = 'task.key'
+	$scope.reverse = true;
+	
+	$scope.activeTask=[];
+	
+	// Toggle active task		
+	var taskNumber = 0;
+
 	$scope.fetching_tasks = false;
+
+	function resetActiveTasks(){
+		
+		$scope.allTimerPaused = false;
+	}
+
+	function modifyTaskList(taskList) {
+		var res = []
+ 		var deferred = $q.defer();
+
+		taskList.forEach(function(task, key){	
+			// convert created date to unix time
+			task.fields.created = parseInt(Date.parse(task.fields.created));
+			
+			// push data
+			res.push(task);
+			deferred.resolve(res);
+		});
+
+		return deferred.promise;
+	}
 	
 	$scope.getJiraTasks = function(){
 
@@ -99,22 +130,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		});
 	}
 
-	function modifyTaskList(taskList) {
-		var res = []
- 		var deferred = $q.defer();
-
-		taskList.forEach(function(task, key){	
-			// convert created date to unix time
-			task.fields.created = parseInt(Date.parse(task.fields.created));
-			
-			// push data
-			res.push(task);
-			deferred.resolve(res);
-		});
-
-		return deferred.promise;
-	}
-
 	// Task Status Filter Toggle
 	$scope.changeStatus = function(status){
 		// console.log($scope.taskStatuses);
@@ -132,27 +147,16 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	// Return Task Url
 	$scope.taskUrl = function(taskKey, taskUrl) {
-		
+	
 		return taskUrl.substring(0,taskUrl.indexOf('/rest/'))+'/browse/'+taskKey;
 	}
 
 	// Toggle active task		
-	var taskNumber = 0;
 	$scope.updateRightView = function(taskNumber) {
 	
 		$scope.rightView = $scope.taskList[taskNumber];
 	}
 
-	$scope.activeTask=[];
-	function resetActiveTasks(){
-		$scope.allTimerPaused = false;
-	}
-
-
-	// sort list by predicate
-	$scope.predicate = 'task.fields.created';
-	$scope.predicate = 'task.key'
-	$scope.reverse = true;
 	$scope.order = function(predicate) {
 		$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
 		$scope.predicate = predicate;
