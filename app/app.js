@@ -199,6 +199,7 @@ angular.module('myApp', [
       }, function() {
         $scope.status = 'You cancelled the dialog.';
       });
+      
       $scope.$watch(function() {
         return $mdMedia('xs') || $mdMedia('sm');
       }, function(wantsFullScreen) {

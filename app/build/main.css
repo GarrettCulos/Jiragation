@@ -37310,32 +37310,25 @@ svg:hover path {
   transform: translateX(-50%) translateY(-250%) rotate(-90deg);
 }
 
-/* line 1, ../sass/_account_settings.scss */
-.account-settings {
-  margin-top: 60px;
-}
-/* line 4, ../sass/_account_settings.scss */
+/* line 3, ../sass/_account_settings.scss */
 .account-settings .user-accounts,
 .account-settings .user-information {
-  margin-bottom: 40px;
   padding: 15px;
   background-color: white;
   -webkit-box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
   box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
 }
-/* line 12, ../sass/_account_settings.scss */
+/* line 10, ../sass/_account_settings.scss */
 .account-settings .user-account {
   margin-bottom: 10px;
 }
-/* line 17, ../sass/_account_settings.scss */
+/* line 15, ../sass/_account_settings.scss */
 .account-settings .user-information input {
-  width: 100%;
   padding: 0 5px;
   line-height: 2em;
 }
-/* line 25, ../sass/_account_settings.scss */
+/* line 22, ../sass/_account_settings.scss */
 .account-settings .user-add-account input {
-  width: 100%;
   padding: 0 5px;
   line-height: 2em;
 }
@@ -37589,25 +37582,21 @@ md-toolbar .md-toolbar-tools {
   margin-top: 1px;
   margin-bottom: 30px;
 }
-/* line 46, ../sass/_task_list.scss */
-.main-content .account {
-  width: 100%;
-}
-/* line 50, ../sass/_task_list.scss */
+/* line 47, ../sass/_task_list.scss */
 .main-content ul.menu {
   height: 55px;
 }
-/* line 54, ../sass/_task_list.scss */
+/* line 51, ../sass/_task_list.scss */
 .main-content .menu {
   list-style: none;
 }
-/* line 56, ../sass/_task_list.scss */
+/* line 53, ../sass/_task_list.scss */
 .main-content .menu li {
   display: inline-block;
   height: 55px;
   line-height: 55px;
 }
-/* line 60, ../sass/_task_list.scss */
+/* line 57, ../sass/_task_list.scss */
 .main-content .menu li a {
   vertical-align: middle;
   padding-right: 0.3em;
@@ -37617,43 +37606,43 @@ md-toolbar .md-toolbar-tools {
   border-right: 1px solid blue;
   border-left: 1px solid blue;
 }
-/* line 68, ../sass/_task_list.scss */
+/* line 65, ../sass/_task_list.scss */
 .main-content .menu li a:last-child {
   border-right: 1px solid transparent;
 }
-/* line 71, ../sass/_task_list.scss */
+/* line 68, ../sass/_task_list.scss */
 .main-content .menu li a:first-child {
   border-left: 1px solid transparent;
 }
-/* line 80, ../sass/_task_list.scss */
+/* line 77, ../sass/_task_list.scss */
 .main-content .right-view img {
   height: 1em;
   margin-right: 5px;
   vertical-align: middle;
 }
-/* line 86, ../sass/_task_list.scss */
+/* line 83, ../sass/_task_list.scss */
 .main-content .timer {
   display: none;
   vertical-align: middle;
 }
-/* line 91, ../sass/_task_list.scss */
+/* line 88, ../sass/_task_list.scss */
 .main-content .logged-time {
   display: inline-block;
 }
-/* line 95, ../sass/_task_list.scss */
+/* line 92, ../sass/_task_list.scss */
 .main-content .paused {
   color: red;
   opacity: 0.5;
 }
-/* line 100, ../sass/_task_list.scss */
+/* line 97, ../sass/_task_list.scss */
 .main-content .no-padding {
   padding: 0;
 }
-/* line 104, ../sass/_task_list.scss */
+/* line 101, ../sass/_task_list.scss */
 .main-content .padding-bottom {
   padding-bottom: 10px;
 }
-/* line 108, ../sass/_task_list.scss */
+/* line 105, ../sass/_task_list.scss */
 .main-content .right-view-title {
   padding-bottom: 10px;
   padding-top: 10px;
@@ -37661,53 +37650,53 @@ md-toolbar .md-toolbar-tools {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
-/* line 116, ../sass/_task_list.scss */
+/* line 113, ../sass/_task_list.scss */
 .main-content .select-default {
   /*opacity:0.3; */
 }
-/* line 117, ../sass/_task_list.scss */
+/* line 114, ../sass/_task_list.scss */
 .main-content .select-default.select-active {
   opacity: 1;
   border-left: 3px solid #323264;
 }
-/* line 121, ../sass/_task_list.scss */
+/* line 118, ../sass/_task_list.scss */
 .main-content .select-default.select-active .timer {
   display: inline-block;
 }
-/* line 124, ../sass/_task_list.scss */
+/* line 121, ../sass/_task_list.scss */
 .main-content .select-default.select-active .logged-time {
   display: none;
 }
-/* line 128, ../sass/_task_list.scss */
+/* line 125, ../sass/_task_list.scss */
 .main-content .select-default.select-active .task-summary-container .task-summary {
   white-space: normal;
 }
-/* line 136, ../sass/_task_list.scss */
+/* line 133, ../sass/_task_list.scss */
 .main-content .task-status, .main-content .task-name, .main-content .task-date, .main-content .task-summary {
   vertical-align: top;
   display: inline-block;
 }
-/* line 145, ../sass/_task_list.scss */
+/* line 142, ../sass/_task_list.scss */
 .main-content .task-priority {
   vertical-align: -webkit-baseline-middle;
   vertical-align: middle;
   display: inline-block;
   margin: 0 10px;
 }
-/* line 152, ../sass/_task_list.scss */
+/* line 149, ../sass/_task_list.scss */
 .main-content .task-date-title {
   font-weight: 700;
   text-align: center;
 }
-/* line 157, ../sass/_task_list.scss */
+/* line 154, ../sass/_task_list.scss */
 .main-content img.task-priority {
   line-height: 1.5em;
 }
-/* line 160, ../sass/_task_list.scss */
+/* line 157, ../sass/_task_list.scss */
 .main-content .task-summary-container {
   overflow: hidden;
 }
-/* line 162, ../sass/_task_list.scss */
+/* line 159, ../sass/_task_list.scss */
 .main-content .task-summary-container .task-summary {
   padding-left: 20px;
   display: inline-block;
@@ -37715,11 +37704,11 @@ md-toolbar .md-toolbar-tools {
   white-space: nowrap;
   /*max-width:450px;*/
 }
-/* line 172, ../sass/_task_list.scss */
+/* line 169, ../sass/_task_list.scss */
 .main-content .task-title-date {
   padding-right: 20px;
 }
-/* line 174, ../sass/_task_list.scss */
+/* line 171, ../sass/_task_list.scss */
 .main-content .task-title-date:after {
   background-image: url("./img/down-arrow.png");
   background-size: cover;
