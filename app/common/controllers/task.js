@@ -62,8 +62,8 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		var current_date = date.getTime();
 		var response = {
 			task_id: $scope.task.key,
-			start_time: current_date,
-			end_time: current_date+timerDataToUnix(logged_time)
+			end_time: current_date,
+			start_time: current_date-timerDataToUnix(logged_time)
 		}
 		console.log(response);
 		console.log(logged_time);

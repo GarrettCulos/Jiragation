@@ -111,7 +111,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			}).then(function successCallback(res){
 				
 				$scope.fetching_tasks = false;
-				
+
 				modifyTaskList(
 					res.data
 				).then(function(response){		
@@ -152,9 +152,29 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	}
 
 	// Toggle active task		
-	$scope.updateRightView = function(taskNumber) {
+	$scope.updateRightView = function(issueId, acct) {
 	
 		$scope.rightView = $scope.taskList[taskNumber];
+		console.log(issueId);
+		console.log($scope);
+
+		var data = {
+			issueId: issueId,
+			acct: acct
+		}
+		// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
+		$http({
+			method: 'GET',
+			url: '/pull_jiras/task_comments',
+			data: 	JSON.stringify(data)
+		}).then(function successCallback(response){
+			$scope.task_comments=response;
+			console.log(response);
+		})
+
+		// update status
+
+		// get attachements // GET /rest/api/2/attachment/{id}
 	}
 
 	$scope.order = function(predicate) {
