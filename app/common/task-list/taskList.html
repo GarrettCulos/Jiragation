@@ -4,8 +4,9 @@
 	    <md-button ng-click="toggleLeft()" class="md-icon-button md-primary">
 	      <md-icon md-svg-icon="img/svg/menu.svg"></md-icon>
 	    </md-button>
-	    <div class="small-text">Nav</div>
+	    <!-- <div class="small-text">Nav</div> -->
 	  </div>  
+
 
 		<div class="navigation-item">
 	    <md-button ng-click="showTabDialog($event)" class="md-icon-button md-primary">
@@ -14,15 +15,15 @@
 	    <div class="small-text">Settings</div>
 	  </div>
 
+ 		<span flex></span>
+
 		<div class="navigation-item">
 	    <md-button aria-label="Get Tasks" class="md-icon-button" ng-click="getJiraTasks()">
 	      <md-icon md-svg-icon="img/svg/refresh.svg" class=" {{!fetching_tasks ? '': 'spinner' }}"></md-icon>
 	    </md-button>
 	    <div class="small-text">Refresh</div>
 	  </div>
-      
-		<span flex></span>
-    <!-- <input ng-model="search.txt" placeholder="Search" flex> -->
+          <!-- <input ng-model="search.txt" placeholder="Search" flex> -->
 
 		<div class="navigation-item">
 	    <md-button ng-click="toggleRight()" class="md-icon-button md-primary">
@@ -34,35 +35,6 @@
   </div>
 </md-toolbar>
 
-
-<md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
-  <md-toolbar class="md-theme-light" ng-controller="LeftCtrl">
-    <span fill></span>
-    <md-button ng-click="close()" class="md-primary">
-      <md-icon md-svg-icon="img/svg/close.svg"></md-icon>
-    </md-button>
-  </md-toolbar>
-
-  <md-content layout-padding style="background-color: #f5f5f5;">
-		<!-- <header ng-controller="HeaderController"></header> -->
-		<md-list>
-			<md-list-item class="noright">
-				<a class="{{isActive('/')}}" href="#/">Tasks</a>
-		    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
-	  	</md-list-item>
-	  	
-	  	<md-list-item class="noright">
-		  	<a class="{{isActive('/account')}}"href="#/account">Account</a>
-		    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
-	  	</md-list-item>
-
-	  	<md-list-item class="noright">
-				<a class="{{isActive('/logs')}}" href="#/logs">Logs</a>
-		    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
-	  	</md-list-item>  
-  	</md-list>
-  </md-content>
-</md-sidenav>
 
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
   <md-toolbar class="md-theme-light" flex-align="center center" ng-controller="RightCtrl">
@@ -79,16 +51,51 @@
   </md-content>
 </md-sidenav>
 
-<md-content layout-padding>
+<md-content layout-padding layout-fill>
+		
+	<md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
+	  <md-toolbar class="md-theme-light" ng-controller="LeftCtrl">
+	    <span fill></span>
+	    <md-button ng-click="close()" class="md-primary">
+	      <md-icon md-svg-icon="img/svg/close.svg"></md-icon>
+	    </md-button>
+	  </md-toolbar>
+
+	  <md-content layout-padding>
+			<!-- <header ng-controller="HeaderController"></header> -->
+			<md-list>
+				<md-list-item class="noright">
+					<a class="{{isActive('/')}}" href="#/">Tasks</a>
+			    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
+		  	</md-list-item>
+		  	
+		  	<md-list-item class="noright">
+			  	<a class="{{isActive('/account')}}"href="#/account">Account</a>
+			    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
+		  	</md-list-item>
+
+		  	<md-list-item class="noright">
+					<a class="{{isActive('/logs')}}" href="#/logs">Logs</a>
+			    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
+		  	</md-list-item>  
+	  	</md-list>
+	  </md-content>
+	</md-sidenav>
+
+
 	<div layout="column" layout-align="center strech">
 		<div class="main-content">
 			<div layout="row" layout-align="enter" flex>
 				
-				<div class="center" flex="5">
+				<div class="center" flex="10">
 						<label>Time</label>
 				</div>
 
-				<div class="center" flex="10">
+				<div class="center" flex="5">
+						<label>Priority</label>
+				</div>
+
+				<div class="center" flex="5">
 						<label>Status</label>
 				</div>
 
@@ -102,9 +109,9 @@
 					</div>	
 				</div>
 
-				<div class="center" flex="65">
+				<div flex="60">
 					<div class="task-summary-title">
-
+						<label> Description </label>
 					</div>			
 					<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
 					<!-- <button  ng-click="updateTaskView(accountNum, taskNum)"> View Task </button> -->		
@@ -120,7 +127,7 @@
 						layout-align="center"
 						flex>
 			
-						<div class="center" flex="5">
+						<div class="center" flex="10">
 							<div class="logged-time">{{ timeLogged | returnTime }}</div>
 							<timer class="timer" autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer> <!-- ng-attr-start-time="timerStart" -->
 					  </div>
@@ -129,7 +136,7 @@
 							<img class="task-priority" src="{{ task.fields.priority | priorityF }}">
 						</div>
 
-						<div flex="5">
+						<div class="center" flex="5">
 							<div class="task-status">  {{ task.fields.status.name }}</div> 
 						</div>
 
@@ -142,7 +149,7 @@
 							<div class="task-date">  {{  task.fields.created | dateF }}  </div>
 						</div>
 
-						<div flex="65" class="task-summary-container">
+						<div flex="60" class="task-summary-container">
 							<div class="task-summary">{{ task.fields.summary }}</div>			
 							<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
 							<!-- <button  ng-click="updateTaskView(taskNum)"> View Task </button> -->		

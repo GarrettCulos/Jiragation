@@ -1,15 +1,27 @@
 .small-text{
-	display:block;
-	font-size:9px;
+	display:inline-block;
+	font-size:14px;
 	color:$my_white;
 	text-align:center;
 	line-height:1em;
+	padding-right:10px;
 	padding-top:5px;
 	padding-bottom:5px;
 }
 .navigation-block{
 	display:block;
 	height:100%;
+}
+
+md-toolbar{
+	@include box-shadow(rgba(black,0.5) -5px 0 10px);
+}
+md-toolbar{
+	min-height:55px;
+	.md-toolbar-tools{
+		height:55px;
+		max-height:55px;
+	}
 }
 
 .nav-bg {
@@ -19,7 +31,6 @@
   text-align: center;
   color:$my_white;
   background-color: $my_purple;
-	@include box-shadow(rgba(black,0.5) -5px 0 10px);
 	
 	ul.nav.navbar-nav{
 		li{

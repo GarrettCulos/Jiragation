@@ -37376,22 +37376,39 @@ svg:hover path {
 
 /* line 1, ../sass/_navbar.scss */
 .small-text {
-  display: block;
-  font-size: 9px;
+  display: inline-block;
+  font-size: 14px;
   color: whitesmoke;
   text-align: center;
   line-height: 1em;
+  padding-right: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
-/* line 10, ../sass/_navbar.scss */
+/* line 11, ../sass/_navbar.scss */
 .navigation-block {
   display: block;
   height: 100%;
 }
 
-/* line 15, ../sass/_navbar.scss */
+/* line 16, ../sass/_navbar.scss */
+md-toolbar {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
+  box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
+}
+
+/* line 19, ../sass/_navbar.scss */
+md-toolbar {
+  min-height: 55px;
+}
+/* line 21, ../sass/_navbar.scss */
+md-toolbar .md-toolbar-tools {
+  height: 55px;
+  max-height: 55px;
+}
+
+/* line 27, ../sass/_navbar.scss */
 .nav-bg {
   z-index: 9;
   width: 100%;
@@ -37399,32 +37416,30 @@ svg:hover path {
   text-align: center;
   color: whitesmoke;
   background-color: #620098;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
-  box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
 }
-/* line 25, ../sass/_navbar.scss */
+/* line 36, ../sass/_navbar.scss */
 .nav-bg ul.nav.navbar-nav li {
   border-top: 2px solid transparent;
 }
-/* line 28, ../sass/_navbar.scss */
+/* line 39, ../sass/_navbar.scss */
 .nav-bg ul.nav.navbar-nav li:hover a {
   background-color: transparent;
 }
-/* line 34, ../sass/_navbar.scss */
+/* line 45, ../sass/_navbar.scss */
 .nav-bg ul.nav.navbar-nav li.active {
   border-top: 2px solid white;
 }
-/* line 39, ../sass/_navbar.scss */
+/* line 50, ../sass/_navbar.scss */
 .nav-bg .nav-item,
 .nav-bg .search-bar,
 .nav-bg .version {
   display: inline-block;
 }
-/* line 44, ../sass/_navbar.scss */
+/* line 55, ../sass/_navbar.scss */
 .nav-bg .version {
   float: right;
 }
-/* line 48, ../sass/_navbar.scss */
+/* line 59, ../sass/_navbar.scss */
 .nav-bg .nav-item {
   padding: 0 30px;
   float: left;
@@ -37432,17 +37447,17 @@ svg:hover path {
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 60, ../sass/_navbar.scss */
+/* line 71, ../sass/_navbar.scss */
 .nav-bg .prefered-name {
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 65, ../sass/_navbar.scss */
+/* line 76, ../sass/_navbar.scss */
 .nav-bg .search-bar {
   line-height: 2.5em;
   display: inline-block;
 }
-/* line 69, ../sass/_navbar.scss */
+/* line 80, ../sass/_navbar.scss */
 .nav-bg .search-bar input {
   line-height: 1.8em;
   padding: 3px 10px;
@@ -37450,14 +37465,14 @@ svg:hover path {
   color: #0a0a0a;
   border: none;
 }
-/* line 76, ../sass/_navbar.scss */
+/* line 87, ../sass/_navbar.scss */
 .nav-bg .search-bar .pull-jiras {
   cursor: pointer;
   color: white;
   margin-left: 20px;
   display: inline-block;
 }
-/* line 83, ../sass/_navbar.scss */
+/* line 94, ../sass/_navbar.scss */
 .nav-bg .search-bar .search-label {
   margin-left: 10px;
   margin-right: 10px;
@@ -37467,21 +37482,21 @@ svg:hover path {
   display: inline-block;
   padding: 0 15px;
 }
-/* line 93, ../sass/_navbar.scss */
+/* line 104, ../sass/_navbar.scss */
 .nav-bg .search-bar button {
   border-top: 2px solid transparent;
   line-height: 3.5em;
 }
-/* line 99, ../sass/_navbar.scss */
+/* line 110, ../sass/_navbar.scss */
 .nav-bg .search-bar .active-button {
   border-top: 2px solid white;
 }
-/* line 104, ../sass/_navbar.scss */
+/* line 115, ../sass/_navbar.scss */
 .nav-bg .version {
   line-height: 3.5em;
   color: rgba(225, 225, 225, 0.3);
 }
-/* line 109, ../sass/_navbar.scss */
+/* line 120, ../sass/_navbar.scss */
 .nav-bg .top-nav {
   position: fixed;
   top: 0;
