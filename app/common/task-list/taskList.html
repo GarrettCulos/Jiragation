@@ -1,49 +1,115 @@
-<div class="nav-bg">
-  <div class="container-fluid">
-    <div class="row">
-			<div class="col-xs-3" ng-controller="HeaderController">
-		  	<header></header>
-		  </div>
-		  
-      <div class="search-bar col-xs-9">
-      	<div class="pull-jiras" ng-click="getJiraTasks()">
-      		<div class="{{!fetching_tasks ? '': 'spinner' }}"><img class="svg" src="img/svg/hot-drink.svg"></div>
-      		<!-- <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-      		<span class="glyphicon glyphicon-cloud-download"></span> -->
-      	</div>
-	      <div class="search-label">Search</div> 
-	      <input ng-model="search.txt">
-	      <div class="search-label">Task Type:</div>
-	      <span ng-repeat="status in taskStatuses">
-	        <button ng-class="{'active-button' : status.isActive}" type="checkbox" ng-click="changeStatus(status.name)"> {{ status.name }}</button>
-	      </span>
-      </div>
-    </div>
+<md-toolbar class="md-primary">
+  <div class="md-toolbar-tools">
+		<div class="navigation-item">
+	    <md-button ng-click="toggleLeft()" class="md-icon-button md-primary">
+	      <md-icon md-svg-icon="img/svg/menu.svg"></md-icon>
+	    </md-button>
+	    <!-- <div class="small-text">Nav</div> -->
+	  </div>  
+
+
+		<div class="navigation-item">
+	    <md-button ng-click="showSettings($event)" class="md-icon-button md-primary">
+	      <md-icon md-svg-icon="img/svg/settings.svg"></md-icon>
+	    </md-button>
+	    <div class="small-text">Settings</div>
+	  </div>
+
+ 		<span flex></span>
+
+		<div class="navigation-item">
+	    <md-button aria-label="Get Tasks" class="md-icon-button" ng-click="getJiraTasks()">
+	      <md-icon md-svg-icon="img/svg/refresh.svg" class=" {{!fetching_tasks ? '': 'spinner' }}"></md-icon>
+	    </md-button>
+	    <div class="small-text">Refresh</div>
+	  </div>
+          <!-- <input ng-model="search.txt" placeholder="Search" flex> -->
+
+		<div class="navigation-item">
+	    <md-button ng-click="toggleRight()" class="md-icon-button md-primary">
+	      <md-icon md-svg-icon="img/svg/view_list.svg"></md-icon>
+	    </md-button>
+	    <div class="small-text">Filter</div>
+	  </div>
+
   </div>
-</div> 
+</md-toolbar>
 
-<div class="container">
+
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+  <md-toolbar class="md-theme-light" flex-align="center center" ng-controller="RightCtrl">
+    <md-button ng-click="close()" class="md-primary">
+      Close
+    </md-button>
+  </md-toolbar>
+
+  <md-content layout-padding>
+	  <md-list-item ng-repeat="status in taskStatuses">
+	    <p> {{ status.name }} </p>
+	    <md-checkbox class="md-primary" ng-model="status.isActive"></md-checkbox>
+	  </md-list-item>
+  </md-content>
+</md-sidenav>
+
+<md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
+  <md-toolbar class="md-theme-light" ng-controller="LeftCtrl">
+    <span fill></span>
+    <md-button ng-click="close()" class="md-primary">
+      <md-icon md-svg-icon="img/svg/close.svg"></md-icon>
+    </md-button>
+  </md-toolbar>
+
+  <md-content layout-padding ng-controller="HeaderController">
+		<!-- <header ></header> -->
+		<md-list>
+			<md-list-item class="noright">
+				<a class="{{isActive('/')}}" href="#/">Tasks</a>
+		    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
+	  	</md-list-item>
+	  	
+<!-- 	  	<md-list-item class="noright">
+		  	<a class="{{isActive('/account')}}"href="#/account">Account</a>
+		    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
+	  	</md-list-item> -->
+
+	  	<md-list-item class="noright">
+				<a class="{{isActive('/logs')}}" href="#/logs">Logs</a>
+		    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
+	  	</md-list-item>  
+  	</md-list>
+  </md-content>
+</md-sidenav>
+
+<md-content layout-padding flex>
+
 	<div class="main-content">
-		<div class="row">
-			<div class="col-xs-6">
-				<div class="col-xs-3 center">
-						<label>Time</label>
-				</div>
-				<div class="col-xs-3 no-padding center">
-						<label>Status</label>
-				</div>
-				<div class="col-xs-3 no-padding center">
-						<label>Task ID</label>
-				</div>
-				<div class="col-xs-3 no-padding">
-					<div ng-click="order(task.fields.created)" ng-class="{reverse:reverse}" class="task-date-title">
-						Date
-					</div>	
-				</div>
+		<div layout="row" layout-align="enter" flex>
+			
+			<div class="center" flex="10">
+					<label>Time</label>
 			</div>
-			<div class="col-xs-6 no-padding">
-				<div class="task-summary-title">
 
+			<div class="center" flex="5">
+					<label>Priority</label>
+			</div>
+
+			<div class="center" flex="5">
+					<label>Status</label>
+			</div>
+
+			<div class="center" flex="10">
+					<label>Task ID</label>
+			</div>
+
+			<div class="center" flex="10">
+				<div ng-click="order(task.fields.created)" ng-class="{reverse:reverse}" class="task-date-title">
+					<label> Date </label>
+				</div>	
+			</div>
+
+			<div flex="60">
+				<div class="task-summary-title">
+					<label> Description </label>
 				</div>			
 				<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
 				<!-- <button  ng-click="updateTaskView(accountNum, taskNum)"> View Task </button> -->		
@@ -51,55 +117,60 @@
 		</div>
 		<div class="account-list">
 			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse">
-				<div class="select-default task-item" ng-class="{'select-active': isActive }" ng-controller ="taskController" ng-click="updateRightView(task.id, taskNum); toggleClick(taskNum); timerToggle()">
-					<div  class="row">
-						<div class="col-xs-6">
-							<div class="col-xs-3 center ">
-								<div class="logged-time">{{ timeLogged | returnTime }}</div>
-								<timer class="timer" autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer> <!-- ng-attr-start-time="timerStart" -->
-						  </div>
-						
-							<div class="col-xs-3 no-padding center">
-								<!-- Pass in pririty object -->
-								<div class="col-xs-3 no-padding"> <img class="task-priority" src="{{ task.fields.priority | priorityF }}"> </div>
-								<div class="col-xs-9 no-padding"> <div class="task-status">  {{ task.fields.status.name }}</div> </div>
-							</div>
-
-							<div class="col-xs-3 no-padding center">
-								<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
-								<a href="{{ taskUrl(task.key, task.self) }}" target="_blank" ><div class="task-name align-left">{{ task.key }}</div></a>
-							</div>
-						
-							<div class="col-xs-3 no-padding center">
-								<div class="task-date">  {{  task.fields.created | dateF }}  </div>
-							</div>
-						</div>
-
-						<div class="col-xs-6 no-padding task-summary-container">
-							<div class="task-summary">{{ task.fields.summary }}</div>			
-							<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
-							<!-- <button  ng-click="updateTaskView(taskNum)"> View Task </button> -->		
-						</div>
-
+				<div class="select-default task-item" 
+					ng-class="{'select-active': isActive }" 
+					ng-controller ="taskController" 
+					ng-click="updateRightView(taskNum); toggleClick(taskNum); timerToggle()"
+					layout="row" 
+					layout-align="center"
+					flex>
+		
+					<div class="center" flex="10">
+						<div class="logged-time">{{ timeLogged | returnTime }}</div>
+						<timer class="timer" autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer> <!-- ng-attr-start-time="timerStart" -->
+				  	</div>
+				
+					<div class="center" flex="5">
+						<img class="task-priority" src="{{ task.fields.priority | priorityF }}">
 					</div>
-					<div ng-if="isActive" class="row">
-						<div class="col-xs-8">
-							{{task.fields.description}}
+
+					<div class="center" flex="5">
+						<div class="task-status">  {{ task.fields.status.name }}</div> 
+					</div>
+
+					<div class="center" flex="10">
+						<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
+						<a href="{{ taskUrl(task.key, task.self) }}" target="_blank" ><div class="task-name align-left">{{ task.key }}</div></a>
+					</div>
+				
+					<div class="center" flex="10">
+						<div class="task-date">  {{  task.fields.created | dateF }}  </div>
+					</div>
+
+					<div flex="60" class="task-summary-container">
+						<div class="task-summary">{{ task.fields.summary }}</div>			
+						<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
+						<!-- <button  ng-click="updateTaskView(taskNum)"> View Task </button> -->		
+					</div>
+
+				</div>
+				<div ng-if="isActive" layout="row" layout-padding>
+					<div flex="70">
+						{{task.fields.description}}
+					</div>
+					<div flex="30" >
+						<div layout="row" flex layout-padding>
+							<div ng-if="task.fields.fixVersions">Release: {{task.fields.fixVersions[0].name}} <br/> Released: {{task.fields.fixVersions[0].released}}</div>
 						</div>
-						<div class="col-xs-4">
-							<div class="row">
-								<div ng-if="task.fields.fixVersions">Release: {{task.fields.fixVersions[0].name}} <br/> Released: {{task.fields.fixVersions[0].released}}</div>
-							</div>
-							<div class="row">
-								<div ng-if="task.fields.duedate">Due: {{task.fields.duedate}}</div>
-							</div>
+						<div layout="row" flex layout-padding>
+							<div ng-if="task.fields.duedate">Due: {{task.fields.duedate}}</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>  
-</div>
+
+</md-content>
 
   

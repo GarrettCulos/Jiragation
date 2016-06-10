@@ -3,6 +3,7 @@
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 .controller('userController', ['$scope', '$http', '$q', function($scope, $http, $q) {
+
 	// ---------------------------
 	// This should be a directive
 	$('img.svg').each(function(){
@@ -145,6 +146,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		}	
 	};
 
+	
 	// Return Task Url
 	$scope.taskUrl = function(taskKey, taskUrl) {
 	

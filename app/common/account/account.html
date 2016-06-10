@@ -1,114 +1,145 @@
-<div class="nav-bg">
-  <div class="container-fluid">
-    <div class="row">
-		  <div class="col-xs-3" ng-controller="HeaderController">
-		  	<header></header>
-		  </div>
-		  
-      <div class="col-xs-9">
+<md-dialog aria-label="Account Settings"  ng-controller="accountCtrl" ng-cloak>
+	<form>
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<h2>
+					Account Settings
+				</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content>
+			<div class="md-dialog-content">
 				<div class="prefered-name">
 					Hello {{userNamePrefered}}, your looking well today.
 				</div>
-      </div>
-    </div>
-  </div>
-</div> 
+			       
+				
+					<div class="account-settings">
+						<h4> Update User Information </h4>	
+						<div class="user-information"> 
+							<div layout="row">
+								<md-input-container flex="33">
+									<label>First Name</label>
+									<input type="text" ng-model="userNameFirst" required >
+								</md-input-container>
 
-<div class="container">
-	<div class="account-settings">
-		<h4> Update User Information </h4>	
-		<div class="user-information"> 
-				<div class="row">
-					<div class="col-xs-3"><b>First Name</b></div>
-					<div class="col-xs-3"><b>Last Name</b></div>
-					<div class="col-xs-3"><b>Prefered Name</b></div>
-				</div>
-				<div class="row">
-					<div class="col-xs-3"><input type="text" ng-model="userNameFirst"></div>
-					<div class="col-xs-3"><input type="text" ng-model="userNameLast"></div>
-					<div class="col-xs-3"><input type="text" ng-model="userNamePrefered"></div>
-				</div>			
-		</div>
+								<md-input-container flex="33">
+									<label>Last Name</label>
+									<input type="text" ng-model="userNameLast" required >
+								</md-input-container>
 
-		
-		<h4> Update List of Jira Accounts </h4>
-		<div class="user-accounts">
-			<div class="visible-account">
-				<div class="user-account">
-					<div class="row">
-						<div class="col-xs-3">
-							<b>User Name</b>
-						</div>
-						<div class="col-xs-3">
-							<b>Password</b>
-						</div>
-						<div class="col-xs-3">
-							<b>URL</b>
-						</div>
-					</div>
-				</div>
-				<div ng-repeat="account in JiraAccounts">
-					<div class="user-account">
-						<div class="row">
-							<div class="col-xs-3">
-								{{account.user_name}}
-							</div>
-							<div class="col-xs-3">
-								{{account.password}}
-							</div>
-							<div class="col-xs-3">
-								{{account.protocal}}://{{account.url}}
-							</div>
-							<div class="col-xs-3">
-								<button class="button" ng-click="hideAccount($index)"> Hide </button>
-								<button class="button" ng-click="delete($index)"> Remove </button>	
+								<md-input-container flex="33">
+									<label>Prefered Name</label>
+									<input type="text" ng-model="userNamePrefered" required >
+								</md-input-container>
 							</div>
 						</div>
-					</div>
+
+						
+						<h4> Update List of Jira Accounts </h4>
+						<div class="user-accounts">
+							<div class="visible-account">
+								<div class="user-account">
+									<div layout="row">
+										<div flex="20">
+											<b>User Name</b>
+										</div>
+										<div flex="20">
+											<b>Password</b>
+										</div>
+										<div flex="35">
+											<b>URL</b>
+										</div>
+									</div>
+								</div>
+								<div ng-repeat="account in JiraAccounts">
+									<div class="user-account">
+										<div layout="row">
+											<div flex="20">
+												{{account.user_name}}
+											</div>
+											<div flex="20">
+												{{account.password}}
+											</div>
+											<div flex="35">
+												{{account.protocal}}://{{account.url}}
+											</div>
+											<div flex="15">
+												<md-button md-primary class="button" ng-click="hideAccount($index)"> Hide </md-button>
+												<md-button md-primary class="button" ng-click="delete($index)"> Remove </md-button>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div ng-if="hiddenJiraAccounts">
+								<h4> Hidden Accounts </h4>
+								<div ng-repeat="account in hiddenJiraAccounts">
+									<div class="user-account">
+										<div layout="row">
+											<div flex="20">
+												{{account.user_name}}
+											</div>
+											<div flex="20">
+												{{account.password}}
+											</div>
+											<div flex="35">
+												{{account.protocal}}://{{account.url}}
+											</div>
+											<div flex="15">
+												<md-button md-primary ng-click="showAccount($index)"> Show </md-button>		
+											</div>
+										</div>
+									</div>
+								</div>
+							</div> 
+							
+							<div class="add-account">
+								<h4> Add Account </h4>
+								<div class="user-add-account">
+									<div layout="row">
+										<md-input-container flex="50">
+											<label>User Name</label>
+											<input type="text" ng-model="userName" required >
+										</md-input-container>
+
+										<md-input-container flex="50">
+											<label>Password</label>
+											<input type="text" ng-model="password" required >
+										</md-input-container>
+									</div>
+									<div layout="row">
+										<md-input-container flex="80">
+											<label>Jira URL</label>
+											<input type="text" ng-model="jiraURL" required >
+										</md-input-container>
+
+										<div flex="20">
+											<md-button  ng-click="addAccount(jiraURL, userName, password)"> Add Account </md-button>		
+										</div>
+									</div>
+								</div>							
+							</div>
+
+					</div>	
 				</div>
 			</div>
-			
-			
-			<h4> Hidden Accounts </h4>
-			<div ng-repeat="account in hiddenJiraAccounts">
-			<div class="user-account">
-				<div class="row">
-					<div class="col-xs-3">
-						{{account.user_name}}
-					</div>
-					<div class="col-xs-3">
-						{{account.password}}
-					</div>
-					<div class="col-xs-3">
-						{{account.protocal}}://{{account.url}}
-					</div>
-					<div class="col-xs-3">
-						<button class="button" ng-click="showAccount($index)"> Show </button>		
-					</div>
-				</div>
-			</div>
-			</div> 
-			
-			<div class="add-account">
-				<h4> Add Account </h4>
-				<div class="user-add-account">
-					<div class="row">
-						<div class="col-xs-3">
-							<input type="text" ng-model="userName" placeholder="User Name">
-						</div>
-						<div class="col-xs-3">
-							<input type="text" ng-model="password" placeholder="Password">
-						</div>
-						<div class="col-xs-3">
-							<input type="text" ng-model="jiraURL" placeholder="Jira URL">
-						</div>
-						<div class="col-xs-3">
-							<button class="button" ng-click="addAccount(jiraURL, userName, password)"> Add Account </button>		
-						</div>
-					</div>
-				</div>							
-			</div>
+		</md-dialog-content>
+		<md-dialog-actions layout="row">
+			<span flex></span>
+			<!-- <md-button ng-click="discard()">
+				discard
+			</md-button>
+			 -->
+			 <md-button ng-click="save('useful')">
+				Save
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>
 
-		</div>
-	</div>	
-</div>
