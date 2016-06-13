@@ -1,41 +1,6 @@
-<md-toolbar class="md-primary">
-  <div class="md-toolbar-tools">
-		<div class="navigation-item">
-	    <md-button ng-click="toggleLeft()" class="md-icon-button md-primary">
-	      <md-icon md-svg-icon="img/svg/menu.svg"></md-icon>
-	    </md-button>
-	    <!-- <div class="small-text">Nav</div> -->
-	  </div>  
+<headernav ng-controller="HeaderController"></headernav>
 
-
-		<div class="navigation-item">
-	    <md-button ng-click="showSettings($event)" class="md-icon-button md-primary">
-	      <md-icon md-svg-icon="img/svg/settings.svg"></md-icon>
-	    </md-button>
-	    <div class="small-text">Settings</div>
-	  </div>
-
- 		<span flex></span>
-
-		<div class="navigation-item">
-	    <md-button aria-label="Get Tasks" class="md-icon-button" ng-click="getJiraTasks()">
-	      <md-icon md-svg-icon="img/svg/refresh.svg" class=" {{!fetching_tasks ? '': 'spinner' }}"></md-icon>
-	    </md-button>
-	    <div class="small-text">Refresh</div>
-	  </div>
-          <!-- <input ng-model="search.txt" placeholder="Search" flex> -->
-
-		<div class="navigation-item">
-	    <md-button ng-click="toggleRight()" class="md-icon-button md-primary">
-	      <md-icon md-svg-icon="img/svg/view_list.svg"></md-icon>
-	    </md-button>
-	    <div class="small-text">Filter</div>
-	  </div>
-
-  </div>
-</md-toolbar>
-
-
+<!-- Filter -->
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
   <md-toolbar class="md-theme-light" flex-align="center center" ng-controller="RightCtrl">
     <md-button ng-click="close()" class="md-primary">
@@ -51,36 +16,7 @@
   </md-content>
 </md-sidenav>
 
-<md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
-  <md-toolbar class="md-theme-light" ng-controller="LeftCtrl">
-    <span fill></span>
-    <md-button ng-click="close()" class="md-primary">
-      <md-icon md-svg-icon="img/svg/close.svg"></md-icon>
-    </md-button>
-  </md-toolbar>
-
-  <md-content layout-padding ng-controller="HeaderController">
-		<!-- <header ></header> -->
-		<md-list>
-			<md-list-item class="noright">
-				<a class="{{isActive('/')}}" href="#/">Tasks</a>
-		    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
-	  	</md-list-item>
-	  	
-<!-- 	  	<md-list-item class="noright">
-		  	<a class="{{isActive('/account')}}"href="#/account">Account</a>
-		    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
-	  	</md-list-item> -->
-
-	  	<md-list-item class="noright">
-				<a class="{{isActive('/logs')}}" href="#/logs">Logs</a>
-		    <md-icon md-svg-icon="communication:email"  ng-click="doSecondaryAction($event)" aria-label="Send Email" class="md-secondary md-hue-3" ></md-icon>
-	  	</md-list-item>  
-  	</md-list>
-  </md-content>
-</md-sidenav>
-
-<md-content layout-padding flex>
+<md-content layout-padding flex style="background-color: rgba(0,0,0,0.05);">
 
 	<div class="main-content">
 		<div layout="row" layout-align="enter" flex>
@@ -170,7 +106,4 @@
 			</div>
 		</div>
 	</div>  
-
 </md-content>
-
-  

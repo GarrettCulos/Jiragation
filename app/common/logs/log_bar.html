@@ -1,15 +1,23 @@
-<div ng-click="isActive()" class="log-bar">
-	<div class="task-line" ng-class="{inactive: inactive}" ng-repeat="(tasks_key, tasks) in task_lines" style="top:{{15*tasks_key}}px">
-		<div data-id="{{tasks.task_id}}" 
-			ng-repeat="(line_key, line) in tasks.lines" 
-			class="time-marker"
-			style="left:{{line.start}}%; width:{{line.width}}%; background-color:{{tasks.color}}; ">
+<div>
+	<div layout="row" flex>
+		<span flex></span>
+		<md-button class="md-primary" ng-click="isActive()">
+			Expand Graph
+		</md-button>	
+	</div>
+	<div layout="row"  class="log-bar" flex>
+		<div class="task-line" ng-class="{inactive: inactive}" ng-repeat="(tasks_key, tasks) in task_lines" style="top:{{15*tasks_key}}px">
+			<div data-id="{{tasks.task_id}}" 
+				ng-repeat="(line_key, line) in tasks.lines" 
+				class="time-marker"
+				style="left:{{line.start}}%; width:{{line.width}}%; background-color:{{tasks.color}}; ">
+			</div>
 		</div>
-	</div>
-	<div class="scale">
-		<span class="time" style="left:33.3333%;">8:00am</span>
-		<span class="time" style="left:50%">12:00am</span>
-		<span class="time" style="left:66.6666%">4:00am</span>
-		<span class="time" style="left:83.3333%">8:00pm</span>
-	</div>
+		<div class="scale">
+			<span class="time" style="left:33.3333%;">8:00am</span>
+			<span class="time" style="left:50%">12:00am</span>
+			<span class="time" style="left:66.6666%">4:00am</span>
+			<span class="time" style="left:83.3333%">8:00pm</span>
+		</div>
+	</div>	
 </div>

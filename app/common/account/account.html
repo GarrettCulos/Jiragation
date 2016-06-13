@@ -6,7 +6,7 @@
 			</h2>
 			<span flex></span>
 			<md-button class="md-icon-button" ng-click="cancel()">
-				<md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+				<md-icon md-svg-src="img/svg/close.svg" aria-label="Close dialog"></md-icon>
 			</md-button>
 		</div>
 	</md-toolbar>
@@ -81,16 +81,16 @@
 							<div ng-repeat="account in hiddenJiraAccounts">
 								<div class="user-account">
 									<div layout="row">
-										<div flex="20">
+										<div flex="20" layout="column" layout-align="left center">
 											{{account.user_name}}
 										</div>
-										<div flex="20">
+										<div flex="20" layout="column" layout-align="left center">
 											{{account.password}}
 										</div>
-										<div flex="35">
+										<div flex="35" layout="column" layout-align="left center">
 											{{account.protocal}}://{{account.url}}
 										</div>
-										<div flex="25">
+										<div flex="25" layout="columns" layout-align="left center">
 											<md-button ng-click="showAccount($index)"> Show </md-button>		
 										</div>
 									</div>
@@ -133,7 +133,7 @@
 			</div>
 		</div>
 	</md-dialog-content>
-	<md-dialog-actions layout="row" class="md-primary">
+	<md-dialog-actions layout="row">
 		<span flex></span>
 		<!-- <md-button ng-click="discard()">
 			discard

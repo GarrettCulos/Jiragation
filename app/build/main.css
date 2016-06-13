@@ -37170,6 +37170,88 @@ md-tooltip.md-show {
   font-weight: 400;
   src: url("fonts/Poiret_one/PoiretOne-Regular.ttf");
 }
+/* line 1, ../sass/_base.scss */
+.validation-messages {
+  font-size: 12px;
+  margin: 10px 0 0 25px;
+}
+
+/* line 6, ../sass/_base.scss */
+.panel-shadow {
+  -webkit-box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
+  box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
+}
+
+/* line 14, ../sass/_base.scss */
+#logs md-icon {
+  color: black;
+}
+/* line 17, ../sass/_base.scss */
+#logs md-icon svg path {
+  fill: rgba(0, 0, 0, 0.87059);
+}
+
+/* line 24, ../sass/_base.scss */
+.md-default-theme .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator,
+.md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator,
+.md-default-theme .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator,
+.md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator {
+  color: whitesmoke;
+}
+
+/* line 32, ../sass/_base.scss */
+input.md-datepicker-input textarea,
+input.md-datepicker-input select {
+  color: rgba(0, 0, 0, 0.87059);
+}
+
+/* line 37, ../sass/_base.scss */
+.md-default-theme .md-calendar-date-selection-indicator:hover,
+.md-calendar-date-selection-indicator:hover {
+  background-color: transparent;
+  border: 1px solid #52007e;
+}
+
+/* line 44, ../sass/_base.scss */
+md-toolbar.md-default-theme:not(.md-menu-toolbar),
+md-toolbar:not(.md-menu-toolbar),
+md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised),
+md-toolbar:not(.md-menu-toolbar) .md-button:not(.md-raised),
+md-checkbox.md-default-theme:not([disabled]).md-primary.md-checked .md-icon:after,
+md-checkbox:not([disabled]).md-primary.md-checked .md-icon:after {
+  border-color: whitesmoke;
+  color: whitesmoke;
+}
+
+/* line 54, ../sass/_base.scss */
+md-dialog .md-actions,
+md-dialog md-dialog-actions {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
+}
+
+/* line 59, ../sass/_base.scss */
+md-datepicker.md-default-theme,
+md-datepicker {
+  background-color: transparent;
+}
+
+/* line 64, ../sass/_base.scss */
+md-toolbar {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
+}
+
+/* line 67, ../sass/_base.scss */
+md-toolbar {
+  min-height: 55px;
+}
+/* line 69, ../sass/_base.scss */
+md-toolbar .md-toolbar-tools {
+  height: 55px;
+  max-height: 55px;
+}
+
 /* line 1, ../sass/_icons.scss */
 svg {
   display: inline-block;
@@ -37353,59 +37435,46 @@ svg:hover path {
   font-size: 1.0em;
   color: whitesmoke;
 }
-/* line 18, ../sass/_logs.scss */
-.logs-control-bar md-content {
-  margin-top: 5px;
-  padding-right: 10px;
-  overflow: inherit;
-  background-color: transparent;
-}
-/* line 23, ../sass/_logs.scss */
-.logs-control-bar md-content md-datepicker {
-  background-color: transparent;
-}
-/* line 25, ../sass/_logs.scss */
+/* line 20, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-button.md-icon-button {
   padding: 0;
   height: inherit;
 }
-/* line 30, ../sass/_logs.scss */
+/* line 25, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container input {
   font-size: 1em;
   color: black;
-  color: whitesmoke;
 }
-/* line 34, ../sass/_logs.scss */
+/* line 29, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input textarea,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input select,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container input textarea,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container input select {
   font-size: 1em;
   color: black;
-  color: whitesmoke;
 }
-/* line 40, ../sass/_logs.scss */
+/* line 35, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container.md-datepicker-input-focused {
   border-bottom-width: 1px;
 }
-/* line 44, ../sass/_logs.scss */
+/* line 39, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle,
 .logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle {
-  border-top-color: rgba(245, 245, 245, 0.5);
+  border-top-color: rgba(0, 0, 0, 0.5);
 }
-/* line 47, ../sass/_logs.scss */
+/* line 42, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover,
 .logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover {
-  border-top-color: whitesmoke;
+  border-top-color: black;
 }
 
-/* line 56, ../sass/_logs.scss */
+/* line 51, ../sass/_logs.scss */
 #logs-display {
   margin-top: 50px;
 }
 
-/* line 1, ../sass/_navbar.scss */
+/* line 2, ../sass/_navbar.scss */
 .small-text {
   display: inline-block;
   font-size: 14px;
@@ -37417,60 +37486,62 @@ svg:hover path {
   padding-bottom: 5px;
 }
 
-/* line 11, ../sass/_navbar.scss */
+/* line 12, ../sass/_navbar.scss */
 .navigation-block {
   display: block;
   height: 100%;
 }
 
-/* line 16, ../sass/_navbar.scss */
-md-toolbar {
-  -webkit-box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
-  box-shadow: rgba(0, 0, 0, 0.5) -5px 0 10px;
+/* line 17, ../sass/_navbar.scss */
+.nav-icon {
+  margin: 0 30px 0 0;
 }
-
-/* line 19, ../sass/_navbar.scss */
-md-toolbar {
-  min-height: 55px;
+/* line 20, ../sass/_navbar.scss */
+.nav-icon svg circle,
+.nav-icon svg polygon,
+.nav-icon svg rect,
+.nav-icon svg path {
+  fill: black;
 }
-/* line 21, ../sass/_navbar.scss */
-md-toolbar .md-toolbar-tools {
-  height: 55px;
-  max-height: 55px;
-}
-
 /* line 27, ../sass/_navbar.scss */
+.nav-icon svg:hover circle,
+.nav-icon svg:hover polygon,
+.nav-icon svg:hover rect,
+.nav-icon svg:hover path {
+  fill: black;
+}
+
+/* line 37, ../sass/_navbar.scss */
 .nav-bg {
   z-index: 9;
   width: 100%;
   position: fixed;
   text-align: center;
-  color: whitesmoke;
-  background-color: #620098;
+  background-color: #52007e;
 }
-/* line 36, ../sass/_navbar.scss */
+/* line 46, ../sass/_navbar.scss */
 .nav-bg ul.nav.navbar-nav li {
   border-top: 2px solid transparent;
 }
-/* line 39, ../sass/_navbar.scss */
+/* line 49, ../sass/_navbar.scss */
 .nav-bg ul.nav.navbar-nav li:hover a {
   background-color: transparent;
 }
-/* line 45, ../sass/_navbar.scss */
+/* line 55, ../sass/_navbar.scss */
 .nav-bg ul.nav.navbar-nav li.active {
   border-top: 2px solid white;
 }
-/* line 50, ../sass/_navbar.scss */
+/* line 60, ../sass/_navbar.scss */
 .nav-bg .nav-item,
 .nav-bg .search-bar,
 .nav-bg .version {
   display: inline-block;
 }
-/* line 55, ../sass/_navbar.scss */
+/* line 65, ../sass/_navbar.scss */
 .nav-bg .version {
   float: right;
 }
-/* line 59, ../sass/_navbar.scss */
+/* line 69, ../sass/_navbar.scss */
 .nav-bg .nav-item {
   padding: 0 30px;
   float: left;
@@ -37478,32 +37549,30 @@ md-toolbar .md-toolbar-tools {
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 71, ../sass/_navbar.scss */
+/* line 81, ../sass/_navbar.scss */
 .nav-bg .prefered-name {
   line-height: 3.5em;
   border-top: 2px solid transparent;
 }
-/* line 76, ../sass/_navbar.scss */
+/* line 86, ../sass/_navbar.scss */
 .nav-bg .search-bar {
   line-height: 2.5em;
   display: inline-block;
 }
-/* line 80, ../sass/_navbar.scss */
+/* line 90, ../sass/_navbar.scss */
 .nav-bg .search-bar input {
   line-height: 1.8em;
   padding: 3px 10px;
   background-color: white;
-  color: #0a0a0a;
   border: none;
 }
-/* line 87, ../sass/_navbar.scss */
+/* line 97, ../sass/_navbar.scss */
 .nav-bg .search-bar .pull-jiras {
   cursor: pointer;
-  color: white;
   margin-left: 20px;
   display: inline-block;
 }
-/* line 94, ../sass/_navbar.scss */
+/* line 104, ../sass/_navbar.scss */
 .nav-bg .search-bar .search-label {
   margin-left: 10px;
   margin-right: 10px;
@@ -37513,21 +37582,20 @@ md-toolbar .md-toolbar-tools {
   display: inline-block;
   padding: 0 15px;
 }
-/* line 104, ../sass/_navbar.scss */
+/* line 114, ../sass/_navbar.scss */
 .nav-bg .search-bar button {
   border-top: 2px solid transparent;
   line-height: 3.5em;
 }
-/* line 110, ../sass/_navbar.scss */
+/* line 120, ../sass/_navbar.scss */
 .nav-bg .search-bar .active-button {
   border-top: 2px solid white;
 }
-/* line 115, ../sass/_navbar.scss */
+/* line 125, ../sass/_navbar.scss */
 .nav-bg .version {
   line-height: 3.5em;
-  color: rgba(225, 225, 225, 0.3);
 }
-/* line 120, ../sass/_navbar.scss */
+/* line 130, ../sass/_navbar.scss */
 .nav-bg .top-nav {
   position: fixed;
   top: 0;

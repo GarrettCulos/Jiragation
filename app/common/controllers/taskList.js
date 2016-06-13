@@ -186,5 +186,3 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	$scope.getJiraTasks();
 }])
-
-

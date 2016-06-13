@@ -39,6 +39,7 @@ angular.module('myApp', [
     	templateUrl: 'common/404.html',
   });
 }])
+
 .config(function ($mdThemingProvider) {
     var customPrimary = {
         '50': '#ad18ff',
@@ -89,20 +90,21 @@ angular.module('myApp', [
         'A700': '#800000'
     };
     var customBackground = {
-        '50': '#d2d6d6',
-        '100': '#c5caca',
-        '200': '#b8bebe',
-        '300': '#abb1b1',
-        '400': '#9da5a5',
-        '500': '#909999',
-        '600': '#838d8d',
-        '700': '#768080',
-        '800': '#6a7373',
-        '900': '#5d6666',
-        'A100': '#e0e2e2',
-        'A200': '#edeeee',
-        'A400': '#fafbfb',
-        'A700': '#515858'
+        '50': '#ffffff',
+        '100': '#ffffff',
+        '200': '#ffffff',
+        '300': '#ffffff',
+        '400': '#ffffff',
+        '500': '#ffffff',
+        '600': '#f0f0f0',
+        '700': '#e0e0e0',
+        '800': '#d1d1d1',
+        '900': '#c2c2c2',
+        'A100': '#ffffff',
+        'A200': '#ffffff',
+        'A400': '#ffffff',
+        'A700': '#e0e0e0',
+        // 'contrastDarkColors': '50 100 200 300 400 500 600 700 800 900 A100 A200 A400 A700'
     };
 
     $mdThemingProvider.definePalette('customPrimary', customPrimary);
@@ -218,8 +220,8 @@ angular.module('myApp', [
         $mdDialog.hide(answer);
       };
     }
-
 })
+
 .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
   $scope.close = function () {
     // Component lookup should always be available since we are not using `ng-if`
@@ -229,6 +231,7 @@ angular.module('myApp', [
       });
   };
 })
+
 .controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
   $scope.close = function () {
     // Component lookup should always be available since we are not using `ng-if`

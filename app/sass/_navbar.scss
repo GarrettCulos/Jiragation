@@ -1,3 +1,4 @@
+
 .small-text{
 	display:inline-block;
 	font-size:14px;
@@ -13,14 +14,23 @@
 	height:100%;
 }
 
-md-toolbar{
-	@include box-shadow(rgba(black,0.5) -5px 0 10px);
-}
-md-toolbar{
-	min-height:55px;
-	.md-toolbar-tools{
-		height:55px;
-		max-height:55px;
+.nav-icon {
+	margin:0 30px 0 0;
+	svg{
+		circle,
+		polygon,
+		rect,
+		path{
+			fill:rgba(0,0,0,1);
+		}
+		&:hover{
+			circle,
+			polygon,
+			rect,
+			path{
+				fill:rgba(0,0,0,1);
+			}
+		}	
 	}
 }
 
@@ -29,7 +39,7 @@ md-toolbar{
   width:100%;
   position:fixed;
   text-align: center;
-  color:$my_white;
+  // color:$my_white;
   background-color: $my_purple;
 	
 	ul.nav.navbar-nav{
@@ -81,12 +91,12 @@ md-toolbar{
 		  line-height: 1.8em;
 		  padding:3px 10px;
 		  background-color:white;
-		  color:$my_black;
+		  // color:$my_black;
 	      border: none;
 		}
 		.pull-jiras{
 			cursor: pointer;
-			color: white;
+			// color: white;
 			margin-left: 20px;
 			display: inline-block;
 		}
@@ -114,7 +124,7 @@ md-toolbar{
 
 	.version {
 	  line-height:3.5em;
-	  color: rgba(225, 225, 225, 0.3);
+	  // color: rgba(225, 225, 225, 0.3);
 	}
 
 	.top-nav {

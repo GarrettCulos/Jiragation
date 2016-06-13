@@ -16,12 +16,7 @@
 	}
 
 	md-content{
-		margin-top:5px;
-		padding-right:10px;
-		overflow:inherit;
-		background-color: transparent;
 		md-datepicker{
-			background-color: transparent;
 			.md-button.md-icon-button{
 				padding:0;
 				height:inherit;
@@ -30,11 +25,11 @@
 				.md-datepicker-input,
 				input{
 					@include font-style;
-					color:$my_white;
+					color:black;
 					textarea, 
 					select{
 						@include font-style;
-						color:$my_white;
+						color:black;
 					}	
 				}
 				&.md-datepicker-input-focused{
@@ -43,9 +38,9 @@
 			}
 			.md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle, 
 			.md-datepicker-triangle-button .md-datepicker-expand-triangle{
-				border-top-color:rgba($my_white,0.5);
+				border-top-color:rgba(black,0.5);
 				&:hover{
-					border-top-color:rgba($my_white,1);
+					border-top-color:rgba(black,1);
 				}
 			}
 		}		

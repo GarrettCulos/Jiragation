@@ -3,8 +3,10 @@
 angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 .controller('logsCtrl', ['$scope', '$http', '$q', function($scope, $http, $q) {
-  	
-  	$scope.maxDate = new Date();
+  
+  $scope.queryTodays = false;
+  $scope.maxDate = new Date();
+
 	var date = new Date();
 	var day = date.getDate();
 	var month = date.getMonth()+1;
@@ -22,7 +24,13 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 		$scope.getlogs(today, tomorrow)
 	}
 
-	$scope.getlogs = function(start_date, end_date){
+	$scope.getlogs = function(startD, endD){
+		console.log(startD);
+		console.log(endD);
+		var start_date = new Date(startD);
+		var end_date = new Date(endD);
+		console.log(start_date);
+		console.log(end_date);
 		var diffDays = Math.ceil(Math.abs((end_date.getTime() - start_date.getTime())/(oneDay)));
 		var day_array = []
 		
@@ -60,10 +68,8 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 		}, function errorCallback(res){
 			console.log(res);
-		});		
-		
+		});			
 	}
-
 
 	function filter_data(day_array, data) {
 		var response = day_array;
