@@ -37396,20 +37396,17 @@ svg:hover path {
 .account-settings .user-accounts,
 .account-settings .user-information {
   padding: 15px;
-  background-color: white;
-  -webkit-box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
-  box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
 }
-/* line 10, ../sass/_account_settings.scss */
+/* line 8, ../sass/_account_settings.scss */
 .account-settings .user-account {
   margin-bottom: 10px;
 }
-/* line 15, ../sass/_account_settings.scss */
+/* line 13, ../sass/_account_settings.scss */
 .account-settings .user-information input {
   padding: 0 5px;
   line-height: 2em;
 }
-/* line 22, ../sass/_account_settings.scss */
+/* line 20, ../sass/_account_settings.scss */
 .account-settings .user-add-account input {
   padding: 0 5px;
   line-height: 2em;
@@ -37420,33 +37417,37 @@ svg:hover path {
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   padding: 20px 0;
 }
+/* line 4, ../sass/_logs.scss */
+.day-log:last-child {
+  border-bottom: none;
+}
 
-/* line 6, ../sass/_logs.scss */
+/* line 9, ../sass/_logs.scss */
 .logs-control-bar {
   margin-top: 4px;
 }
-/* line 8, ../sass/_logs.scss */
+/* line 11, ../sass/_logs.scss */
 .logs-control-bar formgroup {
   display: inline-block;
 }
-/* line 12, ../sass/_logs.scss */
+/* line 15, ../sass/_logs.scss */
 .logs-control-bar .title {
   display: inline-block;
   font-size: 1.0em;
   color: whitesmoke;
 }
-/* line 20, ../sass/_logs.scss */
+/* line 23, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-button.md-icon-button {
   padding: 0;
   height: inherit;
 }
-/* line 25, ../sass/_logs.scss */
+/* line 28, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container input {
   font-size: 1em;
   color: black;
 }
-/* line 29, ../sass/_logs.scss */
+/* line 32, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input textarea,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input select,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container input textarea,
@@ -37454,22 +37455,22 @@ svg:hover path {
   font-size: 1em;
   color: black;
 }
-/* line 35, ../sass/_logs.scss */
+/* line 38, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container.md-datepicker-input-focused {
   border-bottom-width: 1px;
 }
-/* line 39, ../sass/_logs.scss */
+/* line 42, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle,
 .logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle {
   border-top-color: rgba(0, 0, 0, 0.5);
 }
-/* line 42, ../sass/_logs.scss */
+/* line 45, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover,
 .logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover {
   border-top-color: black;
 }
 
-/* line 51, ../sass/_logs.scss */
+/* line 54, ../sass/_logs.scss */
 #logs-display {
   margin-top: 50px;
 }
@@ -37509,102 +37510,6 @@ svg:hover path {
 .nav-icon svg:hover rect,
 .nav-icon svg:hover path {
   fill: black;
-}
-
-/* line 37, ../sass/_navbar.scss */
-.nav-bg {
-  z-index: 9;
-  width: 100%;
-  position: fixed;
-  text-align: center;
-  background-color: #52007e;
-}
-/* line 46, ../sass/_navbar.scss */
-.nav-bg ul.nav.navbar-nav li {
-  border-top: 2px solid transparent;
-}
-/* line 49, ../sass/_navbar.scss */
-.nav-bg ul.nav.navbar-nav li:hover a {
-  background-color: transparent;
-}
-/* line 55, ../sass/_navbar.scss */
-.nav-bg ul.nav.navbar-nav li.active {
-  border-top: 2px solid white;
-}
-/* line 60, ../sass/_navbar.scss */
-.nav-bg .nav-item,
-.nav-bg .search-bar,
-.nav-bg .version {
-  display: inline-block;
-}
-/* line 65, ../sass/_navbar.scss */
-.nav-bg .version {
-  float: right;
-}
-/* line 69, ../sass/_navbar.scss */
-.nav-bg .nav-item {
-  padding: 0 30px;
-  float: left;
-  text-align: center;
-  line-height: 3.5em;
-  border-top: 2px solid transparent;
-}
-/* line 81, ../sass/_navbar.scss */
-.nav-bg .prefered-name {
-  line-height: 3.5em;
-  border-top: 2px solid transparent;
-}
-/* line 86, ../sass/_navbar.scss */
-.nav-bg .search-bar {
-  line-height: 2.5em;
-  display: inline-block;
-}
-/* line 90, ../sass/_navbar.scss */
-.nav-bg .search-bar input {
-  line-height: 1.8em;
-  padding: 3px 10px;
-  background-color: white;
-  border: none;
-}
-/* line 97, ../sass/_navbar.scss */
-.nav-bg .search-bar .pull-jiras {
-  cursor: pointer;
-  margin-left: 20px;
-  display: inline-block;
-}
-/* line 104, ../sass/_navbar.scss */
-.nav-bg .search-bar .search-label {
-  margin-left: 10px;
-  margin-right: 10px;
-  line-height: 2em;
-  border: none;
-  outline: none;
-  display: inline-block;
-  padding: 0 15px;
-}
-/* line 114, ../sass/_navbar.scss */
-.nav-bg .search-bar button {
-  border-top: 2px solid transparent;
-  line-height: 3.5em;
-}
-/* line 120, ../sass/_navbar.scss */
-.nav-bg .search-bar .active-button {
-  border-top: 2px solid white;
-}
-/* line 125, ../sass/_navbar.scss */
-.nav-bg .version {
-  line-height: 3.5em;
-}
-/* line 130, ../sass/_navbar.scss */
-.nav-bg .top-nav {
-  position: fixed;
-  top: 0;
-  width: inherit;
-  height: 55px;
-  border-bottom: 0.1em solid black;
-  z-index: 10;
-  vertical-align: middle;
-  background-color: white;
 }
 
 /* app css stylesheet */

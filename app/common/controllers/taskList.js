@@ -2,7 +2,7 @@
 
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
-.controller('userController', ['$scope', '$http', '$q', function($scope, $http, $q) {
+.controller('taskListController', ['$scope', '$http', '$q', function($scope, $http, $q) {
 
 	// ---------------------------
 	// This should be a directive
@@ -35,9 +35,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	});    
 	// ---------------------------
 
-	$scope.userNamePrefered = 'Garrett';
-	$scope.userNameFirst = 'Garrett';
-	$scope.userNameLast = 'Culos';
 	$scope.isActive = false;
 	$scope.JiraAccounts;
 

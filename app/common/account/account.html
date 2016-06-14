@@ -17,30 +17,29 @@
 			</div> -->
 		       
 			
-				<div class="account-settings">
+				<div class="account-settings ">
 					<h4> Update User Information </h4>	
-					<div class="user-information"> 
+					<div class="user-information panel-shadow"> 
 						<div layout="row">
 							<md-input-container flex="33">
 								<label>First Name</label>
-								<input type="text" ng-model="userNameFirst" required >
+								<input type="text" ng-model="user.firstName" required >
 							</md-input-container>
 
 							<md-input-container flex="33">
-								<label>Last Name</label>
-								<input type="text" ng-model="userNameLast" required >
+								<label>Given Name</label>
+								<input type="text" ng-model="user.givenName" required >
 							</md-input-container>
 
 							<md-input-container flex="33">
 								<label>Prefered Name</label>
-								<input type="text" ng-model="userNamePrefered" required >
+								<input type="text" ng-model="user.preferedName" required >
 							</md-input-container>
 						</div>
 					</div>
-
 					
 					<h4> Update List of Jira Accounts </h4>
-					<div class="user-accounts">
+					<div class="user-accounts panel-shadow">
 						<div class="visible-account">
 							<div class="user-account">
 								<div layout="row">
@@ -100,7 +99,7 @@
 					</div>	
 
 					<h4> Add Account </h4>
-					<div class="user-accounts">
+					<div class="user-accounts panel-shadow">
 						<div class="add-account">
 							<div class="user-add-account">
 								<div layout="row">
@@ -133,13 +132,13 @@
 			</div>
 		</div>
 	</md-dialog-content>
-	<md-dialog-actions layout="row">
+	<md-dialog-actions layout="row" style="z-index:1;">
 		<span flex></span>
 		<!-- <md-button ng-click="discard()">
 			discard
 		</md-button>
 		 -->
-		 <md-button class="md-primary" ng-click="save('useful')">
+		 <md-button class="md-primary" ng-click="updateUser(user); save('useful')">
 			Save
 		</md-button>
 	</md-dialog-actions>

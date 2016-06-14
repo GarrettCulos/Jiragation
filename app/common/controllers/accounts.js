@@ -2,20 +2,21 @@
 
 angular.module('myApp.account', ['ngRoute'])
 
-.controller('accountCtrl', ['$scope', '$http', function($scope, $http) {
-	$scope.userNamePrefered = 'Garrett';
-	$scope.userNameFirst = 'Garrett';
-	$scope.userNameLast = 'Culos';
+.controller('accountCtrl', ['$scope', '$http', 'users', function($scope, $http, users) {
+	
+	users.getUserInfo(function(res){
+	
+		$scope.user  = res;
+		console.log($scope.user);
+		$scope.message = 'Welcome '+ $scope.user.preferedName;
+	});
+	
 	$scope.JiraAccounts	=[];
-	$scope.message = 'Welcome ' + $scope.userNamePrefered;
-	
-	
 	$scope.viewUserUpdate=false;
 	$scope.viewAccounts=false;
 
-  syncAccounts();
+ 	syncAccounts();
   
-  // PLEASE INSERT YOUR USER NAME AND PASSWORDW BELOW
 	$scope.hiddenJiraAccounts = [];
 
 	function syncAccounts(){
@@ -31,6 +32,7 @@ angular.module('myApp.account', ['ngRoute'])
 			console.log(response);
 		});
 	}
+
 
 	$scope.updateUser = function(){
 		
@@ -93,6 +95,11 @@ angular.module('myApp.account', ['ngRoute'])
 	
 		$scope.JiraAccounts.push($scope.hiddenJiraAccounts[ idx ]);
 		$scope.hiddenJiraAccounts.splice(idx,1);
+	}
+	$scope.updateUser = function(user){
+		users.setUserInfo(user,function(res){
+			//nothing
+		});
 	}
 
 

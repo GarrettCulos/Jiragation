@@ -20,16 +20,8 @@ angular.module('myApp', [
 .config(['$routeProvider', function($routeProvider) {
  	$routeProvider
 	.when('/', {
-		templateUrl: 'common/task-list/taskList.html',
-    	controller: 'userController'
-	})
-	.when('/task-list', {
-		templateUrl: 'common/task-list/taskList.html',
-    	controller: 'userController'
-	})
-	.when('/account', {
-    	templateUrl: 'common/account/account.html',
-    	controller: 'accountCtrl'
+  		templateUrl: 'common/task-list/taskList.html',
+      controller: 'taskListController'
 	})
   .when('/logs', {
       templateUrl: 'common/logs/logs.html',
@@ -240,4 +232,37 @@ angular.module('myApp', [
         $log.debug("close LEFT is done");
       });
   };
-});
+})
+
+.service('users', ['$http', function($http){
+  
+    this.setUserInfo = function(user, callback){
+      
+      $http({
+        method: 'POST',
+        url: '/users/update_user_info',
+        data: {
+          preferedName:user.preferedName,
+          firstName:user.firstName,
+          givenName:user.givenName
+        }
+      }).then(function successCallback(response){
+        console.log('Update Successful')
+      }, function errorCallback(response){
+        console.log(response);
+        callback(response);
+      });
+    }
+
+    this.getUserInfo = function(callback){
+      $http({
+        method: 'GET',
+        url: '/users/get_user_info'
+      }).then(function successCallback(response){
+        callback( response.data[0]);
+      }, function errorCallback(response){
+        callback(response);
+      });
+    }
+
+}]);
