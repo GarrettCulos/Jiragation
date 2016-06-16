@@ -52,10 +52,9 @@
 			</div>
 		</div>
 		<div class="account-list">
-			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse">
+			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse" ng-controller = "taskController">
 				<div class="select-default task-item" 
-					ng-class="{'select-active': isActive }" 
-					ng-controller ="taskController" 
+					ng-class = "{'select-active': isActive }"
 					ng-click="updateRightView(taskNum); toggleClick(taskNum); timerToggle()"
 					layout="row" 
 					layout-align="center"
@@ -90,16 +89,23 @@
 					</div>
 
 				</div>
-				<div ng-if="isActive" layout="row" layout-padding>
-					<div flex="70">
-						{{task.fields.description}}
+				<div ng-if='isActive' class="task-body" ng-class = "{'select-active': isActive }" layout="row" layout-padding>
+					
+					<div flex="70" style="margin-left:45px;">
+						<h4> Description: </h4>
+						<pre> {{task.fields.description}} </pre> 
 					</div>
 					<div flex="30" >
-						<div layout="row" flex layout-padding>
-							<div ng-if="task.fields.fixVersions">Release: {{task.fields.fixVersions[0].name}} <br/> Released: {{task.fields.fixVersions[0].released}}</div>
+						<div layout="row" flex layout-padding ng-if="task.fields.fixVersions[0].name">
+							<div> Release: {{task.fields.fixVersions[0].name}} </div> 
 						</div>
-						<div layout="row" flex layout-padding>
-							<div ng-if="task.fields.duedate">Due: {{task.fields.duedate}}</div>
+
+						<div layout="row" flex layout-padding ng-if="task.fields.fixVersions[0].released">
+							<div> Released: {{task.fields.fixVersions[0].released}}</div>
+						</div>
+
+						<div layout="row" flex layout-padding  ng-if="task.fields.duedate">
+							<div> Due: {{task.fields.duedate}}</div>
 						</div>
 					</div>
 				</div>

@@ -19,27 +19,29 @@
 				
 				<formgroup flex="25">
 					<md-datepicker ng-model="logdate.start" md-placeholder="Start Date" md-max-date="maxDate" required name="startDate" class="md-primary"></md-datepicker>
+
 					<div class="validation-messages" 
-						ng-show="queryLogTimes.startDate.$error"
-						ng-messages="queryLogTimes.startDate.$touched && queryLogTimes.startDate.$error">
-		        <div class="md-warn" ng-message="valid">The entered value is not a date!</div>
-		        <div class="md-warn" ng-message="required">This date is required!</div>
-		        <div class="md-warn" ng-message="mindate">Date is too early!</div>
-		        <div class="md-warn" ng-message="maxdate">Date is too late!</div>
-		      </div>
-		    </formgroup>
+						ng-show="queryLogTimes.startDate_name.$error"
+						ng-messages="queryLogTimes.startDate_name.$touched && queryLogTimes.startDate_name.$error">
+				        <div class="md-warn" ng-message="valid">The entered value is not a date!</div>
+				        <div class="md-warn" ng-message="required">This date is required!</div>
+				        <div class="md-warn" ng-message="mindate">Date is too early!</div>
+				        <div class="md-warn" ng-message="maxdate">Date is too late!</div>
+			      	</div>
+			    </formgroup>
 				
 				<formgroup flex="25">
 					<md-datepicker ng-model="logdate.end" md-placeholder="End Date" md-max-date="maxDate" required name="endDate" class="md-primary"></md-datepicker>
+
 					<div class="validation-messages" 
-						ng-show="queryLogTimes.endDate.$error"
-						ng-messages="queryLogTimes.endDate.$touched && queryLogTimes.endDate.$error">
-		        <div class="md-warn" ng-message="valid">The entered value is not a date!</div>
-		        <div class="md-warn" ng-message="required">This date is required!</div>
-		        <div class="md-warn" ng-message="mindate">Date is too early!</div>
-		        <div class="md-warn" ng-message="maxdate">Date is too late!</div>
-		      </div>
-		    </formgroup>
+						ng-show="queryLogTimes.endDate_name.$error"
+						ng-messages="queryLogTimes.endDate_name.$touched && queryLogTimes.endDate_name.$error">
+						<div class="md-warn" ng-message="valid">The entered value is not a date!</div>
+						<div class="md-warn" ng-message="required">This date is required!</div>
+						<div class="md-warn" ng-message="mindate">Date is too early!</div>
+						<div class="md-warn" ng-message="maxdate">Date is too late!</div>
+					</div>
+				</formgroup>
 				<span flex></span>
 		    <input type="submit" class="md-button md-primary" id="submit" value="Query"  ng-disabled="queryLogTimes.startDate.$error.required || queryLogTimes.endDate.$error.required" disabled/>
 			</div>

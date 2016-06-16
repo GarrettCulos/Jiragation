@@ -22,7 +22,7 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 		var today = new Date(now.getTime()-((now.getMinutes()*60)+(now.getHours()*60*60)+(now.getSeconds()))*1000)
 		var tomorrow = new Date( today.getTime()+oneDay);
 
-		getlogs(today, tomorrow)
+		getlogs(today, tomorrow);
 	}
 
 	$scope.getRangeLogs = function(){

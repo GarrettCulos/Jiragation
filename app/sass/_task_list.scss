@@ -15,6 +15,7 @@
     }  
 
     .task-item {
+      border-left:3px solid transparent;
       padding: 15px 20px 15px 10px;
       /*border-bottom:1px solid rgba(0,0,0,0.1);*/
       border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -24,6 +25,9 @@
         height: 1.5em;
         position: relative;
         vertical-align: middle;
+      }
+      &:focus {
+        outline: none;
       }
     }
   }
@@ -110,10 +114,24 @@
     border-top: 1px solid rgba(0, 0, 0, 0.2);
   }
 
+  
+  .task-body{
+     // transition: all ease 0.25s;
+     border-left: 3px solid transparent;
+     max-height:0px;
+     &.select-active{
+      // transition: all ease 0.25s;
+      max-height:400px;
+      overflow-y:scroll;
+     }
+  }
+
   .select-default {
     &.select-active {
       opacity: 1;
       border-left: 3px solid rgba(50, 50, 100, 1);
+      -webkit-box-shadow: rgba(0,0,0,.5) 0 0 6px;
+      box-shadow: rgba(0,0,0,.5) 0 0 6px;
 
       .timer{
         display: inline-block;
