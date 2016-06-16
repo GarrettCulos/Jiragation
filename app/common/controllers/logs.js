@@ -6,25 +6,35 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
   
   $scope.queryTodays = false;
   $scope.maxDate = new Date();
+  $scope.logdate={};
 
 	var date = new Date();
 	var day = date.getDate();
 	var month = date.getMonth()+1;
+	var year = date.getFullYear();
+	var oneDay = 24*60*60*1000;
 	if(month<10){
 		month = "0"+month;
 	}
-	var year = date.getFullYear();
-	var oneDay = 24*60*60*1000;
-
+	
 	$scope.get_todays_logs = function(){
 		var now = new Date();
 		var today = new Date(now.getTime()-((now.getMinutes()*60)+(now.getHours()*60*60)+(now.getSeconds()))*1000)
 		var tomorrow = new Date( today.getTime()+oneDay);
 
-		$scope.getlogs(today, tomorrow)
+		getlogs(today, tomorrow)
 	}
 
-	$scope.getlogs = function(startD, endD){
+	$scope.getRangeLogs = function(){
+		console.log($scope);
+		
+		var startDate = new Date($scope.logdate.start);
+		var endDate = new Date($scope.logdate.end);
+
+		getlogs(startDate.getTime(), endDate.getTime()+oneDay);
+	}
+
+	function getlogs(startD, endD){
 		console.log(startD);
 		console.log(endD);
 		var start_date = new Date(startD);
