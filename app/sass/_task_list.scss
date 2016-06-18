@@ -117,8 +117,8 @@
   
   .task-body{
      // transition: all ease 0.25s;
-     border-left: 3px solid transparent;
      max-height:0px;
+     @include box-shadow(0 -5px 10px -5px rgba(black,0.5) inset);
      &.select-active{
       // transition: all ease 0.25s;
       max-height:400px;
@@ -130,9 +130,8 @@
     &.select-active {
       opacity: 1;
       border-left: 3px solid rgba(50, 50, 100, 1);
-      -webkit-box-shadow: rgba(0,0,0,.5) 0 0 6px;
-      box-shadow: rgba(0,0,0,.5) 0 0 6px;
-
+      @include box-shadow(0 0 6px 0 rgba(black,0.5));
+      
       .timer{
         display: inline-block;
       }

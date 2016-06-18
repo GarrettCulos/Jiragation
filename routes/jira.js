@@ -16,8 +16,8 @@ function taskListToArray(array){
 
 
 jira.get('/task_comments', function(req,res,next) {
-	var data = req.body;
-
+	var data = req.query;
+	
 	var options = {
 		rejectUnauthorized: false,
 		method: 'GET',
@@ -29,7 +29,7 @@ jira.get('/task_comments', function(req,res,next) {
 		}
 	};
 		
-   	if(acct.protocal === "http"){
+   	if(data.acct.protocal === "http"){
 
    		http.get(options, function(response) {
 			console.log(response);

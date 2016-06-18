@@ -37725,8 +37725,9 @@ svg:hover path {
 }
 /* line 118, ../sass/_task_list.scss */
 .main-content .task-body {
-  border-left: 3px solid transparent;
   max-height: 0px;
+  -webkit-box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.5) inset;
+  box-shadow: 0 -5px 10px -5px rgba(0, 0, 0, 0.5) inset;
 }
 /* line 122, ../sass/_task_list.scss */
 .main-content .task-body.select-active {
@@ -37741,47 +37742,47 @@ svg:hover path {
 .main-content .select-default.select-active {
   opacity: 1;
   border-left: 3px solid #323264;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
-  box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
+  -webkit-box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
 }
-/* line 136, ../sass/_task_list.scss */
+/* line 135, ../sass/_task_list.scss */
 .main-content .select-default.select-active .timer {
   display: inline-block;
 }
-/* line 139, ../sass/_task_list.scss */
+/* line 138, ../sass/_task_list.scss */
 .main-content .select-default.select-active .logged-time {
   display: none;
 }
-/* line 143, ../sass/_task_list.scss */
+/* line 142, ../sass/_task_list.scss */
 .main-content .select-default.select-active .task-summary-container .task-summary {
   white-space: normal;
 }
-/* line 151, ../sass/_task_list.scss */
+/* line 150, ../sass/_task_list.scss */
 .main-content .task-status, .main-content .task-name, .main-content .task-date, .main-content .task-summary {
   vertical-align: top;
   display: inline-block;
 }
-/* line 160, ../sass/_task_list.scss */
+/* line 159, ../sass/_task_list.scss */
 .main-content .task-priority {
   vertical-align: -webkit-baseline-middle;
   vertical-align: middle;
   display: inline-block;
   margin: 0 10px;
 }
-/* line 167, ../sass/_task_list.scss */
+/* line 166, ../sass/_task_list.scss */
 .main-content .task-date-title {
   font-weight: 700;
   text-align: center;
 }
-/* line 172, ../sass/_task_list.scss */
+/* line 171, ../sass/_task_list.scss */
 .main-content img.task-priority {
   line-height: 1.5em;
 }
-/* line 175, ../sass/_task_list.scss */
+/* line 174, ../sass/_task_list.scss */
 .main-content .task-summary-container {
   overflow: hidden;
 }
-/* line 177, ../sass/_task_list.scss */
+/* line 176, ../sass/_task_list.scss */
 .main-content .task-summary-container .task-summary {
   padding-left: 20px;
   display: inline-block;
@@ -37789,11 +37790,11 @@ svg:hover path {
   white-space: nowrap;
   /*max-width:450px;*/
 }
-/* line 187, ../sass/_task_list.scss */
+/* line 186, ../sass/_task_list.scss */
 .main-content .task-title-date {
   padding-right: 20px;
 }
-/* line 189, ../sass/_task_list.scss */
+/* line 188, ../sass/_task_list.scss */
 .main-content .task-title-date:after {
   background-image: url("./img/down-arrow.png");
   background-size: cover;

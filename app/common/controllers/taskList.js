@@ -159,8 +159,13 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		$scope.rightView = $scope.taskList[taskNumber];
 		console.log(issueId);
 		console.log($scope);
-
-		var data = {
+		console.log(acct.self);
+		var account = split(acct.selft, '://')
+		account[1]=split(account[1],'/');
+		account = {protocal:account[0]
+				,url:account[1]
+			}
+		var data_load = {
 			issueId: issueId,
 			acct: acct
 		}
@@ -168,7 +173,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		$http({
 			method: 'GET',
 			url: '/pull_jiras/task_comments',
-			data: 	JSON.stringify(data)
+			params: data_load
 		}).then(function successCallback(response){
 			$scope.task_comments=response;
 			console.log(response);
