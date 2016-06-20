@@ -6,11 +6,12 @@ var models = {};
 
 //Create Item Table Structure
 var JiraAccounts = sequelize.define('jira_accounts', {
-	  id:           {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
-    protocal:     {type: Sequelize.STRING, allowNull:false},
-    user_name:    {type: Sequelize.STRING, allowNull: false},
-    url:          {type: Sequelize.STRING, allowNull: false},
-    password:     Sequelize.STRING,
+	  id:             {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+    protocal:       {type: Sequelize.STRING, allowNull:false},
+    user_name:      {type: Sequelize.STRING, allowNull: false},
+    url:            {type: Sequelize.STRING, allowNull: false},
+    account_email:  {type:Sequelize.STRING, allowNull: false},
+    password:       Sequelize.STRING,
 },
 {
    timestamps : true,

@@ -2,7 +2,7 @@
 
 angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 
-.controller('taskController', ['$scope', '$http', function($scope, $http) {
+.controller('taskController', ['$scope', '$http', '$currentUser', '$q', function($scope, $http, $currentUser, $q) {
 
 	$scope.isActive=false;
 	$scope.timerStarted=false;
@@ -15,7 +15,24 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		// + msPsec*data.seconds + msPsec*secPmin*data.minutes + msPsec*secPmin*minPhr*data.hours + msPsec*secPmin*minPhr*hrPday *data.days;
 		return data.millis 
 	}
-	
+
+	function comment_preprocess(comments) {
+		var res = [];
+ 		var deferred = $q.defer();
+ 		console.log($scope.user_accounts);
+ 		comments.forEach(function(comment, key){
+			var comment_push = comment;
+			comment_push.isCurrentUser = false;
+			if($currentUser.user_accounts_email.indexOf(comment.author.emailAddress) != -1 ){
+				comment_push.isCurrentUser = true;
+			}
+	 		res.push(comment_push);
+			deferred.resolve(res);
+			
+ 		})
+		return deferred.promise;
+	}
+
 	$scope.taskLink = function(){	
 	}
 
@@ -56,8 +73,41 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		}
 	}
 
+		// Toggle active task		
+	$scope.updateRightView = function(acct) {
+
+		var temp = acct.self.split('://');
+		temp[1]=temp[1].split('/');
+		var account = {
+			 protocal:temp[0]
+			,url:temp[1][0]
+			,user_name: 'gculos'
+			,password: 'gummyworms'
+		}
+
+		// console.log(account);
+		var data_load = {
+			issueId: acct.id,
+			acct: account
+		}
+		// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
+		$http({
+			method: 'GET',
+			url: '/pull_jiras/task_comments',
+			params: data_load
+		}).then(function successCallback(response){
+
+			// pass in comment array for preprocessing
+			comment_preprocess(response.data.comments).then(function(comments){
+				$scope.task_comments=comments;
+				console.log(comments);
+			})
+			
+		});
+	}
+
 	$scope.$on('timer-stopped', function (event, logged_time){
-		console.log('logged');
+		
 		var date = new Date();
 		var current_date = date.getTime();
 		var response = {
@@ -65,8 +115,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			end_time: current_date,
 			start_time: current_date-timerDataToUnix(logged_time)
 		}
-		console.log(response);
-		console.log(logged_time);
+		
 		// send data to databse
 		$http({
 			method: 'POST',

@@ -17,37 +17,53 @@ function taskListToArray(array){
 
 jira.get('/task_comments', function(req,res,next) {
 	var data = req.query;
-	
+	var account = JSON.parse(data.acct);
+
 	var options = {
 		rejectUnauthorized: false,
 		method: 'GET',
-		host: data.acct.url,
+		host: account.url,
 		path: '/rest/api/2/issue/'+ data.issueId +'/comment',
 		headers:{
 			'Content-Type':  'application/json',
-			'Authorization': 'Basic '+ new Buffer( data.acct.user_name + ':' + data.acct.password ).toString('base64')
+			'Authorization': 'Basic '+ new Buffer( account.user_name + ':' + account.password ).toString('base64')
 		}
 	};
-		
-   	if(data.acct.protocal === "http"){
 
-   		http.get(options, function(response) {
-			console.log(response);
-			res.json(response);
+ 	if(account.protocal === "http"){
+
+ 		http.get(options, function(response) {
+			
+			data='';
+			response.setEncoding('utf8')
+		  response.on('data', function(d) {
+		    data += d
+		  })
+		  response.on('end', function(d) {
+		    res.send(data)
+		  })
 		}).on('error', (error) => {
 			console.error(error);	
 		});
 
-   	} else {
+ 	} else {
 
 		https.get(options, function(response) {	
-			console.log(response);
-		  	res.json(response);
+			// console.log(response);
+			data='';
+			response.setEncoding('utf8')
+		  response.on('data', function(d) {
+		    data += d
+		  })
+		  response.on('end', function(d) {
+		    res.send(data)
+		  })
+		  // res.pipe(response);
 		}).on('error', (error) => {
 			console.error(error);	
 		});
-   		
-   	}
+	 		
+ 	}
 
 });
 
@@ -63,22 +79,22 @@ jira.get('/jira_accounts', function(req, res, next) {
 
 		function get_jira_accounts(r, acct){
 			var tasks = [];
-	    
-		    r.on('data', function(d) {
-		    	tasks.push(d);
-		    }).on('end', function() {
-				
+    
+	    r.on('data', function(d) {
+	    	tasks.push(d);
+	    }).on('end', function() {
+			
 				tasks_list.push(JSON.parse(Buffer.concat(tasks).toString()));
 				// console.log(tasks_list);
 				loop_count=loop_count+1;
 				// console.log('http request complete');
 				if(loop_count == Object.keys(user_accounts).length){
-	   				console.log(taskListToArray(tasks_list,acct));
-	   				console.log('Return tasks');
-	   				res.json(taskListToArray(tasks_list, acct));
-	   			}
+   				// console.log(taskListToArray(tasks_list,acct));
+   				console.log('Return tasks');
+   				res.json(taskListToArray(tasks_list, acct));
+   			}
 			});
-	  	}
+	  }
 
 		user_accounts.forEach(function(acct) { 		/* Loop Through accounts (user_accounts as acct) */
 
@@ -93,21 +109,21 @@ jira.get('/jira_accounts', function(req, res, next) {
 				}
 			};
 			
-		   	if(acct.protocal === "http"){
-		   		http.get(options, function(response) {
+	   	if(acct.protocal === "http"){
+	   		http.get(options, function(response) {
 				  get_jira_accounts(response, acct);
 				}).on('error', (error) => {
 					console.error(error);	
 				});
 
-		   	} else {
+	   	} else {
 				https.get(options, function(response) {
 					get_jira_accounts(response, acct);
 				}).on('error', (error) => {
 					console.error(error);	
 				});
 		   		
-		   	}
+	   	}
 
 		}, function(err) {
 		    

@@ -65,6 +65,10 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	$scope.reverse = true;
 	
 	$scope.activeTask=[];
+		
+  // --------------------------------------------- //
+  //            Jira Related functions             //
+  // --------------------------------------------- //
 	
 	// Toggle active task		
 	var taskNumber = 0;
@@ -76,7 +80,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		$scope.allTimerPaused = false;
 	}
 
-	function modifyTaskList(taskList) {
+	function modify_task_list(taskList) {
 		var res = []
  		var deferred = $q.defer();
 
@@ -91,7 +95,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 		return deferred.promise;
 	}
-	
+
 	$scope.getJiraTasks = function(){
 
 		// Fetch Jira Data`
@@ -113,11 +117,11 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 				
 				$scope.fetching_tasks = false;
 
-				modifyTaskList(
+				modify_task_list(
 					res.data
 				).then(function(response){		
 					$scope.taskList = response;
-					console.log($scope.taskList);
+					// console.log($scope.taskList);
 				});
 
 			}, function errorCallback(res){
@@ -153,36 +157,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		return taskUrl.substring(0,taskUrl.indexOf('/rest/'))+'/browse/'+taskKey;
 	}
 
-	// Toggle active task		
-	$scope.updateRightView = function(issueId, acct) {
-	
-		$scope.rightView = $scope.taskList[taskNumber];
-		console.log(issueId);
-		console.log($scope);
-		console.log(acct.self);
-		var account = split(acct.selft, '://')
-		account[1]=split(account[1],'/');
-		account = {protocal:account[0]
-				,url:account[1]
-			}
-		var data_load = {
-			issueId: issueId,
-			acct: acct
-		}
-		// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
-		$http({
-			method: 'GET',
-			url: '/pull_jiras/task_comments',
-			params: data_load
-		}).then(function successCallback(response){
-			$scope.task_comments=response;
-			console.log(response);
-		})
-
-		// update status
-
-		// get attachements // GET /rest/api/2/attachment/{id}
-	}
 
 	$scope.order = function(predicate) {
 		$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;

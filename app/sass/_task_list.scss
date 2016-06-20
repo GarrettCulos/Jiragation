@@ -1,26 +1,26 @@
 /* app css stylesheet */
 
 .main-content {
-   // margin-top:60px;
+  background-color:transparent;
   
   .center{
     text-align:center;
   }
 
   .account-list{
-    background-color:$bg_color_tasks;
-    @include box-shadow(rgba(20,20,20,0.3) 0 0 5px);
-    div:last-child .task-item{
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);    
+    background-color:transparent;
+    div:first-child .task-item{
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
     }  
 
     .task-item {
+      background-color:white;
       border-left:3px solid transparent;
       padding: 15px 20px 15px 10px;
-      /*border-bottom:1px solid rgba(0,0,0,0.1);*/
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-      border-left: 1px solid rgba(0, 0, 0, 0.1);
-      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      border-left: 1px solid rgba(0, 0, 0, 0.2);
+      border-right: 1px solid rgba(0, 0, 0, 0.2);
+      
       img {
         height: 1.5em;
         position: relative;
@@ -116,22 +116,23 @@
 
   
   .task-body{
-     // transition: all ease 0.25s;
-     max-height:0px;
-     @include box-shadow(0 -5px 10px -5px rgba(black,0.5) inset);
-     &.select-active{
-      // transition: all ease 0.25s;
-      max-height:400px;
-      overflow-y:scroll;
-     }
+    // transition: height ease 0.25s;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+
+    &.select-active{
+      // transition: height ease 0.25s;
+      max-height:90%;
+    }
   }
 
   .select-default {
     &.select-active {
       opacity: 1;
+      margin-top:10px;
       border-left: 3px solid rgba(50, 50, 100, 1);
-      @include box-shadow(0 0 6px 0 rgba(black,0.5));
-      
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
+      @include box-shadow(rgba(black ,0.5) 0 0 6px);
+
       .timer{
         display: inline-block;
       }
@@ -191,4 +192,44 @@
       width: 20px;
     }
   }
+}
+
+.message-id,
+.message-body {
+  display:inline-block;
+}
+
+pre.message-body {
+  width:100%;
+  margin:0;
+  border: 1px solid $my_purple;
+  border-radius: 5px;
+  background-color: transparent;
+  &.right{
+    border-top-right-radius:0; 
+    border-bottom-right-radius:0; 
+  }
+  &.left{
+    border-top-left-radius:0;
+    border-bottom-left-radius:0;
+  }
+}
+
+.message-id {
+  padding:5px;
+  img{
+    border-radius: 5px;
+    border-color: transparent;
+    background-color:$my_white_alt;
+  }
+  &.right{
+    text-align:left;
+  }
+  &.left{
+    text-align:right;
+  }
+}
+
+.my-message{
+  margin-bottom:10px;
 }

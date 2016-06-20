@@ -119,10 +119,10 @@ angular.module('myApp', [
        .backgroundPalette('customBackground')
 })
 
-.controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $log, $mdDialog, $mdMedia) {
+.controller('AppCtrl', function ($scope, $timeout, $http, $mdSidenav, $log, $mdDialog, $mdMedia) {
   $scope.toggleLeft = buildToggler('left');
   $scope.toggleRight = buildToggler('right');
-  
+
 
   // --------------------------------------------- //
   //                  Left/Right navs              //
@@ -240,4 +240,30 @@ angular.module('myApp', [
         $log.debug("close LEFT is done");
       });
   };
-});
+})
+
+.factory('$currentUser', ['$http', function($http) {
+   
+  var  $currentUser = {};
+
+  $http({
+    method:'GET',
+    url: '/account/fetch_accounts',
+    headers: {'Content-Type': 'application/json'}
+  }).then(function successCallback(res){
+    $currentUser.user_accounts = res;
+    $currentUser.user_accounts_email = [];
+    res.data.forEach(function(account,key){
+      $currentUser.user_accounts_email.push(account.account_email)
+    })
+
+  }, function errorCallback(error){
+    $scope.user_accounts_email=null;
+    console.log(error)
+  });
+
+
+
+  return $currentUser;
+ }]);
+
