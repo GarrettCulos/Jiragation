@@ -245,6 +245,10 @@ angular.module('myApp', [
 .factory('$currentUser', ['$http', function($http) {
    
   var  $currentUser = {};
+  $currentUser.userNamePrefered = 'Garrett';
+  $currentUser.userNameFirst = 'Garrett';
+  $currentUser.userNameLast = 'Culos';
+  $currentUser.userProfileImage = null;
 
   $http({
     method:'GET',

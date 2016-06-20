@@ -35,9 +35,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	});    
 	// ---------------------------
 
-	$scope.userNamePrefered = 'Garrett';
-	$scope.userNameFirst = 'Garrett';
-	$scope.userNameLast = 'Culos';
 	$scope.isActive = false;
 	$scope.JiraAccounts;
 

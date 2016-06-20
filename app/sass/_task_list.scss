@@ -20,7 +20,7 @@
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       border-left: 1px solid rgba(0, 0, 0, 0.2);
       border-right: 1px solid rgba(0, 0, 0, 0.2);
-      
+
       img {
         height: 1.5em;
         position: relative;
@@ -202,31 +202,54 @@
 pre.message-body {
   width:100%;
   margin:0;
-  border: 1px solid $my_purple;
+  border: 0px solid transparent;
   border-radius: 5px;
-  background-color: transparent;
   &.right{
     border-top-right-radius:0; 
-    border-bottom-right-radius:0; 
+    background-color:white;
   }
   &.left{
+    color:white;
+    background-color:rgba($my_purple,0.9);
     border-top-left-radius:0;
-    border-bottom-left-radius:0;
   }
 }
 
 .message-id {
-  padding:5px;
+
   img{
-    border-radius: 5px;
+    margin:14px;
+    border-radius: 50%;
     border-color: transparent;
-    background-color:$my_white_alt;
+    background-color:transparent;
   }
   &.right{
+    img{
+      margin-left:0;
+    }
     text-align:left;
+    .triangle{
+      float:left;
+      width: 0; 
+      height: 0; 
+      border:7px solid transparent;
+      border-left: 7px solid white;
+      border-top: 7px solid white;
+    }
   }
   &.left{
     text-align:right;
+    img{
+      margin-right:0;
+    }
+    .triangle{
+      float:right;
+      width: 0; 
+      height: 0; 
+      border:7px solid transparent;
+      border-right: 7px solid rgba($my_purple,0.9);
+      border-top: 7px solid rgba($my_purple,0.9);
+    }
   }
 }
 

@@ -90,6 +90,8 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			issueId: acct.id,
 			acct: account
 		}
+		$scope.currentUser = $currentUser.user_accounts;
+		console.log($scope.currentUser);
 		// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
 		$http({
 			method: 'GET',
@@ -100,7 +102,6 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			// pass in comment array for preprocessing
 			comment_preprocess(response.data.comments).then(function(comments){
 				$scope.task_comments=comments;
-				console.log(comments);
 			})
 			
 		});

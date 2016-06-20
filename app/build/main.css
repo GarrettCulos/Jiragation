@@ -37812,41 +37812,64 @@ svg:hover path {
 pre.message-body {
   width: 100%;
   margin: 0;
-  border: 1px solid #52007e;
+  border: 0px solid transparent;
   border-radius: 5px;
-  background-color: transparent;
 }
-/* line 208, ../sass/_task_list.scss */
+/* line 207, ../sass/_task_list.scss */
 pre.message-body.right {
   border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  background-color: white;
 }
-/* line 212, ../sass/_task_list.scss */
+/* line 211, ../sass/_task_list.scss */
 pre.message-body.left {
+  color: white;
+  background-color: rgba(82, 0, 126, 0.9);
   border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
-/* line 218, ../sass/_task_list.scss */
-.message-id {
-  padding: 5px;
-}
 /* line 220, ../sass/_task_list.scss */
 .message-id img {
-  border-radius: 5px;
+  margin: 14px;
+  border-radius: 50%;
   border-color: transparent;
-  background-color: #cdcdcd;
+  background-color: transparent;
 }
-/* line 225, ../sass/_task_list.scss */
+/* line 226, ../sass/_task_list.scss */
 .message-id.right {
   text-align: left;
 }
-/* line 228, ../sass/_task_list.scss */
+/* line 227, ../sass/_task_list.scss */
+.message-id.right img {
+  margin-left: 0;
+}
+/* line 231, ../sass/_task_list.scss */
+.message-id.right .triangle {
+  float: left;
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  border-left: 7px solid white;
+  border-top: 7px solid white;
+}
+/* line 240, ../sass/_task_list.scss */
 .message-id.left {
   text-align: right;
 }
+/* line 242, ../sass/_task_list.scss */
+.message-id.left img {
+  margin-right: 0;
+}
+/* line 245, ../sass/_task_list.scss */
+.message-id.left .triangle {
+  float: right;
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  border-right: 7px solid rgba(82, 0, 126, 0.9);
+  border-top: 7px solid rgba(82, 0, 126, 0.9);
+}
 
-/* line 233, ../sass/_task_list.scss */
+/* line 256, ../sass/_task_list.scss */
 .my-message {
   margin-bottom: 10px;
 }

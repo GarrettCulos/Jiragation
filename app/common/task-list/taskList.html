@@ -111,11 +111,13 @@
 					</div>
 					
 					<div layout="row" layout-padding>
+						<h4> Comments: </h4>
+
 						<md-list ng-if="task_comments" flex>
-							<h4> Comments: </h4>
 							<md-list-item class="my-message" ng-repeat="(comment_num, comment) in task_comments">
 								<div ng-if="comment.isCurrentUser" flex layout="row" layout-align="start start">
 									<div class="message-id left" flex="15">
+										<div class="triangle"></div>
 										{{comment.author.displayName}}
 										<img src="{{comment.author.avatarUrls['32x32']}}" alt="">
 									</div>	
@@ -126,12 +128,31 @@
 									<pre class="message-body right" flex="70">{{comment.body}}</pre>
 									
 									<div class="message-id right" flex="15">
+										<div class="triangle"></div>
 										<img src="{{comment.author.avatarUrls['32x32']}}" alt="">
 										{{comment.author.displayName}}
 									</div>	
 								</div>
 							</md-list-item>
-					</md-list>
+
+							<md-list-item class="my-message">
+								<div flex layout="row" layout-align="start start">
+									<div class="message-id left" flex="15">
+										<div class="triangle"></div>
+										{{currentUser.userNamePrefered}}
+										<img src="{{currentUser.userProfileImage}}" alt="">
+									</div>	
+									<div class="message-body left" flex="70">
+										<input type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
+									</div>
+									<md-button class="md-primary">
+										Send
+									</md-button>
+								</div>
+							</md-list-item>	
+						</md-list>
+
+					</div>
 				</div>
 			</div>
 		</div>
