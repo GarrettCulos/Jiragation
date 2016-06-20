@@ -85,7 +85,7 @@
 					</div>
 				</div>
 
-				<div ng-if='isActive' class="task-body" ng-class = "{'select-active': isActive }" style="z-index:1">
+				<div ng-hide='!isActive' class="task-body animate-show" style="z-index:1">
 				  
 					<div layout="row" layout-padding>
 				  	<h4 flex> Description: </h4>

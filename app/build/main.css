@@ -37626,52 +37626,54 @@ svg:hover path {
 }
 /* line 16, ../sass/_task_list.scss */
 .main-content .account-list .task-item {
+  margin-top: 0;
   background-color: white;
   border-left: 3px solid transparent;
   padding: 15px 20px 15px 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   border-left: 1px solid rgba(0, 0, 0, 0.2);
   border-right: 1px solid rgba(0, 0, 0, 0.2);
+  transition: margin ease 0.15s;
 }
-/* line 24, ../sass/_task_list.scss */
+/* line 26, ../sass/_task_list.scss */
 .main-content .account-list .task-item img {
   height: 1.5em;
   position: relative;
   vertical-align: middle;
 }
-/* line 29, ../sass/_task_list.scss */
+/* line 31, ../sass/_task_list.scss */
 .main-content .account-list .task-item:focus {
   outline: none;
 }
-/* line 36, ../sass/_task_list.scss */
+/* line 38, ../sass/_task_list.scss */
 .main-content .top-nav ul {
   display: inline-block;
 }
-/* line 39, ../sass/_task_list.scss */
+/* line 41, ../sass/_task_list.scss */
 .main-content .top-nav .align-right {
   float: right;
   list-style: none;
 }
-/* line 45, ../sass/_task_list.scss */
+/* line 47, ../sass/_task_list.scss */
 .main-content .user-name {
   margin-top: 1px;
   margin-bottom: 30px;
 }
-/* line 51, ../sass/_task_list.scss */
+/* line 53, ../sass/_task_list.scss */
 .main-content ul.menu {
   height: 55px;
 }
-/* line 55, ../sass/_task_list.scss */
+/* line 57, ../sass/_task_list.scss */
 .main-content .menu {
   list-style: none;
 }
-/* line 57, ../sass/_task_list.scss */
+/* line 59, ../sass/_task_list.scss */
 .main-content .menu li {
   display: inline-block;
   height: 55px;
   line-height: 55px;
 }
-/* line 61, ../sass/_task_list.scss */
+/* line 63, ../sass/_task_list.scss */
 .main-content .menu li a {
   vertical-align: middle;
   padding-right: 0.3em;
@@ -37681,43 +37683,43 @@ svg:hover path {
   border-right: 1px solid blue;
   border-left: 1px solid blue;
 }
-/* line 69, ../sass/_task_list.scss */
+/* line 71, ../sass/_task_list.scss */
 .main-content .menu li a:last-child {
   border-right: 1px solid transparent;
 }
-/* line 72, ../sass/_task_list.scss */
+/* line 74, ../sass/_task_list.scss */
 .main-content .menu li a:first-child {
   border-left: 1px solid transparent;
 }
-/* line 81, ../sass/_task_list.scss */
+/* line 83, ../sass/_task_list.scss */
 .main-content .right-view img {
   height: 1em;
   margin-right: 5px;
   vertical-align: middle;
 }
-/* line 87, ../sass/_task_list.scss */
+/* line 89, ../sass/_task_list.scss */
 .main-content .timer {
   display: none;
   vertical-align: middle;
 }
-/* line 92, ../sass/_task_list.scss */
+/* line 94, ../sass/_task_list.scss */
 .main-content .logged-time {
   display: inline-block;
 }
-/* line 96, ../sass/_task_list.scss */
+/* line 98, ../sass/_task_list.scss */
 .main-content .paused {
   color: red;
   opacity: 0.5;
 }
-/* line 101, ../sass/_task_list.scss */
+/* line 103, ../sass/_task_list.scss */
 .main-content .no-padding {
   padding: 0;
 }
-/* line 105, ../sass/_task_list.scss */
+/* line 107, ../sass/_task_list.scss */
 .main-content .padding-bottom {
   padding-bottom: 10px;
 }
-/* line 109, ../sass/_task_list.scss */
+/* line 111, ../sass/_task_list.scss */
 .main-content .right-view-title {
   padding-bottom: 10px;
   padding-top: 10px;
@@ -37725,20 +37727,33 @@ svg:hover path {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
-/* line 118, ../sass/_task_list.scss */
+/* line 120, ../sass/_task_list.scss */
 .main-content .task-body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
-/* line 122, ../sass/_task_list.scss */
-.main-content .task-body.select-active {
-  max-height: 90%;
+/* line 123, ../sass/_task_list.scss */
+.main-content .animate-show {
+  max-height: 2500px;
+  overflow-y: scroll;
+  opacity: 1;
 }
-/* line 128, ../sass/_task_list.scss */
+/* line 129, ../sass/_task_list.scss */
+.main-content .animate-show.ng-hide-add,
+.main-content .animate-show.ng-hide-remove {
+  transition: all ease 0.25s;
+}
+/* line 134, ../sass/_task_list.scss */
+.main-content .animate-show.ng-hide {
+  max-height: 0;
+  opacity: 0;
+}
+/* line 139, ../sass/_task_list.scss */
 .main-content .select-default {
   /*opacity:0.3; */
 }
-/* line 129, ../sass/_task_list.scss */
+/* line 140, ../sass/_task_list.scss */
 .main-content .select-default.select-active {
+  transition: margin ease 0.25s;
   opacity: 1;
   margin-top: 10px;
   border-left: 3px solid #323264;
@@ -37746,44 +37761,44 @@ svg:hover path {
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
 }
-/* line 136, ../sass/_task_list.scss */
+/* line 148, ../sass/_task_list.scss */
 .main-content .select-default.select-active .timer {
   display: inline-block;
 }
-/* line 139, ../sass/_task_list.scss */
+/* line 151, ../sass/_task_list.scss */
 .main-content .select-default.select-active .logged-time {
   display: none;
 }
-/* line 143, ../sass/_task_list.scss */
+/* line 155, ../sass/_task_list.scss */
 .main-content .select-default.select-active .task-summary-container .task-summary {
   white-space: normal;
 }
-/* line 151, ../sass/_task_list.scss */
+/* line 163, ../sass/_task_list.scss */
 .main-content .task-status, .main-content .task-name, .main-content .task-date, .main-content .task-summary {
   vertical-align: top;
   display: inline-block;
 }
-/* line 160, ../sass/_task_list.scss */
+/* line 172, ../sass/_task_list.scss */
 .main-content .task-priority {
   vertical-align: -webkit-baseline-middle;
   vertical-align: middle;
   display: inline-block;
   margin: 0 10px;
 }
-/* line 167, ../sass/_task_list.scss */
+/* line 179, ../sass/_task_list.scss */
 .main-content .task-date-title {
   font-weight: 700;
   text-align: center;
 }
-/* line 172, ../sass/_task_list.scss */
+/* line 184, ../sass/_task_list.scss */
 .main-content img.task-priority {
   line-height: 1.5em;
 }
-/* line 175, ../sass/_task_list.scss */
+/* line 187, ../sass/_task_list.scss */
 .main-content .task-summary-container {
   overflow: hidden;
 }
-/* line 177, ../sass/_task_list.scss */
+/* line 189, ../sass/_task_list.scss */
 .main-content .task-summary-container .task-summary {
   padding-left: 20px;
   display: inline-block;
@@ -37791,24 +37806,24 @@ svg:hover path {
   white-space: nowrap;
   /*max-width:450px;*/
 }
-/* line 187, ../sass/_task_list.scss */
+/* line 199, ../sass/_task_list.scss */
 .main-content .task-title-date {
   padding-right: 20px;
 }
-/* line 189, ../sass/_task_list.scss */
+/* line 201, ../sass/_task_list.scss */
 .main-content .task-title-date:after {
   background-image: url("./img/down-arrow.png");
   background-size: cover;
   width: 20px;
 }
 
-/* line 197, ../sass/_task_list.scss */
+/* line 209, ../sass/_task_list.scss */
 .message-id,
 .message-body {
   display: inline-block;
 }
 
-/* line 202, ../sass/_task_list.scss */
+/* line 214, ../sass/_task_list.scss */
 pre.message-body {
   width: 100%;
   margin: 0;
@@ -37816,37 +37831,43 @@ pre.message-body {
   border-radius: 5px;
   background-color: transparent;
 }
-/* line 208, ../sass/_task_list.scss */
+/* line 220, ../sass/_task_list.scss */
 pre.message-body.right {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-/* line 212, ../sass/_task_list.scss */
+/* line 224, ../sass/_task_list.scss */
 pre.message-body.left {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-/* line 218, ../sass/_task_list.scss */
+/* line 230, ../sass/_task_list.scss */
 .message-id {
   padding: 5px;
 }
-/* line 220, ../sass/_task_list.scss */
+/* line 232, ../sass/_task_list.scss */
 .message-id img {
   border-radius: 5px;
   border-color: transparent;
   background-color: #cdcdcd;
 }
-/* line 225, ../sass/_task_list.scss */
+/* line 237, ../sass/_task_list.scss */
 .message-id.right {
   text-align: left;
 }
-/* line 228, ../sass/_task_list.scss */
+/* line 240, ../sass/_task_list.scss */
 .message-id.left {
   text-align: right;
 }
 
-/* line 233, ../sass/_task_list.scss */
+/* line 245, ../sass/_task_list.scss */
 .my-message {
   margin-bottom: 10px;
+}
+
+/* line 249, ../sass/_task_list.scss */
+.stick {
+  position: fixed;
+  top: 80px;
 }
