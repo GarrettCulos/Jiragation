@@ -220,6 +220,7 @@ angular.module('myApp', [
         $mdDialog.hide(answer);
       };
     }
+
 })
 
 .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {

@@ -135,4 +135,5 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	
 	$scope.getTaskTime();
 
+	
 }]);
