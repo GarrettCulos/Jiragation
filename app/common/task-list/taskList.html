@@ -115,7 +115,7 @@
 
 						<md-list ng-if="task_comments" flex>
 							<md-list-item class="my-message" ng-repeat="(comment_num, comment) in task_comments">
-								<div ng-if="comment.isCurrentUser" flex layout="row" layout-align="start start">
+								<div ng-if="comment.isCurrentUser" layout="row" layout-align="start start" style="width:100%;">
 									<div class="message-id left" flex="15">
 										<div class="triangle"></div>
 										{{comment.author.displayName}}
@@ -124,7 +124,7 @@
 									<pre class="message-body left" flex="70">{{comment.body}}</pre>
 								</div>
 				
-								<div ng-if="!comment.isCurrentUser" flex layout="row" layout-align="end start">
+								<div ng-if="!comment.isCurrentUser" layout="row" layout-align="end start" style="width:100%;">
 									<pre class="message-body right" flex="70">{{comment.body}}</pre>
 									
 									<div class="message-id right" flex="15">
@@ -136,7 +136,7 @@
 							</md-list-item>
 
 							<md-list-item class="my-message">
-								<div flex layout="row" layout-align="start start">
+								<div layout="row" layout-align="start start">
 									<div class="message-id left" flex="15">
 										<div class="triangle"></div>
 										{{currentUser.userNamePrefered}}
