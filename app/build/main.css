@@ -37844,19 +37844,21 @@ pre.message-body.left {
 /* line 230, ../sass/_task_list.scss */
 .message-id img {
   margin: 14px;
+  max-width: 35px;
+  max-height: 35px;
   border-radius: 50%;
   border-color: transparent;
   background-color: transparent;
 }
-/* line 236, ../sass/_task_list.scss */
+/* line 238, ../sass/_task_list.scss */
 .message-id.right {
   text-align: left;
 }
-/* line 237, ../sass/_task_list.scss */
+/* line 239, ../sass/_task_list.scss */
 .message-id.right img {
   margin-left: 0;
 }
-/* line 241, ../sass/_task_list.scss */
+/* line 243, ../sass/_task_list.scss */
 .message-id.right .triangle {
   float: left;
   width: 0;
@@ -37865,15 +37867,15 @@ pre.message-body.left {
   border-left: 7px solid white;
   border-top: 7px solid white;
 }
-/* line 250, ../sass/_task_list.scss */
+/* line 252, ../sass/_task_list.scss */
 .message-id.left {
   text-align: right;
 }
-/* line 252, ../sass/_task_list.scss */
+/* line 254, ../sass/_task_list.scss */
 .message-id.left img {
   margin-right: 0;
 }
-/* line 255, ../sass/_task_list.scss */
+/* line 257, ../sass/_task_list.scss */
 .message-id.left .triangle {
   float: right;
   width: 0;
@@ -37883,7 +37885,7 @@ pre.message-body.left {
   border-top: 7px solid rgba(82, 0, 126, 0.9);
 }
 
-/* line 266, ../sass/_task_list.scss */
+/* line 268, ../sass/_task_list.scss */
 .my-message {
   margin-bottom: 10px;
 }

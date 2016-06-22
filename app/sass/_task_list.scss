@@ -120,7 +120,6 @@
   }
   .animate-show {
      max-height:2500px;
-     overflow-y:scroll;
      opacity:1;
   }
 
@@ -229,6 +228,8 @@ pre.message-body {
 
   img{
     margin:14px;
+    max-width:35px;
+    max-height:35px;
     border-radius: 50%;
     border-color: transparent;
     background-color:transparent;

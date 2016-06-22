@@ -54,7 +54,7 @@
 		<div class="account-list">
 			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse" ng-controller = "taskController" style="z-index:2">
 				
-				<div class="select-default task-item" ng-class = "{'select-active': isActive }" ng-click="updateRightView(task); toggleClick(taskNum); timerToggle()" layout="row" layout-align="center" flex>
+				<task-directive class="select-default task-item" ng-class = "{'select-active': isActive }" ng-click="updateRightView(task); toggleClick(taskNum); timerToggle()" layout="row" layout-align="center" flex>
 		
 					<div class="center" flex="10">
 						<div class="logged-time">{{ timeLogged | returnTime }}</div>
@@ -83,7 +83,7 @@
 						<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
 						<!-- <button  ng-click="updateTaskView(taskNum)"> View Task </button> -->		
 					</div>
-				</div>
+				</task-directive>
 
 				<div ng-hide='!isActive' class="task-body animate-show" style="z-index:1">
 				  
@@ -142,9 +142,9 @@
 										{{currentUser.userNamePrefered}}
 										<img src="{{currentUser.userProfileImage}}" alt="">
 									</div>	
-									<div class="message-body left" flex="70">
-										<input type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
-									</div>
+									
+									<input class="message-body left" flex="70" type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
+									
 									<md-button class="md-primary">
 										Send
 									</md-button>

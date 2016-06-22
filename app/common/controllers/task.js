@@ -19,7 +19,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	function comment_preprocess(comments) {
 		var res = [];
  		var deferred = $q.defer();
- 		console.log($scope.user_accounts);
+
  		comments.forEach(function(comment, key){
 			var comment_push = comment;
 			comment_push.isCurrentUser = false;
@@ -91,7 +91,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			acct: account
 		}
 		$scope.currentUser = $currentUser.user_accounts;
-		console.log($scope.currentUser);
+		
 		// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
 		$http({
 			method: 'GET',
@@ -136,4 +136,27 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	$scope.getTaskTime();
 
 	
-}]);
+}])
+.directive('task-directive', function(){
+
+	return {
+
+		compile: function (element, attrs) {
+
+     	return function (element, attrs) {
+
+		    console.log('scroll');
+		    $this = $(this);
+
+				$('.main-content').on('scroll',function(){
+						console.log($this.offset());
+				});
+				
+				console.log($this.offset());
+			}
+
+    }
+
+	}
+
+});
