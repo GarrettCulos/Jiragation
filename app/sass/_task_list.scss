@@ -9,18 +9,13 @@
 
   .account-list{
     background-color:transparent;
-    div:first-child .task-item{
-      border-top: 1px solid rgba(0, 0, 0, 0.2);
-    }  
-
     .task-item {
       margin-top:0;
       background-color:white;
       border-left:3px solid transparent;
       padding: 15px 20px 15px 10px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      border-left: 1px solid rgba(0, 0, 0, 0.2);
-      border-right: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 1px;
+      @include box-shadow(rgba(black ,0.5) 0 0 1px);
       img {
         height: 1.5em;
         position: relative;
@@ -139,7 +134,6 @@
       opacity: 1;
       margin-top:10px;
       border-left: 3px solid rgba(50, 50, 100, 1);
-      border-top: 1px solid rgba(0, 0, 0, 0.2);
       @include box-shadow(rgba(black ,0.5) 0 0 6px);
 
       .timer{

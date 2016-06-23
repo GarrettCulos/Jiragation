@@ -141,7 +141,7 @@
 
 							</md-list-item>
 
-							<md-list-item class="my-message">
+							<!-- <md-list-item class="my-message">
 								<div layout="row" layout-align="end start" style="width:100%;">
 									
 									<input class="message-body right" flex="70" type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
@@ -159,7 +159,31 @@
 
 									</div>	
 								</div>
-							</md-list-item>	
+							</md-list-item>	 -->
+						</md-list>
+						
+						<md-list ng-if="!task_comments" flex>
+							<h4>No Comments</h4>
+							
+							<!-- <md-list-item class="my-message">
+								<div layout="row" layout-align="end start" style="width:100%;">
+									
+									<input class="message-body right" flex="70" type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
+									<div class="message-id right" flex="15">
+										
+										{{currentUser.userNamePrefered}}
+										
+										<div class="triangle"></div>
+										
+										<img src="{{currentUser.userProfileImage}}" alt="">
+										
+										<md-button class="md-primary">
+											Send
+										</md-button>
+
+									</div>	
+								</div>
+							</md-list-item>	 -->
 						</md-list>
 
 					</div>

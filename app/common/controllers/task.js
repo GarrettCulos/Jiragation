@@ -106,8 +106,11 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		}).then(function successCallback(response){
 			// pass in comment array for preprocessing
 			comment_preprocess(response.data.comments).then(function(comments){
-				
-				$scope.task_comments=comments;
+				console.log(comments)
+				if(comments){
+					$scope.task_comments=comments;					
+				}
+
 				$scope.viewAllComments = function(){
 					$scope.comment_limit = comments.length;
 					$scope.comment_limit_end = 0;
@@ -122,6 +125,24 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			
 		});
 	}
+
+	// REQUIRES ROBUST WAY TO OBTAIN TASK SPECIFIC JITA ACCOUNT 
+			// $scope.addComment = function(data) {
+				
+			// 	var data_load = {
+			// 		issueId: acct.id,
+			// 		acct: account
+			// 		body: data
+			// 	}
+
+			// 	$http({
+			// 		method: 'GET',
+			// 		url: '/pull_jiras/add_comments',
+			// 		params: data_load
+			// 	}).then(function successCallback(response){
+
+			// 	});
+			// }
 
 	$scope.$on('timer-stopped', function (event, logged_time){
 		
