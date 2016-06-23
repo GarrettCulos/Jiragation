@@ -12,6 +12,11 @@ Notes.getNotes = function(callback) {
 
 };
 
+Notes.getNotesByIds = function(callback) {
+	// require task id as parameter
+
+};
+
 Notes.addNote = function(callback) {
 	// require task id as parameter
 

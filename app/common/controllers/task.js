@@ -2,7 +2,7 @@
 
 angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 
-.controller('taskController', ['$scope', '$http', function($scope, $http) {
+.controller('taskController', ['$scope', '$http', '$currentUser', '$q', function($scope, $http, $currentUser, $q) {
 
 	$scope.isActive=false;
 	$scope.timerStarted=false;
@@ -15,7 +15,24 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		// + msPsec*data.seconds + msPsec*secPmin*data.minutes + msPsec*secPmin*minPhr*data.hours + msPsec*secPmin*minPhr*hrPday *data.days;
 		return data.millis 
 	}
-	
+
+	function comment_preprocess(comments) {
+		var res = [];
+ 		var deferred = $q.defer();
+
+ 		comments.forEach(function(comment, key){
+			var comment_push = comment;
+			comment_push.isCurrentUser = false;
+			if($currentUser.user_accounts_email.indexOf(comment.author.emailAddress) != -1 ){
+				comment_push.isCurrentUser = true;
+			}
+	 		res.push(comment_push);
+			deferred.resolve(res);
+			
+ 		})
+		return deferred.promise;
+	}
+
 	$scope.taskLink = function(){	
 	}
 
@@ -56,8 +73,79 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		}
 	}
 
+
+	
+
+	// Toggle active task		
+	$scope.updateRightView = function(acct) {
+	
+		$scope.comment_limit = 6;
+		$scope.comment_limit_end = 6;
+
+		var temp = acct.self.split('://');
+		temp[1]=temp[1].split('/');
+		var account = {
+			 protocal:temp[0]
+			,url:temp[1][0]
+			,user_name: 'gculos'
+			,password: 'gummyworms'
+		}
+
+		// console.log(account);
+		var data_load = {
+			issueId: acct.id,
+			acct: account
+		}
+		$scope.currentUser = $currentUser.user_accounts;
+		
+		// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
+		$http({
+			method: 'GET',
+			url: '/pull_jiras/task_comments',
+			params: data_load
+		}).then(function successCallback(response){
+			// pass in comment array for preprocessing
+			comment_preprocess(response.data.comments).then(function(comments){
+				console.log(comments)
+				if(comments){
+					$scope.task_comments=comments;					
+				}
+
+				$scope.viewAllComments = function(){
+					$scope.comment_limit = comments.length;
+					$scope.comment_limit_end = 0;
+					$scope.non_visible_tasks = comments.length - $scope.comment_limit;
+					console.log($scope.comment_limit);
+				}
+				
+				if(comments.length > $scope.comment_limit){
+					$scope.non_visible_tasks = comments.length - $scope.comment_limit;
+				}
+			});
+			
+		});
+	}
+
+	// REQUIRES ROBUST WAY TO OBTAIN TASK SPECIFIC JITA ACCOUNT 
+			// $scope.addComment = function(data) {
+				
+			// 	var data_load = {
+			// 		issueId: acct.id,
+			// 		acct: account
+			// 		body: data
+			// 	}
+
+			// 	$http({
+			// 		method: 'GET',
+			// 		url: '/pull_jiras/add_comments',
+			// 		params: data_load
+			// 	}).then(function successCallback(response){
+
+			// 	});
+			// }
+
 	$scope.$on('timer-stopped', function (event, logged_time){
-		console.log('logged');
+		
 		var date = new Date();
 		var current_date = date.getTime();
 		var response = {
@@ -65,8 +153,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			end_time: current_date,
 			start_time: current_date-timerDataToUnix(logged_time)
 		}
-		console.log(response);
-		console.log(logged_time);
+		
 		// send data to databse
 		$http({
 			method: 'POST',
@@ -75,7 +162,6 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			headers: {'Content-Type': 'application/json'}
 
 		}).then(function successCallback(res){
-			console.log(res.data);
 			$scope.usrAccountData = res.data;
 
 		}, function errorCallback(res){
@@ -85,4 +171,5 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	
 	$scope.getTaskTime();
 
+	
 }]);

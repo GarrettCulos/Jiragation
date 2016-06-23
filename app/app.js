@@ -91,7 +91,7 @@ angular.module('myApp', [
         '600': '#f0f0f0',
         '700': '#e0e0e0',
         '800': '#d1d1d1',
-        '900': '#c2c2c2',
+        '900': '#000000',
         'A100': '#ffffff',
         'A200': '#ffffff',
         'A400': '#ffffff',
@@ -111,10 +111,10 @@ angular.module('myApp', [
        .backgroundPalette('customBackground')
 })
 
-.controller('AppCtrl', function ($scope, $timeout, $mdSidenav, $log, $mdDialog, $mdMedia) {
+.controller('AppCtrl', function ($scope, $timeout, $http, $mdSidenav, $log, $mdDialog, $mdMedia) {
   $scope.toggleLeft = buildToggler('left');
   $scope.toggleRight = buildToggler('right');
-  
+
 
   // --------------------------------------------- //
   //                  Left/Right navs              //
@@ -212,6 +212,7 @@ angular.module('myApp', [
         $mdDialog.hide(answer);
       };
     }
+
 })
 
 .controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
@@ -234,35 +235,31 @@ angular.module('myApp', [
   };
 })
 
-.service('users', ['$http', function($http){
-  
-    this.setUserInfo = function(user, callback){
-      
-      $http({
-        method: 'POST',
-        url: '/users/update_user_info',
-        data: {
-          preferedName:user.preferedName,
-          firstName:user.firstName,
-          givenName:user.givenName
-        }
-      }).then(function successCallback(response){
-        console.log('Update Successful')
-      }, function errorCallback(response){
-        console.log(response);
-        callback(response);
-      });
-    }
+.factory('$currentUser', ['$http', function($http) {
+   
+  var  $currentUser = {};
+  $currentUser.userNamePrefered = 'Garrett';
+  $currentUser.userNameFirst = 'Garrett';
+  $currentUser.userNameLast = 'Culos';
+  $currentUser.userProfileImage = null;
 
-    this.getUserInfo = function(callback){
-      $http({
-        method: 'GET',
-        url: '/users/get_user_info'
-      }).then(function successCallback(response){
-        callback( response.data[0]);
-      }, function errorCallback(response){
-        callback(response);
-      });
-    }
+  $http({
+    method:'GET',
+    url: '/account/fetch_accounts',
+    headers: {'Content-Type': 'application/json'}
+  }).then(function successCallback(res){
+    $currentUser.user_accounts = res;
+    $currentUser.user_accounts_email = [];
+    res.data.forEach(function(account,key){
+      $currentUser.user_accounts_email.push(account.account_email)
+    })
 
-}]);
+  }, function errorCallback(error){
+    $scope.user_accounts_email=null;
+    console.log(error)
+  });
+
+
+
+  return $currentUser;
+ }]);

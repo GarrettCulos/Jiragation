@@ -16,7 +16,7 @@
   </md-content>
 </md-sidenav>
 
-<md-content layout-padding flex style="background-color: rgba(0,0,0,0.05);">
+<md-content id="main" layout-padding flex style="background-color: rgba(0,0,0,0.05);">
 
 	<div class="main-content">
 		<div layout="row" layout-align="enter" flex>
@@ -52,19 +52,14 @@
 			</div>
 		</div>
 		<div class="account-list">
-			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse">
-				<div class="select-default task-item" 
-					ng-class="{'select-active': isActive }" 
-					ng-controller ="taskController" 
-					ng-click="updateRightView(taskNum); toggleClick(taskNum); timerToggle()"
-					layout="row" 
-					layout-align="center"
-					flex>
+			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse" ng-controller = "taskController" style="z-index:2">
+				
+				<task-bar class="select-default task-item" ng-class = "{'select-active': isActive }" isActive="{{isActive}}"ng-click="updateRightView(task); toggleClick(taskNum); timerToggle()" layout="row" layout-align="center" flex>
 		
 					<div class="center" flex="10">
 						<div class="logged-time">{{ timeLogged | returnTime }}</div>
 						<timer class="timer" autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer> <!-- ng-attr-start-time="timerStart" -->
-				  	</div>
+				  </div>
 				
 					<div class="center" flex="5">
 						<img class="task-priority" src="{{ task.fields.priority | priorityF }}">
@@ -88,19 +83,109 @@
 						<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
 						<!-- <button  ng-click="updateTaskView(taskNum)"> View Task </button> -->		
 					</div>
+				</task-bar>
 
-				</div>
-				<div ng-if="isActive" layout="row" layout-padding>
-					<div flex="70">
-						{{task.fields.description}}
+				<div ng-hide='!isActive' class="task-body animate-show" style="z-index:1">
+				  
+					<div layout="row" layout-padding>
+				  	<h4 flex> Description: </h4>
+				  </div>
+					
+					<div layout="row" layout-padding>
+						<div flex="70">
+							<pre> {{task.fields.description}} </pre> 
+						</div>
+						<div flex="30" >
+							<div layout="row" flex layout-padding ng-if="task.fields.fixVersions[0].name">
+								<div> Release: {{task.fields.fixVersions[0].name}} </div> 
+							</div>
+
+							<div layout="row" flex layout-padding ng-if="task.fields.fixVersions[0].released">
+								<div> Released: {{task.fields.fixVersions[0].released}}</div>
+							</div>
+
+							<div layout="row" flex layout-padding  ng-if="task.fields.duedate">
+								<div> Due: {{task.fields.duedate}}</div>
+							</div>
+						</div>	
 					</div>
-					<div flex="30" >
-						<div layout="row" flex layout-padding>
-							<div ng-if="task.fields.fixVersions">Release: {{task.fields.fixVersions[0].name}} <br/> Released: {{task.fields.fixVersions[0].released}}</div>
-						</div>
-						<div layout="row" flex layout-padding>
-							<div ng-if="task.fields.duedate">Due: {{task.fields.duedate}}</div>
-						</div>
+					
+					<div layout="row" layout-padding>
+						<h4> Comments: </h4>
+
+						<md-list ng-if="task_comments" flex>
+							<div ng-if="non_visible_tasks" class="nonvisible-banner">
+								<span class="circle" ng-click="viewAllComments()">{{non_visible_tasks}}</span>
+							</div>
+
+							<md-list-item class="my-message" ng-repeat="(comment_num, comment) in task_comments | limitTo:comment_limit:comment_limit_end">
+								
+								<div ng-if="!comment.isCurrentUser" layout="row" layout-align="start start" style="width:100%;">
+									<div class="message-id left" flex="15">
+										<div class="triangle"></div>
+										{{comment.author.displayName}}
+										<img src="{{comment.author.avatarUrls['32x32']}}" alt="">
+									</div>	
+									<pre class="message-body left" flex="70">{{comment.body}}</pre>
+								</div>
+				
+								<div ng-if="comment.isCurrentUser" layout="row" layout-align="end start" style="width:100%;">
+									<pre class="message-body right" flex="70">{{comment.body}}</pre>
+									
+									<div class="message-id right" flex="15">
+										<div class="triangle"></div>
+										<img src="{{comment.author.avatarUrls['32x32']}}" alt="">
+										{{comment.author.displayName}}
+									</div>	
+								</div>
+
+							</md-list-item>
+
+							<!-- <md-list-item class="my-message">
+								<div layout="row" layout-align="end start" style="width:100%;">
+									
+									<input class="message-body right" flex="70" type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
+									<div class="message-id right" flex="15">
+										
+										{{currentUser.userNamePrefered}}
+										
+										<div class="triangle"></div>
+										
+										<img src="{{currentUser.userProfileImage}}" alt="">
+										
+										<md-button class="md-primary">
+											Send
+										</md-button>
+
+									</div>	
+								</div>
+							</md-list-item>	 -->
+						</md-list>
+						
+						<md-list ng-if="!task_comments" flex>
+							<h4>No Comments</h4>
+							
+							<!-- <md-list-item class="my-message">
+								<div layout="row" layout-align="end start" style="width:100%;">
+									
+									<input class="message-body right" flex="70" type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
+									<div class="message-id right" flex="15">
+										
+										{{currentUser.userNamePrefered}}
+										
+										<div class="triangle"></div>
+										
+										<img src="{{currentUser.userProfileImage}}" alt="">
+										
+										<md-button class="md-primary">
+											Send
+										</md-button>
+
+									</div>	
+								</div>
+							</md-list-item>	 -->
+						</md-list>
+
 					</div>
 				</div>
 			</div>

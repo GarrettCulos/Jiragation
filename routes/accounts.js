@@ -10,6 +10,15 @@ accounts.get('/fetch_accounts', function(req, res, next) {
 	});
 });
 
+accounts.get('/is_current_user', function(req, res, next) { 
+	var email_address = req.body;
+	Accounts.verifyUserAccount(email_address, function(result){
+		// console.log('routes - accout');
+		res.send(result);		
+	});
+});
+
+
 accounts.post('/add_account',function(req,res,next) {
 	var account = req.body;
 	Accounts.setAccount(account, function(result){

@@ -118,12 +118,17 @@
 										<label>Jira URL</label>
 										<input type="text" ng-model="jiraURL" required >
 									</md-input-container>
-
-									
 								</div>
 								<div layout="row">
+									<md-input-container flex="100">
+										<label>Jira Email Account</label>
+										<input type="text" ng-model="account_email" required >
+									</md-input-container>
+								</div>
+
+								<div layout="row">
 									<span flex></span>
-									<md-button class="md-primary" ng-click="addAccount(jiraURL, userName, password)"> Add Account </md-button>		
+									<md-button class="md-primary" ng-click="addAccount(jiraURL, userName, password, account_email)"> Add Account </md-button>
 								</div>
 							</div>
 						</div>
@@ -132,7 +137,11 @@
 			</div>
 		</div>
 	</md-dialog-content>
+<<<<<<< HEAD
 	<md-dialog-actions layout="row" style="z-index:1;">
+=======
+	<md-dialog-actions layout="row" style="z-index:1">
+>>>>>>> ccf25de72488781b6a32342cd6010fe8dd389f27
 		<span flex></span>
 		<!-- <md-button ng-click="discard()">
 			discard

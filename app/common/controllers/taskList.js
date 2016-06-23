@@ -62,6 +62,10 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	$scope.reverse = true;
 	
 	$scope.activeTask=[];
+		
+  // --------------------------------------------- //
+  //            Jira Related functions             //
+  // --------------------------------------------- //
 	
 	// Toggle active task		
 	var taskNumber = 0;
@@ -73,7 +77,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		$scope.allTimerPaused = false;
 	}
 
-	function modifyTaskList(taskList) {
+	function modify_task_list(taskList) {
 		var res = []
  		var deferred = $q.defer();
 
@@ -88,7 +92,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 		return deferred.promise;
 	}
-	
+
 	$scope.getJiraTasks = function(){
 
 		// Fetch Jira Data`
@@ -110,11 +114,11 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 				
 				$scope.fetching_tasks = false;
 
-				modifyTaskList(
+				modify_task_list(
 					res.data
 				).then(function(response){		
 					$scope.taskList = response;
-					console.log($scope.taskList);
+					// console.log($scope.taskList);
 				});
 
 			}, function errorCallback(res){
@@ -150,31 +154,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		return taskUrl.substring(0,taskUrl.indexOf('/rest/'))+'/browse/'+taskKey;
 	}
 
-	// Toggle active task		
-	$scope.updateRightView = function(issueId, acct) {
-	
-		$scope.rightView = $scope.taskList[taskNumber];
-		console.log(issueId);
-		console.log($scope);
-
-		var data = {
-			issueId: issueId,
-			acct: acct
-		}
-		// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
-		$http({
-			method: 'GET',
-			url: '/pull_jiras/task_comments',
-			data: 	JSON.stringify(data)
-		}).then(function successCallback(response){
-			$scope.task_comments=response;
-			console.log(response);
-		})
-
-		// update status
-
-		// get attachements // GET /rest/api/2/attachment/{id}
-	}
 
 	$scope.order = function(predicate) {
 		$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
@@ -183,3 +162,36 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	$scope.getJiraTasks();
 }])
+
+.directive('taskBar', function(){
+	return {
+	    link: function(scope, element, attr) {
+	    	var scroll = angular.element('#main');
+	    	var navHeight = angular.element('headernav')[0].offsetHeight+10;
+
+	    	scroll.on('DOMContentLoaded load resize scroll',function(){
+	    		if(attr.isactive == "true"){
+
+	    			var active_bars = element.parent().parent().find('task-bar.select-active');
+	    			console.log(active_bars);
+
+	    			if(element.parent().offset().top - navHeight < 0){
+	    				element.parent().css({paddingTop: element[0].offsetHeight+10});
+	    				element.css({top:(navHeight-10)});
+	    				element.addClass("sticky");
+	    			} 
+
+	    			if(element.parent().offset().top - navHeight +10 > 0) {
+	    				element.parent().css({paddingTop: '0'});
+	    				element.removeClass("sticky");
+	    			}
+
+					} else {
+						element.removeClass("sticky")
+						element.parent().css({paddingTop: '0'});
+		    				
+					}
+	    	});
+	    },
+	}
+});;

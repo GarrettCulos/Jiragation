@@ -1,29 +1,28 @@
 /* app css stylesheet */
 
 .main-content {
-   // margin-top:60px;
+  background-color:transparent;
   
   .center{
     text-align:center;
   }
 
   .account-list{
-    background-color:$bg_color_tasks;
-    @include box-shadow(rgba(20,20,20,0.3) 0 0 5px);
-    div:last-child .task-item{
-      border-bottom: 1px solid rgba(0, 0, 0, 0.1);    
-    }  
-
+    background-color:transparent;
     .task-item {
+      margin-top:0;
+      background-color:white;
+      border-left:3px solid transparent;
       padding: 15px 20px 15px 10px;
-      /*border-bottom:1px solid rgba(0,0,0,0.1);*/
-      border-top: 1px solid rgba(0, 0, 0, 0.1);
-      border-left: 1px solid rgba(0, 0, 0, 0.1);
-      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 1px;
+      @include box-shadow(rgba(black ,0.5) 0 0 1px);
       img {
         height: 1.5em;
         position: relative;
         vertical-align: middle;
+      }
+      &:focus {
+        outline: none;
       }
     }
   }
@@ -110,10 +109,32 @@
     border-top: 1px solid rgba(0, 0, 0, 0.2);
   }
 
+  
+  .task-body{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  .animate-show {
+     max-height:3500px;
+     opacity:1;
+  }
+
+  .animate-show.ng-hide-add, 
+  .animate-show.ng-hide-remove {
+    transition: all ease 0.25s;
+  }
+
+  .animate-show.ng-hide {
+    max-height:0;
+    opacity:0;
+  }
+
   .select-default {
     &.select-active {
+      transition:margin ease 0.25s;
       opacity: 1;
+      margin-top:10px;
       border-left: 3px solid rgba(50, 50, 100, 1);
+      @include box-shadow(rgba(black ,0.5) 0 0 6px);
 
       .timer{
         display: inline-block;
@@ -174,4 +195,92 @@
       width: 20px;
     }
   }
+}
+
+.message-id,
+.message-body {
+  display:inline-block;
+}
+
+pre.message-body {
+  width:100%;
+  margin:0;
+  border: 0px solid transparent;
+  border-radius: 5px;
+  &.right{
+    border-top-right-radius:0;
+    color:white;
+    background-color:rgba($my_purple,0.9);
+  }
+  &.left{
+    background-color:white;
+    border-top-left-radius:0;
+  }
+}
+
+.message-id {
+
+  img{
+    margin:14px;
+    max-width:35px;
+    max-height:35px;
+    border-radius: 50%;
+    border-color: transparent;
+    background-color:transparent;
+  }
+  &.right{
+    img{
+      margin-left:0;
+    }
+    text-align:left;
+    .triangle{
+      float:left;
+      width: 0; 
+      height: 0; 
+      border:7px solid transparent;
+      border-left: 7px solid rgba($my_purple,0.9);
+      border-top: 7px solid rgba($my_purple,0.9);
+    }
+  }
+  &.left{
+    text-align:right;
+    img{
+      margin-right:0;
+    }
+    .triangle{
+      float:right;
+      width: 0; 
+      height: 0; 
+      border:7px solid transparent;
+      border-right: 7px solid white;
+      border-top: 7px solid white;
+    }
+  }
+}
+
+.my-message{
+  margin-bottom:10px;
+}
+
+.sticky {
+  position:fixed;
+  left:16px;
+  right:31px;
+  z-index:2;
+}
+
+.nonvisible-banner{
+  margin:40px;
+  text-align: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.circle {
+  background-color:$my_purple;
+  color:white;
+  padding: 10px;
+  font-size: 1.1em;
+  border-radius: 50%;
+  border: 1px solid transparent;
 }

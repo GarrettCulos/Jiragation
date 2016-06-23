@@ -9,7 +9,7 @@ var Accounts = function() {
 
 Accounts.getAccounts = function(callback) {
 	// console.log('model - accout');
-	var queryString = "SELECT user_name,url,password,protocal FROM jira_accounts";
+	var queryString = "SELECT user_name,url,password,protocal,account_email FROM jira_accounts";
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){
@@ -19,6 +19,24 @@ Accounts.getAccounts = function(callback) {
   		console.log(err);
   		throw err;
   	});
+};
+
+Accounts.verifyUserAccount = function(account_email, callback) {
+	var queryString = "SELECT * FROM jira_accounts WHERE account_email = '"+account_email +"'";
+	
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
+	.then(function(results){
+		console.log(results);
+		if(results<1){
+			return callback(false);
+		}
+		return callback(true);
+
+	})
+	.catch(function(err){
+		console.log(err);
+		throw err;
+	});
 };
 
 // NEEDS TESTING
@@ -34,6 +52,7 @@ Accounts.setAccount = function(account, callback) {
 			model.JiraAccounts.create({
 				user_name:account.user_name,
 				url: account.url,
+				account_email: account.account_email,
 				password: account.password,
 				protocal: account.protocal
 			}).then(function(table){

@@ -56,14 +56,20 @@ angular.module('myApp.account', ['ngRoute'])
 		$scope.viewAccounts = false;
 	}
 	
-	$scope.addAccount = function(URL,usr,pass){
+	$scope.addAccount = function(URL,usr,pass,account_email){
 		var url_prot = URL.split('://');
 		$http({
 			method: 'POST',
 			url: '/account/add_account',
-			data: {url:url_prot[1], user_name:usr, password:pass, protocal:url_prot[0]}
+			data: {url:url_prot[1], user_name:usr, password:pass, protocal:url_prot[0], account_email:account_email}
 		}).then(function successCallback(response){
 			syncAccounts();
+			
+			$scope.userName ='';
+			$scope.password='';
+			$scope.jiraURL='';
+			$scope.account_email='';
+
 		}, function errorCallback(response){
 			console.log(response);
 		});
