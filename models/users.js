@@ -1,7 +1,5 @@
 var db 					= require('../init_db.js');
-
 var Sequelize 			= db.Sequelize;
-
 var sequelize 			= db.sequelize;
 
 var users = function() {
