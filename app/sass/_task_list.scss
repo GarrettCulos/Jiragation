@@ -274,3 +274,19 @@ pre.message-body {
   right:31px;
   z-index:2;
 }
+
+.nonvisible-banner{
+  margin:40px;
+  text-align: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.circle {
+  background-color:$my_purple;
+  color:white;
+  padding: 10px;
+  font-size: 1.1em;
+  border-radius: 50%;
+  border: 1px solid transparent;
+}

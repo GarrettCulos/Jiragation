@@ -37896,3 +37896,21 @@ pre.message-body.left {
   right: 31px;
   z-index: 2;
 }
+
+/* line 278, ../sass/_task_list.scss */
+.nonvisible-banner {
+  margin: 40px;
+  text-align: center;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+/* line 285, ../sass/_task_list.scss */
+.circle {
+  background-color: #52007e;
+  color: white;
+  padding: 10px;
+  font-size: 1.1em;
+  border-radius: 50%;
+  border: 1px solid transparent;
+}

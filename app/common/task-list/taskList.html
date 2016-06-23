@@ -114,7 +114,12 @@
 						<h4> Comments: </h4>
 
 						<md-list ng-if="task_comments" flex>
-							<md-list-item class="my-message" ng-repeat="(comment_num, comment) in task_comments">
+							<div ng-if="non_visible_tasks" class="nonvisible-banner">
+								<span class="circle" ng-click="viewAllComments()">{{non_visible_tasks}}</span>
+							</div>
+
+							<md-list-item class="my-message" ng-repeat="(comment_num, comment) in task_comments | limitTo:comment_limit:comment_limit_end">
+								
 								<div ng-if="!comment.isCurrentUser" layout="row" layout-align="start start" style="width:100%;">
 									<div class="message-id left" flex="15">
 										<div class="triangle"></div>
@@ -133,21 +138,26 @@
 										{{comment.author.displayName}}
 									</div>	
 								</div>
+
 							</md-list-item>
 
 							<md-list-item class="my-message">
-								<div layout="row" layout-align="start start">
-									<div class="message-id left" flex="15">
-										<div class="triangle"></div>
+								<div layout="row" layout-align="end start" style="width:100%;">
+									
+									<input class="message-body right" flex="70" type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
+									<div class="message-id right" flex="15">
+										
 										{{currentUser.userNamePrefered}}
+										
+										<div class="triangle"></div>
+										
 										<img src="{{currentUser.userProfileImage}}" alt="">
+										
+										<md-button class="md-primary">
+											Send
+										</md-button>
+
 									</div>	
-									
-									<input class="message-body left" flex="70" type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
-									
-									<md-button class="md-primary">
-										Send
-									</md-button>
 								</div>
 							</md-list-item>	
 						</md-list>
