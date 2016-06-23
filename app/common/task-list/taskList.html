@@ -16,7 +16,7 @@
   </md-content>
 </md-sidenav>
 
-<md-content layout-padding flex style="background-color: rgba(0,0,0,0.05);">
+<md-content id="main" layout-padding flex style="background-color: rgba(0,0,0,0.05);">
 
 	<div class="main-content">
 		<div layout="row" layout-align="enter" flex>
@@ -54,7 +54,7 @@
 		<div class="account-list">
 			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse" ng-controller = "taskController" style="z-index:2">
 				
-				<task-directive class="select-default task-item" ng-class = "{'select-active': isActive }" ng-click="updateRightView(task); toggleClick(taskNum); timerToggle()" layout="row" layout-align="center" flex>
+				<task-bar class="select-default task-item" ng-class = "{'select-active': isActive }" isActive="{{isActive}}"ng-click="updateRightView(task); toggleClick(taskNum); timerToggle()" layout="row" layout-align="center" flex>
 		
 					<div class="center" flex="10">
 						<div class="logged-time">{{ timeLogged | returnTime }}</div>
@@ -83,7 +83,7 @@
 						<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
 						<!-- <button  ng-click="updateTaskView(taskNum)"> View Task </button> -->		
 					</div>
-				</task-directive>
+				</task-bar>
 
 				<div ng-hide='!isActive' class="task-body animate-show" style="z-index:1">
 				  
@@ -115,7 +115,7 @@
 
 						<md-list ng-if="task_comments" flex>
 							<md-list-item class="my-message" ng-repeat="(comment_num, comment) in task_comments">
-								<div ng-if="comment.isCurrentUser" layout="row" layout-align="start start" style="width:100%;">
+								<div ng-if="!comment.isCurrentUser" layout="row" layout-align="start start" style="width:100%;">
 									<div class="message-id left" flex="15">
 										<div class="triangle"></div>
 										{{comment.author.displayName}}
@@ -124,7 +124,7 @@
 									<pre class="message-body left" flex="70">{{comment.body}}</pre>
 								</div>
 				
-								<div ng-if="!comment.isCurrentUser" layout="row" layout-align="end start" style="width:100%;">
+								<div ng-if="comment.isCurrentUser" layout="row" layout-align="end start" style="width:100%;">
 									<pre class="message-body right" flex="70">{{comment.body}}</pre>
 									
 									<div class="message-id right" flex="15">

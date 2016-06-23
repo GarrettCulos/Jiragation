@@ -214,12 +214,12 @@ pre.message-body {
   border: 0px solid transparent;
   border-radius: 5px;
   &.right{
-    border-top-right-radius:0; 
-    background-color:white;
-  }
-  &.left{
+    border-top-right-radius:0;
     color:white;
     background-color:rgba($my_purple,0.9);
+  }
+  &.left{
+    background-color:white;
     border-top-left-radius:0;
   }
 }
@@ -244,8 +244,8 @@ pre.message-body {
       width: 0; 
       height: 0; 
       border:7px solid transparent;
-      border-left: 7px solid white;
-      border-top: 7px solid white;
+      border-left: 7px solid rgba($my_purple,0.9);
+      border-top: 7px solid rgba($my_purple,0.9);
     }
   }
   &.left{
@@ -258,12 +258,20 @@ pre.message-body {
       width: 0; 
       height: 0; 
       border:7px solid transparent;
-      border-right: 7px solid rgba($my_purple,0.9);
-      border-top: 7px solid rgba($my_purple,0.9);
+      border-right: 7px solid white;
+      border-top: 7px solid white;
     }
   }
 }
 
 .my-message{
   margin-bottom:10px;
+}
+
+.sticky {
+  position:fixed;
+  top:54px;
+  left:20px;
+  right:20px;
+  z-index:2;
 }

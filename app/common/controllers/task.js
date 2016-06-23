@@ -125,7 +125,6 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			headers: {'Content-Type': 'application/json'}
 
 		}).then(function successCallback(res){
-			console.log(res.data);
 			$scope.usrAccountData = res.data;
 
 		}, function errorCallback(res){
@@ -137,26 +136,85 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 
 	
 }])
-.directive('task-directive', function(){
 
+.directive('taskBar', function(){
 	return {
-
-		compile: function (element, attrs) {
-
-     	return function (element, attrs) {
-
-		    console.log('scroll');
-		    $this = $(this);
-
-				$('.main-content').on('scroll',function(){
-						console.log($this.offset());
-				});
-				
-				console.log($this.offset());
-			}
-
-    }
-
+	    link: function(scope, element, attr) {
+	    	var scroll = angular.element('#main');
+	    	scroll.on('DOMContentLoaded load resize scroll',function(){
+	    		if(attr.isactive == "true"){
+	    			if(element.offset().top < 0){
+	    				element.addClass("sticky");
+	    			} else{
+	    				console.log(element.offset().top)
+	    				element.removeClass("sticky");
+	    			}
+				} else {
+					element.removeClass("sticky")
+				}
+	    	});
+	    },
 	}
-
 });
+// .directive('taskBar', function(){
+// 			var scroll_window = element;
+// 	// var scroll_window = document.getElementsById('main');''
+// 	// console.log(scroll_window);
+
+// 	// function isVisible(el) {
+// 	// 	var rect = el.getBoundingClientRect();
+// 	// 	var clw = (scroll_window.innerWidth || scroll_window.documentElement.clientWidth);
+// 	// 	var clh = (scroll_window.innerHeight || scroll_window.documentElement.clientHeight) ;
+
+// 	// 	// checks if element is fully visible
+// 	// 	//return (rect.top >= 0 && rect.bottom <= clh) && (rect.left >= 0 && rect.right <= clw);
+
+// 	// 	// checks if part of element is visible
+// 	// 	console.log(clh);
+// 	// 	return (rect.left <= clw && 0 <= rect.right && rect.top <= clh && 0 <= rect.bottom);
+// 	// }
+
+// 	// var reg = [];
+
+// 	// function register(element, fn) {
+// 	// 	reg.push([element, fn]);
+// 	// }
+
+// 	// function deregister(element) {
+// 	// 	reg = angular.filter(reg, function (item) {
+// 	// 	  return item[0] !== element;
+// 	// 	});
+// 	// }
+
+// 	// angular.element(scroll_window).on('DOMContentLoaded load resize scroll', function () {
+// 	// 	angular.forEach(reg, function (item) {
+// 	// 	    item[1](isVisible(item[0]));
+// 	// 	});
+// 	// });
+
+// 	return {
+// 		restrict: 'A',
+//         scope: {ranges:'='},
+// 		compile: function(scope, element, attrs) {
+// 			console.log('compile directive');
+// 			var scroll_window = element;
+// 			// scroll_window.on('scroll', function () {
+// 			// 	return console.log('scroll');
+// 			// });
+// 			element.on('mouseover', function () {
+// 				console.log('mouseover');
+// 			});
+
+// 		}
+// 		// link: function (scope, element, attrs, controller) {
+// 		//   register(element[0], function(isVisible){
+// 		//     scope.$apply(function(){
+// 		//       scope.isVisible = isVisible;
+// 		//     })
+// 		//   });
+// 		//   scope.$on('$destroy', function(){
+// 		//     deregister(element);
+// 		//   })
+// 		// }
+// 	}
+// });
