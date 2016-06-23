@@ -161,4 +161,31 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	};
 
 	$scope.getJiraTasks();
-}]);
+}])
+.directive('taskBar', function(){
+	return {
+	    link: function(scope, element, attr) {
+	    	var scroll = angular.element('#main');
+	    	var navHeight = angular.element('headernav')[0].offsetHeight + 5;
+
+	    	scroll.on('DOMContentLoaded load resize scroll',function(){
+	    		if(attr.isactive == "true"){
+	    			if(element.parent().offset().top < navHeight){
+	    				element.parent().css({marginTop: element[0].offsetHeight+5});
+	    				element.css({top:navHeight})
+	    				element.addClass("sticky");
+	    			} 
+
+	    			if(element.parent().offset().top >= navHeight){
+	    				element.parent().css({marginTop: '0'});
+	    				element.removeClass("sticky");
+	    			}
+				} else {
+					element.removeClass("sticky")
+					element.parent().css({marginTop: '0'});
+	    				
+				}
+	    	});
+	    },
+	}
+});;
