@@ -78,7 +78,7 @@ bower update
 
 This will find the latest versions that match the version ranges specified in the `bower.json` file.
 
-
+<!-- 
 ## Loading Angular Asynchronously
 
 The project supports loading the framework and application scripts asynchronously.  The
@@ -160,7 +160,7 @@ CloudBees have provided a CI/deployment setup:
 
 If you run this, you will get a cloned version of this repo to start working on in a private git repo,
 along with a CI service (in Jenkins) hosted that will run unit and end to end tests in both Firefox and Chrome.
-
+ -->
 
 ## Contact
 For more information about this application contact garrett@highwaythreesoutions.com
