@@ -80,7 +80,6 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	$scope.updateRightView = function(acct) {
 	
 		$scope.comment_limit = 6;
-		$scope.comment_limit_end = 6;
 
 		var temp = acct.self.split('://');
 		temp[1]=temp[1].split('/');
@@ -106,7 +105,9 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		}).then(function successCallback(response){
 			// pass in comment array for preprocessing
 			comment_preprocess(response.data.comments).then(function(comments){
-				console.log(comments)
+				// console.log(comments)
+				$scope.comment_limit_end = comments.length-$scope.comment_limit;
+
 				if(comments){
 					$scope.task_comments=comments;					
 				}

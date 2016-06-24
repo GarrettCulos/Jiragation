@@ -37722,30 +37722,26 @@ svg:hover path {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
-/* line 113, ../sass/_task_list.scss */
-.main-content .task-body {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-/* line 116, ../sass/_task_list.scss */
+/* line 112, ../sass/_task_list.scss */
 .main-content .animate-show {
   max-height: 3500px;
   opacity: 1;
 }
-/* line 121, ../sass/_task_list.scss */
+/* line 117, ../sass/_task_list.scss */
 .main-content .animate-show.ng-hide-add,
 .main-content .animate-show.ng-hide-remove {
   transition: all ease 0.25s;
 }
-/* line 126, ../sass/_task_list.scss */
+/* line 122, ../sass/_task_list.scss */
 .main-content .animate-show.ng-hide {
   max-height: 0;
   opacity: 0;
 }
-/* line 131, ../sass/_task_list.scss */
+/* line 127, ../sass/_task_list.scss */
 .main-content .select-default {
   /*opacity:0.3; */
 }
-/* line 132, ../sass/_task_list.scss */
+/* line 128, ../sass/_task_list.scss */
 .main-content .select-default.select-active {
   transition: margin ease 0.25s;
   opacity: 1;
@@ -37754,44 +37750,44 @@ svg:hover path {
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
 }
-/* line 139, ../sass/_task_list.scss */
+/* line 135, ../sass/_task_list.scss */
 .main-content .select-default.select-active .timer {
   display: inline-block;
 }
-/* line 142, ../sass/_task_list.scss */
+/* line 138, ../sass/_task_list.scss */
 .main-content .select-default.select-active .logged-time {
   display: none;
 }
-/* line 146, ../sass/_task_list.scss */
+/* line 142, ../sass/_task_list.scss */
 .main-content .select-default.select-active .task-summary-container .task-summary {
   white-space: normal;
 }
-/* line 154, ../sass/_task_list.scss */
+/* line 150, ../sass/_task_list.scss */
 .main-content .task-status, .main-content .task-name, .main-content .task-date, .main-content .task-summary {
   vertical-align: top;
   display: inline-block;
 }
-/* line 163, ../sass/_task_list.scss */
+/* line 159, ../sass/_task_list.scss */
 .main-content .task-priority {
   vertical-align: -webkit-baseline-middle;
   vertical-align: middle;
   display: inline-block;
   margin: 0 10px;
 }
-/* line 170, ../sass/_task_list.scss */
+/* line 166, ../sass/_task_list.scss */
 .main-content .task-date-title {
   font-weight: 700;
   text-align: center;
 }
-/* line 175, ../sass/_task_list.scss */
+/* line 171, ../sass/_task_list.scss */
 .main-content img.task-priority {
   line-height: 1.5em;
 }
-/* line 178, ../sass/_task_list.scss */
+/* line 174, ../sass/_task_list.scss */
 .main-content .task-summary-container {
   overflow: hidden;
 }
-/* line 180, ../sass/_task_list.scss */
+/* line 176, ../sass/_task_list.scss */
 .main-content .task-summary-container .task-summary {
   padding-left: 20px;
   display: inline-block;
@@ -37799,43 +37795,43 @@ svg:hover path {
   white-space: nowrap;
   /*max-width:450px;*/
 }
-/* line 190, ../sass/_task_list.scss */
+/* line 186, ../sass/_task_list.scss */
 .main-content .task-title-date {
   padding-right: 20px;
 }
-/* line 192, ../sass/_task_list.scss */
+/* line 188, ../sass/_task_list.scss */
 .main-content .task-title-date:after {
   background-image: url("./img/down-arrow.png");
   background-size: cover;
   width: 20px;
 }
 
-/* line 200, ../sass/_task_list.scss */
+/* line 196, ../sass/_task_list.scss */
 .message-id,
 .message-body {
   display: inline-block;
 }
 
-/* line 205, ../sass/_task_list.scss */
+/* line 201, ../sass/_task_list.scss */
 pre.message-body {
   width: 100%;
   margin: 0;
   border: 0px solid transparent;
   border-radius: 5px;
 }
-/* line 210, ../sass/_task_list.scss */
+/* line 206, ../sass/_task_list.scss */
 pre.message-body.right {
   border-top-right-radius: 0;
   color: white;
   background-color: rgba(82, 0, 126, 0.9);
 }
-/* line 215, ../sass/_task_list.scss */
+/* line 211, ../sass/_task_list.scss */
 pre.message-body.left {
   background-color: white;
   border-top-left-radius: 0;
 }
 
-/* line 223, ../sass/_task_list.scss */
+/* line 219, ../sass/_task_list.scss */
 .message-id img {
   margin: 14px;
   max-width: 35px;
@@ -37844,15 +37840,15 @@ pre.message-body.left {
   border-color: transparent;
   background-color: transparent;
 }
-/* line 231, ../sass/_task_list.scss */
+/* line 227, ../sass/_task_list.scss */
 .message-id.right {
   text-align: left;
 }
-/* line 232, ../sass/_task_list.scss */
+/* line 228, ../sass/_task_list.scss */
 .message-id.right img {
   margin-left: 0;
 }
-/* line 236, ../sass/_task_list.scss */
+/* line 232, ../sass/_task_list.scss */
 .message-id.right .triangle {
   float: left;
   width: 0;
@@ -37861,15 +37857,15 @@ pre.message-body.left {
   border-left: 7px solid rgba(82, 0, 126, 0.9);
   border-top: 7px solid rgba(82, 0, 126, 0.9);
 }
-/* line 245, ../sass/_task_list.scss */
+/* line 241, ../sass/_task_list.scss */
 .message-id.left {
   text-align: right;
 }
-/* line 247, ../sass/_task_list.scss */
+/* line 243, ../sass/_task_list.scss */
 .message-id.left img {
   margin-right: 0;
 }
-/* line 250, ../sass/_task_list.scss */
+/* line 246, ../sass/_task_list.scss */
 .message-id.left .triangle {
   float: right;
   width: 0;
@@ -37879,12 +37875,12 @@ pre.message-body.left {
   border-top: 7px solid white;
 }
 
-/* line 261, ../sass/_task_list.scss */
+/* line 257, ../sass/_task_list.scss */
 .my-message {
   margin-bottom: 10px;
 }
 
-/* line 265, ../sass/_task_list.scss */
+/* line 261, ../sass/_task_list.scss */
 .sticky {
   position: fixed;
   left: 16px;
@@ -37892,7 +37888,7 @@ pre.message-body.left {
   z-index: 2;
 }
 
-/* line 272, ../sass/_task_list.scss */
+/* line 268, ../sass/_task_list.scss */
 .nonvisible-banner {
   margin: 40px;
   text-align: center;
@@ -37900,7 +37896,7 @@ pre.message-body.left {
   border-bottom: 1px solid black;
 }
 
-/* line 279, ../sass/_task_list.scss */
+/* line 275, ../sass/_task_list.scss */
 .circle {
   background-color: #52007e;
   color: white;
