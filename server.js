@@ -1,5 +1,5 @@
-var express 	= require('express'); 
-var db 			= require('./init_db.js');
+var express 		= require('express'); 
+var db 					= require('./init_db.js');
 var Sequelize 	= db.Sequelize;
 var sequelize 	= db.sequelize;
 
@@ -23,6 +23,8 @@ app.use(function(req, res, next) {
 app.use('/task', require('./routes/taskManager').taskManager);
 app.use('/account', require('./routes/accounts').accounts );
 app.use('/pull_jiras', require('./routes/jira').jira);
+app.use('/users', require('./routes/users').users);
+
 
 app.use('/', express.static('../Jiragation/'));
 

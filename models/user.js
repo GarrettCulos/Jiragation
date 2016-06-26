@@ -11,7 +11,7 @@ var user = function() {
 // Pull Time Sheet
 user.getUser = function(callback) {
 	// console.log('model - accout');
-	var queryString = "SELECT * FROM user";
+	var queryString = "SELECT * FROM users";
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){
@@ -28,7 +28,47 @@ user.getUser = function(callback) {
 // Pull time log for towards task_id
 user.setGivenName = function(given_name, callback) {
 
-	var queryString = "INSERT given_name FROM user";
+	var queryString = "INSERT given_name FROM users";
+	/* Insert account into database table */
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.INSERT })
+		.then(function(results){
+			callback(results);
+			// console.log(results);
+		})
+		.catch(function(err){
+  		console.log(err);
+  		throw err;
+  	});
+};
+
+user.setUserInfo = function(user_info, callback) {
+
+	var firstName = user_info.firstName;
+	var givenName = user_info.givenName;
+	var preferedName = user_info.preferedName;
+	
+	var queryString = "UPDATE users SET ";
+
+	if(firstName){
+		queryString += "firstName = '" + firstName+"'";
+	}
+	if(givenName){
+		if(firstName){
+			queryString += " , ";
+		}
+		queryString += "givenName = '" + givenName+"'";
+	}
+	if(preferedName){
+		if(firstName || givenName){
+			queryString += " , ";
+		}
+		queryString += "preferedName = '" + preferedName+"'";
+	}
+
+	queryString += "  WHERE id = 1;";
+
+
+
 	/* Insert account into database table */
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.INSERT })
 		.then(function(results){
@@ -38,12 +78,13 @@ user.setGivenName = function(given_name, callback) {
 		.catch(function(err){
 	  		console.log(err);
 	  		throw err;
-	  	});
-};
+	  });
+
+}
 
 user.setFirstName = function(first_name, callback) {
 
-	var queryString = "INSERT first_name FROM user";
+	var queryString = "INSERT first_name FROM usesr";
 	/* Insert account into database table */
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.INSERT })
 		.then(function(results){

@@ -21,14 +21,14 @@ angular.module('myApp', [
  	$routeProvider
 	.when('/', {
 		templateUrl: 'common/task-list/taskList.html',
-    	controller: 'userController'
+    	controller: 'accountsController'
 	})
 	.when('/task-list', {
 		templateUrl: 'common/task-list/taskList.html',
-    	controller: 'userController'
+    	controller: 'accountsController'
 	})
 	.when('/account', {
-    	templateUrl: 'common/account/account.html',
+    	templateUrl: 'common/account/settings.html',
     	controller: 'accountCtrl'
 	})
   .when('/logs', {
@@ -190,7 +190,7 @@ angular.module('myApp', [
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
       $mdDialog.show({
         controller: DialogController,
-        templateUrl: 'common/account/account.html',
+        templateUrl: 'common/account/settings.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
@@ -246,10 +246,17 @@ angular.module('myApp', [
 .factory('$currentUser', ['$http', function($http) {
    
   var  $currentUser = {};
-  $currentUser.userNamePrefered = 'Garrett';
-  $currentUser.userNameFirst = 'Garrett';
-  $currentUser.userNameLast = 'Culos';
-  $currentUser.userProfileImage = null;
+
+  $currentUser.getUserInformation = function() {
+    return $http({
+      method: 'GET',
+      url: '/users/get_user_info'
+    }).then(function successCallback(response){
+      return response;
+    }, function errorCallback(response){
+      return response;
+    });
+  }
 
   $http({
     method:'GET',
@@ -263,11 +270,23 @@ angular.module('myApp', [
     })
 
   }, function errorCallback(error){
-    $scope.user_accounts_email=null;
+    $currentUser.user_accounts_email=null;
     console.log(error)
   });
 
-
+  $currentUser.updateUser = function(user) {
+    return $http({
+      method: 'POST',
+      url: '/users/update_user_info',
+      data: user
+    }).then(function successCallback(response){
+      console.log('Updated User')
+      return 'Success';
+    }, function errorCallback(response){
+      console.log(response);
+      return response;
+    });
+  }
 
   return $currentUser;
  }]);

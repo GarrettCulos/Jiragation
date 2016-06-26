@@ -81,6 +81,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	
 		$scope.comment_limit = 6;
 
+		// REPLACE WITH USER SERVICE
 		var temp = acct.self.split('://');
 		temp[1]=temp[1].split('/');
 		var account = {

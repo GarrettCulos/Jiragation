@@ -2,7 +2,7 @@
 
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
-.controller('userController', ['$scope', '$http', '$q', function($scope, $http, $q) {
+.controller('accountsController', ['$scope', '$http', '$q', function($scope, $http, $q) {
 
 	// ---------------------------
 	// This should be a directive

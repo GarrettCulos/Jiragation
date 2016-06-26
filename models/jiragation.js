@@ -29,9 +29,12 @@ var TimeSheet = sequelize.define('time_sheet', {
 });
 
 var User = sequelize.define('users', {
-	id: {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
-    first_name: {type: Sequelize.STRING, allowNull:false},
-    given_time: { type: Sequelize.STRING, allowNull: false},
+  id: {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+  firstName: {type: Sequelize.STRING, allowNull:false},
+  givenName: { type: Sequelize.STRING, allowNull: false},
+  preferedName: { type: Sequelize.STRING, allowNull: false},
+  password: {type: Sequelize.STRING, allowNull: false},
+  emailAddress: {type: Sequelize.STRING, allowNull: false}
 },
 {
    timestamps : false,

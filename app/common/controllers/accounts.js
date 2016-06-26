@@ -2,14 +2,7 @@
 
 angular.module('myApp.account', ['ngRoute'])
 
-.controller('accountCtrl', ['$scope', '$http', function($scope, $http) {
-	$scope.userNamePrefered = 'Garrett';
-	$scope.userNameFirst = 'Garrett';
-	$scope.userNameLast = 'Culos';
-	$scope.JiraAccounts	=[];
-	$scope.message = 'Welcome ' + $scope.userNamePrefered;
-	
-	
+.controller('accountCtrl', ['$scope', '$http', function($scope, $http) {	
 	$scope.viewUserUpdate=false;
 	$scope.viewAccounts=false;
 
@@ -100,6 +93,5 @@ angular.module('myApp.account', ['ngRoute'])
 		$scope.JiraAccounts.push($scope.hiddenJiraAccounts[ idx ]);
 		$scope.hiddenJiraAccounts.splice(idx,1);
 	}
-
 
 }]);
