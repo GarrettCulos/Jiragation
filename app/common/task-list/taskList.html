@@ -87,12 +87,12 @@
 
 				<div ng-hide='!isActive' class="task-body animate-show" style="z-index:1">
 				  
-					<div layout="row" layout-padding>
-				  	<h4 flex> Description: </h4>
-				  </div>
+					<div layout="row" ng-if="task.fields.description" layout-padding>
+				  		<h4 flex> Description: </h4>
+					</div>
 					
 					<div layout="row" layout-padding>
-						<div flex="70">
+						<div flex="70" ng-if="task.fields.description">
 							<pre> {{task.fields.description}} </pre> 
 						</div>
 						<div flex="30" >
