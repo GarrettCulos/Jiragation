@@ -25,22 +25,6 @@ user.getUser = function(callback) {
 
 };
 
-// Pull time log for towards task_id
-user.setGivenName = function(given_name, callback) {
-
-	var queryString = "INSERT given_name FROM users";
-	/* Insert account into database table */
-	sequelize.query(queryString, { type: Sequelize.QueryTypes.INSERT })
-		.then(function(results){
-			callback(results);
-			// console.log(results);
-		})
-		.catch(function(err){
-  		console.log(err);
-  		throw err;
-  	});
-};
-
 user.setUserInfo = function(user_info, callback) {
 
 	var firstName = user_info.firstName;
@@ -81,20 +65,5 @@ user.setUserInfo = function(user_info, callback) {
 	  });
 
 }
-
-user.setFirstName = function(first_name, callback) {
-
-	var queryString = "INSERT first_name FROM usesr";
-	/* Insert account into database table */
-	sequelize.query(queryString, { type: Sequelize.QueryTypes.INSERT })
-		.then(function(results){
-			callback(results);
-			// console.log(results);
-		})
-		.catch(function(err){
-	  		console.log(err);
-	  		throw err;
-	  	});
-};
 
 module.exports = user;

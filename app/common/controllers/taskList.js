@@ -2,7 +2,7 @@
 
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
-.controller('accountsController', ['$scope', '$http', '$q', function($scope, $http, $q) {
+.controller('accountsController', ['$scope', '$http', '$q', '$myAccounts',function($scope, $http, $q, $myAccounts) {
 
 	// ---------------------------
 	// This should be a directive
@@ -72,6 +72,10 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	$scope.fetching_tasks = false;
 
+	function parseAccountSelf(task){
+		$myAccounts
+	}
+
 	function resetActiveTasks(){
 		
 		$scope.allTimerPaused = false;
@@ -82,12 +86,18 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
  		var deferred = $q.defer();
 
 		taskList.forEach(function(task, key){	
-			// convert created date to unix time
-			task.fields.created = parseInt(Date.parse(task.fields.created));
 			
-			// push data
-			res.push(task);
-			deferred.resolve(res);
+			// convert created date to unix time
+			task.fields.created = parseInt(Date.parse(task.fields.created)); 
+			console.log($myAccounts.getUrlId(task.self));
+			// .then(function(res){
+				task.accountID = $myAccounts.getUrlId(task.self);
+
+				// push data
+				res.push(task);
+				deferred.resolve(res);
+			// });
+
 		});
 
 		return deferred.promise;
@@ -118,7 +128,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 					res.data
 				).then(function(response){		
 					$scope.taskList = response;
-					// console.log($scope.taskList);
+					console.log($scope.taskList);
 				});
 
 			}, function errorCallback(res){

@@ -245,49 +245,84 @@ angular.module('myApp', [
 
 .factory('$currentUser', ['$http', function($http) {
    
-  var  $currentUser = {};
+    var  $currentUser = {};
 
-  $currentUser.getUserInformation = function() {
-    return $http({
-      method: 'GET',
-      url: '/users/get_user_info'
-    }).then(function successCallback(response){
-      return response;
-    }, function errorCallback(response){
-      return response;
+    $currentUser.getUserInformation = function() {
+        return $http({
+            method: 'GET',
+            url: '/users/get_user_info'
+        }).then(function successCallback(response){
+            return response;
+        }, function errorCallback(response){
+            return response;
+        });
+    }
+
+    $http({
+        method:'GET',
+        url: '/account/fetch_accounts',
+        headers: {'Content-Type': 'application/json'}
+    }).then(function successCallback(res){
+        $currentUser.user_accounts = res;
+        $currentUser.user_accounts_email = [];
+        res.data.forEach(function(account,key){
+          $currentUser.user_accounts_email.push(account.account_email)
+        })
+
+    }, function errorCallback(error){
+        $currentUser.user_accounts_email=null;
+        console.log(error)
     });
-  }
 
-  $http({
-    method:'GET',
-    url: '/account/fetch_accounts',
-    headers: {'Content-Type': 'application/json'}
-  }).then(function successCallback(res){
-    $currentUser.user_accounts = res;
-    $currentUser.user_accounts_email = [];
-    res.data.forEach(function(account,key){
-      $currentUser.user_accounts_email.push(account.account_email)
-    })
+    $currentUser.updateUser = function(user) {
+        return $http({
+            method: 'POST',
+            url: '/users/update_user_info',
+            data: user
+        }).then(function successCallback(response){
+            console.log('Updated User')
+            return 'Success';
+        }, function errorCallback(response){
+            console.log(response);
+            return response;
+        });
+    }
 
-  }, function errorCallback(error){
-    $currentUser.user_accounts_email=null;
-    console.log(error)
-  });
+    return $currentUser;
+}])
 
-  $currentUser.updateUser = function(user) {
-    return $http({
-      method: 'POST',
-      url: '/users/update_user_info',
-      data: user
-    }).then(function successCallback(response){
-      console.log('Updated User')
-      return 'Success';
-    }, function errorCallback(response){
-      console.log(response);
-      return response;
+.factory('$myAccounts', ['$http', function($http) {
+    var  $account = {};
+
+    $http({
+        method:'GET',
+        url: '/account/fetch_accounts',
+        headers: {'Content-Type': 'application/json'}
+    }).then(function(res){
+        
+        console.log(res);
+
+        $account.user_accounts = res.data;
+        $account.user_accounts_email = [];
+        res.data.forEach(function(account,key){
+            $account.user_accounts_email.push(account.account_email)
+        })
+
+        $account.getUrlId = function(url) {
+            var formatedURL = url.split('://')[1]
+            var return_val = null;
+
+            res.data.forEach(function(account,key){
+                if( account.url == formatedURL.split('/')[0]){
+                    return_val = key;
+                }
+            });
+
+            return return_val;
+        }  
     });
-  }
+    
+    return $account;
 
-  return $currentUser;
- }]);
-
+  
+}]);
