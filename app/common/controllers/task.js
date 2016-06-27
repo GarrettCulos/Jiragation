@@ -81,9 +81,10 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		
 		$myAccounts.then(function(accountService){
 			
+			var account = accountService.user_accounts[acct.accountId];
 			var data_load = {
 				issueId: acct.id,
-				acct: accountService.user_accounts[acct.accountId];
+				acct: account
 			}
 		
 			// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
@@ -113,7 +114,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 					}
 				});
 			});
-			
+
 		});
 	}
 

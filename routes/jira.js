@@ -18,7 +18,6 @@ function taskListToArray(array){
 jira.get('/task_comments', function(req,res,next) {
 	var data = req.query;
 	var account = JSON.parse(data.acct);
-
 	var options = {
 		rejectUnauthorized: false,
 		method: 'GET',
