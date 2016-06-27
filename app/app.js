@@ -291,38 +291,38 @@ angular.module('myApp', [
     return $currentUser;
 }])
 
-.factory('$myAccounts', ['$http', function($http) {
-    var  $account = {};
+.factory('$myAccounts', ['$http', '$q', function($http, $q) {
 
-    $http({
+    return $http({
         method:'GET',
         url: '/account/fetch_accounts',
         headers: {'Content-Type': 'application/json'}
-    }).then(function(res){
+    }).then(function(response){
+    
+        var $accounts ={};
         
-        console.log(res);
+        $accounts.user_accounts = response.data;
+        $accounts.user_accounts_email  = [];
+        
+        response.data.forEach(function(account,key){
+            $accounts.user_accounts_email.push(account.account_email);
+        });
 
-        $account.user_accounts = res.data;
-        $account.user_accounts_email = [];
-        res.data.forEach(function(account,key){
-            $account.user_accounts_email.push(account.account_email)
-        })
+        $accounts.getUrlId = function(url){
 
-        $account.getUrlId = function(url) {
             var formatedURL = url.split('://')[1]
             var return_val = null;
 
-            res.data.forEach(function(account,key){
+            response.data.forEach(function(account,key){
                 if( account.url == formatedURL.split('/')[0]){
                     return_val = key;
                 }
             });
 
             return return_val;
-        }  
+        }
+
+        return $accounts;
     });
     
-    return $account;
-
-  
 }]);

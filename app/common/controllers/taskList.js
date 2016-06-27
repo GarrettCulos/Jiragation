@@ -72,10 +72,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 	$scope.fetching_tasks = false;
 
-	function parseAccountSelf(task){
-		$myAccounts
-	}
-
 	function resetActiveTasks(){
 		
 		$scope.allTimerPaused = false;
@@ -89,14 +85,16 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 			
 			// convert created date to unix time
 			task.fields.created = parseInt(Date.parse(task.fields.created)); 
-			console.log($myAccounts.getUrlId(task.self));
-			// .then(function(res){
-				task.accountID = $myAccounts.getUrlId(task.self);
 
-				// push data
-				res.push(task);
-				deferred.resolve(res);
-			// });
+
+			$myAccounts.then(function(accountService){ 
+				console.log(accountService);
+				task.accountId = accountService.getUrlId(task.self);
+			});
+
+			// push data
+			res.push(task);
+			deferred.resolve(res);
 
 		});
 
@@ -160,7 +158,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	
 	// Return Task Url
 	$scope.taskUrl = function(taskKey, taskUrl) {
-	
 		return taskUrl.substring(0,taskUrl.indexOf('/rest/'))+'/browse/'+taskKey;
 	}
 
@@ -183,7 +180,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	    		if(attr.isactive == "true"){
 
 	    			var active_bars = element.parent().parent().find('task-bar.select-active');
-	    			console.log(active_bars);
 
 	    			if(element.parent().offset().top - navHeight < 0){
 	    				element.parent().css({paddingTop: element[0].offsetHeight+10});

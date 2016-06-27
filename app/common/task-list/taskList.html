@@ -59,8 +59,8 @@
 					<div class="center" flex="10">
 						<div class="logged-time">{{ timeLogged | returnTime }}</div>
 						<timer class="timer" autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer> <!-- ng-attr-start-time="timerStart" -->
-				  </div>
-				
+					</div>
+
 					<div class="center" flex="5">
 						<img class="task-priority" src="{{ task.fields.priority | priorityF }}">
 					</div>
@@ -73,7 +73,7 @@
 						<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
 						<a href="{{ taskUrl(task.key, task.self) }}" target="_blank" ><div class="task-name align-left">{{ task.key }}</div></a>
 					</div>
-				
+
 					<div class="center" flex="10">
 						<div class="task-date">  {{  task.fields.created | dateF }}  </div>
 					</div>

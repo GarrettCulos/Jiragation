@@ -2,7 +2,7 @@
 
 angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 
-.controller('taskController', ['$scope', '$http', '$currentUser', '$q', function($scope, $http, $currentUser, $q) {
+.controller('taskController', ['$scope', '$http', '$currentUser', '$q', '$myAccounts', function($scope, $http, $currentUser, $q , $myAccounts) {
 
 	$scope.isActive=false;
 	$scope.timerStarted=false;
@@ -73,56 +73,45 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		}
 	}
 
-
-	
-
 	// Toggle active task		
 	$scope.updateRightView = function(acct) {
 	
 		$scope.comment_limit = 6;
-
-		// REPLACE WITH USER SERVICE
-		var temp = acct.self.split('://');
-		temp[1]=temp[1].split('/');
-		var account = {
-			 protocal:temp[0]
-			,url:temp[1][0]
-			,user_name: 'gculos'
-			,password: 'gummyworms'
-		}
-
-		// console.log(account);
-		var data_load = {
-			issueId: acct.id,
-			acct: account
-		}
 		$scope.currentUser = $currentUser.user_accounts;
 		
-		// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
-		$http({
-			method: 'GET',
-			url: '/pull_jiras/task_comments',
-			params: data_load
-		}).then(function successCallback(response){
-			// pass in comment array for preprocessing
-			comment_preprocess(response.data.comments).then(function(comments){
-				// console.log(comments)
-				$scope.comment_limit_end = comments.length-$scope.comment_limit;
+		$myAccounts.then(function(accountService){
+			
+			var data_load = {
+				issueId: acct.id,
+				acct: accountService.user_accounts[acct.accountId];
+			}
+		
+			// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
+			$http({
+				method: 'GET',
+				url: '/pull_jiras/task_comments',
+				params: data_load
+			}).then(function successCallback(response){
+				// pass in comment array for preprocessing
+				comment_preprocess(response.data.comments).then(function(comments){
+					// console.log(comments)
+					$scope.comment_limit_end = comments.length-$scope.comment_limit;
 
-				if(comments){
-					$scope.task_comments=comments;					
-				}
+					if(comments){
+						$scope.task_comments=comments;					
+					}
 
-				$scope.viewAllComments = function(){
-					$scope.comment_limit = comments.length;
-					$scope.comment_limit_end = 0;
-					$scope.non_visible_tasks = comments.length - $scope.comment_limit;
-					console.log($scope.comment_limit);
-				}
-				
-				if(comments.length > $scope.comment_limit){
-					$scope.non_visible_tasks = comments.length - $scope.comment_limit;
-				}
+					$scope.viewAllComments = function(){
+						$scope.comment_limit = comments.length;
+						$scope.comment_limit_end = 0;
+						$scope.non_visible_tasks = comments.length - $scope.comment_limit;
+						console.log($scope.comment_limit);
+					}
+					
+					if(comments.length > $scope.comment_limit){
+						$scope.non_visible_tasks = comments.length - $scope.comment_limit;
+					}
+				});
 			});
 			
 		});
