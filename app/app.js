@@ -20,8 +20,16 @@ angular.module('myApp', [
 .config(['$routeProvider', function($routeProvider) {
  	$routeProvider
 	.when('/', {
-  		templateUrl: 'common/task-list/taskList.html',
-      controller: 'taskListController'
+		templateUrl: 'common/task-list/taskList.html',
+    	controller: 'accountsController'
+	})
+	.when('/task-list', {
+		templateUrl: 'common/task-list/taskList.html',
+    	controller: 'accountsController'
+	})
+	.when('/account', {
+    	templateUrl: 'common/account/settings.html',
+    	controller: 'userAccountController'
 	})
   .when('/logs', {
       templateUrl: 'common/logs/logs.html',
@@ -182,7 +190,7 @@ angular.module('myApp', [
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
       $mdDialog.show({
         controller: DialogController,
-        templateUrl: 'common/account/account.html',
+        templateUrl: 'common/account/settings.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true,
@@ -237,29 +245,83 @@ angular.module('myApp', [
 
 .factory('$currentUser', ['$http', function($http) {
    
-  var  $currentUser = {};
-  $currentUser.userNamePrefered = 'Garrett';
-  $currentUser.userNameFirst = 'Garrett';
-  $currentUser.userNameLast = 'Culos';
-  $currentUser.userProfileImage = null;
+    var  $currentUser = {};
 
-  $http({
-    method:'GET',
-    url: '/account/fetch_accounts',
-    headers: {'Content-Type': 'application/json'}
-  }).then(function successCallback(res){
-    $currentUser.user_accounts = res;
-    $currentUser.user_accounts_email = [];
-    res.data.forEach(function(account,key){
-      $currentUser.user_accounts_email.push(account.account_email)
-    })
+    $currentUser.getUserInformation = function() {
+        return $http({
+            method: 'GET',
+            url: '/users/get_user_info'
+        }).then(function successCallback(response){
+            return response;
+        }, function errorCallback(response){
+            return response;
+        });
+    }
 
-  }, function errorCallback(error){
-    $scope.user_accounts_email=null;
-    console.log(error)
-  });
+    $http({
+        method:'GET',
+        url: '/account/fetch_accounts',
+        headers: {'Content-Type': 'application/json'}
+    }).then(function successCallback(res){
+        $currentUser.user_accounts = res;
+        $currentUser.user_accounts_email = [];
+        res.data.forEach(function(account,key){
+          $currentUser.user_accounts_email.push(account.account_email)
+        })
 
+    }, function errorCallback(error){
+        $currentUser.user_accounts_email=null;
+        console.log(error)
+    });
 
+    $currentUser.updateUser = function(user) {
+        return $http({
+            method: 'POST',
+            url: '/users/update_user_info',
+            data: user
+        }).then(function successCallback(response){
+            console.log('Updated User')
+            return 'Success';
+        }, function errorCallback(response){
+            console.log(response);
+            return response;
+        });
+    }
 
-  return $currentUser;
- }]);
+    return $currentUser;
+}])
+
+.factory('$myAccounts', ['$http', '$q', function($http, $q) {
+
+    return $http({
+        method:'GET',
+        url: '/account/fetch_accounts',
+        headers: {'Content-Type': 'application/json'}
+    }).then(function(response){
+    
+        var $accounts ={};
+        
+        $accounts.user_accounts = response.data;
+        $accounts.user_accounts_email  = [];
+        
+        response.data.forEach(function(account,key){
+            $accounts.user_accounts_email.push(account.account_email);
+        });
+
+        $accounts.getUrlId = function(url){
+
+            var formatedURL = url.split('://')[1]
+            var return_val = null;
+
+            response.data.forEach(function(account,key){
+                if( account.url == formatedURL.split('/')[0]){
+                    return_val = key;
+                }
+            });
+            return return_val;
+        }
+
+        return $accounts;
+    });
+    
+}]);

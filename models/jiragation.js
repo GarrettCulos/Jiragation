@@ -28,6 +28,7 @@ var TimeSheet = sequelize.define('time_sheet', {
    freezeTableName: true
 });
 
+<<<<<<< HEAD
 var Tasks = sequelize.define('tasks', {
     task_id: {type: Sequelize.INTEGER, autoIncrement:true, primaryKey:true},
     task_label: {type: Sequelize.STRING, allowNuyll:false},
@@ -51,6 +52,10 @@ var Notes = sequelize.define('notes',{
 
 var Users = sequelize.define('users', {
 	id: {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+=======
+var User = sequelize.define('users', {
+  id: {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+>>>>>>> 99fbd4c67df714bf5c3e47183fe33e422a8ea488
   firstName: {type: Sequelize.STRING, allowNull:false},
   givenName: { type: Sequelize.STRING, allowNull: false},
   preferedName: { type: Sequelize.STRING, allowNull: false},

@@ -35,12 +35,10 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 	}
 
 	function getlogs(startD, endD){
-		console.log(startD);
-		console.log(endD);
+
 		var start_date = new Date(startD);
 		var end_date = new Date(endD);
-		console.log(start_date);
-		console.log(end_date);
+
 		var diffDays = Math.ceil(Math.abs((end_date.getTime() - start_date.getTime())/(oneDay)));
 		var day_array = []
 		

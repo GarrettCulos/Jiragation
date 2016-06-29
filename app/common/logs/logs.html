@@ -70,7 +70,7 @@
 				<md-list>
 					<md-list-item ng-repeat="(key2, task) in days.tasks" layout="row" layout-align="center center">
 						<span flex="50">
-							{{task.task_id}}	
+							<a href="{{task.url}}">{{task.task_id}}</a>
 						</span>
 						<span class="logged-time" flex="50"> 
 						  {{ task.total_time | returnTime }}

@@ -1,40 +1,22 @@
 'use strict';
 
-angular.module('myApp', ['ngRoute'])
+angular.module('myApp')
 
-.controller('userController', ['$scope', '$http', function($scope, $http){
-	// $scope.setUserInfo = function(user){
-		
-	// 	$http({
-	// 		method: 'POST',
-	// 		url: '/user/get_user_info',
-	// 		data: {
-	// 			preferedName:user.preferedName,
-	// 			firstName:user.firstName,
-	// 			lastName:user.lastName
-	// 		}
-	// 	}).then(function successCallback(response){
-			
-	// 		console.log(response);
+.controller('userInformationController', ['$scope', '$http', '$currentUser', function($scope, $http, $currentUser){
 
-	// 	}, function errorCallback(response){
-	// 		console.log(response);
-	// 	});
-	// }
+	// Update User Information
+	$scope.updateUser = function(){
+		$currentUser.updateUser($scope.user)
+		.then(function() {  
+			console.log('successful');
+		});
+	}
 
-	// $scope.getUserInfo = function(){
-	// 	$http({
-	// 		method: 'POST',
-	// 		url: '/user/get_user_info'
-	// 	}).then(function successCallback(response){
-			
-	// 		console.log(response);
-
-	// 	}, function errorCallback(response){
-	// 		console.log(response);
-	// 	});
-	// }
-	// $scope.getUserInfo();
-	// console.log('userController')
+	// Set User Information
+  $currentUser.getUserInformation()
+  .then(function(result) {  
+		$scope.user = result.data[0];		
+		console.log(result.data[0]);
+	});
 
 }]);

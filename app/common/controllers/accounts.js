@@ -2,16 +2,7 @@
 
 angular.module('myApp.account', ['ngRoute'])
 
-.controller('accountCtrl', ['$scope', '$http', 'users', function($scope, $http, users) {
-	
-	users.getUserInfo(function(res){
-	
-		$scope.user  = res;
-		console.log($scope.user);
-		$scope.message = 'Welcome '+ $scope.user.preferedName;
-	});
-	
-	$scope.JiraAccounts	=[];
+.controller('userAccountController', ['$scope', '$http', function($scope, $http) {	
 	$scope.viewUserUpdate=false;
 	$scope.viewAccounts=false;
 
@@ -107,6 +98,5 @@ angular.module('myApp.account', ['ngRoute'])
 			//nothing
 		});
 	}
-
 
 }]);

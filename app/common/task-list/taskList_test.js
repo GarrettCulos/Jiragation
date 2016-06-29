@@ -8,7 +8,7 @@ describe('myApp.taskList module', function() {
 
     it('should ....', inject(function($controller) {
       //spec body
-      var view1Ctrl = $controller('userController');
+      var view1Ctrl = $controller('accountsController');
       expect(view1Ctrl).toBeDefined();
     }));
 

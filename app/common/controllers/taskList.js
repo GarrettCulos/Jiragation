@@ -2,7 +2,8 @@
 
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
-.controller('taskListController', ['$scope', '$http', '$q', function($scope, $http, $q) {
+
+.controller('accountsController', ['$scope', '$http', '$q', '$myAccounts',function($scope, $http, $q, $myAccounts) {
 
 	// ---------------------------
 	// This should be a directive
@@ -82,12 +83,20 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
  		var deferred = $q.defer();
 
 		taskList.forEach(function(task, key){	
-			// convert created date to unix time
-			task.fields.created = parseInt(Date.parse(task.fields.created));
 			
+			// convert created date to unix time
+			task.fields.created = parseInt(Date.parse(task.fields.created)); 
+
+
+			$myAccounts.then(function(accountService){ 
+				console.log(accountService);
+				task.accountId = accountService.getUrlId(task.self);
+			});
+
 			// push data
 			res.push(task);
 			deferred.resolve(res);
+
 		});
 
 		return deferred.promise;
@@ -118,7 +127,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 					res.data
 				).then(function(response){		
 					$scope.taskList = response;
-					// console.log($scope.taskList);
+					console.log($scope.taskList);
 				});
 
 			}, function errorCallback(res){
@@ -150,7 +159,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	
 	// Return Task Url
 	$scope.taskUrl = function(taskKey, taskUrl) {
-	
 		return taskUrl.substring(0,taskUrl.indexOf('/rest/'))+'/browse/'+taskKey;
 	}
 
@@ -173,7 +181,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 	    		if(attr.isactive == "true"){
 
 	    			var active_bars = element.parent().parent().find('task-bar.select-active');
-	    			console.log(active_bars);
 
 	    			if(element.parent().offset().top - navHeight < 0){
 	    				element.parent().css({paddingTop: element[0].offsetHeight+10});

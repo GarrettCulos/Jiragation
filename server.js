@@ -1,5 +1,5 @@
-var express 	= require('express'); 
-var db 			= require('./init_db.js');
+var express 		= require('express'); 
+var db 					= require('./init_db.js');
 var Sequelize 	= db.Sequelize;
 var sequelize 	= db.sequelize;
 
