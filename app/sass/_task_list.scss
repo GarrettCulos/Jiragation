@@ -16,6 +16,7 @@
       padding: 15px 20px 15px 10px;
       border-radius: 1px;
       @include box-shadow(rgba(black ,0.5) 0 0 1px);
+
       img {
         height: 1.5em;
         position: relative;
@@ -260,7 +261,7 @@ pre.message-body {
 .sticky {
   position:fixed;
   left:16px;
-  right:31px;
+  right:16px;
   z-index:2;
 }
 
