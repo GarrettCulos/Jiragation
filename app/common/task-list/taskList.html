@@ -150,7 +150,7 @@
 							</md-list-item>
 
 							<md-list-item class="my-message">
-								<form name="comment_form" layout="row" layout-align="end start" style="width:100%;" novalidate>
+								<form name="comment_form" ng-submit="comment_form.$valid && addComment(task, add_comment.body, comment_form)" layout="row" layout-align="end start" style="width:100%;" novalidate>
 									<md-input-container flex-gt-xs="70" flex>
 										<textarea aria-label="my-comment" class="message-body right"  type="text" name="my_comment" required="" ng-model="add_comment.body" ng-minlength="1" flex></textarea>
 										<div ng-show="comment_form.$submitted || comment_form.my_comment.$touched">
@@ -160,11 +160,10 @@
 
 									<div class="message-id right" flex="15">
 										{{currentUser.userNamePrefered}}
-										<div class="triangle"></div>
 										<img src="{{currentUser.userProfileImage}}" alt="">
 										<md-input-container>
-											<md-button class="md-primary" disabled="{{commentButtonDissabled}}">
-												<input aria-label="button" type="submit" ng-click="addComment(task, add_comment.body, form)" value="Send"/>
+											<md-button aria-label="button" type="submit" class="md-primary" bg-disabled="commentButtonDissabled">
+												 Send
 											</md-button>
 										</md-input-container>
 									</div>	
@@ -176,21 +175,20 @@
 							<h4>No Comments</h4>
 							
 							<md-list-item class="my-message">
-								<form name="comment_form" layout="row" layout-align="end start" style="width:100%;" novalidate>	
+								<form name="comment_form" ng-submit="comment_form.$valid && addComment(task, add_comment.body, comment_form)" layout="row" layout-align="end start" style="width:100%;" novalidate>	
 									<md-input-container flex-gt-xs="70" flex>
 										<textarea aria-label="my-comment" class="message-body right"  type="text" name="my_comment" required="" ng-model="add_comment.body" ng-minlength="1" flex></textarea>
 										<div ng-show="comment_form.$submitted || comment_form.my_comment.$touched">
-											<div ng-show="comment_form.my_comment.$error.required">You must have something to say...</div>
+											<div md-class="warn" ng-show="comment_form.my_comment.$error.required">You must have something to say...</div>
 										</div>
 									</md-input-container>
 
 									<div class="message-id right" flex="15">
 										{{currentUser.userNamePrefered}}
-										<div class="triangle"></div>
 										<img src="{{currentUser.userProfileImage}}" alt="">
 										<md-input-container>
-											<md-button class="md-primary" disabled="{{commentButtonDissabled}}">
-												<input aria-label="button" type="submit" ng-click="addComment(task, add_comment.body, form)" value="Send"/>
+											<md-button aria-label="button" type="submit" class="md-primary" bg-disabled="commentButtonDissabled">
+												Send
 											</md-button>
 										</md-input-container>
 									</div>	

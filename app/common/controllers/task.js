@@ -40,6 +40,45 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		return deferred.promise;
 	}
 
+	function get_comments(acct){
+		$myAccounts.then(function(accountService){
+			
+			var account = accountService.user_accounts[acct.accountId];
+			var data_load = {
+				issueId: acct.id,
+				acct: account
+			}
+		
+			// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
+			$http({
+				method: 'GET',
+				url: '/pull_jiras/task_comments',
+				params: data_load
+			}).then(function successCallback(response){
+				// pass in comment array for preprocessing
+				comment_preprocess(response.data.comments).then(function(comments){
+					// console.log(comments)
+					$scope.comment_limit_end = comments.length-$scope.comment_limit;
+
+					if(comments){
+						$scope.task_comments=comments;					
+					}
+
+					$scope.viewAllComments = function(){
+						$scope.comment_limit = comments.length;
+						$scope.comment_limit_end = 0;
+						$scope.non_visible_tasks = comments.length - $scope.comment_limit;
+						console.log($scope.comment_limit);
+					}
+					
+					if(comments.length > $scope.comment_limit){
+						$scope.non_visible_tasks = comments.length - $scope.comment_limit;
+					}
+				});
+			});
+		});
+	}
+
 	$scope.taskLink = function(){	
 	}
 
@@ -86,49 +125,14 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		$scope.comment_limit = 6;
 		$scope.currentUser = $currentUser.user_accounts;
 		
-		$myAccounts.then(function(accountService){
-			
-			var account = accountService.user_accounts[acct.accountId];
-			var data_load = {
-				issueId: acct.id,
-				acct: account
-			}
-		
-			// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
-			$http({
-				method: 'GET',
-				url: '/pull_jiras/task_comments',
-				params: data_load
-			}).then(function successCallback(response){
-				// pass in comment array for preprocessing
-				comment_preprocess(response.data.comments).then(function(comments){
-					// console.log(comments)
-					$scope.comment_limit_end = comments.length-$scope.comment_limit;
+		get_comments(acct)
 
-					if(comments){
-						$scope.task_comments=comments;					
-					}
-
-					$scope.viewAllComments = function(){
-						$scope.comment_limit = comments.length;
-						$scope.comment_limit_end = 0;
-						$scope.non_visible_tasks = comments.length - $scope.comment_limit;
-						console.log($scope.comment_limit);
-					}
-					
-					if(comments.length > $scope.comment_limit){
-						$scope.non_visible_tasks = comments.length - $scope.comment_limit;
-					}
-				});
-			});
-
-		});
 	}
 
 	// REQUIRES ROBUST WAY TO OBTAIN TASK SPECIFIC JITA ACCOUNT 
 	$scope.addComment = function(task, data, form) {
 		$myAccounts.then(function(accountService){
-		$scope.commentButtonDissabled=true;
+			$scope.commentButtonDissabled=true;
 			var account = accountService.user_accounts[task.accountId];
 			var data_load = {
 				issueId: task.id,
@@ -141,9 +145,13 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 				url: '/pull_jiras/add_comments',
 				params: data_load
 			}).then(function successCallback(response){
-				console.log(response);
 				$scope.commentButtonDissabled=false;
-				reset_form(form);
+
+				get_comments(task);
+
+				$scope.add_comment={};
+				form.$setPristine();
+				form.$setUntouched();
 			});
 		});
 	}
@@ -174,7 +182,6 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	});
 	
 	$scope.getTaskTime();
-	//clean all comment_forms;
-	reset_form();
+	$scope.add_comment={};
 	
 }]);
