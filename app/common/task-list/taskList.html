@@ -2,48 +2,48 @@
 
 <!-- Filter -->
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
-  <md-toolbar class="md-theme-light" flex-align="center center" ng-controller="RightCtrl">
-    <md-button ng-click="close()" class="md-primary">
-      Close
-    </md-button>
-  </md-toolbar>
+	<md-toolbar class="md-theme-light" flex-align="center center" ng-controller="RightCtrl">
+		<md-button ng-click="close()" class="md-primary">
+			Close
+		</md-button>
+	</md-toolbar>
 
-  <md-content layout-padding>
-	  <md-list-item ng-repeat="status in taskStatuses">
-	    <p> {{ status.name }} </p>
-	    <md-checkbox class="md-primary" ng-model="status.isActive"></md-checkbox>
-	  </md-list-item>
-  </md-content>
+	<md-content layout-padding>
+		<md-list-item ng-repeat="status in taskStatuses">
+			<p> {{ status.name }} </p>
+			<md-checkbox class="md-primary" ng-model="status.isActive"></md-checkbox>
+		</md-list-item>
+	</md-content>
 </md-sidenav>
 
 <md-content id="main" layout-padding flex style="background-color: rgba(0,0,0,0.05);">
 
 	<div class="main-content">
-		<div layout="row" layout-align="enter" flex>
+		<div layout="row" layout-align="enter">
 			
-			<div class="center" flex="10">
-					<label>Time</label>
+			<div class="center" flex  flex>
+				<label>Time</label>
 			</div>
 
-			<div class="center" flex="5">
-					<label>Priority</label>
+			<div class="center" flex  flex>
+				<label>Priority</label>
 			</div>
 
-			<div class="center" flex="5">
-					<label>Status</label>
+			<div class="center" flex  flex>
+				<label>Status</label>
 			</div>
 
-			<div class="center" flex="10">
-					<label>Task ID</label>
+			<div class="center" flex  flex>
+				<label>Task ID</label>
 			</div>
 
-			<div class="center" flex="10">
+			<div class="center" flex  flex>
 				<div ng-click="order(task.fields.created)" ng-class="{reverse:reverse}" class="task-date-title">
 					<label> Date </label>
 				</div>	
 			</div>
 
-			<div flex="60">
+			<div flex="30" flex-gt-sm="45" hide-xs>
 				<div class="task-summary-title">
 					<label> Description </label>
 				</div>			
@@ -54,31 +54,29 @@
 		<div class="account-list">
 			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:search.txt | orderBy:predicate:reverse" ng-controller = "taskController" style="z-index:2">
 				
-				<task-bar class="select-default task-item" ng-class = "{'select-active': isActive }" isActive="{{isActive}}"ng-click="updateRightView(task); toggleClick(taskNum); timerToggle()" layout="row" layout-align="center" flex>
-		
-					<div class="center" flex="10">
+				<task-bar class="select-default task-item" ng-class = "{'select-active': isActive }" isActive="{{isActive}}"ng-click="updateRightView(task); toggleClick(taskNum); timerToggle()" layout="row" layout-align="center">
+					<div class="center" flex>
 						<div class="logged-time">{{ timeLogged | returnTime }}</div>
 						<timer class="timer" autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer> <!-- ng-attr-start-time="timerStart" -->
 					</div>
 
-					<div class="center" flex="5">
+					<div class="center" flex>
 						<img class="task-priority" src="{{ task.fields.priority | priorityF }}">
 					</div>
 
-					<div class="center" flex="5">
+					<div class="center" flex>
 						<div class="task-status">  {{ task.fields.status.name }}</div> 
 					</div>
 
-					<div class="center" flex="10">
+					<div class="center" flex>
 						<!-- <div class="task-priority"> {{ task.fields.priority.name }} </div> -->
-						<a href="{{ taskUrl(task.key, task.self) }}" target="_blank" ><div class="task-name align-left">{{ task.key }}</div></a>
+						<div class="task-name align-left">{{ task.key }}</div></a>
 					</div>
 
-					<div class="center" flex="10">
+					<div class="center" flex>
 						<div class="task-date">  {{  task.fields.created | dateF }}  </div>
 					</div>
-
-					<div flex="60" class="task-summary-container">
+					<div flex-gt-sm="45" flex-gt-xs="30" flex class="task-summary-container" hide-xs>
 						<div class="task-summary">{{ task.fields.summary }}</div>			
 						<!-- <timer autostart="false" countdown="90061"> {{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}</timer> -->
 						<!-- <button  ng-click="updateTaskView(taskNum)"> View Task </button> -->		
@@ -86,17 +84,24 @@
 				</task-bar>
 
 				<div ng-hide='!isActive' class="task-body animate-show" style="z-index:1">
-				  
-					<div layout="row" ng-if="task.fields.description" layout-padding>
-				  		<h4 flex> Description: </h4>
-					</div>
-					
-					<div layout="row" layout-padding>
-						<div flex="70" ng-if="task.fields.description">
+				  	<div layout="row" layout-padding layout-align="end center">
+				  		<md-button href="{{ taskUrl(task.key, task.self) }}" target="_blank"  class="md-primary" flex-gt-xs="30" flex-gt-sm="20" > 
+				  		 	To Task
+				  		</md-button>
+				  	</div>	
+				  		
+				  	<div layout="row" layout-xs="column" ng-if="task.fields.description" layout-padding>
+				  		
+				  		
+				  		<div flex-gt-xs="20" flex>
+					  		<h4> Description: </h4>
+						</div>
+
+						<div ng-if="task.fields.description" flex-gt-xs="70" flex>
 							<pre> {{task.fields.description}} </pre> 
 						</div>
-						<div flex="30" >
-							<div layout="row" flex layout-padding ng-if="task.fields.fixVersions[0].name">
+						<div flex-gt-xs="30" flex>
+							<div ng-if="task.fields.fixVersions[0].name" layout="row" flex layout-padding>
 								<div> Release: {{task.fields.fixVersions[0].name}} </div> 
 							</div>
 
@@ -108,11 +113,16 @@
 								<div> Due: {{task.fields.duedate}}</div>
 							</div>
 						</div>	
-					</div>
+						
+				  	</div>
 					
-					<div layout="row" layout-padding>
-						<h4> Comments: </h4>
-
+				
+					
+					<div layout="row" layout-xs="column" layout-padding>
+						<div flex-gt-xs="20" flex>
+							<h4> Comments: </h4>
+						</div>
+					
 						<md-list ng-if="task_comments" flex>
 							<div ng-if="non_visible_tasks" class="nonvisible-banner">
 								<span class="circle" ng-click="viewAllComments()">{{non_visible_tasks}}</span>
@@ -123,19 +133,19 @@
 								<div ng-if="!comment.isCurrentUser" layout="row" layout-align="start start" style="width:100%;">
 									<div class="message-id left" flex="15">
 										<div class="triangle"></div>
-										{{comment.author.displayName}}
+										<span hide-xs>{{comment.author.displayName}}</span>
 										<img src="{{comment.author.avatarUrls['32x32']}}" alt="">
 									</div>	
-									<pre class="message-body left" flex="70">{{comment.body}}</pre>
+									<pre class="message-body left" flex-gt-xs="70" flex>{{comment.body}}</pre>
 								</div>
 				
 								<div ng-if="comment.isCurrentUser" layout="row" layout-align="end start" style="width:100%;">
-									<pre class="message-body right" flex="70">{{comment.body}}</pre>
+									<pre class="message-body right" flex-gt-xs="70" flex>{{comment.body}}</pre>
 									
 									<div class="message-id right" flex="15">
 										<div class="triangle"></div>
 										<img src="{{comment.author.avatarUrls['32x32']}}" alt="">
-										{{comment.author.displayName}}
+										<span hide-xs>{{comment.author.displayName}}</span>
 									</div>	
 								</div>
 
