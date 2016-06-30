@@ -114,24 +114,32 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 			$scope.JiraAccounts = response.data;
 
-			$http({
-				method: 'GET',
-				url: '/pull_jiras/jira_accounts'
-			
-			}).then(function successCallback(res){
-				
-				$scope.fetching_tasks = false;
+			if($scope.JiraAccounts){
 
-				modify_task_list(
-					res.data
-				).then(function(response){		
-					$scope.taskList = response;
-					console.log($scope.taskList);
+				$http({
+					method: 'GET',
+					url: '/pull_jiras/jira_accounts'
+				
+				}).then(function successCallback(res){
+					
+					$scope.fetching_tasks = false;
+
+					modify_task_list(
+						res.data
+					).then(function(response){		
+						$scope.taskList = response;
+						console.log($scope.taskList);
+					});
+
+				}, function errorCallback(res){
+					$scope.fetching_tasks = false;
 				});
 
-			}, function errorCallback(res){
-				$scope.fetching_tasks = false;
-			});
+			} else {
+				ngDialog('You can add accounts here');
+			}
+
+			
 		
 		}, function errorCallback(response){
 			// console.log(response);

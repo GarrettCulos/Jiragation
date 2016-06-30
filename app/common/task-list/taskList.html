@@ -152,9 +152,9 @@
 							<md-list-item class="my-message">
 								<form name="comment_form" ng-submit="comment_form.$valid && addComment(task, add_comment.body, comment_form)" layout="row" layout-align="end start" style="width:100%;" novalidate>
 									<md-input-container flex-gt-xs="70" flex>
-										<textarea aria-label="my-comment" class="message-body right"  type="text" name="my_comment" required="" ng-model="add_comment.body" ng-minlength="1" flex></textarea>
-										<div ng-show="comment_form.$submitted || comment_form.my_comment.$touched">
-											<div ng-show="comment_form.my_comment.$error.required">You must have something to say...</div>
+										<textarea aria-label="my-comment" class="message-body right task-add-comment"  type="text" name="my_comment" required="" ng-model="add_comment.body" ng-minlength="1" flex></textarea>
+										<div class="task-comment-error" ng-show="comment_form.$submitted || comment_form.my_comment.$touched">
+											<div class="md-warn" ng-show="comment_form.my_comment.$error.required">You must have something to say...</div>
 										</div>
 									</md-input-container>
 
@@ -177,9 +177,9 @@
 							<md-list-item class="my-message">
 								<form name="comment_form" ng-submit="comment_form.$valid && addComment(task, add_comment.body, comment_form)" layout="row" layout-align="end start" style="width:100%;" novalidate>	
 									<md-input-container flex-gt-xs="70" flex>
-										<textarea aria-label="my-comment" class="message-body right"  type="text" name="my_comment" required="" ng-model="add_comment.body" ng-minlength="1" flex></textarea>
-										<div ng-show="comment_form.$submitted || comment_form.my_comment.$touched">
-											<div md-class="warn" ng-show="comment_form.my_comment.$error.required">You must have something to say...</div>
+										<textarea aria-label="my-comment" class="message-body right task-add-comment"  type="text" name="my_comment" required="" ng-model="add_comment.body" ng-minlength="1" flex></textarea>
+										<div class="task-comment-error" ng-show="comment_form.$submitted || comment_form.my_comment.$touched">
+											<div class="md-warn" ng-show="comment_form.my_comment.$error.required">You must have something to say...</div>
 										</div>
 									</md-input-container>
 

@@ -280,3 +280,14 @@ pre.message-body {
   border-radius: 50%;
   border: 1px solid transparent;
 }
+
+textarea.task-add-comment{
+  min-height: 60px;
+  border-radius: 2px;
+  padding: 10px 15px 5px;
+  background-color: white;
+}
+
+.task-comment-error{
+  // could customize
+}
