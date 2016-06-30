@@ -101,6 +101,29 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		return deferred.promise;
 	}
 
+	$scope.addSettings = function(ev) {
+		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+		
+		$mdDialog.show({
+			controller: DialogController,
+			templateUrl: 'common/account/new_settings.html',
+			parent: angular.element(document.body),
+			targetEvent: ev,
+			clickOutsideToClose:true,
+			fullscreen: useFullScreen
+		}).then(function(answer) {
+
+		}, function() {
+			$scope.status = 'You cancelled the dialog.';
+		});
+
+		$scope.$watch(function() {
+			return $mdMedia('xs') || $mdMedia('sm');
+		}, function(wantsFullScreen) {
+			$scope.customFullscreen = (wantsFullScreen === true);
+		});
+    };
+
 	$scope.getJiraTasks = function(){
 
 		// Fetch Jira Data`
@@ -136,7 +159,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 				});
 
 			} else {
-				ngDialog('You can add accounts here');
+				$scope.addAccounts($event)
 			}
 
 			

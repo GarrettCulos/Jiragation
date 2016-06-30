@@ -1,0 +1,162 @@
+<md-dialog aria-label="Account Settings"  ng-controller="accountCtrl" ng-cloak flex>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>
+				You should probably add some accounts.
+			</h2>
+			<span flex></span>
+			<md-button class="md-icon-button" ng-click="cancel()">
+				<md-icon md-svg-src="img/svg/close.svg" aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<!-- <div class="prefered-name">
+				Hello {{userNamePrefered}}, your looking well today.
+			</div> -->
+	       
+			<div class="account-settings">
+				<h4> Add User Information </h4>	
+				<div class="user-information" ng-controller="userInformationController"> 
+					<div layout="row">
+						<md-input-container flex="33">
+							<label>First Name</label>
+							<input type="text" ng-model="user.firstName" required >
+						</md-input-container>
+
+						<md-input-container flex="33">
+							<label>Given Name</label>
+							<input type="text" ng-model="user.givenName" required >
+						</md-input-container>
+
+						<md-input-container flex="33">
+							<label>Prefered Name</label>
+							<input type="text" ng-model="user.preferedName" required >
+						</md-input-container>
+					</div>
+					
+					<div layout="row"> 
+						<md-input-container flex="100">
+							<label>Prefered Name</label>
+							<input type="text" ng-model="user.emailAddress" required >
+						</md-input-container>
+					</div>
+							
+					<div layout="row">
+					<span flex></span>
+						<md-button class="md-primary" ng-click="updateUser()">
+						 Save
+						</md-button>
+					</div>
+				</div>
+
+				
+				<h4> Jira Accounts </h4>
+				<div class="user-accounts">
+					<div class="visible-account">
+						<div class="user-account">
+							<div layout="row">
+								<div flex="20">
+									<b>User Name</b>
+								</div>
+								<div flex="20">
+									<b>Password</b>
+								</div>
+								<div flex="35">
+									<b>URL</b>
+								</div>
+							</div>
+						</div>
+						<div ng-repeat="account in JiraAccounts">
+							<div class="user-account">
+								<div layout="row">
+									<div flex="20" layout="columns" layout-align="left center">
+										{{account.user_name}}
+									</div>
+									<div flex="20" layout="columns" layout-align="left center">
+										{{account.password}}
+									</div>
+									<div flex="35" layout="columns" layout-align="left center">
+										{{account.protocal}}://{{account.url}}
+									</div>
+									<div flex="25" layout="columns" layout-align="left center">
+										<md-button ng-click="hideAccount($index)"> Hide </md-button>
+										<md-button ng-click="delete($index)"> Remove </md-button>	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div ng-if="hiddenJiraAccounts[0].user_name">
+						<h4> Hidden Accounts </h4>
+						<div ng-repeat="account in hiddenJiraAccounts">
+							<div class="user-account">
+								<div layout="row">
+									<div flex="20" layout="column" layout-align="left center">
+										{{account.user_name}}
+									</div>
+									<div flex="20" layout="column" layout-align="left center">
+										{{account.password}}
+									</div>
+									<div flex="35" layout="column" layout-align="left center">
+										{{account.protocal}}://{{account.url}}
+									</div>
+									<div flex="25" layout="columns" layout-align="left center">
+										<md-button ng-click="showAccount($index)"> Show </md-button>		
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> 
+				</div>	
+
+				<h4> Add Account </h4>
+				<div class="user-accounts">
+					<div class="add-account">
+						<div class="user-add-account">
+							<div layout="row">
+								<md-input-container flex="50">
+									<label>User Name</label>
+									<input type="text" ng-model="userName" required >
+								</md-input-container>
+
+								<md-input-container flex="50">
+									<label>Password</label>
+									<input type="text" ng-model="password" required >
+								</md-input-container>
+							</div>
+							<div layout="row">
+								<md-input-container flex="100">
+									<label>Jira URL</label>
+									<input type="text" ng-model="jiraURL" required >
+								</md-input-container>
+							</div>
+							<div layout="row">
+								<md-input-container flex="100">
+									<label>Jira Email Account</label>
+									<input type="text" ng-model="account_email" required >
+								</md-input-container>
+							</div>
+
+							<div layout="row">
+								<span flex></span>
+								<md-button class="md-primary" ng-click="addAccount(jiraURL, userName, password, account_email)"> Add Account </md-button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row" style="z-index:1">
+		<span flex></span>
+		<!-- <md-button ng-click="discard()">
+			discard
+		</md-button>-->
+		 <md-button class="md-primary" ng-click="save('useful')">Close</md-button>
+	</md-dialog-actions>
+
+</md-dialog>
+
