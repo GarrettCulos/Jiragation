@@ -2,7 +2,7 @@
 
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
-.controller('accountsController', ['$scope', '$http', '$q', '$myAccounts',function($scope, $http, $q, $myAccounts) {
+.controller('accountsController', ['$scope', '$http', '$q', '$myAccounts', '$mdMedia', '$mdDialog', function($scope, $http, $q, $myAccounts, $mdMedia, $mdDialog) {
 
 	// ---------------------------
 	// This should be a directive
@@ -122,6 +122,18 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		}, function(wantsFullScreen) {
 			$scope.customFullscreen = (wantsFullScreen === true);
 		});
+		
+		function DialogController($scope, $mdDialog) {
+			$scope.hide = function() {
+				$mdDialog.hide();
+			};
+			$scope.cancel = function() {
+				$mdDialog.cancel();
+			};
+			$scope.save = function(answer) {
+				$mdDialog.hide(answer);
+			};
+		}
     };
 
 	$scope.getJiraTasks = function(){
@@ -136,7 +148,6 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		}).then(function successCallback(response){
 
 			$scope.JiraAccounts = response.data;
-
 			if($scope.JiraAccounts){
 
 				$http({
@@ -159,7 +170,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 				});
 
 			} else {
-				$scope.addAccounts($event)
+				$scope.addSettings(); 
 			}
 
 			
