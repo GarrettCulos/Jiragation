@@ -7,6 +7,13 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	$scope.isActive=false;
 	$scope.timerStarted=false;
 
+	function reset_form(comment_form){
+		if(comment_form){
+			comment_form.$setPristine();
+			comment_form.$setUntouched();
+		}
+	}
+
 	function timerDataToUnix(data) {
 		var msPsec = 1000;
 		var secPmin = 60;
@@ -119,22 +126,27 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	}
 
 	// REQUIRES ROBUST WAY TO OBTAIN TASK SPECIFIC JITA ACCOUNT 
-			// $scope.addComment = function(data) {
-				
-			// 	var data_load = {
-			// 		issueId: acct.id,
-			// 		acct: account
-			// 		body: data
-			// 	}
+	$scope.addComment = function(task, data, form) {
+		$myAccounts.then(function(accountService){
+		$scope.commentButtonDissabled=true;
+			var account = accountService.user_accounts[task.accountId];
+			var data_load = {
+				issueId: task.id,
+				acct: JSON.stringify(account),
+				body: data
+			}
 
-			// 	$http({
-			// 		method: 'GET',
-			// 		url: '/pull_jiras/add_comments',
-			// 		params: data_load
-			// 	}).then(function successCallback(response){
-
-			// 	});
-			// }
+			$http({
+				method: 'GET',
+				url: '/pull_jiras/add_comments',
+				params: data_load
+			}).then(function successCallback(response){
+				console.log(response);
+				$scope.commentButtonDissabled=false;
+				reset_form(form);
+			});
+		});
+	}
 
 	$scope.$on('timer-stopped', function (event, logged_time){
 		
@@ -162,6 +174,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	});
 	
 	$scope.getTaskTime();
-
+	//clean all comment_forms;
+	reset_form();
 	
 }]);

@@ -92,8 +92,7 @@
 				  		
 				  	<div layout="row" layout-xs="column" ng-if="task.fields.description" layout-padding>
 				  		
-				  		
-				  		<div flex-gt-xs="20" flex>
+				  		<div flex-gt-xs="15" flex>
 					  		<h4> Description: </h4>
 						</div>
 
@@ -119,7 +118,7 @@
 				
 					
 					<div layout="row" layout-xs="column" layout-padding>
-						<div flex-gt-xs="20" flex>
+						<div flex-gt-xs="15" flex>
 							<h4> Comments: </h4>
 						</div>
 					
@@ -148,52 +147,55 @@
 										<span hide-xs>{{comment.author.displayName}}</span>
 									</div>	
 								</div>
-
 							</md-list-item>
 
-							<!-- <md-list-item class="my-message">
-								<div layout="row" layout-align="end start" style="width:100%;">
-									
-									<input class="message-body right" flex="70" type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
-									<div class="message-id right" flex="15">
-										
-										{{currentUser.userNamePrefered}}
-										
-										<div class="triangle"></div>
-										
-										<img src="{{currentUser.userProfileImage}}" alt="">
-										
-										<md-button class="md-primary">
-											Send
-										</md-button>
+							<md-list-item class="my-message">
+								<form name="comment_form" layout="row" layout-align="end start" style="width:100%;" novalidate>
+									<md-input-container flex-gt-xs="70" flex>
+										<textarea aria-label="my-comment" class="message-body right"  type="text" name="my_comment" required="" ng-model="add_comment.body" ng-minlength="1" flex></textarea>
+										<div ng-show="comment_form.$submitted || comment_form.my_comment.$touched">
+											<div ng-show="comment_form.my_comment.$error.required">You must have something to say...</div>
+										</div>
+									</md-input-container>
 
+									<div class="message-id right" flex="15">
+										{{currentUser.userNamePrefered}}
+										<div class="triangle"></div>
+										<img src="{{currentUser.userProfileImage}}" alt="">
+										<md-input-container>
+											<md-button class="md-primary" disabled="{{commentButtonDissabled}}">
+												<input aria-label="button" type="submit" ng-click="addComment(task, add_comment.body, form)" value="Send"/>
+											</md-button>
+										</md-input-container>
 									</div>	
-								</div>
-							</md-list-item>	 -->
+								</form>
+							</md-list-item>	
 						</md-list>
 						
 						<md-list ng-if="!task_comments" flex>
 							<h4>No Comments</h4>
 							
-							<!-- <md-list-item class="my-message">
-								<div layout="row" layout-align="end start" style="width:100%;">
-									
-									<input class="message-body right" flex="70" type="text" name="Add Comment" ng-model="add_comment.body" ng-minlength="3">
-									<div class="message-id right" flex="15">
-										
-										{{currentUser.userNamePrefered}}
-										
-										<div class="triangle"></div>
-										
-										<img src="{{currentUser.userProfileImage}}" alt="">
-										
-										<md-button class="md-primary">
-											Send
-										</md-button>
+							<md-list-item class="my-message">
+								<form name="comment_form" layout="row" layout-align="end start" style="width:100%;" novalidate>	
+									<md-input-container flex-gt-xs="70" flex>
+										<textarea aria-label="my-comment" class="message-body right"  type="text" name="my_comment" required="" ng-model="add_comment.body" ng-minlength="1" flex></textarea>
+										<div ng-show="comment_form.$submitted || comment_form.my_comment.$touched">
+											<div ng-show="comment_form.my_comment.$error.required">You must have something to say...</div>
+										</div>
+									</md-input-container>
 
+									<div class="message-id right" flex="15">
+										{{currentUser.userNamePrefered}}
+										<div class="triangle"></div>
+										<img src="{{currentUser.userProfileImage}}" alt="">
+										<md-input-container>
+											<md-button class="md-primary" disabled="{{commentButtonDissabled}}">
+												<input aria-label="button" type="submit" ng-click="addComment(task, add_comment.body, form)" value="Send"/>
+											</md-button>
+										</md-input-container>
 									</div>	
-								</div>
-							</md-list-item>	 -->
+								</form>
+							</md-list-item>	
 						</md-list>
 
 					</div>

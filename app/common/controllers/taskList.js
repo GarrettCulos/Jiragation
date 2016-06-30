@@ -88,7 +88,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 
 			$myAccounts.then(function(accountService){ 
-				console.log(accountService);
+				// console.log(accountService);
 				task.accountId = accountService.getUrlId(task.self);
 			});
 

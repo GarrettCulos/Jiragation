@@ -4,16 +4,67 @@ var Accounts 			= require('../models/accounts');
 var fs 					= require('fs');
 const http 				= require('http');
 const https 			= require('https');
+const querystring 		= require('querystring');
 
 function taskListToArray(array){
 	var res =[];
 	array.forEach(function(taskList){
 		res = res.concat(taskList.issues);
-		// console.log(res);
 	});
 	return res;
 };
 
+jira.get('/add_comments', function(req,res,next) {
+	var data = req.query;
+	var account = JSON.parse(data.acct);
+	var post_data = '{"body":"'+data.body+'"}';
+
+	var options = {
+		method: 'POST',
+		host: account.url,
+		path: '/rest/api/2/issue/'+ data.issueId +'/comment',
+		headers:{
+			'Content-Type':  'application/json',
+			'Content-Length': Buffer.byteLength(post_data),
+			'Authorization': 'Basic '+ new Buffer( account.user_name + ':' + account.password ).toString('base64')
+		}
+	};
+
+ 	if(account.protocal === "http"){
+
+ 		var post_req = http.request(options, function(response) {
+			data='';
+			response.setEncoding('utf8')
+			response.on('data', function(d) {
+				data += d
+			});
+			response.on('end', function(d) {
+				res.send(data)
+			});
+		}).on('error', (error) => {
+			console.error(error);	
+		});
+
+ 	} else {
+
+		var post_req = https.request(options, function(response) {	
+			data='';
+			response.setEncoding('utf8')
+			response.on('data', function(d) {
+				data += d
+			});
+			response.on('end', function(d) {
+				res.send(data)
+			});
+		}).on('error', (error) => {
+			console.error(error);	
+		});
+	 		
+ 	}
+
+ 	post_req.write(post_data);
+ 	post_req.end();
+});
 
 jira.get('/task_comments', function(req,res,next) {
 	var data = req.query;
@@ -63,7 +114,6 @@ jira.get('/task_comments', function(req,res,next) {
 		});
 	 		
  	}
-
 });
 
 jira.get('/jira_accounts', function(req, res, next) { 
@@ -131,8 +181,6 @@ jira.get('/jira_accounts', function(req, res, next) {
 		}); /* end loop */
 
 	});
-	
 });
-
 
 module.exports.jira = jira;
