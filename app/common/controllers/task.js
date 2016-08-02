@@ -141,6 +141,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			}
 
 			$http({
+				rejectUnauthorized: false,
 				method: 'GET',
 				url: '/pull_jiras/add_comments',
 				params: data_load

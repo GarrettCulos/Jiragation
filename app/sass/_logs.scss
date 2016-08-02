@@ -47,6 +47,19 @@
 	}
 }
 
+task-line{
+	task-info{
+		display:none;
+		background-color:rgba(1,1,1,0.8);
+		color:white;
+		border-radius:5px;
+		padding:10px;
+		position:absolute;
+		width:300px;
+		left:0;
+		top:100%;
+	}
+}
 
 #logs-display{
 	margin-top:50px;

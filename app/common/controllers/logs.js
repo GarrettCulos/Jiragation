@@ -158,7 +158,8 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 			linearize(scope.task_log.tasks).then(function(response){
 				console.log(response);
-				scope.task_lines = response;
+				scope.scales = {day_begin:response.day_begin,day_end:response.day_end};
+				scope.task_lines = response.tasks;
 			});
 			
 			scope.inactive = true;
@@ -168,7 +169,6 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 			function linearize(data) {
 
-				var response = [];
 				var deferred = $q.defer();
 				var colors = [
 					'#FFB429'
@@ -181,16 +181,25 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 					, '#C57BE0'
 					, '#7BC7E0'
 				]
+				var response = {
+					day_begin:{
+						date:day_start+oneDay
+					},
+					day_end:{
+						date:day_start
+					},
+					tasks: []
+				}
 
 				angular.forEach(data, function(task, task_key){
-					response.push({
+					response.tasks.push({
 						task_id: task.task_id,
 						color: colors[task_key],
 						lines : []
 					})
 
 					angular.forEach(task.logged_time, function(log, log_key){
-						response[task_key].lines.push({
+						response.tasks[task_key].lines.push({
 							day_start: day_start,
 							width: (parseInt(log.end_time) - parseInt(log.start_time))*100/oneDay,
 							start_time: log.start_time,
@@ -198,6 +207,18 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 							start: (parseInt(log.start_time) - day_start)/oneDay*100,
 							end: (parseInt(log.end_time) - day_start)/oneDay*100
 						});
+						if(parseInt(log.start_time) < response.day_begin.date){
+							response.day_begin = {
+								date: parseInt(log.start_time),
+								location: (parseInt(log.start_time) - day_start)/oneDay*100
+							};
+						}
+						if(parseInt(log.end_time) > response.day_end.date){
+							response.day_end = {
+								date: parseInt(log.start_time),
+								location: (parseInt(log.end_time) - day_start)/oneDay*100
+							} 
+						}
 						deferred.resolve(response);
 					});
 				});
@@ -206,4 +227,14 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 			}
 		}
 	};
-}]);
+}]).directive('taskLine', function(){
+	return {
+	    link: function(scope, element, attr) {
+	    	// var this = angular.element();
+	    	
+	    	// this.on('hover', function(){
+	    	// 	console.log("trigger");
+	    	// });
+	    }
+	}
+});
