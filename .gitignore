@@ -1,4 +1,4 @@
-/db/**
-.sass-cache/**
-bower_components/*/**
-node_modules/*/**
+db/*
+./sass-cache/*
+bower_components/*
+node_modules/*

@@ -37371,7 +37371,7 @@ svg:hover path {
 .log-bar .task-line {
   position: absolute;
   left: 0;
-  height: 15px;
+  height: 0px;
   width: 100%;
   transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
 }
@@ -37386,7 +37386,20 @@ svg:hover path {
   opacity: 0.5;
   top: 0;
 }
-/* line 26, ../sass/_log_bar.scss */
+/* line 24, ../sass/_log_bar.scss */
+.log-bar .task-line task-info {
+  display: block;
+  background-color: rgba(1, 1, 1, 0.8);
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  max-width: 300px;
+  left: 0;
+  top: 100%;
+  z-index: 12;
+}
+/* line 38, ../sass/_log_bar.scss */
 .log-bar .scale .time {
   position: absolute;
   transform: translateX(-50%) translateY(-250%) rotate(-90deg);
@@ -37469,20 +37482,7 @@ svg:hover path {
   border-top-color: black;
 }
 
-/* line 51, ../sass/_logs.scss */
-task-line task-info {
-  display: none;
-  background-color: rgba(1, 1, 1, 0.8);
-  color: white;
-  border-radius: 5px;
-  padding: 10px;
-  position: absolute;
-  width: 300px;
-  left: 0;
-  top: 100%;
-}
-
-/* line 64, ../sass/_logs.scss */
+/* line 50, ../sass/_logs.scss */
 #logs-display {
   margin-top: 50px;
 }

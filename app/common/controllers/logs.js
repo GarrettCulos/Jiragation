@@ -157,7 +157,6 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 			var day_start = (new Date(scope.task_log.date)).getTime()
 
 			linearize(scope.task_log.tasks).then(function(response){
-				console.log(response);
 				scope.scales = {day_begin:response.day_begin,day_end:response.day_end};
 				scope.task_lines = response.tasks;
 			});
@@ -225,16 +224,19 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 				return deferred.promise;
 			}
+
 		}
 	};
 }]).directive('taskLine', function(){
 	return {
-	    link: function(scope, element, attr) {
-	    	// var this = angular.element();
-	    	
-	    	// this.on('hover', function(){
-	    	// 	console.log("trigger");
-	    	// });
+	    link: function(scope, elem, attr) {
+			scope.hoverIn = function(){
+			    scope.hoverEdit = true;
+			};
+
+			scope.hoverOut = function(){
+			    scope.hoverEdit = false;
+			};
 	    }
 	}
 });
