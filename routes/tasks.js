@@ -3,14 +3,14 @@ var tasks 			= express.Router();
 var Tasks 			= require('../models/tasks');
 var fs 					= require('fs');
 
-tasks.get('/get_local_tasks', function(req, res, next) { 
+tasks.get('/get_tasks', function(req, res, next) { 
 	Tasks.getTasks(function(result){
 		// console.log('routes - accout');
 		res.send(result);		
 	});
 });
 
-tasks.get('/get_local_tasks_by_id', function(req, res, next) { 
+tasks.get('/get_tasks_by_id', function(req, res, next) { 
 	var task_id = req.body;
 	Tasks.getTaskById(task_id, function(result){
 		// console.log('routes - accout');
@@ -18,7 +18,7 @@ tasks.get('/get_local_tasks_by_id', function(req, res, next) {
 	});
 });
 
-tasks.get('/get_local_tasks_by_date', function(req, res, next) { 
+tasks.get('/get_tasks_by_date', function(req, res, next) { 
 	var dates = req.body;
 	Tasks.getTasksByDate(dates, function(result){
 		// console.log('routes - accout');

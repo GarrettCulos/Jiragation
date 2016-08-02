@@ -9,6 +9,7 @@ angular.module('myApp', [
   , 'myApp.version'
   , 'myApp.task'
   , 'myApp.headerNav'
+  , 'myApp.actionBar'
   , 'timer'
   , 'appFilters'
   , 'ngMaterial'

@@ -1,0 +1,36 @@
+<md-dialog aria-label="Add/Update Task"  ng-controller="updateTask" ng-cloak flex>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>
+				Task Edit
+			</h2>
+			<span flex></span>
+			<md-button class="md-icon-button" ng-click="cancel()">
+				<md-icon md-svg-src="img/svg/close.svg" aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<md-dialog-content>
+		<div class="md-dialog-content">
+			<!-- <div class="prefered-name">
+				Hello {{userNamePrefered}}, your looking well today.
+			</div> -->
+		       
+			
+				
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row" style="z-index:1;">
+
+		<span flex></span>
+		<!-- <md-button ng-click="discard()">
+			discard
+		</md-button>
+		 -->
+		 <md-button class="md-primary" ng-click="updateUser(user); save('useful')">
+			Add/Edit
+		</md-button>
+	</md-dialog-actions>
+
+</md-dialog>
+

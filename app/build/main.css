@@ -37255,7 +37255,7 @@ md-toolbar .md-toolbar-tools {
 /* line 1, ../sass/_icons.scss */
 svg {
   display: inline-block;
-  width: 27px;
+  width: 25px;
   font-size: inherit;
   vertical-align: middle;
 }
@@ -37396,7 +37396,7 @@ svg:hover path {
   position: absolute;
   max-width: 300px;
   left: 0;
-  top: 100%;
+  top: 16px;
   z-index: 12;
 }
 /* line 38, ../sass/_log_bar.scss */
@@ -37423,6 +37423,11 @@ svg:hover path {
 .account-settings .user-add-account input {
   padding: 0 5px;
   line-height: 2em;
+}
+
+/* line 4, ../sass/_action_nav.scss */
+#actionNav .dartPath svg path {
+  fill: black;
 }
 
 /* line 1, ../sass/_logs.scss */
@@ -37483,11 +37488,7 @@ svg:hover path {
   border-top-color: black;
 }
 
-<<<<<<< HEAD
-/* line 54, ../sass/_logs.scss */
-=======
-/* line 50, ../sass/_logs.scss */
->>>>>>> 7f6bed8e0357b56253e4221d084a56569dd2179a
+/* line 53, ../sass/_logs.scss */
 #logs-display {
   margin-top: 50px;
 }
