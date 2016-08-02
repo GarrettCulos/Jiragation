@@ -2,8 +2,7 @@
 
 angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
-
-.controller('accountsController', ['$scope', '$http', '$q', '$myAccounts',function($scope, $http, $q, $myAccounts) {
+.controller('accountsController', ['$scope', '$http', '$q', '$myAccounts', '$mdMedia', '$mdDialog', function($scope, $http, $q, $myAccounts, $mdMedia, $mdDialog) {
 
 	// ---------------------------
 	// This should be a directive
@@ -89,7 +88,7 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 
 			$myAccounts.then(function(accountService){ 
-				console.log(accountService);
+				// console.log(accountService);
 				task.accountId = accountService.getUrlId(task.self);
 			});
 
@@ -101,6 +100,41 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 
 		return deferred.promise;
 	}
+
+	$scope.addSettings = function(ev) {
+		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+		
+		$mdDialog.show({
+			controller: DialogController,
+			templateUrl: 'common/account/new_settings.html',
+			parent: angular.element(document.body),
+			targetEvent: ev,
+			clickOutsideToClose:true,
+			fullscreen: useFullScreen
+		}).then(function(answer) {
+
+		}, function() {
+			$scope.status = 'You cancelled the dialog.';
+		});
+
+		$scope.$watch(function() {
+			return $mdMedia('xs') || $mdMedia('sm');
+		}, function(wantsFullScreen) {
+			$scope.customFullscreen = (wantsFullScreen === true);
+		});
+		
+		function DialogController($scope, $mdDialog) {
+			$scope.hide = function() {
+				$mdDialog.hide();
+			};
+			$scope.cancel = function() {
+				$mdDialog.cancel();
+			};
+			$scope.save = function(answer) {
+				$mdDialog.hide(answer);
+			};
+		}
+    };
 
 	$scope.getJiraTasks = function(){
 
@@ -114,25 +148,32 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		}).then(function successCallback(response){
 
 			$scope.JiraAccounts = response.data;
+			if($scope.JiraAccounts){
 
-			$http({
-				method: 'GET',
-				url: '/pull_jiras/jira_accounts'
-			
-			}).then(function successCallback(res){
+				$http({
+					method: 'GET',
+					url: '/pull_jiras/jira_accounts'
 				
-				$scope.fetching_tasks = false;
+				}).then(function successCallback(res){
+					
+					$scope.fetching_tasks = false;
 
-				modify_task_list(
-					res.data
-				).then(function(response){		
-					$scope.taskList = response;
-					console.log($scope.taskList);
+					modify_task_list(
+						res.data
+					).then(function(response){		
+						$scope.taskList = response;
+						console.log($scope.taskList);
+					});
+
+				}, function errorCallback(res){
+					$scope.fetching_tasks = false;
 				});
 
-			}, function errorCallback(res){
-				$scope.fetching_tasks = false;
-			});
+			} else {
+				$scope.addSettings(); 
+			}
+
+			
 		
 		}, function errorCallback(response){
 			// console.log(response);
