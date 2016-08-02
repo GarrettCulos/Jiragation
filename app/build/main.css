@@ -37811,7 +37811,21 @@ svg:hover path {
   display: inline-block;
 }
 
-/* line 201, ../sass/_task_list.scss */
+/* line 200, ../sass/_task_list.scss */
+pre {
+  white-space: pre-wrap;
+  /* CSS3 browsers  */
+  white-space: -moz-pre-wrap !important;
+  /* 1999+ Mozilla  */
+  white-space: -pre-wrap;
+  /* Opera 4 thru 6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 and up */
+  word-wrap: break-word;
+  width: 100%;
+}
+
+/* line 208, ../sass/_task_list.scss */
 pre.message-body {
   white-space: pre-wrap;
   /* CSS3 browsers  */
@@ -37827,19 +37841,19 @@ pre.message-body {
   border: 0px solid transparent;
   border-radius: 5px;
 }
-/* line 212, ../sass/_task_list.scss */
+/* line 219, ../sass/_task_list.scss */
 pre.message-body.right {
   border-top-right-radius: 0;
   color: white;
   background-color: rgba(82, 0, 126, 0.9);
 }
-/* line 217, ../sass/_task_list.scss */
+/* line 224, ../sass/_task_list.scss */
 pre.message-body.left {
   background-color: white;
   border-top-left-radius: 0;
 }
 
-/* line 225, ../sass/_task_list.scss */
+/* line 232, ../sass/_task_list.scss */
 .message-id img {
   margin: 14px;
   max-width: 35px;
@@ -37848,15 +37862,15 @@ pre.message-body.left {
   border-color: transparent;
   background-color: transparent;
 }
-/* line 233, ../sass/_task_list.scss */
+/* line 240, ../sass/_task_list.scss */
 .message-id.right {
   text-align: left;
 }
-/* line 234, ../sass/_task_list.scss */
+/* line 241, ../sass/_task_list.scss */
 .message-id.right img {
   margin-left: 0;
 }
-/* line 238, ../sass/_task_list.scss */
+/* line 245, ../sass/_task_list.scss */
 .message-id.right .triangle {
   float: left;
   width: 0;
@@ -37865,15 +37879,15 @@ pre.message-body.left {
   border-left: 7px solid rgba(82, 0, 126, 0.9);
   border-top: 7px solid rgba(82, 0, 126, 0.9);
 }
-/* line 247, ../sass/_task_list.scss */
+/* line 254, ../sass/_task_list.scss */
 .message-id.left {
   text-align: right;
 }
-/* line 249, ../sass/_task_list.scss */
+/* line 256, ../sass/_task_list.scss */
 .message-id.left img {
   margin-right: 0;
 }
-/* line 252, ../sass/_task_list.scss */
+/* line 259, ../sass/_task_list.scss */
 .message-id.left .triangle {
   float: right;
   width: 0;
@@ -37883,12 +37897,12 @@ pre.message-body.left {
   border-top: 7px solid white;
 }
 
-/* line 263, ../sass/_task_list.scss */
+/* line 270, ../sass/_task_list.scss */
 .my-message {
   margin-bottom: 10px;
 }
 
-/* line 267, ../sass/_task_list.scss */
+/* line 274, ../sass/_task_list.scss */
 .sticky {
   position: fixed;
   left: 16px;
@@ -37896,7 +37910,7 @@ pre.message-body.left {
   z-index: 2;
 }
 
-/* line 274, ../sass/_task_list.scss */
+/* line 281, ../sass/_task_list.scss */
 .nonvisible-banner {
   margin: 40px;
   text-align: center;
@@ -37904,7 +37918,7 @@ pre.message-body.left {
   border-bottom: 1px solid black;
 }
 
-/* line 281, ../sass/_task_list.scss */
+/* line 288, ../sass/_task_list.scss */
 .circle {
   background-color: #52007e;
   color: white;
@@ -37914,7 +37928,7 @@ pre.message-body.left {
   border: 1px solid transparent;
 }
 
-/* line 290, ../sass/_task_list.scss */
+/* line 297, ../sass/_task_list.scss */
 textarea.task-add-comment {
   min-height: 60px;
   border-radius: 2px;
