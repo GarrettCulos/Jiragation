@@ -1,6 +1,6 @@
 # Jiragation
 
-This application consolidates you JIRA tasks, across many different accounts, into one easy to manage time tracking system.
+This application consolidates you JIRA tasks, across several different accounts, into one easy to manage time tracking system.
 
 ## Prerequisites
 
