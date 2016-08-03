@@ -4,7 +4,7 @@ This application consolidates you JIRA tasks, across several different accounts,
 
 ## Prerequisites
 
-We also use a number of node.js tools to initialize and test. You must have node.js and
+We use a number of node.js tools to initialize. You must have node.js and
 its package manager (npm) installed.  You can get them from [http://nodejs.org/](http://nodejs.org/).
 
 
