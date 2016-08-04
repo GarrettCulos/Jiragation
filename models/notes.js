@@ -17,9 +17,17 @@ Notes.getNotesByIds = function(callback) {
 
 };
 
-Notes.addNote = function(callback) {
-	// require task id as parameter
-
+Notes.addNote = function(note, callback) {
+	model.Notes.create({
+		task_id: note.task_id,
+		description: note.description,
+		is_active: 1
+	}).then(function(results) {
+		callback(results);
+	}, function(err){
+		console.log(err);
+		throw err;
+	});
 };
 
 Notes.editNote = function(callback) {
@@ -27,4 +35,4 @@ Notes.editNote = function(callback) {
 
 };
 
-module.exports = Tasks;
+module.exports = Notes;

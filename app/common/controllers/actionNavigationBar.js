@@ -29,13 +29,11 @@ angular.module('myApp.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
       $mdDialog.show({
         clickOutsideToClose: true,
         controller: function($mdDialog) {
-          // Save the clicked item
-          this.item = item;
           // Setup some handlers
-          this.close = function() {
+          this.cancel = function() {
             $mdDialog.cancel();
           };
-          this.submit = function() {
+          this.save = function() {
             $mdDialog.hide();
           };
         },
@@ -45,8 +43,32 @@ angular.module('myApp.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
       });
     }
 }])
-
 .controller('updateTask', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
-
       
+}])
+.controller('noteController', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
+    
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+
+    $scope.addNote = function(note) {
+      $http({
+        method:   'POST',
+        url:      '/notes/add_note',
+        params:  {
+          description: note.message,
+          task_id: note.task_id
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(function successCallback(res){
+        $mdDialog.hide();
+      }, function errorCallback(res){
+        console.log(res);
+        $mdDialog.hide();
+      });     
+    
+    };
 }]);
