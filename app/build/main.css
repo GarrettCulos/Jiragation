@@ -37530,6 +37530,13 @@ svg:hover path {
   fill: black;
 }
 
+/* line 37, ../sass/_navbar.scss */
+#actionNav {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
 /* app css stylesheet */
 /* line 3, ../sass/_task_list.scss */
 .main-content {

@@ -47,6 +47,30 @@ angular.module('myApp.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
 }])
 
 .controller('updateTask', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
+  
+  $http({
+    method: 'GET',
+    url: '/account/fetch_accounts'
 
+  }).then(function successCallback(response){
+    var jiraAccounts = response.data;
+    console.log(jiraAccounts);
+
+    $scope.accountSearch = function(query) {
+      var matches = [];
+      jiraAccounts.forEach(function(account) {
+          if (account.url.toLowerCase().indexOf(query.toString().toLowerCase()) >= 0) {
+              matches.push(account);
+          }
+      });
+      return matches;
+    }
+
+  }, function errorCallback(response){
+    console.log(response);
+  });
+
+  
+  
       
 }]);
