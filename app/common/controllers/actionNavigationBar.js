@@ -28,18 +28,6 @@ angular.module('myApp.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
       // Show the dialog
       $mdDialog.show({
         clickOutsideToClose: true,
-        controller: function($mdDialog) {
-          // Save the clicked item
-          this.item = item;
-          // Setup some handlers
-          this.close = function() {
-            $mdDialog.cancel();
-          };
-          this.submit = function() {
-            $mdDialog.hide();
-          };
-        },
-        controllerAs: 'dialog',
         templateUrl: item.dialogTemplate,
         targetEvent: $event
       });
@@ -48,6 +36,11 @@ angular.module('myApp.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
 
 .controller('updateTask', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
   
+  // Setup some handlers
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  };
+
   $http({
     method: 'GET',
     url: '/account/fetch_accounts'
@@ -64,6 +57,11 @@ angular.module('myApp.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
           }
       });
       return matches;
+    }
+    $scope.updateUser = function(task){
+      console.log(task);
+
+      $mdDialog.hide();
     }
 
   }, function errorCallback(response){

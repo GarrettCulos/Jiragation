@@ -18,16 +18,16 @@
 						<md-autocomplete flex required
 							md-input-name="addTask.account"
 							md-input-minlength="0"
-							md-selected-item="selectedAccount"
-							md-search-text="searchText"
-							md-items="item in accountSearch(searchText)"
+							md-selected-item="task.selectedAccount"
+							md-search-text="accountSearchText"
+							md-items="item in accountSearch(accountSearchText)"
 							md-item-text="item.url"
 							md-floating-label="Account">
 							<md-item-template>
-								<span md-highlight-text="searchText" md-highlight-flags="^i">{{item.url}}</span>
+								<span md-highlight-text="accountSearchText" md-highlight-flags="^i">{{item.url}}</span>
 							</md-item-template>
 							<md-not-found>
-					        	No account matching "{{searchText}}" was found.
+					        	No account matching "{{accountSearchText}}" was found.
 							</md-not-found>
 							<div ng-messages="addTask.account.$error" ng-if="addTask.account.$touched">
 								<div ng-message="required">You <b>must</b> select an account.</div>
@@ -39,13 +39,13 @@
 							md-input-name="addTask.project"
 							md-input-minlength="0"
 							md-input-maxlength="30"
-							md-selected-item="selectedProjects"
-							md-search-text="searchText"
-							md-items="item in projectSearch(searchText)"
+							md-selected-item="task.selectedProjects"
+							md-search-text="projectSearchText"
+							md-items="item in projectSearch(projectSearchText)"
 							md-item-text="item.url"
 							md-floating-label="Projects">
 							<md-item-template>
-								<span md-highlight-text="searchText" md-highlight-flags="^i">{{item.url}}</span>
+								<span md-highlight-text="projectSearchText" md-highlight-flags="^i">{{item.url}}</span>
 							</md-item-template>
 							<div ng-messages="addTask.project.$error" ng-if="addTask.project.$touched">
 								<div ng-message="required">You <b>must</b> select an project.</div>
@@ -70,13 +70,13 @@
 							md-input-name="addTask.priority"
 							md-input-minlength="0"
 							md-input-maxlength="30"
-							md-selected-item="selectedProjects"
-							md-search-text="searchText"
-							md-items="item in prioritySearch(searchText)"
+							md-selected-item="task.selectedProjects"
+							md-search-text="prioritySearchText"
+							md-items="item in prioritySearch(prioritySearchText)"
 							md-item-text="item.url"
 							md-floating-label="Priority">
 							<md-item-template>
-								<span md-highlight-text="searchText" md-highlight-flags="^i">{{item.url}}</span>
+								<span md-highlight-text="prioritySearchText" md-highlight-flags="^i">{{item.url}}</span>
 							</md-item-template>
 							<div ng-messages="addTask.priority.$error" ng-if="addTask.priority.$touched">
 								<div ng-message="required">You <b>must</b> select an priority.</div>
@@ -105,7 +105,7 @@
 				discard
 			</md-button>
 			 -->
-			 <md-button class="md-primary" ng-click="updateUser(user); save('useful')">
+			 <md-button class="md-primary" ng-click="updateUser(task); save('useful')">
 				Add/Edit
 			</md-button>
 		</md-dialog-actions>
