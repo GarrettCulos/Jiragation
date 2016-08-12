@@ -1,6 +1,6 @@
 var express 			= require('express');
 var notes 			= express.Router();
-var Notes 			= require('../models/tasks');
+var Notes 			= require('../models/notes');
 var fs 					= require('fs');
 
 notes.get('/get_notes', function(req, res, next) { 
@@ -18,15 +18,15 @@ notes.get('/get_notes_by_ids', function(req, res, next) {
 	});
 });
 
-notes.get('/add_note', function(req, res, next) { 
-	var note = req.body;
+notes.post('/add_note', function(req, res, next) { 
+	var note = req.query;
 	Notes.addNote(note, function(result){
 		// console.log('routes - accout');
 		res.send(result);		
 	});
 });
 
-notes.get('/edit_note', function(req, res, next) { 
+notes.post('/edit_note', function(req, res, next) { 
 	var note_id = req.body;
 	Notes.editNote(note_id, function(result){
 		// console.log('routes - accout');

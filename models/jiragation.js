@@ -44,8 +44,9 @@ var Tasks = sequelize.define('tasks', {
 
 var Notes = sequelize.define('notes',{
     note_id: {type: Sequelize.INTEGER, autoIncrement:true, primaryKey:true},
-    task_id:{ type: Sequelize.INTEGER, allowNull: false},
-    description: { type: Sequelize.STRING, allowNull: false}
+    task_id:{ type: Sequelize.STRING, allowNull: true},
+    description: { type: Sequelize.STRING, allowNull: false},
+    is_active:{ type: Sequelize.INTEGER, allowNull: false}
 })
 
 var Users = sequelize.define('users', {

@@ -33,9 +33,8 @@ angular.module('myApp.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
       });
     }
 }])
-
 .controller('updateTask', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
-  
+ 
   // Setup some handlers
   $scope.cancel = function() {
     $mdDialog.cancel();
@@ -67,8 +66,31 @@ angular.module('myApp.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
   }, function errorCallback(response){
     console.log(response);
   });
-
-  
-  
       
+}])
+.controller('noteController', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
+    
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+
+    $scope.addNote = function(note) {
+      $http({
+        method:   'POST',
+        url:      '/notes/add_note',
+        params:  {
+          description: note.message,
+          task_id: note.task_id
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(function successCallback(res){
+        $mdDialog.hide();
+      }, function errorCallback(res){
+        console.log(res);
+        $mdDialog.hide();
+      });     
+    
+    };
 }]);
