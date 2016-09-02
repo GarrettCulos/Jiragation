@@ -33,6 +33,10 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 		getlogs(startDate.getTime(), endDate.getTime()+oneDay);
 	}
+	$scope.logTime = function(task){
+		// THIS FUNCTIN WILL NEED THE USER"S ACCOUNT INFORMATION FOR THE SPECIFIC TASK -> blocked by not saving task&account data
+		console.log(task)
+	}
 
 	function getlogs(startD, endD){
 
@@ -59,17 +63,12 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 			headers: {'Content-Type': 'application/json'}
 
 		}).then(function successCallback(res){		
-			
 			if(res.data.time_logs.length>0){
-
 				filter_data(day_array,res).then(function(response){
-
 					summarize_data(response).then(function(res){
 						$scope.queryLog=res;
 					})
-
 				});
-
 			} else{
 				console.log('No data');
 			}
@@ -82,18 +81,14 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 	function filter_data(day_array, data) {
 		var response = day_array;
 		var deferred = $q.defer();
-		
-		angular.forEach(day_array, function(day, day_key){
 
+		angular.forEach(day_array, function(day, day_key){
 			angular.forEach(data.data.time_logs, function(task, key){
-			
 				if (task.start_time > day.date.getTime()  && task.start_time < (day.date.getTime()+oneDay) ) {
 					response[day_key].logs.push(task);
 					deferred.resolve(response);
 				}
-
 			});
-
 		});
 
 		return deferred.promise;
@@ -106,6 +101,7 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 		
 		angular.forEach(data, function(day, day_key){
 			
+			console.log(day);
 			response.push({
 				date: day.date,
 				time_logged: 0, 
@@ -193,7 +189,7 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 				angular.forEach(data, function(task, task_key){
 					response.tasks.push({
 						task_id: task.task_id,
-						color: colors[task_key],
+						color: colors[task_key%colors.length],
 						lines : []
 					})
 
