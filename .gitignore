@@ -2,3 +2,6 @@ db/*
 ./sass-cache/*
 bower_components/*
 node_modules/*
+config/*
+!config/default.json
+!config/disallowedPasswords.js

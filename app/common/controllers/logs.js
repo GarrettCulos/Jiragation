@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
+angular.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 .controller('logsCtrl', ['$scope', '$http', '$q', function($scope, $http, $q) {
   

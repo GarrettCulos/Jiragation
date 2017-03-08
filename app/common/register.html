@@ -1,0 +1,68 @@
+<headernav ng-controller="HeaderController"></headernav>
+
+<!-- Filter -->
+<div  style="overflow:scroll;" flex>
+  <form name="registration" ng-submit="register(registration, user)">
+    <md-container layout="column" layout-align="center stretch" style="padding:20px;" flex="80" flex-xs="100">
+      <div flex="100" layout="row">
+        <md-input-container flex="50">
+          <label>First Name</label>
+          <input name="first_name" ng-model="user.first_name" required>
+          <div ng-messages="registration.first_name.$error">
+            <div ng-message="required">This field is required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="50">
+          <label>Last Name</label>
+          <input name="last_name" ng-model="user.last_name" required>
+          <div ng-messages="registration.last_name.$error">
+            <div ng-message="required">This field is required.</div>
+          </div>
+        </md-input-container>
+      </div>
+      <div flex="100" layout="row">
+        <md-input-container flex="100">
+          <label>User Name</label>
+          <input name="user_name" ng-model="user.user_name" ng-change="resetError(registration.user_name)" required>
+          <!-- {{registration.user_name}} -->
+          <div ng-messages="registration.user_name.$error">
+            <div ng-message="required">This field is required.</div>
+            <div ng-message="match">This user name is taken. Please try another.</div>
+          </div>
+        </md-input-container>
+      </div>
+
+      <md-input-container flex="100">
+        <label>Email Address</label>
+        <input name="email_address" ng-model="user.email_address" ng-change="resetError(registration.email_address)" type="email" ng-pattern="/^.+@.+\..+$/" required>
+        <!-- {{registration.email_address}} -->
+        <div ng-messages="registration.email_address.$error">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="pattern">The value entered but resemble an email.</div>
+          <div ng-message="taken">This email has already been registered. Try another email or contact an administrator.</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container flex="100">
+        <label>Password</label>
+        
+        <input name="password" ng-model="user.password" type="password" ng-change="user.passwordConfirm = null" required>
+        <div ng-messages="registration.password.$error">
+          <div ng-message="required">This field is required.</div>
+        </div>
+      </md-input-container>
+
+      <md-input-container flex="100">
+        <label>Confirm Password</label>
+        <input name="passwordConfirm" ng-model="user.passwordConfirm" ng-change="resetError(registration.passwordConfirm)" type="password" required>
+        <!-- {{registration.passwordConfirm}} -->
+        <div ng-messages="registration.passwordConfirm.$error">
+          <div ng-message="required">This field is required.</div>
+          <div ng-message="match">This field must match the password field above.</div>
+        </div>
+      </md-input-container>
+      
+      <md-button class="md-raised md-primary" style="color:rgb(240,240,240);" type="submit">submit</md-button>
+    </form>
+  </md-container>
+</div>

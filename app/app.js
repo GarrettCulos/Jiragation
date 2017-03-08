@@ -1,15 +1,15 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+angular.module('Jiragation', [
     'ngRoute'
-  , 'myApp.taskList'
-  , 'myApp.logs'
-  , 'myApp.account'
-  , 'myApp.version'
-  , 'myApp.task'
-  , 'myApp.headerNav'
-  , 'myApp.actionBar'
+  , 'Jiragation.taskList'
+  , 'Jiragation.logs'
+  , 'Jiragation.account'
+  , 'Jiragation.version'
+  , 'Jiragation.task'
+  , 'Jiragation.headerNav'
+  , 'Jiragation.actionBar'
   , 'timer'
   , 'appFilters'
   , 'ngMaterial'
@@ -17,31 +17,34 @@ angular.module('myApp', [
   , 'ngAria'
   , 'ngMessages'
   // , 'material.svgAssetsCache'
-])
-.config(['$routeProvider', function($routeProvider) {
+]).config(['$routeProvider','$locationProvider', function($routeProvider,$locationProvider) {
  	$routeProvider
-	.when('/', {
-		templateUrl: 'common/task-list/taskList.html',
-    	controller: 'accountsController'
-	})
-	.when('/task-list', {
-		templateUrl: 'common/task-list/taskList.html',
-    	controller: 'accountsController'
-	})
-	.when('/account', {
-    	templateUrl: 'common/account/settings.html',
-    	controller: 'userAccountController'
-	})
-  .when('/logs', {
-      templateUrl: 'common/logs/logs.html',
-      controller: 'logsCtrl'
-  })
-  .otherwise({
-    	templateUrl: 'common/404.html',
-  });
-}])
+  	.when('/', {
+  		templateUrl: 'common/login.html'
+  	})
+  	.when('/task-list', {
+  		templateUrl: 'common/task-list/taskList.html',
+      controller: 'accountsController'
+  	})
+  	.when('/account', {
+      templateUrl: 'common/account/settings.html',
+      controller: 'userAccountController'
+  	})
+    .when('/logs', {
+       templateUrl: 'common/logs/logs.html',
+       controller: 'logsCtrl'
+    })
+    .when('/register',{
+      templateUrl:'common/register.html',
+      controller:'userController'
+    })
+    .otherwise({
+      templateUrl: 'common/404.html',
+    });
 
-.config(function ($mdThemingProvider) {
+  $locationProvider.hashPrefix("");
+  $locationProvider.html5Mode(true);  
+}]).config(function ($mdThemingProvider) {
     var customPrimary = {
         '50': '#ad18ff',
         '100': '#a400fe',
@@ -59,20 +62,20 @@ angular.module('myApp', [
         'A700': '#100018'
     };
     var customAccent = {
-        '50': '#6f0004',
-        '100': '#880004',
-        '200': '#a20005',
-        '300': '#bb0006',
-        '400': '#d50007',
-        '500': '#ee0008',
-        '600': '#ff222a',
-        '700': '#ff3c42',
-        '800': '#ff555b',
-        '900': '#ff6f74',
-        'A100': '#ff222a',
-        'A200': '#ff0911',
-        'A400': '#ee0008',
-        'A700': '#ff888c'
+        '50': '#515e6c',
+        '100': '#5c6b7b',
+        '200': '#677889',
+        '300': '#738596',
+        '400': '#8291a1',
+        '500': '#909eac',
+        '600': '#aeb8c2',
+        '700': '#bcc4cd',
+        '800': '#cbd1d8',
+        '900': '#d9dee3',
+        'A100': '#aeb8c2',
+        'A200': '#9fabb7',
+        'A400': '#909eac',
+        'A700': '#e8ebee'
     };
     var customWarn = {
         '50': '#ff8080',
@@ -118,9 +121,201 @@ angular.module('myApp', [
        .accentPalette('customAccent')
        .warnPalette('customWarn')
        .backgroundPalette('customBackground')
-})
+}).run(['$rootScope', '$http', '$location', 'Authenticate',  function($rootScope, $http, $location, Authenticate) {
+  $rootScope.user = {};
+  // set login state
+  Authenticate.check(function(res){
+    $rootScope.isLoggedIn = res;
+    if(res){
+        // set user information
+        Authenticate.getUser(function(response){
+            $rootScope.user = response.data;
+            (response.data.is_admin)?$rootScope.isAdmin = true:$rootScope.isAdmin=false;
+        });
+    }
+    else{
+      // $location.path('/')
+    }
+  });
 
-.controller('AppCtrl', function ($scope, $timeout, $http, $mdSidenav, $log, $mdDialog, $mdMedia) {
+  // Listen to logins
+  $rootScope.$on('authLogin', function(event, user) {
+    Authenticate.check(function(res){
+        (res)?$rootScope.isLoggedIn = true:$rootScope.isLoggedIn =false;
+        (user.is_admin)?$rootScope.isAdmin = true:$rootScope.isAdmin=false;
+        $rootScope.user = user;
+    });
+  });
+
+  $rootScope.$on('authLogout', function(event, user) {
+    Authenticate.check(function(res){
+        (res)?$rootScope.isLoggedIn = true:$rootScope.isLoggedIn = false;
+        $rootScope.isAdmin = false;
+        $rootScope.user = {};
+    });
+  });
+}]).factory('Authenticate', ['$window','$location','$http', '$rootScope', function($window, $location, $http, $rootScope) {
+    return {
+        login:function(user, callback){
+            $http({
+                method:   'POST',
+                url:      '/api/authenticate',
+                data: user,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function(result){
+                if(result.data.token){
+                    console.log('loggeding in');
+
+                    $http.defaults.headers.common['x-access-token']=result.data.token;
+                    $window.localStorage['jwtToken']=result.data.token;
+
+                    $rootScope.$broadcast('authLogin', result.user);
+                    // $location.path('/inventory');
+                    callback(result);
+                }
+                else{
+                    callback({status:401, message:'An Unknown Error Occured'});
+                }
+            }, function(error){
+                callback({status:401, message:error});
+            });
+        },
+        check:function(callback){
+            var token = $window.localStorage['jwtToken'];
+            if(!token){
+                return callback(null);
+            };
+            $http.defaults.headers.common['x-access-token'] = token;
+            $http({
+                method:'GET',
+                url:'/api/tokenCheck'
+            }).then(function(response){
+                // set http header
+                callback(true);
+            }, function(error){
+                if(error.status==401){
+                    console.log('session expired');
+                    // $location.path('/'); 
+                    delete $window.localStorage['jwtToken'];
+                    delete $http.defaults.headers.common['x-access-token'];  
+                    return callback(null);
+                } 
+            });
+        },
+        remove:function(callback){
+            delete $window.localStorage['jwtToken'];
+            delete $http.defaults.headers.common['x-access-token'];
+            $location.path('/');
+            callback();
+        },
+        add:function(token, callback){
+            $http.defaults.headers.common['x-access-token']=token;
+            $window.localStorage['jwtToken']=token;
+            callback();
+        },
+        getUser:function(callback){
+            var token = $window.localStorage['jwtToken'];
+            if(!token){
+                return callback(null);
+            }
+
+            $http({
+                method:'GET',
+                url:'/api/tokenCheck'
+            }).then(function(response){
+                if(response.status==401){
+                    console.log('session expired');
+                    $location.path('/login');   
+                    return callback(null);
+                } 
+                return callback(response);
+            });
+        },
+        getUserName:function(callback){
+            var token = $window.localStorage['jwtToken'];
+            if(!token){
+                return callback(null);
+            }
+            $http({
+                method:'GET',
+                url:'/api/tokenCheck'
+            }).then(function(response){
+                if(response.status==401){
+                    return callback(null);
+                } 
+                return callback(response.data.user_name);
+            });
+        },
+        updateUser:function(user, callback, error){
+            $http({
+                method:'POST',
+                url:'/users/update',
+                data:{
+                    user:user
+                },
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function(response){
+                console.log(response);
+                if(response.status==422){
+                    return error(response);
+                } 
+                return callback(response);
+            }, function(err){
+                error(err);
+            });
+        }
+    };
+}]).factory('$currentUser', ['$http', function($http) {
+   
+    var  $currentUser = {};
+
+    $currentUser.getUserInformation = function() {
+        return $http({
+            method: 'GET',
+            url: '/users/get_user_info'
+        }).then(function successCallback(response){
+            return response;
+        }, function errorCallback(response){
+            return response;
+        });
+    }
+
+    $http({
+        method:'GET',
+        url: '/account/fetch_accounts',
+        headers: {'Content-Type': 'application/json'}
+    }).then(function successCallback(res){
+        $currentUser.user_accounts = res;
+        $currentUser.user_accounts_email = [];
+        res.data.forEach(function(account,key){
+          $currentUser.user_accounts_email.push(account.account_email)
+        })
+
+    }, function errorCallback(error){
+        $currentUser.user_accounts_email=null;
+        console.log(error)
+    });
+
+    $currentUser.updateUser = function(user) {
+        return $http({
+            method: 'POST',
+            url: '/users/update_user_info',
+            data: user
+        }).then(function successCallback(response){
+            console.log('Updated User')
+            return 'Success';
+        }, function errorCallback(response){
+            console.log(response);
+            return response;
+        });
+    }
+
+    return $currentUser;
+}]).controller('AppCtrl', function ($scope, $timeout, $http, $mdSidenav, $log, $mdDialog, $mdMedia) {
   $scope.toggleLeft = buildToggler('left');
   $scope.toggleRight = buildToggler('right');
 
@@ -221,10 +416,7 @@ angular.module('myApp', [
         $mdDialog.hide(answer);
       };
     }
-
-})
-
-.controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+}).controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
   $scope.close = function () {
     // Component lookup should always be available since we are not using `ng-if`
     $mdSidenav('right').close()
@@ -232,9 +424,7 @@ angular.module('myApp', [
         $log.debug("close RIGHT is done");
       });
   };
-})
-
-.controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+}).controller('LeftCtrl', function ($scope, $timeout, $mdSidenav, $log) {
   $scope.close = function () {
     // Component lookup should always be available since we are not using `ng-if`
     $mdSidenav('left').close()
@@ -242,57 +432,7 @@ angular.module('myApp', [
         $log.debug("close LEFT is done");
       });
   };
-})
-
-.factory('$currentUser', ['$http', function($http) {
-   
-    var  $currentUser = {};
-
-    $currentUser.getUserInformation = function() {
-        return $http({
-            method: 'GET',
-            url: '/users/get_user_info'
-        }).then(function successCallback(response){
-            return response;
-        }, function errorCallback(response){
-            return response;
-        });
-    }
-
-    $http({
-        method:'GET',
-        url: '/account/fetch_accounts',
-        headers: {'Content-Type': 'application/json'}
-    }).then(function successCallback(res){
-        $currentUser.user_accounts = res;
-        $currentUser.user_accounts_email = [];
-        res.data.forEach(function(account,key){
-          $currentUser.user_accounts_email.push(account.account_email)
-        })
-
-    }, function errorCallback(error){
-        $currentUser.user_accounts_email=null;
-        console.log(error)
-    });
-
-    $currentUser.updateUser = function(user) {
-        return $http({
-            method: 'POST',
-            url: '/users/update_user_info',
-            data: user
-        }).then(function successCallback(response){
-            console.log('Updated User')
-            return 'Success';
-        }, function errorCallback(response){
-            console.log(response);
-            return response;
-        });
-    }
-
-    return $currentUser;
-}])
-
-.factory('$myAccounts', ['$http', '$q', function($http, $q) {
+}).factory('$myAccounts', ['$http', '$q', function($http, $q) {
 
     return $http({
         method:'GET',
@@ -324,5 +464,4 @@ angular.module('myApp', [
 
         return $accounts;
     });
-    
 }]);

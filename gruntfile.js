@@ -6,26 +6,49 @@ module.exports = function(grunt) {
     compass:{
       dist: {                   // Target
         options: {              // Target options
-          sassDir: './app/sass',
-          cssDir: './app/build'
+          sassDir: 'app/sass',
+          cssDir: 'app/build'
         }
       }
     },
 
     bower_concat: {
       all: {
-        dest: './app/build/_lib.js',
-        cssDest: './app/build/_lib.css',
+        dest: 'app/build/_lib.js',
+        cssDest: 'app/build/_lib.css',
         dependencies: {
         },
         bowerOptions: {
           relative: false
         },
         exclude: [
-          'bootstrap'
+          'bootstrap',
+          'grulp',
+          'angular-loader',
+          'angular-mocks',
+          'bootstrap-sass',
+          'd3',
+          'grunt',
+          'jquery',
+          'material-design-icons',
+          'vega',
+          'vega-lite',
+          'viscompass'
         ],
         mainFiles: {
-          
+          'angular':'angular.js',
+          'angular-animate':'angular-animate.min.js',
+          'angular-aria':'angular-aria.min.js',
+          'angular-base64':'angular-base64.js',
+          'angular-material':'angular-material.min.js',
+          'angular-messages':'angular-messages.min.js',
+          'angular-moment':'angular-moment.min.js',
+          'angular-route':'angular-route.min.js',
+          'angular-timer':['app/js/_timer.js','app/js/i18nService.js', 'app/js/progressBarService.js'],
+          'html5-boilerplate':'dist/js/vendore/modernizer-2.8.3.min.js',
+          'humanize-duration':'humanize-duration.js',
+          'moment':'moment.js',
+          'momentjs':'moment.js',
         },
       }
     },

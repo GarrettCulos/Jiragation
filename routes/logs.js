@@ -1,5 +1,5 @@
 var express 			= require('express');
-var logs 			= express.Router();
+var logs 				= express.Router();
 var Accounts 			= require('../models/accounts');
 var fs 					= require('fs');
 
@@ -18,7 +18,7 @@ logs.post('/add_account',function(req,res,next) {
 	});
 });
 
-logs.post('/remove_account',function(req,res,next) {
+logs.delete('/remove_account',function(req,res,next) {
 	var account = req.body;
 	Accounts.removeAccount(account, function(result){
 		// console.log('Account Set');

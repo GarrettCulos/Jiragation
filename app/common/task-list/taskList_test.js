@@ -1,8 +1,8 @@
 'use strict';
 
-describe('myApp.taskList module', function() {
+describe('Jiragation.taskList module', function() {
 
-  beforeEach(module('myApp.taskList'));
+  beforeEach(module('Jiragation.taskList'));
 
   describe('taskList controller', function(){
 

@@ -59,8 +59,6 @@ Tasks.getTasksByDate = function(callback) {
 };
 
 Tasks.addTasks = function(req, callback) {
-	// Req Nothing.
-	
 	model.Tasks.create({
 		task_id: req.task_id,
 		task_label: req.task_label,
@@ -75,37 +73,42 @@ Tasks.addTasks = function(req, callback) {
 		console.log(err);
 		throw err;
 	});
-
 };
 
 Tasks.updateTasks = function(callback) {
 	// Requires task ID
-	
-	model.Tasks.update(req, {
-		where: {
-			task_id:req.task_id	
-		}
-	})
-	.then(function (rows) {
-		if(rows < 1){
-			model.Tasks.create({
-				task_id: req.task_id,
-				task_label: req.task_label,
-				account_id: req.account_id,
-				priority: req.priority,
-				date_created: req.date_created,
-				due_date: req.due_date,
-				description: req.description
-			}).then(function(table){
-				callback(null,table);
-			});
-		} else{
-			callback(null,rows);			
-		}
+	sequelize.transaction(function (t) {
+		return model.Tasks.update(req, {
+			where: {
+				task_id:req.task_id	
+			},
+			transaction:t
+		})
+		.then(function (rows) {
+			if(rows < 1){
+				return model.Tasks.create({
+					task_id: req.task_id,
+					task_label: req.task_label,
+					account_id: req.account_id,
+					priority: req.priority,
+					date_created: req.date_created,
+					due_date: req.due_date,
+					description: req.description
+				},{transaction:t}).then(function(table){
+					return table;
+				});
+			} else{
+				throw 'no data'
+			}
 
-	}, function(err){
-		console.log(err);
-	});	
+		}, function(err){
+			throw err;
+		});
+	}).then(function (user) {
+		callback(null,table);
+	}).catch(function (error) {
+	    callback(error, null);
+	});
 };
 
 module.exports = Tasks;

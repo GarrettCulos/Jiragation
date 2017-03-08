@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.task', ['ngRoute','timer','appFilters'])
+angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 
 .controller('taskController', ['$scope', '$http', '$currentUser', '$q', '$myAccounts', function($scope, $http, $currentUser, $q , $myAccounts) {
 

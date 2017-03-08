@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.account', ['ngRoute'])
+angular.module('Jiragation.account', ['ngRoute'])
 
 .controller('userAccountController', ['$scope', '$http', function($scope, $http) {	
 	$scope.viewUserUpdate=false;
@@ -71,7 +71,7 @@ angular.module('myApp.account', ['ngRoute'])
 		
 		var account = $scope.JiraAccounts[id];
 		$http({
-			method: 'POST',
+			method: 'DELETE',
 			url: '/account/remove_account',
 			data: {url:account.url, user_name:account.user_name}
 		}).then(function successCallback(response){

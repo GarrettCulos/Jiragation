@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.headerNav', ['ngRoute','timer'])
+angular.module('Jiragation.headerNav', ['ngRoute','timer'])
 
 .controller('HeaderController', ['$scope', '$http', '$location', function($scope, $http, $location) {
 	$scope.isActive = function(page){

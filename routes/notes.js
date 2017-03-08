@@ -1,7 +1,7 @@
-var express 			= require('express');
+var express 		= require('express');
 var notes 			= express.Router();
 var Notes 			= require('../models/notes');
-var fs 					= require('fs');
+var fs 				= require('fs');
 
 notes.get('/get_notes', function(req, res, next) { 
 	Notes.getNotes(function(result){

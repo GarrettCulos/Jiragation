@@ -16,8 +16,7 @@ taskManager.get('/getTrackedTime',function(req, res, next) {
 		res.send({time_logs: time_logs});
 
 	});
-})
-
+});
 
 taskManager.get('/getTaskTime',function(req, res, next) {
 	TimeSheet.getTaskTime(req.query, function(time_logs) {
@@ -35,7 +34,7 @@ taskManager.get('/getTaskTime',function(req, res, next) {
 			res.send({logged_time:todays_logged_time});
 		});
 	});
-})
+});
 
 taskManager.post('/add_accounts',function(req, res, next) {
 	var account = req.account;
@@ -43,6 +42,6 @@ taskManager.post('/add_accounts',function(req, res, next) {
 		// console.log('Account Set');
 		res.send(result);		
 	});
-})
+});
 
 module.exports.taskManager = taskManager;

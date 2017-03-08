@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
+angular.module('Jiragation.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
 
 .controller('actionNavigationBar', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
       

@@ -6,12 +6,12 @@ var models = {};
 
 //Create Item Table Structure
 var JiraAccounts = sequelize.define('jira_accounts', {
-	  id:           {type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
-    protocal:     {type: Sequelize.STRING, allowNull:false},
-    user_name:    {type: Sequelize.STRING, allowNull: false},
-    url:          {type: Sequelize.STRING, allowNull: false},
-    password:     {type: Sequelize.STRING, allowNull:false},
-    account_email: {type: Sequelize.STRING, allowNull:false}
+	  id:            { type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+    protocal:      { type: Sequelize.STRING, allowNull:false},
+    user_name:     { type: Sequelize.STRING, allowNull: false},
+    url:           { type: Sequelize.STRING, allowNull: false},
+    password:      { type: Sequelize.STRING, allowNull:false},
+    account_email: { type: Sequelize.STRING, allowNull:false}
 },
 {
    timestamps : true,
@@ -19,23 +19,23 @@ var JiraAccounts = sequelize.define('jira_accounts', {
 });
 
 var TimeSheet = sequelize.define('time_sheet', {
-    task_id: {type: Sequelize.STRING, allowNull:false},
-    start_time:{ type: Sequelize.STRING, allowNull: false},
-    end_time: { type: Sequelize.STRING, allowNull: false}
+    task_id:      { type: Sequelize.STRING, allowNull:false},
+    start_time:   { type: Sequelize.STRING, allowNull: false},
+    end_time:     { type: Sequelize.STRING, allowNull: false}
 },
 {
-   timestamps : true,
+   timestamps : false,
    freezeTableName: true
 });
 
 var Tasks = sequelize.define('tasks', {
-    task_id: {type: Sequelize.INTEGER, autoIncrement:true, primaryKey:true},
-    task_label: {type: Sequelize.STRING, allowNuyll:false},
-    account_id:{ type: Sequelize.INTEGER, allowNull: false},
-    priority: { type: Sequelize.STRING, allowNull: true},
+    task_id:      { type: Sequelize.INTEGER, autoIncrement:true, primaryKey:true},
+    task_label:   { type: Sequelize.STRING, allowNuyll:false},
+    account_id:   { type: Sequelize.INTEGER, allowNull: false},
+    priority:     { type: Sequelize.STRING, allowNull: true},
     date_created: { type: Sequelize.DATE, allowNull: false},
-    due_date: { type: Sequelize.DATE, allowNull: true},
-    description: { type: Sequelize.STRING, allowNull: true}
+    due_date:     { type: Sequelize.DATE, allowNull: true},
+    description:  { type: Sequelize.STRING, allowNull: true}
 },
 {
    timestamps : true,
@@ -43,29 +43,35 @@ var Tasks = sequelize.define('tasks', {
 });
 
 var Notes = sequelize.define('notes',{
-    note_id: {type: Sequelize.INTEGER, autoIncrement:true, primaryKey:true},
-    task_id:{ type: Sequelize.STRING, allowNull: true},
-    description: { type: Sequelize.STRING, allowNull: false},
-    is_active:{ type: Sequelize.INTEGER, allowNull: false}
+    note_id:      { type: Sequelize.INTEGER, autoIncrement:true, primaryKey:true},
+    task_id:      { type: Sequelize.STRING, allowNull: true},
+    description:  { type: Sequelize.STRING, allowNull: false},
+    is_active:    { type: Sequelize.INTEGER, allowNull: false}
+},
+{
+   timestamps : true,
+   freezeTableName: true
 })
 
 var Users = sequelize.define('users', {
-	id: {type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
-  firstName: {type: Sequelize.STRING, allowNull:false},
-  givenName: { type: Sequelize.STRING, allowNull: false},
-  preferedName: { type: Sequelize.STRING, allowNull: false},
-  password: {type: Sequelize.STRING, allowNull: false},
-  emailAddress: {type: Sequelize.STRING, allowNull: false}
+	id:               { type : Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
+  first_name:       { type: Sequelize.STRING, allowNull:false},
+  given_name:       { type: Sequelize.STRING, allowNull: false},
+  user_name:        { type: Sequelize.STRING, allowNull: false},
+  password:         { type: Sequelize.STRING, allowNull: false},
+  is_admin:         { type: Sequelize.INTEGER, allowNull: false},
+  is_active:        { type: Sequelize.INTEGER, allowNull: false},
+  email_address:    { type: Sequelize.STRING, allowNull: false}
 },
 {
    timestamps : false,
    freezeTableName: true
 });
 
-models.JiraAccounts = JiraAccounts;
-models.TimeSheet = TimeSheet;
-models.Tasks = Tasks;
-models.Notes = Notes;
 models.Users = Users;
+models.Notes = Notes;
+models.Tasks = Tasks;
+models.TimeSheet = TimeSheet;
+models.JiraAccounts = JiraAccounts;
 
 module.exports = models;
