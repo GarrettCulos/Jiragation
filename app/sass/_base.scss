@@ -7,10 +7,15 @@
 	@include box-shadow(rgba(20,20,20,0.3) 0 0 5px);
 }
 
+.navigation-search{
+	width:calc(100% - 40px)	
+}
+.login-input{
+	width:100%; 
+}
 
 .login-input,
-.navigation-search{
-  	width:100%; 
+.navigation-search{  
   	line-height:1.4em; 
   	border:0; 
   	font-size:14px; 
@@ -40,7 +45,6 @@
 	background-color:$my_purple;
 	color:white;
 	font-weight:400;
-
 }
 
 

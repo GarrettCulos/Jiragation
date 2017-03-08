@@ -25,7 +25,7 @@ Users.getUserInformation = function(user_id, callback){
 	selectQuery +=" u.email_address as `user_email`, "
 	selectQuery +=" u.first_name as `first_name`, "
 	selectQuery +=" u.last_name as `last_name`, "
-	selectQuery +=" u.is_admin as `is_admin`, " 
+	selectQuery +=" u.is_admin as `is_admin` " 
 	selectQuery +=" FROM users u "
 	selectQuery +=" WHERE u.id="+user_id;
 
@@ -94,15 +94,10 @@ Users.add = function(user, callback) {
 		return callback(errors, null);
 	}
 
-	// Hash DCI number
-	try {
-		user.dci = this.hasPassowrd(user.dci);
-	} catch(err) {
-		warnings.push({message: 'No DCI number given.'});
-	}
 
 	// check email is unique
 	user.is_admin = 0;
+	user.is_active = 1;
 	user.join_date = new Date();
 
 	// Add user to database
@@ -176,6 +171,7 @@ Users.update = function(user, callback){
 
 	// check email is unique
 	user.is_admin = 0;
+	user.is_active = 0;
 
   	// Add user to database
   	if(user.email_address){

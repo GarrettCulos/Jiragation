@@ -37182,10 +37182,19 @@ md-tooltip.md-show {
   box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
 }
 
-/* line 11, ../sass/_base.scss */
+/* line 10, ../sass/_base.scss */
+.navigation-search {
+  width: calc(100% - 40px);
+}
+
+/* line 13, ../sass/_base.scss */
+.login-input {
+  width: 100%;
+}
+
+/* line 17, ../sass/_base.scss */
 .login-input,
 .navigation-search {
-  width: 100%;
   line-height: 1.4em;
   border: 0;
   font-size: 14px;
@@ -37195,7 +37204,7 @@ md-tooltip.md-show {
   transition: all ease-in-out 0.1s;
   color: white;
 }
-/* line 23, ../sass/_base.scss */
+/* line 28, ../sass/_base.scss */
 .login-input::-webkit-input-placeholder, .login-input::-moz-placeholder, .login-input:-ms-input-placeholder, .login-input:-moz-placeholder,
 .navigation-search::-webkit-input-placeholder,
 .navigation-search::-moz-placeholder,
@@ -37204,7 +37213,7 @@ md-tooltip.md-show {
   /* Firefox 18- */
   color: rgba(255, 255, 255, 0.8);
 }
-/* line 29, ../sass/_base.scss */
+/* line 34, ../sass/_base.scss */
 .login-input:focus,
 .navigation-search:focus {
   outline: none;
@@ -37214,24 +37223,25 @@ md-tooltip.md-show {
   padding: 10px 20px;
 }
 
-/* line 37, ../sass/_base.scss */
+/* line 42, ../sass/_base.scss */
 .login-block {
   padding: 20px;
+  border-radius: 5px;
   background-color: #52007e;
   color: white;
   font-weight: 400;
 }
 
-/* line 50, ../sass/_base.scss */
+/* line 55, ../sass/_base.scss */
 #logs md-icon {
   color: black;
 }
-/* line 53, ../sass/_base.scss */
+/* line 58, ../sass/_base.scss */
 #logs md-icon svg path {
   fill: rgba(0, 0, 0, 0.87059);
 }
 
-/* line 60, ../sass/_base.scss */
+/* line 65, ../sass/_base.scss */
 .md-default-theme .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator,
 .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator,
 .md-default-theme .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator,
@@ -37239,20 +37249,20 @@ md-tooltip.md-show {
   color: whitesmoke;
 }
 
-/* line 68, ../sass/_base.scss */
+/* line 73, ../sass/_base.scss */
 input.md-datepicker-input textarea,
 input.md-datepicker-input select {
   color: rgba(0, 0, 0, 0.87059);
 }
 
-/* line 73, ../sass/_base.scss */
+/* line 78, ../sass/_base.scss */
 .md-default-theme .md-calendar-date-selection-indicator:hover,
 .md-calendar-date-selection-indicator:hover {
   background-color: transparent;
   border: 1px solid #52007e;
 }
 
-/* line 80, ../sass/_base.scss */
+/* line 85, ../sass/_base.scss */
 md-toolbar.md-default-theme:not(.md-menu-toolbar),
 md-toolbar:not(.md-menu-toolbar),
 md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised),
@@ -37263,30 +37273,30 @@ md-checkbox:not([disabled]).md-primary.md-checked .md-icon:after {
   color: whitesmoke;
 }
 
-/* line 90, ../sass/_base.scss */
+/* line 95, ../sass/_base.scss */
 md-dialog .md-actions,
 md-dialog md-dialog-actions {
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
 }
 
-/* line 95, ../sass/_base.scss */
+/* line 100, ../sass/_base.scss */
 md-datepicker.md-default-theme,
 md-datepicker {
   background-color: transparent;
 }
 
-/* line 100, ../sass/_base.scss */
+/* line 105, ../sass/_base.scss */
 md-toolbar {
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
 }
 
-/* line 103, ../sass/_base.scss */
+/* line 108, ../sass/_base.scss */
 md-toolbar {
   min-height: 55px;
 }
-/* line 105, ../sass/_base.scss */
+/* line 110, ../sass/_base.scss */
 md-toolbar .md-toolbar-tools {
   height: 55px;
   max-height: 55px;

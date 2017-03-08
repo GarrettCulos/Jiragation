@@ -7,21 +7,23 @@ var Notes = function() {
 
 };
 
-Notes.getNotes = function(callback) {
+Notes.getNotes = function(req, callback) {
 	// require task id as parameter
 
 };
 
-Notes.getNotesByIds = function(callback) {
+Notes.getNotesByIds = function(req, callback) {
 	// require task id as parameter
 
 };
 
-Notes.addNote = function(note, callback) {
+Notes.addNote = function(req, callback) {
+	var note = req.body;
 	model.Notes.create({
 		task_id: note.task_id,
 		description: note.description,
-		is_active: 1
+		is_active: 1,
+		user_id: req.decoded.id	
 	}).then(function(results) {
 		callback(results);
 	}, function(err){
@@ -30,9 +32,8 @@ Notes.addNote = function(note, callback) {
 	});
 };
 
-Notes.editNote = function(callback) {
+Notes.editNote = function(req, callback) {
 	// require note id as parameter
-
 };
 
 module.exports = Notes;

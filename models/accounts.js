@@ -7,9 +7,16 @@ var Accounts = function() {
 
 };
 
-Accounts.getAccounts = function(callback) {
+Accounts.getAccounts = function(req, callback) {
 	// console.log('model - accout');
-	var queryString = "SELECT user_name,url,password,protocal,account_email FROM jira_accounts";
+	var queryString = "SELECT ";
+			queryString += " ja.user_name as user_name , ";
+			queryString += " ja.url as url,";
+			queryString += " ja.password as password, ";
+			queryString += " ja.protocal as protocal, ";
+			queryString += " ja.account_email as account_email ";
+			queryString += " FROM jira_accounts ja ";
+			queryString += " ja.user_id ="+req.decoded.id;
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){
@@ -21,8 +28,11 @@ Accounts.getAccounts = function(callback) {
   	});
 };
 
-Accounts.verifyUserAccount = function(account_email, callback) {
-	var queryString = "SELECT * FROM jira_accounts WHERE account_email = '"+account_email +"'";
+Accounts.verifyUserAccount = function(req, callback) {
+	var account_email = req.body;
+	var queryString = "SELECT * FROM jira_accounts ";
+			queryString += " WHERE account_email = '"+account_email +"'";
+			queryString += " AND user_id = "+req.decoded.id;
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
 	.then(function(results){
@@ -40,12 +50,15 @@ Accounts.verifyUserAccount = function(account_email, callback) {
 };
 
 // NEEDS TESTING
-Accounts.setAccount = function(account, callback) {
+Accounts.setAccount = function(req, callback) {
+	var account = req.body;
+
 	model.JiraAccounts.update(account, {
 		where: {
 			user_name:account.user_name,
-			url: account.url		
-		}
+			url: account.url,
+			user_id: req.decoded.id		
+		},
 	})
 	.then(function (rows) {
 		if(rows < 1){
@@ -54,7 +67,8 @@ Accounts.setAccount = function(account, callback) {
 				url: account.url,
 				account_email: account.account_email,
 				password: account.password,
-				protocal: account.protocal
+				protocal: account.protocal,
+				user_id: req.decoded.id	
 			}).then(function(table){
 				callback(null,table);
 			});
@@ -67,11 +81,13 @@ Accounts.setAccount = function(account, callback) {
 	});	
 };
 
-Accounts.removeAccount = function(account, callback) {
+Accounts.removeAccount = function(req, callback) {
+	var account = req.body
 	model.JiraAccounts.destroy({
 		where: {
 			user_name:account.user_name,
-			url: account.url		
+			url: account.url,
+			user_id: req.decoded.id			
 		}
 	})
 	.then(function (rows) {

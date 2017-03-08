@@ -4,16 +4,26 @@ var Users			= require('../models/users');
 var fs 				= require('fs');
 
 users.get('/get_user_info', function(req, res, next) { 
-	Users.getUser(function(result){
-		res.send(result);		
-	});
+	if(res.decoded){
+		Users.getUserInformation(req.decodec.id, function(result){
+			res.send(result);		
+		});	
+	}
+	else{
+		res.status(401).send('Unauthorized Request');
+	}
 });
 
 users.post('/update_user_info',function(req,res,next) {
-	var user_info = req.body;
-	Users.setUserInfo(user_info, function(result){
-		res.send(result);		
-	});
+	if(req.decoded){
+		Users.update(req, function(result){
+			res.send(result);		
+		});
+	}
+	else{
+		res.status(401).send('Unauthorized Request');
+	}
+		
 });
 
 module.exports.users = users;

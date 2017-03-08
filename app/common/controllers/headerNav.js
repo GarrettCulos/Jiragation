@@ -2,7 +2,7 @@
 
 angular.module('Jiragation.headerNav', ['ngRoute','timer'])
 
-.controller('HeaderController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+.controller('HeaderController', ['$scope', '$http', '$location', 'Authenticate', function($scope, $http, $location, Authenticate) {
 	$scope.isActive = function(page){
 		if( page == $location.path() ){
 			return 'active';
@@ -24,6 +24,13 @@ angular.module('Jiragation.headerNav', ['ngRoute','timer'])
 			icon: 'img/svg/ic_update_black_24px.svg',
 			link: '/logs'
 		}];
+
+	$scope.logout = function(){
+    Authenticate.remove(function(res){
+      $rootScope.$broadcast('authLogout',{});
+      $location.path('/');
+    });    
+	}
 
 }])
 

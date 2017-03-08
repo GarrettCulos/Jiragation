@@ -1,10 +1,7 @@
 <headernav ng-controller="HeaderController"></headernav>
-<md-content layout="column" layout-align="center center" flex layout-fill ng-controller="userController">
-	<div class="login-block md-whiteframe-8dp" layout="column" flex-gt-md="50" flex="80" layout-align="center center">
+<md-content layout="column" layout-align="center center" flex ng-controller="userController">
+	<div class="login-block md-whiteframe-8dp" layout="row" flex-gt-md="50" flex="80" layout-align="start center">
 		<form ng-submit="login(login_form, user)" name="login_form" flex>
-			<div flex="100" layout="row" layout-align="start center" flex>
-				<p>Login</p>
-			</div>
 			<div flex="100" layout="row" layout-align="start center" flex style="min-height:60px;">
 				<input type="string" name="user_name" placeholder="user name" ng-model="user.user_name" required class="login-input">
 			</div>
@@ -24,4 +21,5 @@
 			</div>
 		</form>
 	</div>
+			
 </md-content>

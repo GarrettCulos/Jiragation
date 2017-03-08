@@ -4,25 +4,36 @@ var Accounts 			= require('../models/accounts');
 var fs 					= require('fs');
 
 logs.get('/fetch_accounts', function(req, res, next) { 
-	Accounts.getAccounts(function(result){
-		// console.log('routes - accout');
-		res.send(result);		
-	});
+	if(req.decoded !=null){
+		Accounts.getAccounts(req, function(result){
+			res.send(result);		
+		});
+	}
+	else{
+		res.status(401).send('You do not have the proper authorization');
+	}
 });
 
 logs.post('/add_account',function(req,res,next) {
-	var account = req.body;
-	Accounts.setAccount(account, function(result){
-		// console.log('Account Set');
-		res.send(result);		
-	});
+	if(req.decoded !=null){
+		Accounts.setAccount(req, function(result){
+			res.send(result);		
+		});
+	}
+	else{
+		res.status(401).send('You do not have the proper authorization');
+	}
 });
 
 logs.delete('/remove_account',function(req,res,next) {
-	var account = req.body;
-	Accounts.removeAccount(account, function(result){
-		// console.log('Account Set');
-		res.send(result);		
-	});
+	if(req.decoded !=null){
+		Accounts.removeAccount(req, function(result){
+			res.send(result);		
+		});
+	}
+	else{
+		res.status(401).send('You do not have the proper authorization');
+	}
 });
+
 module.exports.logs = logs;

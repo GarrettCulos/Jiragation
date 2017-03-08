@@ -1,18 +1,18 @@
 <!-- toolbar -->
 <md-toolbar class="md-primary">
 	<div class="md-toolbar-tools" layout="row" layout-align="center center">
-		<div>
-			JIRAGATION
-		</div>
 		<div class="navigation-item" ng-if="isActive('/task-list')">
 			<md-button ng-click="toggleLeft()" class="md-icon-button md-primary">
 		      <md-icon md-svg-icon="img/svg/menu.svg"></md-icon>
 			</md-button>
 		</div>
+		<div>
+			JIRAGATION
+		</div>
 
-    	<md-button ng-if="isActive('/task-list')" ng-click="showSettings($event)" class="md-icon-button md-primary" class="navigation-item" style="min-width:125px;">
+    	<md-button ng-if="isActive('/task-list')" ng-click="showSettings($event)" class="md-icon-button md-primary" class="navigation-item">
       		<md-icon md-svg-icon="img/svg/settings.svg"></md-icon>
-	    	<div class="small-text">Settings</div>
+	    	<!-- <div class="small-text">Settings</div> -->
     	</md-button>
 
 		<div flex ng-if="isActive('/task-list')">
@@ -22,17 +22,21 @@
 
 		<!-- home -->
 		
-	    <md-button aria-label="Get Tasks" class="md-icon-button" ng-click="getJiraTasks()" ng-if="isActive('/task-list')" class="navigation-item" style="min-width:150px;">
+	    <md-button aria-label="Get Tasks" class="md-icon-button" ng-click="getJiraTasks()" ng-if="isActive('/task-list')" class="navigation-item">
 	    	<md-icon md-svg-icon="img/svg/refresh.svg" class=" {{!fetching_tasks ? '': 'spinner' }}"></md-icon>
-			<div class="small-text">Refresh</div>
+			<!-- <div class="small-text">Refresh</div> -->
 	    </md-button>
 
 		<!-- home -->
 		
-	    <md-button ng-click="toggleRight()" class="md-icon-button md-primary" ng-if="isActive('/task-list')" class="navigation-item" style="min-width:150px;">
-	    	<md-icon md-svg-icon="img/svg/view_list.svg"></md-icon>
+	    <md-button ng-click="toggleRight()" class="md-icon-button md-primary" ng-if="isActive('/task-list')" class="navigation-item" style="width:65px">
+	    	<!-- <md-icon md-svg-icon="img/svg/view_list.svg"></md-icon> -->
 	    	<div class="small-text">Filter</div>
 	    </md-button>
+
+	    <md-button	ng-click="logout()" class="md-icon-button md-primary" ng-if="isActive('/task-list')" class="navigation-item" style="width:75px">
+	  	logout
+	  	</md-button>
 	</div>
 </md-toolbar>
 
