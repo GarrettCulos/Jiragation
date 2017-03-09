@@ -2,19 +2,11 @@
 
 angular
 .module('Jiragation.headerNav', ['ngRoute','timer'])
-.controller('HeaderController', ['$scope', '$http', '$location', 'Authenticate', function($scope, $http, $location, Authenticate) {
-	$scope.isActive = function(page){
-		if( page == $location.path() ){
-			return 'active';
-		}
-		return '';
-	};
+.controller('HeaderController', ['$scope', '$http', '$location', 'Authenticate', '$rootScope', function($scope, $http, $location, Authenticate, $rootScope) {
+	$scope.inputSerachText ='';
 
-	$scope.goTo = function(page){
-		$location.path(page)
-	};
-
-	$scope.menu=[{
+	$scope.menu=[
+		{
 			title: 'Home',
 			icon: 'img/svg/ic_home_black_24px.svg',
 			link: '/'
@@ -25,12 +17,29 @@ angular
 			link: '/logs'
 		}];
 
+	$scope.isActive = function(page){
+		if( page == $location.path() ){
+			return 'active';
+		}
+		return '';
+	};
+
+
+	$scope.goTo = function(page){
+		$location.path(page)
+	};
+
 	$scope.logout = function(){
     Authenticate.remove(function(res){
       $rootScope.$broadcast('authLogout',{});
       $location.path('/');
     });    
 	}
+	$scope.changeFilterText = function(searchValue){
+		// console.log(searchValue)
+		$rootScope.$broadcast('searchTextChange', searchValue);
+	}
+	
 
 }]).directive('headernav', function(){
   return{

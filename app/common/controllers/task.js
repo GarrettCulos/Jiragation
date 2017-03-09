@@ -2,11 +2,11 @@
 
 angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 
-.controller('taskController', ['$scope', '$http', '$currentUser', '$q', '$myAccounts', function($scope, $http, $currentUser, $q , $myAccounts) {
+.controller('taskController', ['$scope', '$http', '$currentUser', '$q', '$myAccounts', '$rootScope', function($scope, $http, $currentUser, $q , $myAccounts, $rootScope) {
 
 	$scope.isActive=false;
 	$scope.timerStarted=false;
-
+	$scope.taskFilterText = ''
 	function reset_form(comment_form){
 		if(comment_form){
 			comment_form.$setPristine();
@@ -79,6 +79,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 		});
 	}
 
+
 	$scope.taskLink = function(){	
 	}
 
@@ -118,7 +119,6 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 			$scope.getTaskTime();
 		}
 	}
-
 	// Toggle active task		
 	$scope.updateRightView = function(acct) {
 	
@@ -126,9 +126,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 		$scope.currentUser = $currentUser.user_accounts;
 		
 		get_comments(acct)
-
 	}
-
 	// REQUIRES ROBUST WAY TO OBTAIN TASK SPECIFIC JITA ACCOUNT 
 	$scope.addComment = function(task, data, form) {
 		$myAccounts.then(function(accountService){
@@ -183,6 +181,10 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 		});
 	});
 	
+	$rootScope.$on('searchTextChange', function(event, newvalue){
+		console.log(newvalue);
+		$scope.taskFilterText = newvalue;
+	});
 	$scope.getTaskTime();
 	$scope.add_comment={};
 	

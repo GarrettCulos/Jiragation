@@ -16,7 +16,7 @@
     	</md-button>
 
 		<div flex ng-if="isActive('/task-list')">
-			<input class="navigation-search" placeholder="Search" type="search" name="serach_txt" ng-model="search.txt">
+			<input class="navigation-search" placeholder="Search" type="search" name="serach_txt" ng-model="inputSerachText" ng-change="changeFilterText(inputSerachText)">
 		</div>
 		
 
