@@ -233,6 +233,24 @@ angular.module('Jiragation', [
                 return callback(response);
             });
         },
+        getUserInformation:function(callback){
+            var token = $window.localStorage['jwtToken'];
+            if(!token){
+                return callback(null);
+            }
+
+            $http({
+                method:'GET',
+                url:'/users/getUserInformation'
+            }).then(function(response){
+                if(response.status >= 400){
+                    console.log('session expired');
+                    $location.path('/login');   
+                    return callback(response);
+                } 
+                return callback(response);
+            });
+        },
         getUserName:function(callback){
             var token = $window.localStorage['jwtToken'];
             if(!token){
@@ -315,6 +333,38 @@ angular.module('Jiragation', [
     }
 
     return $currentUser;
+}]).factory('$myAccounts', ['$http', '$q', function($http, $q) {
+
+    return $http({
+        method:'GET',
+        url: '/account/fetch_accounts',
+        headers: {'Content-Type': 'application/json'}
+    }).then(function(response){
+    
+        var $accounts ={};
+        
+        $accounts.user_accounts = response.data;
+        $accounts.user_accounts_email  = [];
+        
+        response.data.forEach(function(account,key){
+            $accounts.user_accounts_email.push(account.account_email);
+        });
+
+        $accounts.getUrlId = function(url){
+
+            var formatedURL = url.split('://')[1]
+            var return_val = null;
+
+            response.data.forEach(function(account,key){
+                if( account.url == formatedURL.split('/')[0]){
+                    return_val = key;
+                }
+            });
+            return return_val;
+        }
+
+        return $accounts;
+    });
 }]).controller('AppCtrl', function ($scope, $timeout, $http, $mdSidenav, $log, $mdDialog, $mdMedia) {
   $scope.toggleLeft = buildToggler('left');
   $scope.toggleRight = buildToggler('right');
@@ -416,6 +466,7 @@ angular.module('Jiragation', [
         $mdDialog.hide(answer);
       };
     }
+    
 }).controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
   $scope.close = function () {
     // Component lookup should always be available since we are not using `ng-if`
@@ -432,36 +483,13 @@ angular.module('Jiragation', [
         $log.debug("close LEFT is done");
       });
   };
-}).factory('$myAccounts', ['$http', '$q', function($http, $q) {
+}).controller('ToastCtrl', function($location, $scope, $mdToast, $mdDialog, params) {
+    $scope.closeToast = function() {
+        $mdToast.hide().then(function(){});
+    };
+    $scope.goTo =function(p){
+        $location.path(p);
+    }
 
-    return $http({
-        method:'GET',
-        url: '/account/fetch_accounts',
-        headers: {'Content-Type': 'application/json'}
-    }).then(function(response){
-    
-        var $accounts ={};
-        
-        $accounts.user_accounts = response.data;
-        $accounts.user_accounts_email  = [];
-        
-        response.data.forEach(function(account,key){
-            $accounts.user_accounts_email.push(account.account_email);
-        });
-
-        $accounts.getUrlId = function(url){
-
-            var formatedURL = url.split('://')[1]
-            var return_val = null;
-
-            response.data.forEach(function(account,key){
-                if( account.url == formatedURL.split('/')[0]){
-                    return_val = key;
-                }
-            });
-            return return_val;
-        }
-
-        return $accounts;
-    });
-}]);
+    $scope.params=params;
+});

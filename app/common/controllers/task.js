@@ -177,7 +177,8 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 		}).then(function successCallback(res){
 			$scope.usrAccountData = res.data;
 
-		}, function errorCallback(res){
+		}, function errorCallback(err){
+			console.log(err)
 			console.log('Warning Will Robinson');
 		});
 	});

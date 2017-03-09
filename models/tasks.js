@@ -9,13 +9,12 @@ var Tasks = function() {
 
 Tasks.getTasks = function(req, callback) {
 	
-	var queryString = "SELECT * FROM tasks WHERE user_id="+req.decoded.id;
+	var queryString = "SELECT * FROM tasks t WHERE t.user_id="+req.decoded.id;
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		callback(results);
 		// console.log(results);
 	}).catch(function(err){
-		console.log(err);
 		throw err;
 	});
 
@@ -24,14 +23,13 @@ Tasks.getTasks = function(req, callback) {
 Tasks.getTaskById = function(req, callback) {
 	// Requires task id
 	console.log(req);
-	var queryString = "SELECT * FROM tasks WHERE tasks.task_id ="+req.body.task_id;
-			queryString += " AND user_id="+req.decoded.id
+	var queryString = "SELECT * FROM tasks t WHERE t.task_id ="+req.body.task_id;
+		queryString += " AND t.user_id="+req.decoded.id
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		callback(results);
 		// console.log(results);
 	}).catch(function(err){
-		console.log(err);
 		throw err;
 	});	
 };
@@ -54,7 +52,7 @@ Tasks.getTasksByDate = function(req, callback) {
 };
 
 Tasks.addTasks = function(req, callback) {
-	model.Tasks.create({
+	model.tasks.create({
 		task_id: req.body.task_id,
 		task_label: req.body.task_label,
 		account_id: req.body.account_id,

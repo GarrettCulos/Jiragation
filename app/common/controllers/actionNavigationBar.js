@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('Jiragation.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
-
+angular
+.module('Jiragation.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
 .controller('actionNavigationBar', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
       
     $scope.hidden = false;
@@ -32,8 +32,7 @@ angular.module('Jiragation.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
         targetEvent: $event
       });
     }
-}])
-.controller('updateTask', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
+}]).controller('updateTask', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
  
   // Setup some handlers
   $scope.cancel = function() {
@@ -65,10 +64,8 @@ angular.module('Jiragation.actionBar', ['ngRoute','ngMaterial', 'ngMessages'])
 
   }, function errorCallback(response){
     console.log(response);
-  });
-      
-}])
-.controller('noteController', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
+  });     
+}]).controller('noteController', ['$scope', '$http', '$location', '$mdDialog', '$timeout', function($scope, $http, $location, $mdDialog, $timeout) {
     
     $scope.cancel = function() {
       $mdDialog.cancel();

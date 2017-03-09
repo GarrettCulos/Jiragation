@@ -120,7 +120,7 @@ jira.get('/jira_accounts', function(req, res, next) {
 	
 	var user_accounts = [];
 
-	Accounts.getAccounts(function(accts){
+	Accounts.getAccounts(req, function(accts){
 		// console.log('routes - accout');
 		var tasks_list = [];
 		var loop_count = 0;

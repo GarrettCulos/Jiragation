@@ -16,7 +16,7 @@ accounts.get('/fetch_accounts', function(req, res, next) {
 });
 
 accounts.get('/is_current_user', function(req, res, next) { 
-	if(req.decoded){
+	if(req.decoded != null){
 		Accounts.verifyUserAccount(req, function(result){
 			// console.log('routes - accout');
 			res.send(result);		
@@ -29,7 +29,7 @@ accounts.get('/is_current_user', function(req, res, next) {
 
 
 accounts.post('/add_account',function(req,res,next) {
-	if(req.decoded){
+	if(req.decoded != null){
 		Accounts.setAccount(req, function(result){
 			// console.log('Account Set');
 			res.send(result);		
@@ -40,11 +40,10 @@ accounts.post('/add_account',function(req,res,next) {
 	}
 });
 
-accounts.post('/remove_account',function(req,res,next) {
-	if(req.decoded){
+accounts.delete('/remove_account',function(req,res,next) {
+	if(req.decoded != null){
 		Accounts.removeAccount(req, function(result){
-			// console.log('Account Set');
-			res.send(result);		
+			res.sendStatus(result);		
 		});
 	}
 	else{

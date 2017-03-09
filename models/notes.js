@@ -19,7 +19,7 @@ Notes.getNotesByIds = function(req, callback) {
 
 Notes.addNote = function(req, callback) {
 	var note = req.body;
-	model.Notes.create({
+	model.notes.create({
 		task_id: note.task_id,
 		description: note.description,
 		is_active: 1,

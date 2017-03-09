@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('Jiragation.taskList', ['ngRoute','timer','appFilters'])
-
+angular
+.module('Jiragation.taskList', ['ngRoute','timer','appFilters'])
 .controller('accountsController', ['$scope', '$http', '$q', '$myAccounts', '$mdMedia', '$mdDialog', function($scope, $http, $q, $myAccounts, $mdMedia, $mdDialog) {
 
 	// ---------------------------
@@ -210,9 +210,7 @@ angular.module('Jiragation.taskList', ['ngRoute','timer','appFilters'])
 	};
 
 	$scope.getJiraTasks();
-}])
-
-.directive('taskBar', function(){
+}]).directive('taskBar', function(){
 	return {
 	    link: function(scope, element, attr) {
 	    	var scroll = angular.element('#main');

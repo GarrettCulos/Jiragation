@@ -14,6 +14,20 @@
 	width:100%; 
 }
 
+.hover-blur{
+	-webkit-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -o-filter: blur(4px);
+    -ms-filter: blur(4px);
+    filter: blur(4px);
+    &:hover{
+    	-webkit-filter: blur(0px);
+	    -moz-filter: blur(0px);
+	    -o-filter: blur(0px);
+	    -ms-filter: blur(0px);
+	    filter: blur(0px);
+    }
+}
 .login-input,
 .navigation-search{  
   	line-height:1.4em; 

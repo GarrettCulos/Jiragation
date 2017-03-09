@@ -4,7 +4,7 @@ var Users			= require('../models/users');
 var fs 				= require('fs');
 
 users.get('/get_user_info', function(req, res, next) { 
-	if(res.decoded){
+	if(res.decoded!=null){
 		Users.getUserInformation(req.decodec.id, function(result){
 			res.send(result);		
 		});	
@@ -13,17 +13,36 @@ users.get('/get_user_info', function(req, res, next) {
 		res.status(401).send('Unauthorized Request');
 	}
 });
+users.post('/update', function(req,res,next) {
+	if(req.decoded != null){
+    	Users.update(req.body.user,function(error, response){
+      		if(error){
+        		return res.status(400).send(error);
+      		}
+      		else{
+		        req.body.password = req.body.passwordConfirm
+		        delete req.body.passwordConfirm
+		        res.send(req.body);
+      		}
+    	});
+  	}
+  	else{
+		res.status(401).send('Unauthorized Request');
+	}
+}); 
 
-users.post('/update_user_info',function(req,res,next) {
-	if(req.decoded){
-		Users.update(req, function(result){
-			res.send(result);		
+users.get('/getUserInformation', function(req,res,next) {
+	if(req.decoded!=null){
+		Users.getUserInformation(req.decoded.id, function(err, result){
+			if(err){
+				return res.status(400).send(err)
+			}
+			res.send(result);
 		});
 	}
 	else{
 		res.status(401).send('Unauthorized Request');
 	}
-		
 });
 
 module.exports.users = users;

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('Jiragation.headerNav', ['ngRoute','timer'])
-
+angular
+.module('Jiragation.headerNav', ['ngRoute','timer'])
 .controller('HeaderController', ['$scope', '$http', '$location', 'Authenticate', function($scope, $http, $location, Authenticate) {
 	$scope.isActive = function(page){
 		if( page == $location.path() ){
@@ -32,9 +32,7 @@ angular.module('Jiragation.headerNav', ['ngRoute','timer'])
     });    
 	}
 
-}])
-
-.directive('headernav', function(){
+}]).directive('headernav', function(){
   return{
     templateUrl: 'common/headerNav.html'
   }

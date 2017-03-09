@@ -23,7 +23,6 @@ module.exports = function(grunt) {
         },
         exclude: [
           'bootstrap',
-          'grulp',
           'angular-loader',
           'angular-mocks',
           'bootstrap-sass',
@@ -36,7 +35,7 @@ module.exports = function(grunt) {
           'viscompass'
         ],
         mainFiles: {
-          'angular':'angular.js',
+          'angular':'angular.min.js',
           'angular-animate':'angular-animate.min.js',
           'angular-aria':'angular-aria.min.js',
           'angular-base64':'angular-base64.js',

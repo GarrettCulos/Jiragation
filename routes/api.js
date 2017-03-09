@@ -51,19 +51,6 @@ api.post('/authenticate', function(req, res) {
   });
 });
 
-api.post('/udpateUser',function(req, res, next){
-  User.update(req.body,function(error, response){
-    console.log(error);
-    if(error){
-      res.status(400).send(error);
-    }else{
-      req.body.password = req.body.passwordConfirm
-      delete req.body.passwordConfirm
-      res.send(req.body);
-    }
-  });
-});
-
 api.post('/addUser',function(req, res, next){
   User.add(req.body,function(error, response){
     console.log(error);

@@ -28,7 +28,7 @@ Users.getUserInformation = function(user_id, callback){
 	selectQuery +=" u.is_admin as `is_admin` " 
 	selectQuery +=" FROM users u "
 	selectQuery +=" WHERE u.id="+user_id;
-
+	
 	sequelize.query( selectQuery, {type: Sequelize.QueryTypes.select}).then(function(results){
 		callback(null, results[0][0]);
 	}, function(err){
