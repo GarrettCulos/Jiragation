@@ -37776,39 +37776,52 @@ svg:hover path {
   font-weight: 700;
   text-align: center;
 }
-/* line 172, ../sass/_task_list.scss */
+/* line 170, ../sass/_task_list.scss */
+.main-content .task-date-title:focus {
+  outline: none;
+}
+/* line 174, ../sass/_task_list.scss */
+.main-content .task-date-title label {
+  padding-right: 20px;
+}
+/* line 177, ../sass/_task_list.scss */
+.main-content .task-date-title label:after {
+  background-image: url("./img/down-arrow.png");
+  background-size: cover;
+  background-repeat: none;
+  width: 20px;
+}
+/* line 184, ../sass/_task_list.scss */
+.main-content .task-date-title.reverse label:after {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+/* line 194, ../sass/_task_list.scss */
 .main-content img.task-priority {
   line-height: 1.5em;
 }
-/* line 175, ../sass/_task_list.scss */
+/* line 197, ../sass/_task_list.scss */
 .main-content .task-summary-container {
   overflow: hidden;
 }
-/* line 177, ../sass/_task_list.scss */
+/* line 199, ../sass/_task_list.scss */
 .main-content .task-summary-container .task-summary {
   display: inline-block;
   font-weight: 600;
   white-space: nowrap;
   /*max-width:450px;*/
 }
-/* line 186, ../sass/_task_list.scss */
-.main-content .task-title-date {
-  padding-right: 20px;
-}
-/* line 188, ../sass/_task_list.scss */
-.main-content .task-title-date:after {
-  background-image: url("./img/down-arrow.png");
-  background-size: cover;
-  width: 20px;
-}
 
-/* line 196, ../sass/_task_list.scss */
+/* line 208, ../sass/_task_list.scss */
 .message-id,
 .message-body {
   display: inline-block;
 }
 
-/* line 200, ../sass/_task_list.scss */
+/* line 212, ../sass/_task_list.scss */
 pre {
   white-space: pre-wrap;
   /* CSS3 browsers  */
@@ -37822,7 +37835,7 @@ pre {
   width: 100%;
 }
 
-/* line 208, ../sass/_task_list.scss */
+/* line 220, ../sass/_task_list.scss */
 pre.message-body {
   white-space: pre-wrap;
   /* CSS3 browsers  */
@@ -37838,19 +37851,19 @@ pre.message-body {
   border: 0px solid transparent;
   border-radius: 5px;
 }
-/* line 219, ../sass/_task_list.scss */
+/* line 231, ../sass/_task_list.scss */
 pre.message-body.right {
   border-top-right-radius: 0;
   color: white;
   background-color: rgba(82, 0, 126, 0.9);
 }
-/* line 224, ../sass/_task_list.scss */
+/* line 236, ../sass/_task_list.scss */
 pre.message-body.left {
   background-color: white;
   border-top-left-radius: 0;
 }
 
-/* line 232, ../sass/_task_list.scss */
+/* line 244, ../sass/_task_list.scss */
 .message-id img {
   margin: 14px;
   max-width: 35px;
@@ -37859,15 +37872,15 @@ pre.message-body.left {
   border-color: transparent;
   background-color: transparent;
 }
-/* line 240, ../sass/_task_list.scss */
+/* line 252, ../sass/_task_list.scss */
 .message-id.right {
   text-align: left;
 }
-/* line 241, ../sass/_task_list.scss */
+/* line 253, ../sass/_task_list.scss */
 .message-id.right img {
   margin-left: 0;
 }
-/* line 245, ../sass/_task_list.scss */
+/* line 257, ../sass/_task_list.scss */
 .message-id.right .triangle {
   float: left;
   width: 0;
@@ -37876,15 +37889,15 @@ pre.message-body.left {
   border-left: 7px solid rgba(82, 0, 126, 0.9);
   border-top: 7px solid rgba(82, 0, 126, 0.9);
 }
-/* line 254, ../sass/_task_list.scss */
+/* line 266, ../sass/_task_list.scss */
 .message-id.left {
   text-align: right;
 }
-/* line 256, ../sass/_task_list.scss */
+/* line 268, ../sass/_task_list.scss */
 .message-id.left img {
   margin-right: 0;
 }
-/* line 259, ../sass/_task_list.scss */
+/* line 271, ../sass/_task_list.scss */
 .message-id.left .triangle {
   float: right;
   width: 0;
@@ -37894,12 +37907,12 @@ pre.message-body.left {
   border-top: 7px solid white;
 }
 
-/* line 270, ../sass/_task_list.scss */
+/* line 282, ../sass/_task_list.scss */
 .my-message {
   margin-bottom: 10px;
 }
 
-/* line 274, ../sass/_task_list.scss */
+/* line 286, ../sass/_task_list.scss */
 .sticky {
   position: fixed;
   left: 16px;
@@ -37907,7 +37920,7 @@ pre.message-body.left {
   z-index: 2;
 }
 
-/* line 281, ../sass/_task_list.scss */
+/* line 293, ../sass/_task_list.scss */
 .nonvisible-banner {
   margin: 40px;
   text-align: center;
@@ -37915,7 +37928,7 @@ pre.message-body.left {
   border-bottom: 1px solid black;
 }
 
-/* line 288, ../sass/_task_list.scss */
+/* line 300, ../sass/_task_list.scss */
 .circle {
   background-color: #52007e;
   color: white;
@@ -37925,7 +37938,7 @@ pre.message-body.left {
   border: 1px solid transparent;
 }
 
-/* line 297, ../sass/_task_list.scss */
+/* line 309, ../sass/_task_list.scss */
 textarea.task-add-comment {
   min-height: 60px;
   border-radius: 2px;

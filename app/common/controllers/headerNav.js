@@ -35,8 +35,8 @@ angular
       $location.path('/');
     });    
 	}
+	
 	$scope.changeFilterText = function(searchValue){
-		// console.log(searchValue)
 		$rootScope.$broadcast('searchTextChange', searchValue);
 	}
 	

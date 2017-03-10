@@ -123,7 +123,6 @@ angular.module('Jiragation', [
        .backgroundPalette('customBackground')
 }).run(['$rootScope', '$http', '$location', 'Authenticate',  function($rootScope, $http, $location, Authenticate) {
   $rootScope.user = {};
-  $rootScope.search_text = ''
   // set login state
   Authenticate.check(function(res){
     $rootScope.isLoggedIn = res;

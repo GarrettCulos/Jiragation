@@ -25,7 +25,7 @@
 				<label>Time</label>
 			</div>
 
-			<div class="center" flex>
+			<div class="center" flex-xs="15" flex>
 				<label>Priority</label>
 			</div>
 
@@ -62,7 +62,7 @@
 						<timer class="timer" autostart="false">{{hhours}}.{{mminutes}}.{{sseconds}}</timer> <!-- ng-attr-start-time="timerStart" -->
 					</div>
 
-					<div class="center" flex>
+					<div class="center" flex-xs="15" flex>
 						<img class="task-priority" src="{{ task.fields.priority | priorityF }}">
 					</div>
 
@@ -87,7 +87,7 @@
 
 				<div ng-hide='!isActive' class="task-body animate-show" style="z-index:1">
 			  	<div layout="row" layout-padding layout-align="end center">
-			  		<md-button href="{{ taskUrl(task.key, task.self) }}" target="_blank"  class="md-primary" flex-gt-xs="30" flex-gt-sm="20" > 
+			  		<md-button href="{{ taskUrl(task.key, task.self) }}" target="_blank"  class="md-primary" flex-gt-xs="30" flex-gt-sm="20" flex> 
 			  		 	To Task
 			  		</md-button>
 			  	</div>	

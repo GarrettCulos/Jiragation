@@ -181,10 +181,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 		});
 	});
 	
-	$rootScope.$on('searchTextChange', function(event, newvalue){
-		console.log(newvalue);
-		$scope.taskFilterText = newvalue;
-	});
+
 	$scope.getTaskTime();
 	$scope.add_comment={};
 	
