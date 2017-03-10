@@ -1,0 +1,25 @@
+<headernav ng-controller="HeaderController"></headernav>
+<md-content layout="column" layout-align="center center" flex ng-controller="userController">
+	<div class="login-block md-whiteframe-8dp" layout="row" flex-gt-md="50" flex="80" layout-align="start center">
+		<form ng-submit="login(login_form, user)" name="login_form" flex>
+			<div flex="100" layout="row" layout-align="start center" flex style="min-height:60px;">
+				<input type="string" name="user_name" placeholder="user name" ng-model="user.user_name" required class="login-input">
+			</div>
+			<div flex="100" layout="row" layout-align="start center" flex style="min-height:60px;">
+				<input type="password" name="user_password" placeholder="password" ng-model="user.password" class="login-input">
+			</div>
+		    <div ng-if="message" style="background:rgba(250,0,0,0.4); margin-left:-20px; margin-right:-20px; padding:5px 20px;">
+		    	{{message}}
+		    </div>
+			<div flex="100" layout="row" layout-align="start center" flex style="min-height:60px;">
+				<md-button class="md-accent md-raised" type="submit" flex>
+					<div>login</div>
+				</md-button>
+			</div>
+			<div flex="100" layout="row" layout-align="start center" flex style="min-height:60px;">
+				<md-button class="md-accent md-raised" ng-click="goTo('register')" flex style="max-height:80px;">register</md-button>
+			</div>
+		</form>
+	</div>
+			
+</md-content>

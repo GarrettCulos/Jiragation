@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('myApp.task', ['ngRoute','timer','appFilters'])
+angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 
-.controller('taskController', ['$scope', '$http', '$currentUser', '$q', '$myAccounts', function($scope, $http, $currentUser, $q , $myAccounts) {
+.controller('taskController', ['$scope', '$http', '$currentUser', '$q', '$myAccounts', '$rootScope', function($scope, $http, $currentUser, $q , $myAccounts, $rootScope) {
 
 	$scope.isActive=false;
 	$scope.timerStarted=false;
-
+	$scope.taskFilterText = ''
 	function reset_form(comment_form){
 		if(comment_form){
 			comment_form.$setPristine();
@@ -79,6 +79,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		});
 	}
 
+
 	$scope.taskLink = function(){	
 	}
 
@@ -118,7 +119,6 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			$scope.getTaskTime();
 		}
 	}
-
 	// Toggle active task		
 	$scope.updateRightView = function(acct) {
 	
@@ -126,9 +126,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		$scope.currentUser = $currentUser.user_accounts;
 		
 		get_comments(acct)
-
 	}
-
 	// REQUIRES ROBUST WAY TO OBTAIN TASK SPECIFIC JITA ACCOUNT 
 	$scope.addComment = function(task, data, form) {
 		$myAccounts.then(function(accountService){
@@ -141,6 +139,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			}
 
 			$http({
+				rejectUnauthorized: false,
 				method: 'GET',
 				url: '/pull_jiras/add_comments',
 				params: data_load
@@ -176,11 +175,13 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		}).then(function successCallback(res){
 			$scope.usrAccountData = res.data;
 
-		}, function errorCallback(res){
+		}, function errorCallback(err){
+			console.log(err)
 			console.log('Warning Will Robinson');
 		});
 	});
 	
+
 	$scope.getTaskTime();
 	$scope.add_comment={};
 	

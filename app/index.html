@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html lang="en" ng-app="Jiragation" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="Jiragation" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="Jiragation" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="Jiragation" class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,8 +11,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/style.min.css">
   <link rel="shortcut icon" type="image/png" href="./img/favicon.png"/>
+  <base href="/">
   <!-- <link href="/img/favicon.ico" rel="icon" type="image/x-icon" /> -->
-  <script src="../bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body ng-controller="AppCtrl">
   
@@ -22,28 +22,16 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-  <script src="../bower_components/angular/angular.js"></script>
-  <script src="../bower_components/angular-route/angular-route.min.js"></script>
-  <script src="../bower_components/angular-moment/angular-moment.min.js"></script>
-  <script src="../bower_components/angular-aria/angular-aria.min.js"></script>
-  <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
-  <script src="../bower_components/angular-material/angular-material.min.js"></script>
-  <script src="../bower_components/angular-messages/angular-messages.min.js"></script>
-  <script src="../bower_components/moment/moment.js"></script>
-  <script src="../bower_components/momentjs/moment.js"></script>
-  <script src="../bower_components/angular-timer/app/js/_timer.js"></script>
-  <script src="../bower_components/angular-timer/app/js/i18nService.js"></script>
-  <script src="../bower_components/angular-timer/app/js/progressBarService.js"></script>
-  <script src="../bower_components/angular-base64/angular-base64.js"></script>
-  <script src="../bower_components/humanize-duration/humanize-duration.js"></script>
-  <script src="app.js"></script>
+  <script src="build/_lib.js"></script>
   <script src="js/main.js"></script>
+  <script src="app.js"></script>
   <script src="common/controllers/logs.js"></script>
   <script src="common/controllers/headerNav.js"></script>
   <script src="common/controllers/accounts.js"></script>
   <script src="common/controllers/task.js"></script>
   <script src="common/controllers/taskList.js"></script>
   <script src="common/controllers/user.js"></script>
+  <script src="common/controllers/actionNavigationBar.js"></script>
   <script src="common/task-list/filters.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>

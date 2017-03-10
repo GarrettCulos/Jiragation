@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
-
-.controller('accountsController', ['$scope', '$http', '$q', '$myAccounts', '$mdMedia', '$mdDialog', function($scope, $http, $q, $myAccounts, $mdMedia, $mdDialog) {
+angular
+.module('Jiragation.taskList', ['ngRoute','timer','appFilters'])
+.controller('accountsController', ['$scope', '$http', '$q', '$myAccounts', '$mdMedia', '$mdDialog', '$rootScope', function($scope, $http, $q, $myAccounts, $mdMedia, $mdDialog, $rootScope) {
 
 	// ---------------------------
 	// This should be a directive
@@ -208,11 +208,14 @@ angular.module('myApp.taskList', ['ngRoute','timer','appFilters'])
 		$scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
 		$scope.predicate = predicate;
 	};
+	
+	$rootScope.$on('searchTextChange', function(event, newvalue){
+		$scope.taskFilterText = newvalue;
+	});
 
 	$scope.getJiraTasks();
-}])
 
-.directive('taskBar', function(){
+}]).directive('taskBar', function(){
 	return {
 	    link: function(scope, element, attr) {
 	    	var scroll = angular.element('#main');

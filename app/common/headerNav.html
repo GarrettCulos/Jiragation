@@ -1,59 +1,67 @@
 <!-- toolbar -->
 <md-toolbar class="md-primary">
-  <div class="md-toolbar-tools">
-		<div class="navigation-item">
-	    <md-button ng-click="toggleLeft()" class="md-icon-button md-primary">
-	      <md-icon md-svg-icon="img/svg/menu.svg"></md-icon>
-	    </md-button>
-	  </div>  
+	<div class="md-toolbar-tools" layout="row" layout-align="center center">
+		<div class="navigation-item" ng-if="isActive('/task-list')">
+			<md-button ng-click="toggleLeft()" class="md-icon-button md-primary">
+		      <md-icon md-svg-icon="img/svg/menu.svg"></md-icon>
+			</md-button>
+		</div>
+		<div ng-if="isActive('/')">
+			JIRAGATION
+		</div>
 
-		<div class="navigation-item">
-	    <md-button ng-click="showSettings($event)" class="md-icon-button md-primary">
-	      <md-icon md-svg-icon="img/svg/settings.svg"></md-icon>
-	    </md-button>
-	    <div class="small-text">Settings</div>
-	  </div>
+    	<md-button ng-if="isActive('/task-list')" ng-click="showSettings($event)" class="md-icon-button md-primary" class="navigation-item">
+      		<md-icon md-svg-icon="img/svg/settings.svg"></md-icon>
+	    	<!-- <div class="small-text">Settings</div> -->
+    	</md-button>
 
-		<span flex></span>
-
-		<!-- home -->
-		<div ng-if="isActive('/')" class="navigation-item">
-	    <md-button aria-label="Get Tasks" class="md-icon-button" ng-click="getJiraTasks()">
-	      <md-icon md-svg-icon="img/svg/refresh.svg" class=" {{!fetching_tasks ? '': 'spinner' }}"></md-icon>
-	    </md-button>
-	    <div class="small-text">Refresh</div>
-	  </div>
+		<div flex ng-if="isActive('/task-list')">
+			<input class="navigation-search" placeholder="Search" type="search" name="serach_txt" ng-model="inputSerachText" ng-change="changeFilterText(inputSerachText)">
+		</div>
+		
 
 		<!-- home -->
-		<div ng-if="isActive('/')" class="navigation-item">
-	    <md-button ng-click="toggleRight()" class="md-icon-button md-primary">
-	      <md-icon md-svg-icon="img/svg/view_list.svg"></md-icon>
+		
+	    <md-button aria-label="Get Tasks" class="md-icon-button" ng-click="getJiraTasks()" ng-if="isActive('/task-list')" class="navigation-item">
+	    	<md-icon md-svg-icon="img/svg/refresh.svg" class=" {{!fetching_tasks ? '': 'spinner' }}"></md-icon>
+			<!-- <div class="small-text">Refresh</div> -->
 	    </md-button>
-	    <div class="small-text">Filter</div>
-	  </div>
 
-  </div>
+		<!-- home -->
+		
+	    <md-button ng-click="toggleRight()" class="md-icon-button md-primary" ng-if="isActive('/task-list')" class="navigation-item" style="width:65px">
+	    	<!-- <md-icon md-svg-icon="img/svg/view_list.svg"></md-icon> -->
+	    	<div class="small-text">Filter</div>
+	    </md-button>
+
+	    <md-button	ng-click="logout()" class="md-icon-button md-primary" ng-if="isActive('/task-list')" class="navigation-item" style="width:75px">
+	  	logout
+	  	</md-button>
+	</div>
 </md-toolbar>
 
 <!-- navigation sidebar -->
 <md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="left">
-  <div ng-controller="LeftCtrl">
-	  
-	  <md-toolbar class="md-theme-light" >
-	    <h3 layout-padding>Jiragation</h3>
-	    <div class="md-body-2" fill > </div>
-	  </md-toolbar>    
+	<div ng-controller="LeftCtrl">
+		<md-toolbar class="md-theme-light" >
+	    	<h3 layout-padding>Jiragation</h3>
+	    	<div class="md-body-2" fill> 
+	    	</div>
+		</md-toolbar>    
 
 		<md-list>
-	    <md-subheader  class="md-no-sticky">Navigation</md-subheader>
-	    <md-list-item class="md-2-line" ng-repeat="item in menu" role="link" md-ink-ripple ng-click="goTo(item.link); close()" class="{{isActive(item.link)}}">
-	      <md-icon class="nav-icon" md-svg-icon="{{item.icon}}" aria-label="{{item.title}}" ></md-icon>
-	      <div class="md-list-item-text">
-	        <span class="md-body-2">{{item.title}}</span>
-	      </div>
-	    </md-list-item>
-	    <md-divider></md-divider>
-	  </md-list>
-
+		    <md-subheader  class="md-no-sticky">Navigation</md-subheader>
+		    <md-list-item 
+		    	class="md-2-line {{isActive(item.link)}}" 
+				ng-repeat="item in menu" 
+				ng-click="goTo(item.link); close();"
+				role="link"
+				md-ink-ripple>
+				<md-icon class="nav-icon" md-svg-icon="{{item.icon}}" aria-label="{{item.title}}" ></md-icon>
+				<div class="md-list-item-text">
+					<span class="md-body-2">{{item.title}}</span>
+		    	</div>
+		    </md-list-item>
+		</md-list>
 	</div>
 </md-sidenav>

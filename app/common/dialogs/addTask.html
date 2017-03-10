@@ -1,0 +1,112 @@
+<md-dialog aria-label="Add/Update Task"  ng-controller="updateTask" ng-cloak flex>
+	<form name="addTask">
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<h2>
+					Task Edit
+				</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon md-svg-src="img/svg/close.svg" aria-label="Close dialog"></md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content>
+			<div class="md-dialog-content">
+				<md-content layout-sm="column">
+					<md-input-container class="md-block" layout="row" flex>
+						<md-autocomplete flex required
+							md-input-name="addTask.account"
+							md-selected-item="task.selectedAccount"
+							md-search-text="accountSearchText"
+							md-items="item in accountSearch(accountSearchText)"
+							md-item-text="item.url"
+							md-floating-label="Account">
+							<md-item-template>
+								<span md-highlight-text="accountSearchText" md-highlight-flags="^i">{{item.url}}</span>
+							</md-item-template>
+							<md-not-found>
+					        	No account matching "{{accountSearchText}}" was found.
+							</md-not-found>
+							<div ng-messages="addTask.account.$error" ng-if="addTask.account.$touched">
+								<div ng-message="required">You <b>must</b> select an account.</div>
+							</div>
+						</md-autocomplete>
+					</md-input-container>
+					<md-input-container class="md-block" flex layout="row">
+						<md-autocomplete flex required
+							md-input-name="addTask.project"
+							md-input-maxlength="30"
+							md-selected-item="task.selectedProjects"
+							md-search-text="projectSearchText"
+							md-items="item in projectSearch(projectSearchText)"
+							md-item-text="item.url"
+							md-floating-label="Projects">
+							<md-item-template>
+								<span md-highlight-text="projectSearchText" md-highlight-flags="^i">{{item.url}}</span>
+							</md-item-template>
+							<div ng-messages="addTask.project.$error" ng-if="addTask.project.$touched">
+								<div ng-message="required">You <b>must</b> select an project.</div>
+							</div>
+						</md-autocomplete>
+						<!-- <label for="project" >Project</label>
+						<input md-maxlength="30" required md-no-asterisk name="project" ng-model="task.project_name">
+						<div ng-messages="addTask.project.$error">
+							<div ng-message="required">This is required.</div>
+							<div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+						</div> -->
+					</md-input-container>
+					<md-input-container class="md-block" layout="row" flex-sm="100" flex="50">
+						<label for="name">Task Name</label>
+						<input required md-no-asterisk name="name" ng-model="task.name">
+						<div ng-messages="addTask.name.$error">
+							<div ng-message="required">This is required.</div>
+						</div>
+					</md-input-container>
+					<md-input-container class="md-block" layout="row" flex-sm="100" flex="50">
+						<md-autocomplete flex required
+							md-input-name="addTask.priority"
+							md-input-minlength="0"
+							md-input-maxlength="30"
+							md-selected-item="task.selectedProjects"
+							md-search-text="prioritySearchText"
+							md-items="item in prioritySearch(prioritySearchText)"
+							md-item-text="item.url"
+							md-floating-label="Priority">
+							<md-item-template>
+								<span md-highlight-text="prioritySearchText" md-highlight-flags="^i">{{item.url}}</span>
+							</md-item-template>
+							<div ng-messages="addTask.priority.$error" ng-if="addTask.priority.$touched">
+								<div ng-message="required">You <b>must</b> select an priority.</div>
+							</div>
+						</md-autocomplete>
+						<!-- <label for="priority">Priority</label>
+						<input required md-no-asterisk name="priority" ng-model="task.priority">
+						<div ng-messages="addTask.priority.$error">
+							<div ng-message="required">This is required.</div>
+						</div> -->
+					</md-input-container>
+					<md-input-container class="md-block" layout="row" flex>
+						<label for="description">Description</label>
+						<input required md-no-asterisk name="description" ng-model="task.description">
+						<div ng-messages="addTask.description.$error">
+							<div ng-message="required">This is required.</div>
+						</div>
+					</md-input-container>
+				</md-content>
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions layout="row" style="z-index:1;">
+
+			<span flex></span>
+			<!-- <md-button ng-click="discard()">
+				discard
+			</md-button>
+			 -->
+			 <md-button class="md-primary" ng-click="updateUser(task); save('useful')">
+				Add/Edit
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>
+

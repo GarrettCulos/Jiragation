@@ -6,5 +6,10 @@
 		"password" : "",
 		"database" : "jiratation",
         "logging" : false
+	},
+	"server" : {
+		"secret"        	: "a23d8fu1234@a)As-3j3lA~12",
+		"port"          	: 9003,
+		"root"          	:"./"
 	}
 }

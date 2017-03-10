@@ -7,6 +7,61 @@
 	@include box-shadow(rgba(20,20,20,0.3) 0 0 5px);
 }
 
+.navigation-search{
+	width:calc(100% - 40px)	
+}
+.login-input{
+	width:100%; 
+}
+
+.hover-blur{
+	-webkit-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -o-filter: blur(4px);
+    -ms-filter: blur(4px);
+    filter: blur(4px);
+    &:hover{
+    	-webkit-filter: blur(0px);
+	    -moz-filter: blur(0px);
+	    -o-filter: blur(0px);
+	    -ms-filter: blur(0px);
+	    filter: blur(0px);
+    }
+}
+.login-input,
+.navigation-search{  
+  	line-height:1.4em; 
+  	border:0; 
+  	font-size:14px; 
+  	border-radius:3px; 
+  	background-color:rgba(255,255,255,0.1);
+  	padding: 6px 20px;
+  	transition:all ease-in-out 0.1s;
+  	color:white;
+
+  	&::-webkit-input-placeholder,
+	&::-moz-placeholder,
+	&:-ms-input-placeholder,
+	&:-moz-placeholder { /* Firefox 18- */
+  		color: rgba(255,255,255,0.8);
+	}
+	&:focus{
+		outline:none;
+		background-color:rgba(255,255,255,0.2);
+		transition:all ease-in-out 0.1s; 
+		border-radius:0;
+		padding:10px 20px;
+	};
+}
+.login-block{
+	padding:20px;
+	border-radius:5px;
+	background-color:$my_purple;
+	color:white;
+	font-weight:400;
+}
+
+
 // angular md overrieds
 	
 	// date selector overrides

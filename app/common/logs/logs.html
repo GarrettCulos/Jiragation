@@ -75,6 +75,9 @@
 						<span class="logged-time" flex="50"> 
 						  {{ task.total_time | returnTime }}
 						</span>
+						
+						<md-button ng-if="task.total_time > 100" class="md-primary" ng-click="logTime(task)">Log Time</md-button>
+
 					</md-list-item>
 				</md-list>
 			</div>

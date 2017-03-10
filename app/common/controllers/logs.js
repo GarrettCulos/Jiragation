@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
+angular.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 .controller('logsCtrl', ['$scope', '$http', '$q', function($scope, $http, $q) {
   
@@ -33,6 +33,10 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 		getlogs(startDate.getTime(), endDate.getTime()+oneDay);
 	}
+	$scope.logTime = function(task){
+		// THIS FUNCTIN WILL NEED THE USER"S ACCOUNT INFORMATION FOR THE SPECIFIC TASK -> blocked by not saving task&account data
+		console.log(task)
+	}
 
 	function getlogs(startD, endD){
 
@@ -59,17 +63,12 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 			headers: {'Content-Type': 'application/json'}
 
 		}).then(function successCallback(res){		
-			
 			if(res.data.time_logs.length>0){
-
 				filter_data(day_array,res).then(function(response){
-
 					summarize_data(response).then(function(res){
 						$scope.queryLog=res;
 					})
-
 				});
-
 			} else{
 				console.log('No data');
 			}
@@ -82,18 +81,14 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 	function filter_data(day_array, data) {
 		var response = day_array;
 		var deferred = $q.defer();
-		
-		angular.forEach(day_array, function(day, day_key){
 
+		angular.forEach(day_array, function(day, day_key){
 			angular.forEach(data.data.time_logs, function(task, key){
-			
 				if (task.start_time > day.date.getTime()  && task.start_time < (day.date.getTime()+oneDay) ) {
 					response[day_key].logs.push(task);
 					deferred.resolve(response);
 				}
-
 			});
-
 		});
 
 		return deferred.promise;
@@ -106,6 +101,7 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 		
 		angular.forEach(data, function(day, day_key){
 			
+			console.log(day);
 			response.push({
 				date: day.date,
 				time_logged: 0, 
@@ -157,8 +153,8 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 			var day_start = (new Date(scope.task_log.date)).getTime()
 
 			linearize(scope.task_log.tasks).then(function(response){
-				console.log(response);
-				scope.task_lines = response;
+				scope.scales = {day_begin:response.day_begin,day_end:response.day_end};
+				scope.task_lines = response.tasks;
 			});
 			
 			scope.inactive = true;
@@ -168,7 +164,6 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 			function linearize(data) {
 
-				var response = [];
 				var deferred = $q.defer();
 				var colors = [
 					'#FFB429'
@@ -181,16 +176,25 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 					, '#C57BE0'
 					, '#7BC7E0'
 				]
+				var response = {
+					day_begin:{
+						date:day_start+oneDay
+					},
+					day_end:{
+						date:day_start
+					},
+					tasks: []
+				}
 
 				angular.forEach(data, function(task, task_key){
-					response.push({
+					response.tasks.push({
 						task_id: task.task_id,
-						color: colors[task_key],
+						color: colors[task_key%colors.length],
 						lines : []
 					})
 
 					angular.forEach(task.logged_time, function(log, log_key){
-						response[task_key].lines.push({
+						response.tasks[task_key].lines.push({
 							day_start: day_start,
 							width: (parseInt(log.end_time) - parseInt(log.start_time))*100/oneDay,
 							start_time: log.start_time,
@@ -198,12 +202,37 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 							start: (parseInt(log.start_time) - day_start)/oneDay*100,
 							end: (parseInt(log.end_time) - day_start)/oneDay*100
 						});
+						if(parseInt(log.start_time) < response.day_begin.date){
+							response.day_begin = {
+								date: parseInt(log.start_time),
+								location: (parseInt(log.start_time) - day_start)/oneDay*100
+							};
+						}
+						if(parseInt(log.end_time) > response.day_end.date){
+							response.day_end = {
+								date: parseInt(log.start_time),
+								location: (parseInt(log.end_time) - day_start)/oneDay*100
+							} 
+						}
 						deferred.resolve(response);
 					});
 				});
 
 				return deferred.promise;
 			}
+
 		}
 	};
-}]);
+}]).directive('taskLine', function(){
+	return {
+	    link: function(scope, elem, attr) {
+			scope.hoverIn = function(){
+			    scope.hoverEdit = true;
+			};
+
+			scope.hoverOut = function(){
+			    scope.hoverEdit = false;
+			};
+	    }
+	}
+});
