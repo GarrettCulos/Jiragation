@@ -1,34 +1,31 @@
 'use strict';
 
-angular.module('myApp.account', ['ngRoute'])
-
-.controller('accountCtrl', ['$scope', '$http', function($scope, $http) {	
+angular
+.module('Jiragation.account', ['ngRoute'])
+.controller('userAccountController', ['$scope', '$http', 'Authenticate', '$mdDialog', '$mdToast', function($scope, $http, Authenticate, $mdDialog, $mdToast) {	
 	$scope.viewUserUpdate=false;
 	$scope.viewAccounts=false;
-
-  syncAccounts();
+	$scope.account = {};
+	$scope.userChanges = {};
+ 	syncAccounts();
   
-  // PLEASE INSERT YOUR USER NAME AND PASSWORDW BELOW
-	$scope.hiddenJiraAccounts = [];
+	Authenticate.getUserInformation(function(res){
+		console.log(res.data);
+		$scope.user = res.data
+		$scope.userChanges.id = res.data.id
+
+	});
 
 	function syncAccounts(){
-		$scope.hiddenJiraAccounts = [];
 		$http({
 			method: 'GET',
 			url: '/account/fetch_accounts'
 
 		}).then(function successCallback(response){
 			$scope.JiraAccounts = response.data;
-
 		}, function errorCallback(response){
 			console.log(response);
 		});
-	}
-
-	$scope.updateUser = function(){
-		
-		syncAccounts();
-		$scope.viewUserUpdate = true;
 	}
 
 	$scope.closeUpdateUser = function(){
@@ -47,51 +44,86 @@ angular.module('myApp.account', ['ngRoute'])
 		$scope.viewAccounts = false;
 	}
 	
-	$scope.addAccount = function(URL,usr,pass,account_email){
-		var url_prot = URL.split('://');
+	$scope.addAccount = function(form, data){
+		console.log(data);
 		$http({
 			method: 'POST',
 			url: '/account/add_account',
-			data: {url:url_prot[1], user_name:usr, password:pass, protocal:url_prot[0], account_email:account_email}
+			data: {
+				url:data.jira_url.split('://')[1], 
+				user_name:data.user_name, 
+				password:data.password, 
+				protocal:data.jira_url.split('://')[0], 
+				account_email:data.account_email
+			}
 		}).then(function successCallback(response){
-			syncAccounts();
-			
-			$scope.userName ='';
-			$scope.password='';
-			$scope.jiraURL='';
-			$scope.account_email='';
-
+			$scope.JiraAccounts.push({
+				account_email:data.account_email,
+				password:data.password,
+				protocal:data.jira_url.split('://')[0],
+				url:data.jira_url.split('://')[1],
+				user_name:data.user_name
+			});
+			$scope.account = {};
+            form.$setPristine();
+            form.$setUntouched();
 		}, function errorCallback(response){
 			console.log(response);
 		});
-		$scope.JiraAccounts=$scope.JiraAccounts.concat();
 	}
 	
-	$scope.delete = function(id){
-		
-		var account = $scope.JiraAccounts[id];
-		$http({
-			method: 'POST',
-			url: '/account/remove_account',
-			data: {url:account.url, user_name:account.user_name}
-		}).then(function successCallback(response){
-			syncAccounts();
-		}, function errorCallback(response){
+	$scope.deleteAccount = function(ev, id){
+		var confirm = $mdDialog.confirm()
+            .title('Are you sure you want to remove this account?')
+            .textContent('Account: ' + $scope.JiraAccounts[id].url )
+            .ariaLabel('Remove Account')
+            .targetEvent(ev)
+            .ok('Remove Account')
+            .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function() {
+            var account = $scope.JiraAccounts[id];
+			$http({
+				method: 'DELETE',
+				url: '/account/remove_account',
+				params: {url:account.url, user_name:account.user_name}
+			}).then(function successCallback(response){
+				$mdToast.show({
+                    hideDeplay:5000,
+                    position:'bottom left',
+                    controller  : 'ToastCtrl',
+                    locals:{
+                        params:{
+                            text:'Account Removed'
+                        }
+                    },
+                    templateUrl: 'common/dialogs/toastTemplate.html'
+                });
+				syncAccounts();
+			}, function errorCallback(response){
+				console.log(response);
+			});
+
+        }, function() {
+            console.log('canceled decklis removal');
+        });
+	}
+
+	$scope.updateUser = function(form, u){
+		console.log(u);
+		Authenticate.updateUser(u, function(response){
 			console.log(response);
+			$mdToast.show({ 
+				hideDeplay:5000, 
+				position:'bottom right', 
+				controller: 'ToastCtrl', 
+				locals:{ params:{
+					text:'Account Updated'
+                }}, 
+                templateUrl: 'common/dialogs/toastTemplate.html'
+            });
+		}, function(error){
+			console.log(error)
 		});
-		$scope.JiraAccounts=$scope.JiraAccounts.concat();
 	}
-
-	$scope.hideAccount = function( idx ){
-		
-		$scope.hiddenJiraAccounts.push($scope.JiraAccounts[ idx ]);
-		$scope.JiraAccounts.splice(idx,1);
-	}
-
-	$scope.showAccount = function( idx ){
-	
-		$scope.JiraAccounts.push($scope.hiddenJiraAccounts[ idx ]);
-		$scope.hiddenJiraAccounts.splice(idx,1);
-	}
-
 }]);

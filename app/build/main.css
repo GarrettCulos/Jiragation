@@ -37182,16 +37182,119 @@ md-tooltip.md-show {
   box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
 }
 
-/* line 14, ../sass/_base.scss */
+/* line 10, ../sass/_base.scss */
+.navigation-search {
+  width: calc(100% - 40px);
+}
+
+/* line 13, ../sass/_base.scss */
+.login-input {
+  width: 100%;
+}
+
+/* line 17, ../sass/_base.scss */
+.hover-blur {
+  -webkit-filter: blur(4px);
+  -moz-filter: blur(4px);
+  -o-filter: blur(4px);
+  -ms-filter: blur(4px);
+  filter: blur(4px);
+}
+/* line 23, ../sass/_base.scss */
+.hover-blur:hover {
+  -webkit-filter: blur(0px);
+  -moz-filter: blur(0px);
+  -o-filter: blur(0px);
+  -ms-filter: blur(0px);
+  filter: blur(0px);
+}
+
+/* line 31, ../sass/_base.scss */
+.login-input,
+.navigation-search {
+  line-height: 1.4em;
+  border: 0;
+  font-size: 14px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 6px 20px;
+  transition: all ease-in-out 0.1s;
+  color: white;
+}
+/* line 42, ../sass/_base.scss */
+.login-input::-webkit-input-placeholder, .login-input::-moz-placeholder, .login-input:-ms-input-placeholder, .login-input:-moz-placeholder,
+.navigation-search::-webkit-input-placeholder,
+.navigation-search::-moz-placeholder,
+.navigation-search:-ms-input-placeholder,
+.navigation-search:-moz-placeholder {
+  /* Firefox 18- */
+  color: rgba(255, 255, 255, 0.8);
+}
+/* line 48, ../sass/_base.scss */
+.login-input:focus,
+.navigation-search:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all ease-in-out 0.1s;
+  border-radius: 0;
+  padding: 10px 20px;
+}
+
+/* line 56, ../sass/_base.scss */
+.login-block {
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #52007e;
+  color: white;
+  font-weight: 400;
+}
+
+/* line 64, ../sass/_base.scss */
+.rotate90 {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+/* line 71, ../sass/_base.scss */
+.text-rotate270 {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  /* Border is the new background */
+  background: none;
+  -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  -o-transform-origin: 0 0;
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+/* line 92, ../sass/_base.scss */
+.rotate270 {
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+/* line 104, ../sass/_base.scss */
 #logs md-icon {
   color: black;
 }
-/* line 17, ../sass/_base.scss */
+/* line 107, ../sass/_base.scss */
 #logs md-icon svg path {
   fill: rgba(0, 0, 0, 0.87059);
 }
 
-/* line 24, ../sass/_base.scss */
+/* line 114, ../sass/_base.scss */
 .md-default-theme .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator,
 .md-calendar-date.md-calendar-selected-date .md-calendar-date-selection-indicator,
 .md-default-theme .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator,
@@ -37199,20 +37302,20 @@ md-tooltip.md-show {
   color: whitesmoke;
 }
 
-/* line 32, ../sass/_base.scss */
+/* line 122, ../sass/_base.scss */
 input.md-datepicker-input textarea,
 input.md-datepicker-input select {
   color: rgba(0, 0, 0, 0.87059);
 }
 
-/* line 37, ../sass/_base.scss */
+/* line 127, ../sass/_base.scss */
 .md-default-theme .md-calendar-date-selection-indicator:hover,
 .md-calendar-date-selection-indicator:hover {
   background-color: transparent;
   border: 1px solid #52007e;
 }
 
-/* line 44, ../sass/_base.scss */
+/* line 134, ../sass/_base.scss */
 md-toolbar.md-default-theme:not(.md-menu-toolbar),
 md-toolbar:not(.md-menu-toolbar),
 md-toolbar.md-default-theme:not(.md-menu-toolbar) .md-button:not(.md-raised),
@@ -37223,30 +37326,30 @@ md-checkbox:not([disabled]).md-primary.md-checked .md-icon:after {
   color: whitesmoke;
 }
 
-/* line 54, ../sass/_base.scss */
+/* line 144, ../sass/_base.scss */
 md-dialog .md-actions,
 md-dialog md-dialog-actions {
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
 }
 
-/* line 59, ../sass/_base.scss */
+/* line 149, ../sass/_base.scss */
 md-datepicker.md-default-theme,
 md-datepicker {
   background-color: transparent;
 }
 
-/* line 64, ../sass/_base.scss */
+/* line 154, ../sass/_base.scss */
 md-toolbar {
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 6px;
 }
 
-/* line 67, ../sass/_base.scss */
+/* line 157, ../sass/_base.scss */
 md-toolbar {
   min-height: 55px;
 }
-/* line 69, ../sass/_base.scss */
+/* line 159, ../sass/_base.scss */
 md-toolbar .md-toolbar-tools {
   height: 55px;
   max-height: 55px;
@@ -37255,7 +37358,7 @@ md-toolbar .md-toolbar-tools {
 /* line 1, ../sass/_icons.scss */
 svg {
   display: inline-block;
-  width: 27px;
+  width: 25px;
   font-size: inherit;
   vertical-align: middle;
 }
@@ -37371,7 +37474,7 @@ svg:hover path {
 .log-bar .task-line {
   position: absolute;
   left: 0;
-  height: 15px;
+  height: 0px;
   width: 100%;
   transition: all cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
 }
@@ -37386,7 +37489,20 @@ svg:hover path {
   opacity: 0.5;
   top: 0;
 }
-/* line 26, ../sass/_log_bar.scss */
+/* line 24, ../sass/_log_bar.scss */
+.log-bar .task-line task-info {
+  display: block;
+  background-color: rgba(1, 1, 1, 0.8);
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  max-width: 300px;
+  left: 0;
+  top: 16px;
+  z-index: 12;
+}
+/* line 38, ../sass/_log_bar.scss */
 .log-bar .scale .time {
   position: absolute;
   transform: translateX(-50%) translateY(-250%) rotate(-90deg);
@@ -37396,23 +37512,25 @@ svg:hover path {
 .account-settings .user-accounts,
 .account-settings .user-information {
   padding: 15px;
-  background-color: white;
-  -webkit-box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
-  box-shadow: rgba(20, 20, 20, 0.3) 0 0 5px;
 }
-/* line 10, ../sass/_account_settings.scss */
+/* line 8, ../sass/_account_settings.scss */
 .account-settings .user-account {
   margin-bottom: 10px;
 }
-/* line 15, ../sass/_account_settings.scss */
+/* line 13, ../sass/_account_settings.scss */
 .account-settings .user-information input {
   padding: 0 5px;
   line-height: 2em;
 }
-/* line 22, ../sass/_account_settings.scss */
+/* line 20, ../sass/_account_settings.scss */
 .account-settings .user-add-account input {
   padding: 0 5px;
   line-height: 2em;
+}
+
+/* line 4, ../sass/_action_nav.scss */
+#actionNav .dartPath svg path {
+  fill: black;
 }
 
 /* line 1, ../sass/_logs.scss */
@@ -37420,33 +37538,37 @@ svg:hover path {
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   padding: 20px 0;
 }
+/* line 4, ../sass/_logs.scss */
+.day-log:last-child {
+  border-bottom: none;
+}
 
-/* line 6, ../sass/_logs.scss */
+/* line 9, ../sass/_logs.scss */
 .logs-control-bar {
   margin-top: 4px;
 }
-/* line 8, ../sass/_logs.scss */
+/* line 11, ../sass/_logs.scss */
 .logs-control-bar formgroup {
   display: inline-block;
 }
-/* line 12, ../sass/_logs.scss */
+/* line 15, ../sass/_logs.scss */
 .logs-control-bar .title {
   display: inline-block;
   font-size: 1.0em;
   color: whitesmoke;
 }
-/* line 20, ../sass/_logs.scss */
+/* line 23, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-button.md-icon-button {
   padding: 0;
   height: inherit;
 }
-/* line 25, ../sass/_logs.scss */
+/* line 28, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container input {
   font-size: 1em;
   color: black;
 }
-/* line 29, ../sass/_logs.scss */
+/* line 32, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input textarea,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container .md-datepicker-input select,
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container input textarea,
@@ -37454,22 +37576,22 @@ svg:hover path {
   font-size: 1em;
   color: black;
 }
-/* line 35, ../sass/_logs.scss */
+/* line 38, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-datepicker-input-container.md-datepicker-input-focused {
   border-bottom-width: 1px;
 }
-/* line 39, ../sass/_logs.scss */
+/* line 42, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle,
 .logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle {
   border-top-color: rgba(0, 0, 0, 0.5);
 }
-/* line 42, ../sass/_logs.scss */
+/* line 45, ../sass/_logs.scss */
 .logs-control-bar md-content md-datepicker .md-default-theme .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover,
 .logs-control-bar md-content md-datepicker .md-datepicker-triangle-button .md-datepicker-expand-triangle:hover {
   border-top-color: black;
 }
 
-/* line 51, ../sass/_logs.scss */
+/* line 53, ../sass/_logs.scss */
 #logs-display {
   margin-top: 50px;
 }
@@ -37512,99 +37634,10 @@ svg:hover path {
 }
 
 /* line 37, ../sass/_navbar.scss */
-.nav-bg {
-  z-index: 9;
-  width: 100%;
+#actionNav {
   position: fixed;
-  text-align: center;
-  background-color: #52007e;
-}
-/* line 46, ../sass/_navbar.scss */
-.nav-bg ul.nav.navbar-nav li {
-  border-top: 2px solid transparent;
-}
-/* line 49, ../sass/_navbar.scss */
-.nav-bg ul.nav.navbar-nav li:hover a {
-  background-color: transparent;
-}
-/* line 55, ../sass/_navbar.scss */
-.nav-bg ul.nav.navbar-nav li.active {
-  border-top: 2px solid white;
-}
-/* line 60, ../sass/_navbar.scss */
-.nav-bg .nav-item,
-.nav-bg .search-bar,
-.nav-bg .version {
-  display: inline-block;
-}
-/* line 65, ../sass/_navbar.scss */
-.nav-bg .version {
-  float: right;
-}
-/* line 69, ../sass/_navbar.scss */
-.nav-bg .nav-item {
-  padding: 0 30px;
-  float: left;
-  text-align: center;
-  line-height: 3.5em;
-  border-top: 2px solid transparent;
-}
-/* line 81, ../sass/_navbar.scss */
-.nav-bg .prefered-name {
-  line-height: 3.5em;
-  border-top: 2px solid transparent;
-}
-/* line 86, ../sass/_navbar.scss */
-.nav-bg .search-bar {
-  line-height: 2.5em;
-  display: inline-block;
-}
-/* line 90, ../sass/_navbar.scss */
-.nav-bg .search-bar input {
-  line-height: 1.8em;
-  padding: 3px 10px;
-  background-color: white;
-  border: none;
-}
-/* line 97, ../sass/_navbar.scss */
-.nav-bg .search-bar .pull-jiras {
-  cursor: pointer;
-  margin-left: 20px;
-  display: inline-block;
-}
-/* line 104, ../sass/_navbar.scss */
-.nav-bg .search-bar .search-label {
-  margin-left: 10px;
-  margin-right: 10px;
-  line-height: 2em;
-  border: none;
-  outline: none;
-  display: inline-block;
-  padding: 0 15px;
-}
-/* line 114, ../sass/_navbar.scss */
-.nav-bg .search-bar button {
-  border-top: 2px solid transparent;
-  line-height: 3.5em;
-}
-/* line 120, ../sass/_navbar.scss */
-.nav-bg .search-bar .active-button {
-  border-top: 2px solid white;
-}
-/* line 125, ../sass/_navbar.scss */
-.nav-bg .version {
-  line-height: 3.5em;
-}
-/* line 130, ../sass/_navbar.scss */
-.nav-bg .top-nav {
-  position: fixed;
-  top: 0;
-  width: inherit;
-  height: 55px;
-  border-bottom: 0.1em solid black;
-  z-index: 10;
-  vertical-align: middle;
-  background-color: white;
+  bottom: 10px;
+  right: 10px;
 }
 
 /* app css stylesheet */
@@ -37625,7 +37658,7 @@ svg:hover path {
   margin-top: 0;
   background-color: white;
   border-left: 3px solid transparent;
-  padding: 15px 20px 15px 10px;
+  padding: 15px 0;
   border-radius: 1px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 0 1px;
   box-shadow: rgba(0, 0, 0, 0.5) 0 0 1px;
@@ -37779,58 +37812,94 @@ svg:hover path {
   font-weight: 700;
   text-align: center;
 }
-/* line 172, ../sass/_task_list.scss */
+/* line 170, ../sass/_task_list.scss */
+.main-content .task-date-title:focus {
+  outline: none;
+}
+/* line 174, ../sass/_task_list.scss */
+.main-content .task-date-title label {
+  padding-right: 20px;
+}
+/* line 177, ../sass/_task_list.scss */
+.main-content .task-date-title label:after {
+  background-image: url("./img/down-arrow.png");
+  background-size: cover;
+  background-repeat: none;
+  width: 20px;
+}
+/* line 184, ../sass/_task_list.scss */
+.main-content .task-date-title.reverse label:after {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+/* line 194, ../sass/_task_list.scss */
 .main-content img.task-priority {
   line-height: 1.5em;
 }
-/* line 175, ../sass/_task_list.scss */
+/* line 197, ../sass/_task_list.scss */
 .main-content .task-summary-container {
   overflow: hidden;
 }
-/* line 177, ../sass/_task_list.scss */
+/* line 199, ../sass/_task_list.scss */
 .main-content .task-summary-container .task-summary {
   display: inline-block;
   font-weight: 600;
   white-space: nowrap;
   /*max-width:450px;*/
 }
-/* line 186, ../sass/_task_list.scss */
-.main-content .task-title-date {
-  padding-right: 20px;
-}
-/* line 188, ../sass/_task_list.scss */
-.main-content .task-title-date:after {
-  background-image: url("./img/down-arrow.png");
-  background-size: cover;
-  width: 20px;
-}
 
-/* line 196, ../sass/_task_list.scss */
+/* line 208, ../sass/_task_list.scss */
 .message-id,
 .message-body {
   display: inline-block;
 }
 
-/* line 201, ../sass/_task_list.scss */
+/* line 212, ../sass/_task_list.scss */
+pre {
+  white-space: pre-wrap;
+  /* CSS3 browsers  */
+  white-space: -moz-pre-wrap !important;
+  /* 1999+ Mozilla  */
+  white-space: -pre-wrap;
+  /* Opera 4 thru 6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 and up */
+  word-wrap: break-word;
+  width: 100%;
+}
+
+/* line 220, ../sass/_task_list.scss */
 pre.message-body {
+  white-space: pre-wrap;
+  /* CSS3 browsers  */
+  white-space: -moz-pre-wrap !important;
+  /* 1999+ Mozilla  */
+  white-space: -pre-wrap;
+  /* Opera 4 thru 6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 and up */
+  word-wrap: break-word;
   width: 100%;
   margin: 0;
   border: 0px solid transparent;
   border-radius: 5px;
 }
-/* line 206, ../sass/_task_list.scss */
+/* line 231, ../sass/_task_list.scss */
 pre.message-body.right {
   border-top-right-radius: 0;
   color: white;
   background-color: rgba(82, 0, 126, 0.9);
 }
-/* line 211, ../sass/_task_list.scss */
+/* line 236, ../sass/_task_list.scss */
 pre.message-body.left {
   background-color: white;
   border-top-left-radius: 0;
 }
 
-/* line 219, ../sass/_task_list.scss */
+/* line 244, ../sass/_task_list.scss */
 .message-id img {
   margin: 14px;
   max-width: 35px;
@@ -37839,15 +37908,15 @@ pre.message-body.left {
   border-color: transparent;
   background-color: transparent;
 }
-/* line 227, ../sass/_task_list.scss */
+/* line 252, ../sass/_task_list.scss */
 .message-id.right {
   text-align: left;
 }
-/* line 228, ../sass/_task_list.scss */
+/* line 253, ../sass/_task_list.scss */
 .message-id.right img {
   margin-left: 0;
 }
-/* line 232, ../sass/_task_list.scss */
+/* line 257, ../sass/_task_list.scss */
 .message-id.right .triangle {
   float: left;
   width: 0;
@@ -37856,15 +37925,15 @@ pre.message-body.left {
   border-left: 7px solid rgba(82, 0, 126, 0.9);
   border-top: 7px solid rgba(82, 0, 126, 0.9);
 }
-/* line 241, ../sass/_task_list.scss */
+/* line 266, ../sass/_task_list.scss */
 .message-id.left {
   text-align: right;
 }
-/* line 243, ../sass/_task_list.scss */
+/* line 268, ../sass/_task_list.scss */
 .message-id.left img {
   margin-right: 0;
 }
-/* line 246, ../sass/_task_list.scss */
+/* line 271, ../sass/_task_list.scss */
 .message-id.left .triangle {
   float: right;
   width: 0;
@@ -37874,12 +37943,12 @@ pre.message-body.left {
   border-top: 7px solid white;
 }
 
-/* line 257, ../sass/_task_list.scss */
+/* line 282, ../sass/_task_list.scss */
 .my-message {
   margin-bottom: 10px;
 }
 
-/* line 261, ../sass/_task_list.scss */
+/* line 286, ../sass/_task_list.scss */
 .sticky {
   position: fixed;
   left: 16px;
@@ -37887,7 +37956,7 @@ pre.message-body.left {
   z-index: 2;
 }
 
-/* line 268, ../sass/_task_list.scss */
+/* line 293, ../sass/_task_list.scss */
 .nonvisible-banner {
   margin: 40px;
   text-align: center;
@@ -37895,7 +37964,7 @@ pre.message-body.left {
   border-bottom: 1px solid black;
 }
 
-/* line 275, ../sass/_task_list.scss */
+/* line 300, ../sass/_task_list.scss */
 .circle {
   background-color: #52007e;
   color: white;
@@ -37903,4 +37972,12 @@ pre.message-body.left {
   font-size: 1.1em;
   border-radius: 50%;
   border: 1px solid transparent;
+}
+
+/* line 309, ../sass/_task_list.scss */
+textarea.task-add-comment {
+  min-height: 60px;
+  border-radius: 2px;
+  padding: 10px 15px 5px;
+  background-color: white;
 }

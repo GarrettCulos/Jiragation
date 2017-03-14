@@ -1,0 +1,44 @@
+<md-dialog aria-label="Log Time" ng-cloak flex>
+	<md-toolbar>
+		<div class="md-toolbar-tools">
+			<h2>
+				{{ log.task_id}} ({{ log.account }})
+			</h2>
+			<span flex></span>
+			<md-button class="md-icon-button" ng-click="cancel()">
+				<md-icon md-svg-src="img/svg/close.svg" aria-label="Close dialog"></md-icon>
+			</md-button>
+		</div>
+	</md-toolbar>
+
+	<form name="logTime" ng-submit="submitLogRequest(log)">
+		<md-dialog-content layout="column" style="padding:10px 20px;">
+			<div layout="row">
+				<p> You have tracked {{ task.total_time | returnTime }} of work. Logging in chunks of {{log_min}}min, we suggest you log {{ suggested_time }}min</p>
+			</div>
+			<div layout="row">
+				<md-input-container flex-gt-xs="20" flex="100">
+					<label for="time">Time (Minutes)</label>
+					<input ng-model="log.time" class="md-input ng-not-empty" id="time" aria-invalid="false" required>
+				</md-input-container>
+
+				<md-input-container flex flex-xs="100">
+					<label for="comment">Comment</label>
+					<input ng-model="log.comment" aria-invalid="false" type="textarea"  id="comment" required>
+				</md-input-container>
+				
+				<md-datepicker style="padding-top: 20px;"  flex-xs="100" ng-model="log.date" md-placeholder="Date" md-max-date="log.date" required name="date" class="md-primary"></md-datepicker>
+
+				<md-switch ng-model="log.assignToReporter" aria-label="Assign to reported" flex-xs="100" style="margin-left: 20px; margin-top: 25px;">
+				  Assign to reported?  
+				</md-switch>
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions layout="row" >
+			<span flex></span>
+			<md-button class="md-primary" type="submit">Log Time</md-button>
+		</md-dialog-actions>
+  </form>
+
+</md-dialog>
+

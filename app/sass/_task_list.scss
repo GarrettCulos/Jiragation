@@ -167,6 +167,28 @@
   .task-date-title {
     font-weight: 700;
     text-align: center;
+    &:focus{
+      outline:none;
+    }
+  
+    label{
+      padding-right:20px
+    }
+    label:after {
+      background-image: url('./img/down-arrow.png');
+      background-size: cover;
+      background-repeat:none;
+      width: 20px;
+    }
+    &.reverse{
+      label:after{
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        transform: rotate(180deg);
+      }
+    }
   }
 
   img.task-priority {
@@ -181,24 +203,27 @@
         /*max-width:450px;*/
       }
   }
-  
-
-  .task-title-date {
-    padding-right: 20px;
-    &:after {
-      background-image: url('./img/down-arrow.png');
-      background-size: cover;
-      width: 20px;
-    }
-  }
 }
 
 .message-id,
 .message-body {
   display:inline-block;
 }
-
+pre{
+  white-space: pre-wrap;                 /* CSS3 browsers  */
+  white-space: -moz-pre-wrap !important; /* 1999+ Mozilla  */
+  white-space: -pre-wrap;                /* Opera 4 thru 6 */
+  white-space: -o-pre-wrap;              /* Opera 7 and up */
+  word-wrap: break-word;       
+  width:100%;
+}
 pre.message-body {
+  white-space: pre-wrap;                 /* CSS3 browsers  */
+  white-space: -moz-pre-wrap !important; /* 1999+ Mozilla  */
+  white-space: -pre-wrap;                /* Opera 4 thru 6 */
+  white-space: -o-pre-wrap;              /* Opera 7 and up */
+  word-wrap: break-word;       
+
   width:100%;
   margin:0;
   border: 0px solid transparent;

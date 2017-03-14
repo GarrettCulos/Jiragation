@@ -1,20 +1,12 @@
 'use strict';
 
-angular.module('myApp.headerNav', ['ngRoute','timer'])
+angular
+.module('Jiragation.headerNav', ['ngRoute','timer'])
+.controller('HeaderController', ['$scope', '$http', '$location', 'Authenticate', '$rootScope', function($scope, $http, $location, Authenticate, $rootScope) {
+	$scope.inputSerachText ='';
 
-.controller('HeaderController', ['$scope', '$http', '$location', function($scope, $http, $location) {
-	$scope.isActive = function(page){
-		if( page == $location.path() ){
-			return 'active';
-		}
-		return '';
-	};
-
-	$scope.goTo = function(page){
-		$location.path(page)
-	};
-
-	$scope.menu=[{
+	$scope.menu=[
+		{
 			title: 'Home',
 			icon: 'img/svg/ic_home_black_24px.svg',
 			link: '/'
@@ -25,9 +17,34 @@ angular.module('myApp.headerNav', ['ngRoute','timer'])
 			link: '/logs'
 		}];
 
-}])
+	$scope.isActive = function(page){
+		if( page == $location.path() ){
+			return 'active';
+		}
+		return '';
+	};
 
-.directive('headernav', function(){
+	$scope.goBack = function(){
+		window.history.back();
+	}
+
+	$scope.goTo = function(page){
+		$location.path(page)
+	};
+
+	$scope.logout = function(){
+    Authenticate.remove(function(res){
+      $rootScope.$broadcast('authLogout',{});
+      $location.path('/');
+    });    
+	}
+	
+	$scope.changeFilterText = function(searchValue){
+		$rootScope.$broadcast('searchTextChange', searchValue);
+	}
+	
+
+}]).directive('headernav', function(){
   return{
     templateUrl: 'common/headerNav.html'
   }

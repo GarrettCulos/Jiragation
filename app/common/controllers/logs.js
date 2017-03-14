@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
-
-.controller('logsCtrl', ['$scope', '$http', '$q', function($scope, $http, $q) {
+angular
+.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
+.controller('logsCtrl', ['$scope', '$http', '$q', '$mdDialog', '$mdToast', '$mdMedia', '$filter', function($scope, $http, $q, $mdDialog, $mdToast, $mdMedia, $filter) {
   
   $scope.queryTodays = false;
   $scope.maxDate = new Date();
@@ -34,6 +34,89 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 		getlogs(startDate.getTime(), endDate.getTime()+oneDay);
 	}
 
+	$scope.logTime = function(ev, task, date){
+
+		$mdDialog.show({
+			templateUrl: 'common/dialogs/logTime.html',
+			scope:$scope.$new(),
+			targetEvent: ev,
+        	clickOutsideToClose:true,
+			fullscreen: $mdMedia('xs'),
+			locals:{
+				task:task
+			},
+			controller: ['$scope', '$mdDialog', '$http', '$mdToast', 'task', function($scope, $mdDialog, $http, $mdToast, task) {
+                $scope.task = task;
+                var log_min = 15;
+                var logged_time = task.total_time/60/1000;
+                $scope.log_min = log_min;
+                $scope.suggested_time = Math.ceil(logged_time/log_min)*log_min;
+                $scope.total_time = task.total_time/60/1000;
+
+                $scope.log = {
+                	date:date,
+                	account_id: task.account.account_id,
+                	task_id:task.task_id,
+                	time: Math.ceil(logged_time/log_min)*log_min,
+                	account:""+task.account.protocal+"://"+task.account.url,
+                	assignToReporter:false
+                }
+
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                };
+                $scope.submitLogRequest = function(data) {
+                	var days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+                	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+                	var date_string = days[data.date.getDay()]+" "
+                		date_string +=months[data.date.getMonth()]+" "
+                		date_string +=data.date.getDate()+" "
+                		date_string +=((data.date.getHours()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getMinutes()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getSeconds()<10)?"0"+data.date.getHours():data.date.getHours())+" "
+                		date_string +=String(data.date).replace(/[\s\S]+\(/,"").replace(/\)/,"")+" "
+                		date_string +=data.date.getFullYear()
+
+                	var payload = {
+                		account:data.account,
+						account_id:data.account_id,
+						assignToReporter:data.assignToReporter,
+						comment:data.comment,
+						task_id:data.task_id,
+						time:data.time,
+                		date:date_string
+                	}
+					$http({
+	                    method:   'POST',
+	                    url:      '/jira/logTime',
+	                    data: JSON.stringify(payload), 
+	                    headers: {
+	                      'Content-Type': 'application/json'
+	                    }
+	                }).then(function successCallback(res){
+	                    $mdDialog.cancel();
+	                    $mdToast.show({
+		                    hideDeplay:5000,
+		                    position:'bottom left',
+		                    controller  : 'ToastCtrl',
+		                    locals:{
+		                        params:{
+		                            text: data.time+'m Logged to '+data.task_id
+		                        }
+		                    },
+		                    templateUrl: 'common/dialogs/toastTemplate.html'
+		                });
+	                }, function errorCallback(res){
+	                    console.log(res);
+	                });
+                }
+        	}]
+		}).then(function(answer) {
+			$scope.status = 'You said the information was "' + answer + '".';
+		}, function() {
+			$scope.status = 'You cancelled the dialog.';
+		});
+	}
+
 	function getlogs(startD, endD){
 
 		var start_date = new Date(startD);
@@ -59,17 +142,12 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 			headers: {'Content-Type': 'application/json'}
 
 		}).then(function successCallback(res){		
-			
 			if(res.data.time_logs.length>0){
-
 				filter_data(day_array,res).then(function(response){
-
 					summarize_data(response).then(function(res){
 						$scope.queryLog=res;
 					})
-
 				});
-
 			} else{
 				console.log('No data');
 			}
@@ -82,18 +160,14 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 	function filter_data(day_array, data) {
 		var response = day_array;
 		var deferred = $q.defer();
-		
-		angular.forEach(day_array, function(day, day_key){
 
+		angular.forEach(day_array, function(day, day_key){
 			angular.forEach(data.data.time_logs, function(task, key){
-			
 				if (task.start_time > day.date.getTime()  && task.start_time < (day.date.getTime()+oneDay) ) {
 					response[day_key].logs.push(task);
 					deferred.resolve(response);
 				}
-
 			});
-
 		});
 
 		return deferred.promise;
@@ -101,6 +175,7 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 	function summarize_data(data) {
 
+		// query should subquery for this information.
 		var response = [];
 		var deferred = $q.defer();
 		
@@ -122,8 +197,14 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 					response[day_key].tasks_temp.push(task_id);
 					response[day_key].tasks.push({
 						task_id: task_id,
-						logged_time: [task],
-						total_time: logged_time
+						logged_time: [{start_time:task.start_time, end_time: task.end_time}],
+						total_time: logged_time,
+						account:{
+							account_id:task.account_id,
+							protocal:task.protocal,
+							url:task.url,
+							user_name:task.user_name
+						}
 					});
 					response[day_key].time_logged += logged_time;
 					deferred.resolve(response);
@@ -132,7 +213,7 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 					var logged_time = task.end_time-task.start_time;
 					
 					response[day_key].tasks[index].total_time += logged_time;
-					response[day_key].tasks[index].logged_time.push(task);
+					response[day_key].tasks[index].logged_time.push({start_time:task.start_time, end_time: task.end_time});
 					response[day_key].time_logged += logged_time;
 
 					deferred.resolve(response);
@@ -157,8 +238,8 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 			var day_start = (new Date(scope.task_log.date)).getTime()
 
 			linearize(scope.task_log.tasks).then(function(response){
-				console.log(response);
-				scope.task_lines = response;
+				scope.scales = {day_begin:response.day_begin,day_end:response.day_end};
+				scope.task_lines = response.tasks;
 			});
 			
 			scope.inactive = true;
@@ -168,29 +249,28 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 
 			function linearize(data) {
 
-				var response = [];
 				var deferred = $q.defer();
-				var colors = [
-					'#FFB429'
-					, '#BBFF29'
-					, '#29FF3B'
-					, '#29FFF4'
-					, '#2986FF'
-					, '#6D29FF'
-					, '#FF2942'
-					, '#C57BE0'
-					, '#7BC7E0'
-				]
+				var colorVars = 'ABCDEF0123456789';
+				var colorTemp = ['','','','','',''];
+				var response = {
+					day_begin:{
+						date:day_start+oneDay
+					},
+					day_end:{
+						date:day_start
+					},
+					tasks: []
+				}
 
 				angular.forEach(data, function(task, task_key){
-					response.push({
+					response.tasks.push({
 						task_id: task.task_id,
-						color: colors[task_key],
+						color: "#"+colorTemp.map(function(num){ return colorVars[Math.floor((Math.random() * 15))]}).join(''),
 						lines : []
 					})
 
 					angular.forEach(task.logged_time, function(log, log_key){
-						response[task_key].lines.push({
+						response.tasks[task_key].lines.push({
 							day_start: day_start,
 							width: (parseInt(log.end_time) - parseInt(log.start_time))*100/oneDay,
 							start_time: log.start_time,
@@ -198,12 +278,37 @@ angular.module('myApp.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
 							start: (parseInt(log.start_time) - day_start)/oneDay*100,
 							end: (parseInt(log.end_time) - day_start)/oneDay*100
 						});
+						if(parseInt(log.start_time) < response.day_begin.date){
+							response.day_begin = {
+								date: parseInt(log.start_time),
+								location: (parseInt(log.start_time) - day_start)/oneDay*100
+							};
+						}
+						if(parseInt(log.end_time) > response.day_end.date){
+							response.day_end = {
+								date: parseInt(log.start_time),
+								location: (parseInt(log.end_time) - day_start)/oneDay*100
+							} 
+						}
 						deferred.resolve(response);
 					});
 				});
 
 				return deferred.promise;
 			}
+
 		}
 	};
-}]);
+}]).directive('taskLine', function(){
+	return {
+	    link: function(scope, elem, attr) {
+			scope.hoverIn = function(){
+			    scope.hoverEdit = true;
+			};
+
+			scope.hoverOut = function(){
+			    scope.hoverEdit = false;
+			};
+	    }
+	}
+});

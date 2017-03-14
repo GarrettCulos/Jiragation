@@ -8,62 +8,92 @@ var TimeSheet = function() {
 };
 
 // Pull Time Sheet
-TimeSheet.getTimeSheet = function(callback) {
+TimeSheet.getTimeSheet = function(req, callback) {
 	// console.log('model - accout');
-	var queryString = "SELECT * FROM time_sheet";
+	var queryString = "SELECT * FROM time_sheet ts WHERE ts.user_id ="+req.decoded.id;
 	
-	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
-	.then(function(results){
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		callback(results);
 		// console.log(results);
-	})
-	.catch(function(err){
-  		console.log(err);
-  		throw err;
-  	});
+	}).catch(function(err){
+		throw err;
+	});
 
 };
 
 TimeSheet.logTaskTime = function(req, callback) {
-	model.TimeSheet.create({
-		task_id: req.task_id,
-		start_time: req.start_time,
-		end_time: req.end_time,
-	}).then(function(results) {
-		callback(results);
-	}, function(err){
-		console.log(err);
-		throw err;
-	});
+	sequelize.transaction(function(t){
+		return model.jiraAccounts.find({
+			where:{
+				url:req.body.account_url
+			},
+			transaction:t
+		}).then(function(account){
+			return model.timeSheet.create({
+				task_id: req.body.task_id,
+				account_id: account.id,
+				start_time: req.body.start_time,
+				end_time: req.body.end_time,
+				user_id: req.decoded.id
+			},{transaction:t}).then(function(results) {
+				return 
+			}, function(err){
+				throw err;
+			});
+		});
+	}).then(function(results){
+		return callback(results);
+	}).catch(function(error){
+		return callback(null);
+	});	
 };
 
 //pull time log for specific task_id
-TimeSheet.getTaskTime = function(res, callback) {
+TimeSheet.getTaskTime = function(req, callback) {
 	
-	var queryString = "SELECT * FROM time_sheet WHERE task_id = '" + res.task_id + "'";
-	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
-	.then(function(results){
+	var queryString =  " SELECT "
+		queryString += " ts.task_id as task_id, ";
+		queryString += " ts.start_time as start_time, ";
+		queryString += " ts.end_time as end_time, ";
+		queryString += " ts.account_id as account_id, ";
+		queryString += " ac.user_name as user_name, ";
+		queryString += " ac.url as url, ";
+		queryString += " ac.account_email as account_email, ";
+		queryString += " ac.protocal as protocal ";
+		queryString += " FROM time_sheet ts "
+		queryString += " JOIN jira_accounts ac ON ac.id = ts.account_id"
+		queryString += " WHERE ts.task_id = '" + req.query.task_id + "' "
+		queryString += " AND ts.user_id="+req.decoded.id;
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		callback(results);
 		// console.log(results);
-	})
-	.catch(function(err){
+	}).catch(function(err){
   		// console.log(err);
   		throw err;
   	});
 };
 
-TimeSheet.getTrackedTime = function(res, callback) {
-	console.log(res);
+TimeSheet.getTrackedTime = function(req, callback) {
 	// var earlier_Date =  new Date( res.earlier_time);
 	// var later_Date  new Date ( res.later_time);
-	var queryString = "SELECT * FROM time_sheet WHERE createdAt >= '" + res.earlier_time + "' AND createdAt <= '" + res.later_time + "'";
-
-	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
-	.then(function(results){
+	var queryString  = " SELECT "
+		queryString += " ts.task_id as task_id, ";
+		queryString += " ts.start_time as start_time, ";
+		queryString += " ts.end_time as end_time, ";
+		queryString += " ts.account_id as account_id, ";
+		queryString += " ac.user_name as user_name, ";
+		queryString += " ac.url as url, ";
+		queryString += " ac.account_email as account_email, ";
+		queryString += " ac.protocal as protocal ";
+		queryString += " FROM time_sheet ts ";
+		queryString += " JOIN jira_accounts ac ON ac.id = ts.account_id"
+		queryString += " WHERE ts.start_time >= '" + new Date(req.query.earlier_time).getTime()/1000 + "' ";
+		queryString += " AND ts.start_time <= '" + new Date(req.query.later_time).getTime()/1000 + "' ";
+		queryString += " AND ts.user_id ="+req.decoded.id;
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		callback(results);
 		// console.log(results);
-	})
-	.catch(function(err){
+	}).catch(function(err){
   		// console.log(err);
   		throw err;
   	});

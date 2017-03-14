@@ -54,7 +54,7 @@ this server is:
 npm start
 ```
 
-Now browse to the app at `http://localhost:8000/app`.
+Now browse to the app at `http://localhost:9003`.
 
 ## Updating Angular
 
@@ -89,7 +89,13 @@ For more information on AngularJS please check out http://angularjs.org/
 [npm]: https://www.npmjs.org/
 [node]: http://nodejs.org
 [protractor]: https://github.com/angular/protractor
-[jasmine]: http://jasmine.github.io
-[karma]: http://karma-runner.github.io
 [travis]: https://travis-ci.org/
 [http-server]: https://github.com/nodeapps/http-server
+
+
+## Known Issues and Task Log
+- add DDL for initial setup.
+- extend authorization token after performing verified http request.
+- multi-day log, left date, styling issue.
+- adding comments work intermittently.
+- hash account passwords for db storage.

@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('myApp.task', ['ngRoute','timer','appFilters'])
+angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 
-.controller('taskController', ['$scope', '$http', '$currentUser', '$q', '$myAccounts', function($scope, $http, $currentUser, $q , $myAccounts) {
+.controller('taskController', ['$scope', '$http', '$currentUser', '$q', '$myAccounts', '$rootScope', function($scope, $http, $currentUser, $q , $myAccounts, $rootScope) {
 
 	$scope.isActive=false;
 	$scope.timerStarted=false;
-
+	$scope.taskFilterText = ''
 	function reset_form(comment_form){
 		if(comment_form){
 			comment_form.$setPristine();
@@ -52,7 +52,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
 			$http({
 				method: 'GET',
-				url: '/pull_jiras/task_comments',
+				url: '/jira/task_comments',
 				params: data_load
 			}).then(function successCallback(response){
 				// pass in comment array for preprocessing
@@ -78,6 +78,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			});
 		});
 	}
+
 
 	$scope.taskLink = function(){	
 	}
@@ -118,7 +119,6 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			$scope.getTaskTime();
 		}
 	}
-
 	// Toggle active task		
 	$scope.updateRightView = function(acct) {
 	
@@ -126,9 +126,7 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		$scope.currentUser = $currentUser.user_accounts;
 		
 		get_comments(acct)
-
 	}
-
 	// REQUIRES ROBUST WAY TO OBTAIN TASK SPECIFIC JITA ACCOUNT 
 	$scope.addComment = function(task, data, form) {
 		$myAccounts.then(function(accountService){
@@ -141,8 +139,9 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 			}
 
 			$http({
+				rejectUnauthorized: false,
 				method: 'GET',
-				url: '/pull_jiras/add_comments',
+				url: '/jira/add_comments',
 				params: data_load
 			}).then(function successCallback(response){
 				$scope.commentButtonDissabled=false;
@@ -157,10 +156,11 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 	}
 
 	$scope.$on('timer-stopped', function (event, logged_time){
-		
+		console.log($scope.task.self.split('://')[1].split('/rest/api/')[0])
 		var date = new Date();
 		var current_date = date.getTime();
 		var response = {
+			account_url: $scope.task.self.split('://')[1].split('/rest/api/')[0],
 			task_id: $scope.task.key,
 			end_time: current_date,
 			start_time: current_date-timerDataToUnix(logged_time)
@@ -176,11 +176,13 @@ angular.module('myApp.task', ['ngRoute','timer','appFilters'])
 		}).then(function successCallback(res){
 			$scope.usrAccountData = res.data;
 
-		}, function errorCallback(res){
+		}, function errorCallback(err){
+			console.log(err)
 			console.log('Warning Will Robinson');
 		});
 	});
 	
+
 	$scope.getTaskTime();
 	$scope.add_comment={};
 	

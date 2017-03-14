@@ -1,66 +1,90 @@
 var db 					= require('../init_db');
 var model 				= require('./jiragation');
 var Sequelize 			= db.Sequelize;
-
 var sequelize 			= db.sequelize;
 
 var Accounts = function() {
 
 };
-
-Accounts.getAccounts = function(callback) {
-	// console.log('model - accout');
-	var queryString = "SELECT user_name,url,password,protocal,account_email FROM jira_accounts";
+Accounts.getAccountsById = function(req, callback){
+	var queryString = "SELECT ";
+			queryString += " ja.user_name as user_name , ";
+			queryString += " ja.url as url,";
+			queryString += " ja.password as password, ";
+			queryString += " ja.protocal as protocal, ";
+			queryString += " ja.account_email as account_email ";
+			queryString += " FROM jira_accounts ja ";
+			queryString += " WHERE ja.user_id ="+req.decoded.id;
+			queryString += " AND ja.id ="+req.body.account_id;
 	
-	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
-	.then(function(results){
-		callback(results);
-	})
-	.catch(function(err){
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
+		callback(results[0]);
+	}).catch(function(err){
   		console.log(err);
   		throw err;
   	});
 };
 
-Accounts.verifyUserAccount = function(account_email, callback) {
-	var queryString = "SELECT * FROM jira_accounts WHERE account_email = '"+account_email +"'";
+Accounts.getAccounts = function(req, callback) {
+	// console.log('model - accout');
+	var queryString = "SELECT ";
+			queryString += " ja.user_name as user_name , ";
+			queryString += " ja.url as url,";
+			queryString += " ja.password as password, ";
+			queryString += " ja.protocal as protocal, ";
+			queryString += " ja.account_email as account_email ";
+			queryString += " FROM jira_accounts ja ";
+			queryString += " WHERE ja.user_id ="+req.decoded.id;
 	
-	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT })
-	.then(function(results){
-		console.log(results);
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
+		callback(results);
+	}).catch(function(err){
+  		console.log(err);
+  		throw err;
+  	});
+};
+
+Accounts.verifyUserAccount = function(req, callback) {
+	var account_email = req.body;
+	var queryString = "SELECT * FROM jira_accounts ";
+		queryString += " WHERE account_email = '"+account_email +"'";
+		queryString += " AND user_id = "+req.decoded.id;
+	
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		if(results<1){
 			return callback(false);
 		}
 		return callback(true);
-
-	})
-	.catch(function(err){
+	}).catch(function(err){
 		console.log(err);
 		throw err;
 	});
 };
 
 // NEEDS TESTING
-Accounts.setAccount = function(account, callback) {
-	model.JiraAccounts.update(account, {
+Accounts.setAccount = function(req, callback) {
+	var account = req.body;
+
+	model.jiraAccounts.update(account, {
 		where: {
 			user_name:account.user_name,
-			url: account.url		
-		}
-	})
-	.then(function (rows) {
+			url: account.url,
+			user_id: req.decoded.id		
+		},
+	}).then(function (rows) {
 		if(rows < 1){
-			model.JiraAccounts.create({
+			model.jiraAccounts.create({
 				user_name:account.user_name,
 				url: account.url,
 				account_email: account.account_email,
 				password: account.password,
-				protocal: account.protocal
+				protocal: account.protocal,
+				user_id: req.decoded.id	
 			}).then(function(table){
-				callback(null,table);
+				callback(table);
 			});
 		} else{
-			callback(null,rows);			
+			callback(rows);			
 		}
 
 	}, function(err){
@@ -68,20 +92,23 @@ Accounts.setAccount = function(account, callback) {
 	});	
 };
 
-Accounts.removeAccount = function(account, callback) {
-	model.JiraAccounts.destroy({
+Accounts.removeAccount = function(req, callback) {
+	
+	model.jiraAccounts.destroy({
 		where: {
-			user_name:account.user_name,
-			url: account.url		
+			user_name:req.query.user_name,
+			url: req.query.url,
+			user_id: req.decoded.id			
 		}
-	})
-	.then(function (rows) {
-		callback(null,table);
+	}).then(function (res) {
+		if(res>0){
+			return callback(res);
+		};
+		return callback({error:'Invalid Input'});
+		throw 'Accounts.removeAccount: Invalid Input';
 	}, function(err){
 		console.log(err);
 	});	
 };
-
-
 
 module.exports = Accounts;
