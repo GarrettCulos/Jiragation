@@ -29,7 +29,6 @@ module.exports = function(grunt) {
           'd3',
           'grunt',
           'jquery',
-          'material-design-icons',
           'vega',
           'vega-lite',
           'viscompass'
