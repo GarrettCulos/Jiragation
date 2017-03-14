@@ -23,6 +23,7 @@ var timeSheet = sequelize.define('time_sheet', {
     task_id:      { type: Sequelize.STRING, allowNull:false},
     start_time:   { type: Sequelize.INTEGER, allowNull: false},
     end_time:     { type: Sequelize.INTEGER, allowNull: false},
+    account_id:   { type: Sequelize.INTEGER, allowNull:false},
     user_id:      { type: Sequelize.INTEGER, allowNull:false}
 },
 {

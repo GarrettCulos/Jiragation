@@ -61,6 +61,41 @@
 	font-weight:400;
 }
 
+.rotate90{
+	-webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+.text-rotate270{
+	position: absolute;
+    bottom: 0;
+    left: 50%;
+    
+    /* Border is the new background */
+    background: none;
+
+	-webkit-transform-origin: 0 0;
+	-moz-transform-origin:    0 0;
+	-ms-transform-origin:     0 0;
+	-o-transform-origin:      0 0;
+
+	-webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
+
+
+.rotate270{
+	-webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+}
 
 // angular md overrieds
 	

@@ -9,6 +9,10 @@
 		<div ng-if="isActive('/')">
 			JIRAGATION
 		</div>
+		<div ng-if="isActive('/logs') || isActive('/register')" ng-click="goBack();" class="rotate90">
+			<md-icon md-svg-icon="img/svg/hot-drink.svg"></md-icon>
+		</div>
+		<span ng-if="isActive('/logs') || isActive('/register')" flex></span>
 
     	<md-button ng-if="isActive('/task-list')" ng-click="showSettings($event)" class="md-icon-button md-primary" class="navigation-item">
       		<md-icon md-svg-icon="img/svg/settings.svg"></md-icon>

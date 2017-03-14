@@ -4,87 +4,95 @@
 	
 	<md-content class="panel-shadow" layout="row"  layout-align="start end">
 		<!-- logs query times -->
-	  <form name="queryLogTimes" ng-submit="getRangeLogs()" flex novalidate>
-	  	<md-list-item>
-		    <p> Query Todays Logs </p>
-		    <md-checkbox class="md-primary" ng-model="queryTodays"></md-checkbox>
-		  </md-list-item>
+		<form name="queryLogTimes" ng-submit="getRangeLogs()" flex novalidate>
+		  	<md-list-item>
+			    <p> Query Todays Logs </p>
+			    <md-checkbox class="md-primary" ng-model="queryTodays"></md-checkbox>
+			  </md-list-item>
 
-			<md-divider ng-if="!queryTodays" style="margin:10px 0;"></md-divider>
+				<md-divider ng-if="!queryTodays" style="margin:10px 0;"></md-divider>
 
-			<div ng-if="!queryTodays" layout="row" layout-padding>
-				<formgroup flex="25">
-					<p> Query logged time from </p>
-				</formgroup>
-				
-				<formgroup flex="25">
-					<md-datepicker ng-model="logdate.start" md-placeholder="Start Date" md-max-date="maxDate" required name="startDate" class="md-primary"></md-datepicker>
+				<div ng-if="!queryTodays" layout="row" layout-padding>
+					<formgroup flex="25">
+						<p> Query logged time from </p>
+					</formgroup>
+					
+					<formgroup flex="25">
+						<md-datepicker ng-model="logdate.start" md-placeholder="Start Date" md-max-date="maxDate" required name="startDate" class="md-primary"></md-datepicker>
 
-					<div class="validation-messages" 
-						ng-show="queryLogTimes.startDate_name.$error"
-						ng-messages="queryLogTimes.startDate_name.$touched && queryLogTimes.startDate_name.$error">
-				        <div class="md-warn" ng-message="valid">The entered value is not a date!</div>
-				        <div class="md-warn" ng-message="required">This date is required!</div>
-				        <div class="md-warn" ng-message="mindate">Date is too early!</div>
-				        <div class="md-warn" ng-message="maxdate">Date is too late!</div>
-			      	</div>
-			    </formgroup>
-				
-				<formgroup flex="25">
-					<md-datepicker ng-model="logdate.end" md-placeholder="End Date" md-max-date="maxDate" required name="endDate" class="md-primary"></md-datepicker>
+						<div class="validation-messages" 
+							ng-show="queryLogTimes.startDate_name.$error"
+							ng-messages="queryLogTimes.startDate_name.$touched && queryLogTimes.startDate_name.$error">
+					        <div class="md-warn" ng-message="valid">The entered value is not a date!</div>
+					        <div class="md-warn" ng-message="required">This date is required!</div>
+					        <div class="md-warn" ng-message="mindate">Date is too early!</div>
+					        <div class="md-warn" ng-message="maxdate">Date is too late!</div>
+				      	</div>
+				    </formgroup>
+					
+					<formgroup flex="25">
+						<md-datepicker ng-model="logdate.end" md-placeholder="End Date" md-max-date="maxDate" required name="endDate" class="md-primary"></md-datepicker>
 
-					<div class="validation-messages" 
-						ng-show="queryLogTimes.endDate_name.$error"
-						ng-messages="queryLogTimes.endDate_name.$touched && queryLogTimes.endDate_name.$error">
-						<div class="md-warn" ng-message="valid">The entered value is not a date!</div>
-						<div class="md-warn" ng-message="required">This date is required!</div>
-						<div class="md-warn" ng-message="mindate">Date is too early!</div>
-						<div class="md-warn" ng-message="maxdate">Date is too late!</div>
-					</div>
-				</formgroup>
-				<span flex></span>
-		    <input type="submit" class="md-button md-primary" id="submit" value="Query"  ng-disabled="queryLogTimes.startDate.$error.required || queryLogTimes.endDate.$error.required" disabled/>
-			</div>
-		</form>
+						<div class="validation-messages" 
+							ng-show="queryLogTimes.endDate_name.$error"
+							ng-messages="queryLogTimes.endDate_name.$touched && queryLogTimes.endDate_name.$error">
+							<div class="md-warn" ng-message="valid">The entered value is not a date!</div>
+							<div class="md-warn" ng-message="required">This date is required!</div>
+							<div class="md-warn" ng-message="mindate">Date is too early!</div>
+							<div class="md-warn" ng-message="maxdate">Date is too late!</div>
+						</div>
+					</formgroup>
+					<span flex></span>
+			    <input type="submit" class="md-button md-primary" id="submit" value="Query"  ng-disabled="queryLogTimes.startDate.$error.required || queryLogTimes.endDate.$error.required" disabled/>
+				</div>
+			</form>
 		
 		<md-button ng-if="queryTodays" class="md-primary" ng-click="get_todays_logs()">query</md-button>
-		
 	</md-content>
 	
 	<h2 ng-if="queryLog">Query Summarys:</h2>
 		
-	<md-content class="panel-shadow" ng-if="queryLog" layout-padding>
-		<div layout="row" layout-align="center center" class="day-log" ng-repeat="(key1, days) in queryLog">
-
-			<div flex="30" ng-if="!days.tasks[0].task_id" layout-padding>
-				<h4 style="text-align:center; padding:10px 0; margin:0;">{{ days.date | readableDateF }}</h4>
-				<p style="text-align:center; padding:10px 0; margin:0;">No Time Tracked</p>
+	<md-content class="panel-shadow" ng-if="queryLog" style="padding:0px;">
+		<div layout="row" layout-align="center center" class="day-log" ng-repeat="(key1, days) in queryLog"  style="padding:0px;" flex>
+			<div style="position:absolute; left:0; top:0; bottom:0; width:60px; background-color: rgb(98,0,152); color: white; z-index:1;" flex>
+				<h4 class="text-rotate270" style="margin:0; left:20px; width: 200px; height: 60px;text-align: center;">{{ days.date | readableDateF }}</h4>
 			</div>
-			
-			
-			<div flex="30" ng-if="days.tasks[0].task_id" layout-padding>
+			<div layout="column" style="padding-left:60px;" flex  style="padding:0px;">
+				<div layout="row" flex="30" flex-gt-md="20">
+					<div ng-if="!days.tasks[0].task_id" layout-padding flex >
+						<p style="text-align:center; padding:10px 0; margin:0;">No Time Tracked</p>
+					</div>
+					
+					
+					<div flex="30" flex-gt-md="20" ng-if="days.tasks[0].task_id"  style="padding:0px;">
+						<md-list style="overflow-y:scroll; max-height:350px; min-height:200px; border-right:1px solid rgb(100,100,100);" flex>
+							<md-subheader class="md-no-sticky">Task ID <span style="float:right;"> Time</span></md-subheader>
+							<md-list-item ng-repeat="(key2, task) in days.tasks" layout="row" layout-align="center center" ng-click="logTime($event, task, days.date)" flex>
+					            <span>{{ task.task_id }}</span>
+					            <span flex></span>
+					            <span>{{ task.total_time | returnTime }}</span>
+		          				<!-- <span flex="50">
+									<a href="{{task.url}}">{{task.task_id}}</a>
+								</span>
+								<span class="logged-time" flex="50"> 
+								  {{ task.total_time | returnTime }}
+								</span> -->
+								<!-- <md-button ng-if="task.total_time > 100" class="md-primary" ng-click="logTime(task)">Log Time</md-button> -->
+							</md-list-item>
+						</md-list>
+						<md-toolbar layout="row" style="background-color:rgb(100,100,100);min-height:30px; box-shadow: none;">
+					      <div class="md-toolbar-tools" style="max-height:30px; height:30px;">
+					        <!-- <h4 >{{ days.date | readableDateF }}</h4> -->
+					        <span flex></span>
+							<p style="font-size:14px; color:white; margin:0;"> {{days.time_logged | returnTime}}</p>
+					      </div>
+					    </md-toolbar>
+					</div>
 
-				<h3 style="border-bottom: 1px solid black; text-align:center; padding:10px 0;">{{ days.date | readableDateF }}</h3>
-				<h4 style="text-align:center; padding:10px 0;">{{days.time_logged | returnTime}} Tracked</h4>
-				
-				<md-list>
-					<md-list-item ng-repeat="(key2, task) in days.tasks" layout="row" layout-align="center center">
-						<span flex="50">
-							<a href="{{task.url}}">{{task.task_id}}</a>
-						</span>
-						<span class="logged-time" flex="50"> 
-						  {{ task.total_time | returnTime }}
-						</span>
-						
-						<md-button ng-if="task.total_time > 100" class="md-primary" ng-click="logTime(task)">Log Time</md-button>
-
-					</md-list-item>
-				</md-list>
-			</div>
-
-			<div flex="70" layout-align="center center" ng-if="days.tasks[0].task_id" layout-padding>
-				<logbar ng-if="days" data="{{days}}"></logbar>
-			</div>
+					<div flex= layout-align="center center" ng-if="days.tasks[0].task_id" layout-padding>
+						<logbar ng-if="days" data="{{days}}"></logbar>
+					</div>
+				</div>
 			</div>
 		</div>
 	</md-content>

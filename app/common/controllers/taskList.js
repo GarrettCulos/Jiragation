@@ -152,7 +152,7 @@ angular
 
 				$http({
 					method: 'GET',
-					url: '/pull_jiras/jira_accounts'
+					url: '/jira/jira_accounts'
 				
 				}).then(function successCallback(res){
 					

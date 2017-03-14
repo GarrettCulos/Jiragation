@@ -6,6 +6,24 @@ var sequelize 			= db.sequelize;
 var Accounts = function() {
 
 };
+Accounts.getAccountsById = function(req, callback){
+	var queryString = "SELECT ";
+			queryString += " ja.user_name as user_name , ";
+			queryString += " ja.url as url,";
+			queryString += " ja.password as password, ";
+			queryString += " ja.protocal as protocal, ";
+			queryString += " ja.account_email as account_email ";
+			queryString += " FROM jira_accounts ja ";
+			queryString += " WHERE ja.user_id ="+req.decoded.id;
+			queryString += " AND ja.id ="+req.body.account_id;
+	
+	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
+		callback(results[0]);
+	}).catch(function(err){
+  		console.log(err);
+  		throw err;
+  	});
+};
 
 Accounts.getAccounts = function(req, callback) {
 	// console.log('model - accout');
@@ -33,7 +51,6 @@ Accounts.verifyUserAccount = function(req, callback) {
 		queryString += " AND user_id = "+req.decoded.id;
 	
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
-		console.log(results);
 		if(results<1){
 			return callback(false);
 		}

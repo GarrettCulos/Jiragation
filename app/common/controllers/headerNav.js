@@ -24,6 +24,9 @@ angular
 		return '';
 	};
 
+	$scope.goBack = function(){
+		window.history.back();
+	}
 
 	$scope.goTo = function(page){
 		$location.path(page)

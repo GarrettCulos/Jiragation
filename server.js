@@ -29,7 +29,7 @@ app.use(auth);
 /* Routes */
 app.use('/task', require('./routes/taskManager').taskManager);
 app.use('/account', require('./routes/accounts').accounts );
-app.use('/pull_jiras', require('./routes/jira').jira);
+app.use('/jira', require('./routes/jira').jira);
 app.use('/users', require('./routes/users').users);
 app.use('/notes', require('./routes/notes').notes);
 

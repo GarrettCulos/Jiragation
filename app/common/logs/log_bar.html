@@ -8,10 +8,9 @@
 	<div layout="row"  class="log-bar" flex>
 		<task-line class="task-line" ng-class="{inactive: inactive}" ng-repeat="(tasks_key, tasks) in task_lines" style="top:{{15*tasks_key}}px">
 			
-			<time-marker data-id="{{tasks.task_id}}" ng-repeat="(line_key, line) in tasks.lines" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()" class="time-marker" style="left:{{line.start}}%; width:{{line.width}}%; background-color:{{tasks.color}}; "></time-marker>
-			<task-info class="task-info" data-id="{{tasks.task_id}}" style="left:{{line.start}}%" ng-show="hoverEdit">
-				{{tasks.task_id}}
-			</task-info>
+			<time-marker data-id="{{tasks.task_id}}" ng-repeat="(line_key, line) in tasks.lines" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()" class="time-marker" style="left:{{line.start}}%; width:{{line.width}}%; background-color:{{tasks.color}}; ">
+				<md-tooltip  md-direction="above" md-autohide="true">{{tasks.task_id}}</md-tooltip>
+			</time-marker>
 
 		</task-line>
 		<div class="scale">

@@ -78,8 +78,7 @@ Tasks.updateTasks = function(callback) {
 				user_id: req.decoded.id
 			},
 			transaction:t
-		})
-		.then(function (rows) {
+		}).then(function (rows) {
 			if(rows < 1){
 				return model.Tasks.create({
 					task_id: req.task_id,

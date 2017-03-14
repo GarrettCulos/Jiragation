@@ -52,7 +52,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 			// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
 			$http({
 				method: 'GET',
-				url: '/pull_jiras/task_comments',
+				url: '/jira/task_comments',
 				params: data_load
 			}).then(function successCallback(response){
 				// pass in comment array for preprocessing
@@ -141,7 +141,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 			$http({
 				rejectUnauthorized: false,
 				method: 'GET',
-				url: '/pull_jiras/add_comments',
+				url: '/jira/add_comments',
 				params: data_load
 			}).then(function successCallback(response){
 				$scope.commentButtonDissabled=false;
@@ -156,10 +156,11 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 	}
 
 	$scope.$on('timer-stopped', function (event, logged_time){
-		
+		console.log($scope.task.self.split('://')[1].split('/rest/api/')[0])
 		var date = new Date();
 		var current_date = date.getTime();
 		var response = {
+			account_url: $scope.task.self.split('://')[1].split('/rest/api/')[0],
 			task_id: $scope.task.key,
 			end_time: current_date,
 			start_time: current_date-timerDataToUnix(logged_time)

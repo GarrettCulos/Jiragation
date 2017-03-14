@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
-
-.controller('logsCtrl', ['$scope', '$http', '$q', function($scope, $http, $q) {
+angular
+.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters'])
+.controller('logsCtrl', ['$scope', '$http', '$q', '$mdDialog', '$mdToast', '$mdMedia', '$filter', function($scope, $http, $q, $mdDialog, $mdToast, $mdMedia, $filter) {
   
   $scope.queryTodays = false;
   $scope.maxDate = new Date();
@@ -33,9 +33,90 @@ angular.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters
 
 		getlogs(startDate.getTime(), endDate.getTime()+oneDay);
 	}
-	$scope.logTime = function(task){
-		// THIS FUNCTIN WILL NEED THE USER"S ACCOUNT INFORMATION FOR THE SPECIFIC TASK -> blocked by not saving task&account data
-		console.log(task)
+
+	$scope.logTime = function(ev, task, date){
+
+		$mdDialog.show({
+			templateUrl: 'common/dialogs/logTime.html',
+			scope:$scope.$new(),
+			targetEvent: ev,
+        	clickOutsideToClose:true,
+			fullscreen: $mdMedia('xs'),
+			locals:{
+				task:task
+			},
+			controller: ['$scope', '$mdDialog', '$http', '$mdToast', 'task', function($scope, $mdDialog, $http, $mdToast, task) {
+                $scope.task = task;
+                var log_min = 15;
+                var logged_time = task.total_time/60/1000;
+                $scope.log_min = log_min;
+                $scope.suggested_time = Math.ceil(logged_time/log_min)*log_min;
+                $scope.total_time = task.total_time/60/1000;
+
+                $scope.log = {
+                	date:date,
+                	account_id: task.account.account_id,
+                	task_id:task.task_id,
+                	time: Math.ceil(logged_time/log_min)*log_min,
+                	account:""+task.account.protocal+"://"+task.account.url,
+                	assignToReporter:false
+                }
+
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                };
+                $scope.submitLogRequest = function(data) {
+                	var days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
+                	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+                	var date_string = days[data.date.getDay()]+" "
+                		date_string +=months[data.date.getMonth()]+" "
+                		date_string +=data.date.getDate()+" "
+                		date_string +=((data.date.getHours()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getMinutes()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getSeconds()<10)?"0"+data.date.getHours():data.date.getHours())+" "
+                		date_string +=String(data.date).replace(/[\s\S]+\(/,"").replace(/\)/,"")+" "
+                		date_string +=data.date.getFullYear()
+
+                	var payload = {
+                		account:data.account,
+						account_id:data.account_id,
+						assignToReporter:data.assignToReporter,
+						comment:data.comment,
+						task_id:data.task_id,
+						time:data.time,
+                		date:date_string
+                	}
+                	console.log()
+					$http({
+	                    method:   'POST',
+	                    url:      '/jira/logTime',
+	                    data: JSON.stringify(payload), 
+	                    headers: {
+	                      'Content-Type': 'application/json'
+	                    }
+	                }).then(function successCallback(res){
+	                    console.log(res);
+	                    $mdDialog.cancel();
+	                    $mdToast.show({
+		                    hideDeplay:5000,
+		                    position:'bottom left',
+		                    controller  : 'ToastCtrl',
+		                    locals:{
+		                        params:{
+		                            text: data.time+'m Logged to '+data.task_id
+		                        }
+		                    },
+		                    templateUrl: 'common/dialogs/toastTemplate.html'
+		                });
+	                }, function errorCallback(res){
+	                    console.log(res);
+	                });
+                }
+        	}]
+		}).then(function(answer) {
+			$scope.status = 'You said the information was "' + answer + '".';
+		}, function() {
+			$scope.status = 'You cancelled the dialog.';
+		});
 	}
 
 	function getlogs(startD, endD){
@@ -96,12 +177,12 @@ angular.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters
 
 	function summarize_data(data) {
 
+		// query should subquery for this information.
 		var response = [];
 		var deferred = $q.defer();
 		
 		angular.forEach(data, function(day, day_key){
 			
-			console.log(day);
 			response.push({
 				date: day.date,
 				time_logged: 0, 
@@ -118,8 +199,14 @@ angular.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters
 					response[day_key].tasks_temp.push(task_id);
 					response[day_key].tasks.push({
 						task_id: task_id,
-						logged_time: [task],
-						total_time: logged_time
+						logged_time: [{start_time:task.start_time, end_time: task.end_time}],
+						total_time: logged_time,
+						account:{
+							account_id:task.account_id,
+							protocal:task.protocal,
+							url:task.url,
+							user_name:task.user_name
+						}
 					});
 					response[day_key].time_logged += logged_time;
 					deferred.resolve(response);
@@ -128,7 +215,7 @@ angular.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters
 					var logged_time = task.end_time-task.start_time;
 					
 					response[day_key].tasks[index].total_time += logged_time;
-					response[day_key].tasks[index].logged_time.push(task);
+					response[day_key].tasks[index].logged_time.push({start_time:task.start_time, end_time: task.end_time});
 					response[day_key].time_logged += logged_time;
 
 					deferred.resolve(response);
@@ -165,17 +252,8 @@ angular.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters
 			function linearize(data) {
 
 				var deferred = $q.defer();
-				var colors = [
-					'#FFB429'
-					, '#BBFF29'
-					, '#29FF3B'
-					, '#29FFF4'
-					, '#2986FF'
-					, '#6D29FF'
-					, '#FF2942'
-					, '#C57BE0'
-					, '#7BC7E0'
-				]
+				var colorVars = 'ABCDEF0123456789';
+				var colorTemp = ['','','','','',''];
 				var response = {
 					day_begin:{
 						date:day_start+oneDay
@@ -189,7 +267,7 @@ angular.module('Jiragation.logs', ['ngMaterial', 'ngRoute', 'timer', 'appFilters
 				angular.forEach(data, function(task, task_key){
 					response.tasks.push({
 						task_id: task.task_id,
-						color: colors[task_key%colors.length],
+						color: "#"+colorTemp.map(function(num){ return colorVars[Math.floor((Math.random() * 15))]}).join(''),
 						lines : []
 					})
 
