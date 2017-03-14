@@ -66,7 +66,7 @@ angular
                     $mdDialog.cancel();
                 };
                 $scope.submitLogRequest = function(data) {
-                	var days = ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'];
+                	var days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
                 	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
                 	var date_string = days[data.date.getDay()]+" "
@@ -85,7 +85,6 @@ angular
 						time:data.time,
                 		date:date_string
                 	}
-                	console.log()
 					$http({
 	                    method:   'POST',
 	                    url:      '/jira/logTime',
@@ -94,7 +93,6 @@ angular
 	                      'Content-Type': 'application/json'
 	                    }
 	                }).then(function successCallback(res){
-	                    console.log(res);
 	                    $mdDialog.cancel();
 	                    $mdToast.show({
 		                    hideDeplay:5000,

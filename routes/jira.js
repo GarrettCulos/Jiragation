@@ -186,8 +186,6 @@ jira.get('/jira_accounts', function(req, res, next) {
 jira.post('/logTime', function(req,res,next){
 	Accounts.getAccountsById(req, function(account){
 
-		var d = new Date("EEE MMM d HH:mm:ss zzz yyyy");
-		console.log(d);
 		post_data = {
 				timeSpentSeconds: req.body.time*60,
 				visibility: {
@@ -199,7 +197,7 @@ jira.post('/logTime', function(req,res,next){
 		}
 		post_data = JSON.stringify(post_data)
 		// console.log(account);
-		console.log(post_data);
+		// console.log(post_data);
 		var options = {
 			rejectUnauthorized: false,
 			method: "POST",
@@ -209,9 +207,9 @@ jira.post('/logTime', function(req,res,next){
 				"Content-Type": "application/json",
 				"Content-Length": Buffer.byteLength(post_data),
 				"Authorization": "Basic "+ new Buffer( account.user_name + ":" + account.password ).toString('base64')
-			},
+			}
 		};
-		console.log(options);
+		// console.log(options);
 
 	 	if(account.protocal == "http"){
 
