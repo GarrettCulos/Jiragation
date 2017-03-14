@@ -1,6 +1,7 @@
 var config      =   require('config');
 var mysql       = 	require('mysql');
 var dbConfig 	= 	config.get('dbConfig');
+// console.log(dbConfig);
 var Sequelize 	= 	require("sequelize");
 var pool 		=  	mysql.createPool({
 					    connectionLimit : dbConfig.get('connection_limit'),
