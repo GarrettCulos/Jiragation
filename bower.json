@@ -16,6 +16,7 @@
     "viscompass": "compass#~0.6.2",
     "bootstrap-sass": "boostrap-sass#~3.3.6",
     "angular-material": "^1.0.9",
-    "angular-messages": "^1.5.6"
+    "angular-messages": "^1.5.6",
+    "html5-boilerplate": "~5.2.0"
   }
 }
