@@ -99,7 +99,6 @@ For more information on AngularJS please check out http://angularjs.org/
 
 
 ## Known Issues and Task Log
-- add DDL for initial setup.
 - extend authorization token after performing verified http request.
 - multi-day log, left date, styling issue.
 - adding comments work intermittently.
