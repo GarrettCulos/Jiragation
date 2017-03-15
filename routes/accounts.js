@@ -7,7 +7,14 @@ accounts.get('/fetch_accounts', function(req, res, next) {
 	if(req.decoded != null){
 		Accounts.getAccounts(req, function(result){
 			// console.log('routes - accout');
-			res.send(result);		
+			console.log(result);
+			if(result.length>0){
+				res.send(result);	
+			}
+			else{
+				res.status(400).send('no-accounts');
+			}
+			
 		});
 	}
 	else{

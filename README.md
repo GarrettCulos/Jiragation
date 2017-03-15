@@ -31,7 +31,6 @@ We have preconfigured `npm` to automatically run `bower` so we can simply do:
 ```
 npm install
 bower install
-bundle install
 ```
 
 Behind the scenes this will also call `bower install`.  You should find that you have two new
