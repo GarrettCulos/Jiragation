@@ -146,7 +146,6 @@ angular
 			url: '/account/fetch_accounts'
 		
 		}).then(function successCallback(response){
-
 			$scope.JiraAccounts = response.data;
 			if($scope.JiraAccounts){
 
@@ -155,7 +154,7 @@ angular
 					url: '/jira/jira_accounts'
 				
 				}).then(function successCallback(res){
-					
+					delete $scope.jiraTaskListError
 					$scope.fetching_tasks = false;
 
 					modify_task_list(
@@ -166,6 +165,9 @@ angular
 					});
 
 				}, function errorCallback(res){
+					$scope.jiraTaskListError={
+						messsage:res.data
+					};
 					$scope.fetching_tasks = false;
 				});
 
@@ -173,10 +175,17 @@ angular
 				$scope.addSettings(); 
 			}
 
-			
-		
 		}, function errorCallback(response){
-			// console.log(response);
+			
+			$scope.jiraTaskListError = {
+				message:response.data,
+				noAccounts:false
+			};
+			
+			if(response.data = 'no-accounts'){
+				$scope.jiraTaskListError.noAccounts=true;
+			}
+			
 			$scope.fetching_tasks = false;
 		
 		});

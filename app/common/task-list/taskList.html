@@ -15,10 +15,18 @@
 		</md-list-item>
 	</md-content>
 </md-sidenav>
-
+<div layout="row" class="main-content" ng-if="jiraTaskListError.noAccounts">
+	<div style="background-color:rgb(174,4,24); color:rgb(245,245,245); padding:15px 30px; font-weight:500;" flex>
+		You should probably enter a few account (press the <md-icon md-svg-icon="img/svg/settings.svg"></md-icon> icon above)
+	</div>
+</div>
+<div layout="row" class="main-content" ng-if="!jiraTaskListError.noAccounts">
+	<div style="background-color:rgb(174,4,24); color:rgb(245,245,245); padding:15px 30px; font-weight:500;" flex>
+		{{jiraTaskListError.message}}
+	</div>
+</div>
 <md-content id="main" layout-padding flex style="background-color: rgba(0,0,0,0.05);">
-
-	<div class="main-content">
+	<div class="main-content" ng-if="taskList">
 		<div layout="row" layout-align="enter">
 			
 			<div class="center" flex >
@@ -51,7 +59,6 @@
 				<!-- <button  ng-click="updateTaskView(accountNum, taskNum)"> View Task </button> -->		
 			</div>
 		</div>
-		{{search_text}}
 		<div class="account-list">
 			<div ng-repeat="(taskNum, task) in taskList | statusF:taskStatuses | filter:taskFilterText | orderBy:predicate:reverse" 
 				ng-controller = "taskController" style="z-index:2">
