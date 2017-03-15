@@ -7,7 +7,6 @@ accounts.get('/fetch_accounts', function(req, res, next) {
 	if(req.decoded != null){
 		Accounts.getAccounts(req, function(result){
 			// console.log('routes - accout');
-			console.log(result);
 			if(result.length>0){
 				res.send(result);	
 			}

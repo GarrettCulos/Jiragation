@@ -67,7 +67,7 @@
 					<div flex="30" flex-gt-md="20" ng-if="days.tasks[0].task_id"  style="padding:0px;">
 						<md-list style="overflow-y:scroll; max-height:350px; min-height:200px; border-right:1px solid rgb(100,100,100);" flex>
 							<md-subheader class="md-no-sticky">Task ID <span style="float:right;"> Time</span></md-subheader>
-							<md-list-item ng-repeat="(key2, task) in days.tasks" layout="row" layout-align="center center" ng-click="logTime($event, task, days.date)" flex>
+							<md-list-item ng-repeat="(key2, task) in days.tasks" ng-click="logTime($event, task, days.date)" flex>
 					            <span>{{ task.task_id }}</span>
 					            <span flex></span>
 					            <span>{{ task.total_time | returnTime }}</span>

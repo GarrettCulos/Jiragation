@@ -20,7 +20,7 @@
 		You should probably enter a few account (press the <md-icon md-svg-icon="img/svg/settings.svg"></md-icon> icon above)
 	</div>
 </div>
-<div layout="row" class="main-content" ng-if="!jiraTaskListError.noAccounts">
+<div layout="row" class="main-content" ng-if="!jiraTaskListError.noAccounts && jiraTaskListError">
 	<div style="background-color:rgb(174,4,24); color:rgb(245,245,245); padding:15px 30px; font-weight:500;" flex>
 		{{jiraTaskListError.message}}
 	</div>
