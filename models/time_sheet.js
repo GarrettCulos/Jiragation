@@ -65,7 +65,6 @@ TimeSheet.getTaskTime = function(req, callback) {
 		queryString += " JOIN jira_accounts ac ON ac.id = ts.account_id"
 		queryString += " WHERE ts.task_id = '" + req.query.task_id + "' "
 		queryString += " AND ts.user_id="+req.decoded.id;
-	console.log(queryString);
 
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		callback(results);
@@ -93,7 +92,6 @@ TimeSheet.getTrackedTime = function(req, callback) {
 		queryString += " WHERE ts.start_time >= '" + new Date(req.query.earlier_time).getTime() + "' ";
 		queryString += " AND ts.start_time <= '" + new Date(req.query.later_time).getTime() + "' ";
 		queryString += " AND ts.user_id ="+req.decoded.id;
-		console.log(queryString);
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		callback(results);
 		// console.log(results);
