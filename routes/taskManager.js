@@ -7,7 +7,7 @@ var fs 					= require('fs');
 taskManager.post('/trackTime', function(req, res, next) {
 	if(req.decoded != null){
 		TimeSheet.logTaskTime(req, function(req, result) {
-			// console.log(result); 
+			console.log(result); 
 			res.send(result);		
 		});
 	}

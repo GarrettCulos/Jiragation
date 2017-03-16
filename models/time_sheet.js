@@ -29,14 +29,15 @@ TimeSheet.logTaskTime = function(req, callback) {
 			},
 			transaction:t
 		}).then(function(account){
-			return model.timeSheet.create({
+			return model.time_sheet.create({
 				task_id: req.body.task_id,
 				account_id: account.id,
 				start_time: req.body.start_time,
 				end_time: req.body.end_time,
 				user_id: req.decoded.id
 			},{transaction:t}).then(function(results) {
-				return 
+				console.log(results)
+				return results;
 			}, function(err){
 				throw err;
 			});
@@ -44,7 +45,6 @@ TimeSheet.logTaskTime = function(req, callback) {
 	}).then(function(results){
 		return callback(results);
 	}).catch(function(error){
-		console.log(error);
 		return callback(error);
 	});	
 };
