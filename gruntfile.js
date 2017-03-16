@@ -37,6 +37,7 @@ module.exports = function(grunt) {
           'angular':'angular.min.js',
           'angular-animate':'angular-animate.min.js',
           'angular-aria':'angular-aria.min.js',
+          'moment':'moment.js',
           'angular-base64':'angular-base64.js',
           'angular-material':'angular-material.min.js',
           'angular-messages':'angular-messages.min.js',
@@ -45,8 +46,7 @@ module.exports = function(grunt) {
           'angular-timer':['app/js/_timer.js','app/js/i18nService.js', 'app/js/progressBarService.js'],
           'html5-boilerplate':'dist/js/vendore/modernizer-2.8.3.min.js',
           'humanize-duration':'humanize-duration.js',
-          'moment':'moment.js',
-          'momentjs':'moment.js',
+          'momentjs':'moment.js'
         },
       }
     },
