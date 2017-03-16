@@ -66,7 +66,7 @@ angular
                     $mdDialog.cancel();
                 };
                 $scope.submitLogRequest = function(data) {
-                	var days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+                	var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
                 	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
                 	var date_string = days[data.date.getDay()]+" "

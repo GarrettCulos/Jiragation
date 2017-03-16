@@ -2,7 +2,7 @@
 <md-toolbar class="md-primary">
 	<div class="md-toolbar-tools" layout="row" layout-align="center center">
 		<div class="navigation-item" ng-if="isActive('/task-list')">
-			<md-button ng-click="toggleLeft()" class="md-icon-button md-primary">
+			<md-button aria-label="navigation" ng-click="toggleLeft()" class="md-icon-button md-primary">
 		      <md-icon md-svg-icon="img/svg/menu.svg"></md-icon>
 			</md-button>
 		</div>
@@ -14,7 +14,7 @@
 		</div>
 		<span ng-if="isActive('/logs') || isActive('/register')" flex></span>
 
-    	<md-button ng-if="isActive('/task-list')" ng-click="showSettings($event)" class="md-icon-button md-primary" class="navigation-item">
+    	<md-button aria-label="settings" ng-if="isActive('/task-list')" ng-click="showSettings($event)" class="md-icon-button md-primary" class="navigation-item">
       		<md-icon md-svg-icon="img/svg/settings.svg"></md-icon>
 	    	<!-- <div class="small-text">Settings</div> -->
     	</md-button>

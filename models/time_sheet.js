@@ -44,7 +44,8 @@ TimeSheet.logTaskTime = function(req, callback) {
 	}).then(function(results){
 		return callback(results);
 	}).catch(function(error){
-		return callback(null);
+		console.log(error);
+		return callback(error);
 	});	
 };
 
@@ -64,6 +65,7 @@ TimeSheet.getTaskTime = function(req, callback) {
 		queryString += " JOIN jira_accounts ac ON ac.id = ts.account_id"
 		queryString += " WHERE ts.task_id = '" + req.query.task_id + "' "
 		queryString += " AND ts.user_id="+req.decoded.id;
+
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		callback(results);
 		// console.log(results);
@@ -87,8 +89,8 @@ TimeSheet.getTrackedTime = function(req, callback) {
 		queryString += " ac.protocal as protocal ";
 		queryString += " FROM time_sheet ts ";
 		queryString += " JOIN jira_accounts ac ON ac.id = ts.account_id"
-		queryString += " WHERE ts.start_time >= '" + new Date(req.query.earlier_time).getTime()/1000 + "' ";
-		queryString += " AND ts.start_time <= '" + new Date(req.query.later_time).getTime()/1000 + "' ";
+		queryString += " WHERE ts.start_time >= '" + new Date(req.query.earlier_time).getTime() + "' ";
+		queryString += " AND ts.start_time <= '" + new Date(req.query.later_time).getTime() + "' ";
 		queryString += " AND ts.user_id ="+req.decoded.id;
 	sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
 		callback(results);
