@@ -16,10 +16,10 @@
     "angular-messages": "1.6.0",
     "angular-moment": "^0.10.3",
     "html5-boilerplate": "~5.2.0",
-    "moment": "~2.17.1",
+    "moment": "2.9.0",
     "grunt": "~1.0.1",
     "viscompass": "compass#~0.6.2",
     "bootstrap-sass": "boostrap-sass#~3.3.6",
-    "angular-material": "^1.1.1"
+    "angular-material": "~1.1.1"
   }
 }
