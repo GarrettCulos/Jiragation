@@ -24,7 +24,7 @@ function sign_in(u, callback){
         // if user is found and password is right
         // create a token
         var token = jwt.sign(user, config.get('secret'), {
-          expiresIn: 1440*60 // expires in 24 hours
+          expiresIn: 1440*60*2 // expires in 2 days
         });
 
         // return the information including token as JSON
@@ -63,6 +63,27 @@ api.post('/addUser',function(req, res, next){
     }
   });
 });
+
+api.get('/refreshToken', function(req,res,next){
+  // Refresh token only when page is refreshed (Authentication.refresh is called in the front end). 
+  // Token expiry experation set for the standard 2 days.
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  jwt.verify(token, config.get('secret'),function(err, decoded) {
+    if(err || decoded.user_name == null){ console.error(err); return res.status(401).send(err);}
+
+    User.getUser(decoded.user_name, function(err, user) {
+      if (err){ console.error(err); return res.status(401).send(err);}
+
+      var token = jwt.sign(user, config.get('secret'), {
+        expiresIn: 1440*60*2 // expires in 2 days
+      });
+
+      res.send({success: true, message: 'Successful login', token: token });
+    });
+
+  });
+  
+})
 
 api.get('/tokenCheck', function(req,res,next){
   var token = req.body.token || req.query.token || req.headers['x-access-token'];

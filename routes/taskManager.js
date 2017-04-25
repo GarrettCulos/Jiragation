@@ -6,8 +6,11 @@ var fs 					= require('fs');
 
 taskManager.post('/trackTime', function(req, res, next) {
 	if(req.decoded != null){
-		TimeSheet.logTaskTime(req, function(req, result) {
-			console.log(result); 
+		req.body.start_time = new Date(req.body.start_time).getTime();
+		req.body.end_time = new Date(req.body.end_time).getTime();
+
+		// console.log('start_time',req.body.start_time);
+		TimeSheet.logTaskTime(req, function(result) {
 			res.send(result);		
 		});
 	}
@@ -29,20 +32,21 @@ taskManager.get('/getTrackedTime',function(req, res, next) {
 
 taskManager.get('/getTaskTime',function(req, res, next) {
 	if(req.decoded != null){
-		TimeSheet.getTaskTime(req, function(time_logs) {
-			var todays_logged_time=0;
+		
+		if(req.query.start_time == null){
 			var	date = new Date();
-			var todays_date = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+			req.query.start_time = new Date(date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" 00:00:00").getTime();
+			// console.log(new Date(req.query.start_time));
+			// console.log(req.query.start_time);	
+		}
+		
+		if(req.query.end_time == null){
+			var	date = new Date();
+			req.query.end_time = new Date(date.getFullYear()+"/"+(date.getMonth()+1)+"/"+date.getDate()+" 24:00:00").getTime();
+		}
 
-			async.forEach(time_logs,function(time_log,callback){
-				if(time_log.start_time> todays_date){
-					todays_logged_time = todays_logged_time + (parseInt(time_log.end_time)-parseInt(time_log.start_time));
-				}
-				callback(null,todays_logged_time);
-			}, function(err){
-				if(err){ throw err}
-				res.send({logged_time:todays_logged_time});
-			});
+		TimeSheet.getTaskTime(req, function(log) {
+			res.send({logged_time:log[0].logged_time});
 		});
 	}
 	else{

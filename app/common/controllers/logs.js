@@ -45,7 +45,7 @@ angular
 			locals:{
 				task:task
 			},
-			controller: ['$scope', '$mdDialog', '$http', '$mdToast', 'task', function($scope, $mdDialog, $http, $mdToast, task) {
+			controller: ['$scope', '$mdDialog', '$http', '$mdToast', 'task', 'moment', function($scope, $mdDialog, $http, $mdToast, task, moment) {
                 $scope.task = task;
                 var log_min = 15;
                 var logged_time = task.total_time/60/1000;
@@ -69,12 +69,15 @@ angular
                 	var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
                 	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-                	var date_string = days[data.date.getDay()]+" "
-                		date_string +=months[data.date.getMonth()]+" "
-                		date_string +=data.date.getDate()+" "
-                		date_string +=((data.date.getHours()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getMinutes()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getSeconds()<10)?"0"+data.date.getHours():data.date.getHours())+" "
-                		date_string +=String(data.date).replace(/[\s\S]+\(/,"").replace(/\)/,"")+" "
-                		date_string +=data.date.getFullYear()
+                	// var date_string = data.date.getFullYear()+"-"
+                	// 	date_string +=data.date.getMonth()+1+"-"
+                	// 	date_string +=data.date.getDate()+"'T'"
+                	// 	date_string +=((data.date.getHours()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getMinutes()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getSeconds()<10)?"0"+data.date.getHours():data.date.getHours())+" "
+                		// var format = "YYYY-MM-DD[T]HH:mm:ss.SSSZ";
+    					var date_string = moment(data.date).format("YYYY-MM-DD[T]HH:mm:ss.SSSZZ");
+    					console.log(date_string);
+                		// console.log(String(date_string).replace(' ', 'T'))
+                		// date_string = new Date("yyyy-MM-dd`T`HH:mm:ss.SSSZ");
 
                 	var payload = {
                 		account:data.account,

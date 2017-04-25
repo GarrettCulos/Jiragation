@@ -132,7 +132,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 		$myAccounts.then(function(accountService){
 			$scope.commentButtonDissabled=true;
 			var account = accountService.user_accounts[task.accountId];
-			var data_load = {
+			var payload = {
 				issueId: task.id,
 				acct: JSON.stringify(account),
 				body: data
@@ -142,7 +142,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 				rejectUnauthorized: false,
 				method: 'GET',
 				url: '/jira/add_comments',
-				params: data_load
+				params: payload
 			}).then(function successCallback(response){
 				$scope.commentButtonDissabled=false;
 
@@ -159,18 +159,20 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 		console.log($scope.task.self.split('://')[1].split('/rest/api/')[0])
 		var date = new Date();
 		var current_date = date.getTime();
-		var response = {
+			console.log(current_date);
+		var payload = {
 			account_url: $scope.task.self.split('://')[1].split('/rest/api/')[0],
 			task_id: $scope.task.key,
-			end_time: current_date,
-			start_time: current_date-timerDataToUnix(logged_time)
+			end_time: new Date(current_date),
+			start_time: new Date(current_date-timerDataToUnix(logged_time))
 		}
+		console.log(payload)
 		
 		// send data to databse
 		$http({
 			method: 'POST',
 			url: 	'/task/trackTime',
-			data: 	JSON.stringify(response),
+			data: 	JSON.stringify(payload),
 			headers: {'Content-Type': 'application/json'}
 
 		}).then(function successCallback(res){

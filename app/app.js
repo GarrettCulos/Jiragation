@@ -133,11 +133,8 @@ angular.module('Jiragation', [
             (response.data.is_admin)?$rootScope.isAdmin = true:$rootScope.isAdmin=false;
         });
     }
-    else{
-      // $location.path('/')
-    }
   });
-
+  
   // Listen to logins
   $rootScope.$on('authLogin', function(event, user) {
     Authenticate.check(function(res){
@@ -172,7 +169,6 @@ angular.module('Jiragation', [
                     $window.localStorage['jwtToken']=result.data.token;
 
                     $rootScope.$broadcast('authLogin', result.user);
-                    // $location.path('/inventory');
                     callback(result);
                 }
                 else{
@@ -180,6 +176,32 @@ angular.module('Jiragation', [
                 }
             }, function(error){
                 callback({status:401, message:error});
+            });
+        },
+        refresh:function(callback){
+            var token = $window.localStorage['jwtToken'];
+            if(!token){
+                return callback(null);
+            };
+            $http.defaults.headers.common['x-access-token'] = token;
+            $http({
+                method:'GET',
+                url:'/api/refreshToken'
+            }).then(function(response){
+                console.log('refreshed token');
+                // console.log(response.data);
+                $http.defaults.headers.common['x-access-token']=result.data.token;
+                $window.localStorage['jwtToken']=result.data.token;
+                callback(result);
+            }, function(error){
+              console.log(error);
+              if(error.status==401){
+                  console.log('session expired');
+                  delete $window.localStorage['jwtToken'];
+                  delete $http.defaults.headers.common['x-access-token'];
+                  $location.path('/');
+                  return callback(null);
+              } 
             });
         },
         check:function(callback){
@@ -197,7 +219,7 @@ angular.module('Jiragation', [
             }, function(error){
                 if(error.status==401){
                     console.log('session expired');
-                    // $location.path('/'); 
+                    $location.path('/');
                     delete $window.localStorage['jwtToken'];
                     delete $http.defaults.headers.common['x-access-token'];  
                     return callback(null);
@@ -365,10 +387,13 @@ angular.module('Jiragation', [
 
         return $accounts;
     });
-}]).controller('AppCtrl', function ($scope, $timeout, $http, $mdSidenav, $log, $mdDialog, $mdMedia) {
+}]).controller('AppCtrl', ['$scope', '$timeout', '$http', '$mdSidenav', '$log', '$mdDialog', '$mdMedia', 'Authenticate', function ($scope, $timeout, $http, $mdSidenav, $log, $mdDialog, $mdMedia, Authenticate) {
   $scope.toggleLeft = buildToggler('left');
   $scope.toggleRight = buildToggler('right');
 
+  Authenticate.refresh(function(response){
+    console.log(response);
+  });
 
   // --------------------------------------------- //
   //                  Left/Right navs              //
@@ -467,7 +492,7 @@ angular.module('Jiragation', [
       };
     }
     
-}).controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+}]).controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
   $scope.close = function () {
     // Component lookup should always be available since we are not using `ng-if`
     $mdSidenav('right').close()

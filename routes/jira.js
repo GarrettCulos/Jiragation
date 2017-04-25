@@ -14,7 +14,7 @@ function taskListToArray(array){
 	return res;
 };
 
-jira.get('/add_comments', function(req,res,next) {
+jira.get('/add_comments', function(req,res) {
 	var data = req.query;
 	var account = JSON.parse(data.acct);
 	var post_data = '{"body":"'+data.body+'"}';
@@ -66,7 +66,7 @@ jira.get('/add_comments', function(req,res,next) {
  	post_req.end();
 });
 
-jira.get('/task_comments', function(req,res,next) {
+jira.get('/task_comments', function(req,res) {
 	var data = req.query;
 	var account = JSON.parse(data.acct);
 	var options = {
@@ -116,7 +116,7 @@ jira.get('/task_comments', function(req,res,next) {
  	}
 });
 
-jira.get('/jira_accounts', function(req, res, next) { 
+jira.get('/jira_accounts', function(req, res) { 
 	
 	var user_accounts = [];
 
@@ -132,7 +132,6 @@ jira.get('/jira_accounts', function(req, res, next) {
 		    r.on('data', function(d) {
 		    	tasks.push(d);
 		    }).on('end', function() {
-				
 				tasks_list.push(JSON.parse(Buffer.concat(tasks).toString()));
 				// console.log(tasks_list);
 				loop_count=loop_count+1;
@@ -160,17 +159,29 @@ jira.get('/jira_accounts', function(req, res, next) {
 			
 		   	if(acct.protocal === "http"){
 		   		http.get(options, function(response) {
-					  get_jira_accounts(response, acct);
-					}).on('error', (error) => {
-						console.error(error);	
-					});
+	   				if(parseInt(response.statusCode) == 200){
+			  			get_jira_accounts(response, acct);		   					
+	   				}
+	   				else{
+	   					console.log(response);
+	   					res.status(parseInt(response.statusCode)).send("internal error");
+	   				}
+				}).on('error', (error) => {
+					console.error(error);	
+				});
 
 		   	} else {
-					https.get(options, function(response) {
+				https.get(options, function(response) {
+	   				if(response.statusCode == 200){
 						get_jira_accounts(response, acct);
-					}).on('error', (error) => {
-						console.error(error);	
-					});
+					}
+	   				else{
+	   					console.log(response);
+	   					res.status(response.statusCode).send("internal error");
+	   				}
+				}).on('error', (error) => {
+					console.error(error);	
+				});
 			   		
 		   	}
 
@@ -183,18 +194,22 @@ jira.get('/jira_accounts', function(req, res, next) {
 	});
 });
 
-jira.post('/logTime', function(req,res,next){
+jira.post('/logTime', function(req,res){
 	Accounts.getAccountsById(req, function(account){
+
 
 		post_data = {
 				timeSpentSeconds: req.body.time*60,
-				visibility: {
-			        type: 'group',
-			        value: "jira-developers"
-			    },
-				started: req.body.date, 
+				// timeSpent: req.body.time+'m',
+				// visibility: {
+			 //        type: 'group',
+			 //        value: "jira-developers"
+			 //    },
+				started: req.body.date,
 				comment: req.body.comment
 		}
+		
+		// console.log(post_data);
 		post_data = JSON.stringify(post_data)
 		// console.log(account);
 		// console.log(post_data);
