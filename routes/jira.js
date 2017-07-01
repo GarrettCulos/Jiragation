@@ -1,6 +1,11 @@
+var env           		= process.env.NODE_ENV || "development";
+var config        		= require('../config/config.json')[env];
 var express 			= require('express');
 var jira				= express.Router();
 var Accounts 			= require('../models/accounts');
+var async				= require('async');
+var cryptoJS 			= require('crypto-js');
+var JiraC 				= require('../services').jira;
 var fs 					= require('fs');
 const http 				= require('http');
 const https 			= require('https');
@@ -8,17 +13,20 @@ const querystring 		= require('querystring');
 
 function taskListToArray(array){
 	var res =[];
+
 	array.forEach(function(taskList){
 		res = res.concat(taskList.issues);
 	});
+	console.log(res);
 	return res;
 };
 
-jira.get('/add_comments', function(req,res,next) {
+jira.get('/add_comments', function(req,res) {
 	var data = req.query;
 	var account = JSON.parse(data.acct);
 	var post_data = '{"body":"'+data.body+'"}';
-
+	var basic_authBytes  = cryptoJS.AES.decrypt(account.basic_auth, config.secret);
+	var basic_auth = basic_authBytes.toString(cryptoJS.enc.Utf8);
 	var options = {
 		method: 'POST',
 		host: account.url,
@@ -26,49 +34,26 @@ jira.get('/add_comments', function(req,res,next) {
 		headers:{
 			'Content-Type':  'application/json',
 			'Content-Length': Buffer.byteLength(post_data),
-			'Authorization': 'Basic '+ new Buffer( account.user_name + ':' + account.password ).toString('base64')
+			'Authorization': 'Basic '+ basic_auth
 		}
 	};
 
- 	if(account.protocal === "http"){
+	var requestData = {};
+	requestData.post_data = post_data;
+	requestData.account = account;
 
- 		var post_req = http.request(options, function(response) {
-			data='';
-			response.setEncoding('utf8')
-			response.on('data', function(d) {
-				data += d
-			});
-			response.on('end', function(d) {
-				res.send(data)
-			});
-		}).on('error', (error) => {
-			console.error(error);	
-		});
-
- 	} else {
-
-		var post_req = https.request(options, function(response) {	
-			data='';
-			response.setEncoding('utf8')
-			response.on('data', function(d) {
-				data += d
-			});
-			response.on('end', function(d) {
-				res.send(data)
-			});
-		}).on('error', (error) => {
-			console.error(error);	
-		});
-	 		
- 	}
-
- 	post_req.write(post_data);
- 	post_req.end();
+	JiraC.jiraRequest(options, requestData, function(response){
+		res.status(200).send(response);
+	}, function(error){
+		res.status(404).send(error);
+	});
 });
 
-jira.get('/task_comments', function(req,res,next) {
+jira.get('/task_comments', function(req,res) {
 	var data = req.query;
 	var account = JSON.parse(data.acct);
+	var basic_authBytes  = cryptoJS.AES.decrypt(account.basic_auth, config.secret);
+	var basic_auth = basic_authBytes.toString(cryptoJS.enc.Utf8);
 	var options = {
 		rejectUnauthorized: false,
 		method: 'GET',
@@ -76,77 +61,30 @@ jira.get('/task_comments', function(req,res,next) {
 		path: '/rest/api/2/issue/'+ data.issueId +'/comment',
 		headers:{
 			'Content-Type':  'application/json',
-			'Authorization': 'Basic '+ new Buffer( account.user_name + ':' + account.password ).toString('base64')
+			'Authorization': 'Basic '+ basic_auth
 		}
 	};
+	var requestData = {};
+	requestData.account = account;
 
- 	if(account.protocal === "http"){
-
- 		http.get(options, function(response) {
-			
-			data='';
-			response.setEncoding('utf8')
-		  response.on('data', function(d) {
-		    data += d
-		  })
-		  response.on('end', function(d) {
-		    res.send(data)
-		  })
-		}).on('error', (error) => {
-			console.error(error);	
-		});
-
- 	} else {
-
-		https.get(options, function(response) {	
-			// console.log(response);
-			data='';
-			response.setEncoding('utf8')
-		  response.on('data', function(d) {
-		    data += d
-		  })
-		  response.on('end', function(d) {
-		    res.send(data)
-		  })
-		  // res.pipe(response);
-		}).on('error', (error) => {
-			console.error(error);	
-		});
-	 		
- 	}
+ 	JiraC.jiraRequest(options, requestData, function(response){
+		res.status(200).send(response);
+	}, function(error){
+		res.status(404).send(error);
+	});
 });
 
-jira.get('/jira_accounts', function(req, res, next) { 
-	
-	var user_accounts = [];
-
+jira.get('/jira_accounts', function(req, res) { 
 	Accounts.getAccounts(req, function(accts){
 		// console.log('routes - accout');
 		var tasks_list = [];
 		var loop_count = 0;
-		user_accounts = accts;
+		var user_accounts = accts;
 
-		function get_jira_accounts(r, acct){
-			var tasks = [];
-    
-		    r.on('data', function(d) {
-		    	tasks.push(d);
-		    }).on('end', function() {
-				
-				tasks_list.push(JSON.parse(Buffer.concat(tasks).toString()));
-				// console.log(tasks_list);
-				loop_count=loop_count+1;
-				// console.log('http request complete');
-				if(loop_count == Object.keys(user_accounts).length){
-	   				// console.log(taskListToArray(tasks_list,acct));
-	   				console.log('Return tasks');
-	   				res.json(taskListToArray(tasks_list, acct));
-	   			}
-			});
-	    }
+		async.forEach(user_accounts, function(acct, next2){
 
-		user_accounts.forEach(function(acct) { 		/* Loop Through accounts (user_accounts as acct) */
-
+			var basic_authBytes  = cryptoJS.AES.decrypt(acct.basic_auth.toString(), config.secret);
+			var basic_auth = basic_authBytes.toString(cryptoJS.enc.Utf8);
 			var options = {
 				rejectUnauthorized: false,
 				method: 'GET',
@@ -154,39 +92,30 @@ jira.get('/jira_accounts', function(req, res, next) {
 				path: '/rest/api/latest/search?jql=assignee='+ acct.user_name + '+order+by+duedate',
 				headers:{
 					'Content-Type':  'application/json',
-					'Authorization': 'Basic '+ new Buffer( acct.user_name + ':' + acct.password ).toString('base64')
+					'Authorization': 'Basic '+ basic_auth
 				}
 			};
 			
-		   	if(acct.protocal === "http"){
-		   		http.get(options, function(response) {
-					  get_jira_accounts(response, acct);
-					}).on('error', (error) => {
-						console.error(error);	
-					});
-
-		   	} else {
-					https.get(options, function(response) {
-						get_jira_accounts(response, acct);
-					}).on('error', (error) => {
-						console.error(error);	
-					});
-			   		
-		   	}
-
-		}, function(err) {
-		    
-		    console.log('iterating done');
-		
-		}); /* end loop */
-
+			var requestData = {};
+			requestData.account = acct;
+			
+		   	JiraC.jiraRequest(options, requestData, function(response){
+		   		tasks_list.push(JSON.parse(response));
+		   		next2();
+			}, function(error){
+				// console.log('error getting accout',error)
+				next2();
+			});
+		}, function(finished){
+			res.status(200).send(tasks_list.map((e)=> {return e.issues})[0]);	
+		});
 	});
 });
 
-jira.post('/logTime', function(req,res,next){
+jira.post('/logTime', function(req,res){
 	Accounts.getAccountsById(req, function(account){
 
-		post_data = {
+		var post_data = JSON.stringify({
 				timeSpentSeconds: req.body.time*60,
 				visibility: {
 			        type: 'group',
@@ -194,10 +123,9 @@ jira.post('/logTime', function(req,res,next){
 			    },
 				started: req.body.date, 
 				comment: req.body.comment
-		}
-		post_data = JSON.stringify(post_data)
-		// console.log(account);
-		// console.log(post_data);
+		})
+		var basic_authBytes  = cryptoJS.AES.decrypt(account.basic_auth, config.secret);
+		var basic_auth = basic_authBytes.toString(cryptoJS.enc.Utf8);
 		var options = {
 			rejectUnauthorized: false,
 			method: "POST",
@@ -206,46 +134,18 @@ jira.post('/logTime', function(req,res,next){
 			headers:{
 				"Content-Type": "application/json",
 				"Content-Length": Buffer.byteLength(post_data),
-				"Authorization": "Basic "+ new Buffer( account.user_name + ":" + account.password ).toString('base64')
+				"Authorization": "Basic "+ basic_auth
 			}
 		};
-		// console.log(options);
+		var requestData = {};
+		requestData.post_data = post_data;
+		requestData.account = account;
 
-	 	if(account.protocal == "http"){
-
-	 		var post_req = http.request(options, function(response) {
-				data='';
-				// console.log(response);
-				response.setEncoding('utf8')
-				response.on('data', function(d) {
-					data += d
-				});
-				response.on('end', function(d) {
-					res.status(response.statusCode).send(data);
-				});
-			}).on('error', (error) => {
-				console.error(error);	
-			});
-
-	 	} else {
-
-			var post_req = https.request(options, function(response) {	
-				data='';
-				response.setEncoding('utf8')
-				response.on('data', function(d) {
-					// console.log(d)
-					data += d
-				});
-				response.on('end', function(d) {
-					res.status(response.statusCode).send(data);
-				});
-			}).on('error', (error) => {
-				console.error(error);	
-			});
-		 		
-	 	}
-	 	post_req.write(post_data);
-	 	post_req.end();
+		JiraC.jiraRequest(options, requestData, function(response){
+	   		res.status(200).send(response);
+		}, function(error){
+	   		res.status(404).send(error);
+		});
 	});
 });
 

@@ -1,8 +1,9 @@
-var db 			= require('../init_db');
-var model		= require('./jiragation');
+var env 		= process.env.NODE_ENV || "development";
+var config 		= require('../config/config.json')[env];
 var passwords	= require('../config/disallowedPasswords');
-var config      = require('config');
-var bcrypt		= require('bcrypt');
+var db 			= require('../db');
+var model		= require('./jiragation');
+var bcrypt		= require('bcryptjs');
 var Sequelize 	= db.Sequelize;
 var sequelize 	= db.sequelize;
 

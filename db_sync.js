@@ -1,5 +1,5 @@
 var fs 					= require('fs');
-var db 					= require('./init_db.js');
+var db 					= require('./db.js');
 var model				= require('./models/jiragation.js');
 var Sequelize 			= db.Sequelize;
 var sequelize 			= db.sequelize;
@@ -8,5 +8,5 @@ var sequelize 			= db.sequelize;
 sequelize.sync().then(function () {
 	console.log('Table Created');
 }, function(err) {
-	console.log('An error occur while creating table');		
+	console.log('An error occur while creating table', err);		
 });

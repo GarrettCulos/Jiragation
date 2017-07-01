@@ -3,7 +3,7 @@ var users 			= express.Router();
 var Users			= require('../models/users');
 var fs 				= require('fs');
 
-users.get('/get_user_info', function(req, res, next) { 
+users.get('/get_user_info', function(req, res) { 
 	if(res.decoded!=null){
 		Users.getUserInformation(req.decodec.id, function(result){
 			res.send(result);		
@@ -13,7 +13,7 @@ users.get('/get_user_info', function(req, res, next) {
 		res.status(401).send('Unauthorized Request');
 	}
 });
-users.post('/update', function(req,res,next) {
+users.post('/update', function(req,res) {
 	if(req.decoded != null){
     	Users.update(req.body.user,function(error, response){
       		if(error){
@@ -31,7 +31,7 @@ users.post('/update', function(req,res,next) {
 	}
 }); 
 
-users.get('/getUserInformation', function(req,res,next) {
+users.get('/getUserInformation', function(req,res) {
 	if(req.decoded!=null){
 		Users.getUserInformation(req.decoded.id, function(err, result){
 			if(err){

@@ -1,4 +1,4 @@
-var db 					= require('../init_db');
+var db 					= require('../db');
 var model 				= require('./jiragation');
 var Sequelize 			= db.Sequelize;
 var sequelize 			= db.sequelize;

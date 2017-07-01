@@ -52,7 +52,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 			// get comments // GET /rest/api/2/issue/{issueIdOrKey}/comment
 			$http({
 				method: 'GET',
-				url: '/jira/task_comments',
+				url: '/api/v1/jira/task_comments',
 				params: data_load
 			}).then(function successCallback(response){
 				// pass in comment array for preprocessing
@@ -88,7 +88,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 			// var taskID = ;
 			$http({
 				method:  'GET',
-				url: 	 '/task/getTaskTime',
+				url: 	 '/api/v1/task/getTaskTime',
 				params:  { task_id: $scope.task.key},
 				headers: {'Content-Type': 'application/json'}
 
@@ -141,7 +141,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 			$http({
 				rejectUnauthorized: false,
 				method: 'GET',
-				url: '/jira/add_comments',
+				url: '/api/v1/jira/add_comments',
 				params: data_load
 			}).then(function successCallback(response){
 				$scope.commentButtonDissabled=false;
@@ -169,7 +169,7 @@ angular.module('Jiragation.task', ['ngRoute','timer','appFilters'])
 		// send data to databse
 		$http({
 			method: 'POST',
-			url: 	'/task/trackTime',
+			url: 	'/api/v1/task/trackTime',
 			data: 	JSON.stringify(response),
 			headers: {'Content-Type': 'application/json'}
 

@@ -87,7 +87,7 @@ angular
                 	}
 					$http({
 	                    method:   'POST',
-	                    url:      '/jira/logTime',
+	                    url:      '/api/v1/jira/logTime',
 	                    data: JSON.stringify(payload), 
 	                    headers: {
 	                      'Content-Type': 'application/json'
@@ -134,7 +134,7 @@ angular
 
 		$http({
 			method:  'GET',
-			url: 	 '/task/getTrackedTime',
+			url: 	 '/api/v1/task/getTrackedTime',
 			params:  { 
 				earlier_time: start_date,
 				later_time: end_date

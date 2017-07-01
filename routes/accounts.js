@@ -3,7 +3,7 @@ var accounts 			= express.Router();
 var Accounts 			= require('../models/accounts');
 var fs 					= require('fs');
 
-accounts.get('/fetch_accounts', function(req, res, next) {
+accounts.get('/fetch_accounts', function(req, res) {
 	if(req.decoded != null){
 		Accounts.getAccounts(req, function(result){
 			// console.log('routes - accout');
@@ -21,7 +21,7 @@ accounts.get('/fetch_accounts', function(req, res, next) {
 	}
 });
 
-accounts.get('/is_current_user', function(req, res, next) { 
+accounts.get('/is_current_user', function(req, res) { 
 	if(req.decoded != null){
 		Accounts.verifyUserAccount(req, function(result){
 			// console.log('routes - accout');
@@ -34,11 +34,13 @@ accounts.get('/is_current_user', function(req, res, next) {
 });
 
 
-accounts.post('/add_account',function(req,res,next) {
+accounts.post('/add_account',function(req,res) {
 	if(req.decoded != null){
-		Accounts.setAccount(req, function(result){
-			// console.log('Account Set');
-			res.send(result);		
+		Accounts.addAccount(req, function(errors, result){
+			if(errors){
+				return res.status(401).send(errors);
+			}
+			res.send(result);
 		});
 	}
 	else{
@@ -46,7 +48,7 @@ accounts.post('/add_account',function(req,res,next) {
 	}
 });
 
-accounts.delete('/remove_account',function(req,res,next) {
+accounts.delete('/remove_account',function(req,res) {
 	if(req.decoded != null){
 		Accounts.removeAccount(req, function(result){
 			res.sendStatus(result);		

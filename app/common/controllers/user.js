@@ -14,7 +14,7 @@ angular
  	$scope.register = function(registration, user){
     $http({
         method:'POST',
-        url: '/api/addUser',
+        url: '/api/v2/user',
         data: user,
         headers: {
           'Content-Type': 'application/json'

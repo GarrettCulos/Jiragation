@@ -3,7 +3,7 @@ var logs 				= express.Router();
 var Accounts 			= require('../models/accounts');
 var fs 					= require('fs');
 
-logs.get('/fetch_accounts', function(req, res, next) { 
+logs.get('/fetch_accounts', function(req, res) { 
 	if(req.decoded !=null){
 		Accounts.getAccounts(req, function(result){
 			res.send(result);		
@@ -14,7 +14,7 @@ logs.get('/fetch_accounts', function(req, res, next) {
 	}
 });
 
-logs.post('/add_account',function(req,res,next) {
+logs.post('/add_account',function(req,res) {
 	if(req.decoded !=null){
 		Accounts.setAccount(req, function(result){
 			res.send(result);		
@@ -25,7 +25,7 @@ logs.post('/add_account',function(req,res,next) {
 	}
 });
 
-logs.delete('/remove_account',function(req,res,next) {
+logs.delete('/remove_account',function(req,res) {
 	if(req.decoded !=null){
 		Accounts.removeAccount(req, function(result){
 			res.send(result);		

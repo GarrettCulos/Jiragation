@@ -158,8 +158,8 @@ angular.module('Jiragation', [
     return {
         login:function(user, callback){
             $http({
-                method:   'POST',
-                url:      '/api/authenticate',
+                method:   'PUT',
+                url:      '/api/v2/user/login',
                 data: user,
                 headers: {
                     'Content-Type': 'application/json'
@@ -190,7 +190,7 @@ angular.module('Jiragation', [
             $http.defaults.headers.common['x-access-token'] = token;
             $http({
                 method:'GET',
-                url:'/api/tokenCheck'
+                url:'/api/v1/tokenCheck'
             }).then(function(response){
                 // set http header
                 callback(true);
@@ -223,7 +223,7 @@ angular.module('Jiragation', [
 
             $http({
                 method:'GET',
-                url:'/api/tokenCheck'
+                url:'/api/v1/tokenCheck'
             }).then(function(response){
                 if(response.status==401){
                     console.log('session expired');
@@ -241,7 +241,7 @@ angular.module('Jiragation', [
 
             $http({
                 method:'GET',
-                url:'/users/getUserInformation'
+                url:'/api/v2/users'
             }).then(function(response){
                 if(response.status >= 400){
                     console.log('session expired');
@@ -258,7 +258,7 @@ angular.module('Jiragation', [
             }
             $http({
                 method:'GET',
-                url:'/api/tokenCheck'
+                url:'/api/v1/tokenCheck'
             }).then(function(response){
                 if(response.status==401){
                     return callback(null);
@@ -269,7 +269,7 @@ angular.module('Jiragation', [
         updateUser:function(user, callback, error){
             $http({
                 method:'POST',
-                url:'/users/update',
+                url:'/api/v2/users/'+user.id,
                 data:{
                     user:user
                 },
@@ -278,7 +278,7 @@ angular.module('Jiragation', [
                 }
             }).then(function(response){
                 console.log(response);
-                if(response.status==422){
+                if(response.status==400){
                     return error(response);
                 } 
                 return callback(response);
@@ -294,7 +294,7 @@ angular.module('Jiragation', [
     $currentUser.getUserInformation = function() {
         return $http({
             method: 'GET',
-            url: '/users/get_user_info'
+            url: '/api/v1/users/get_user_info'
         }).then(function successCallback(response){
             return response;
         }, function errorCallback(response){
@@ -304,7 +304,7 @@ angular.module('Jiragation', [
 
     $http({
         method:'GET',
-        url: '/account/fetch_accounts',
+        url: '/api/v2/account',
         headers: {'Content-Type': 'application/json'}
     }).then(function successCallback(res){
         $currentUser.user_accounts = res;
@@ -321,7 +321,7 @@ angular.module('Jiragation', [
     $currentUser.updateUser = function(user) {
         return $http({
             method: 'POST',
-            url: '/users/update_user_info',
+            url: '/api/v1/users/update_user_info',
             data: user
         }).then(function successCallback(response){
             console.log('Updated User')
@@ -337,7 +337,7 @@ angular.module('Jiragation', [
 
     return $http({
         method:'GET',
-        url: '/account/fetch_accounts',
+        url: '/api/v2/account',
         headers: {'Content-Type': 'application/json'}
     }).then(function(response){
     

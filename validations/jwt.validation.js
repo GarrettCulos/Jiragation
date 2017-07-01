@@ -3,9 +3,8 @@ var config        = require('../config/config.json')[env];
 var bcrypt        = require('bcryptjs');
 var jwt           = require('jsonwebtoken');
 
-
 // check header or url parameters or post parameters for token
-module.exports = function(req, res, next){
+exports.check = function(req, res, next){
 
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   // decode token

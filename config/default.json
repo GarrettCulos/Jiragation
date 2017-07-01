@@ -1,15 +1,68 @@
 {
-	"dbConfig" : {
-		"connection_limit" : 100,
-		"host" : "localhost",
-		"user" : "root",
-		"password" : "",
-		"database" : "<database name>",
-        "logging" : false
-	},
-	"server" : {
-		"secret"        	: "a23d8fu1234@a)As-3j3lA~12", // change this!
-		"port"          	: 9003,
-		"root"          	:"./"
-	}
+    "development": {
+        "secret": "thisismysecret",
+        "database": {
+            "connection_limit" : 100,
+            "username": "root",
+            "password": "",
+            "database": "jiragation2",
+            "options": {
+                "host": "127.0.0.1",
+                "dialect": "mysql",
+                "timezone": "America/Los_Angeles",
+                "logging":true,
+                "pool":{                 
+                    "max": 100,
+                    "min": 0,
+                    "idle": 10000
+                }
+            }
+        },
+        "port": 9003,
+        "root":"./"
+    },
+    "test": {
+        "secret": "superNotSecret",
+        "database": {
+            "connection_limit" : 100,
+            "username": "root",
+            "password": "",
+            "database": "jiragation2",
+            "options": {
+                "host": "127.0.0.1",
+                "dialect": "mysql",
+                "timezone": "America/Los_Angeles",
+                "logging":true,
+                "pool":{                 
+                    "max": 100,
+                    "min": 0,
+                    "idle": 10000
+                }
+            }
+        },
+        "port": 9003,
+        "root":"./"
+    },
+    "production": {
+        "secret": "h!s@aS4s<zuwc..(sd}[u5S",
+        "database": {
+        	"connection_limit" : 100,
+            "username": "root",
+            "password": "",
+            "database": "jiragation2",
+            "options": {
+                "host": "127.0.0.1",
+                "dialect": "mysql",
+                "timezone": "America/Los_Angeles",
+                "logging":true,
+                "pool":{                 
+                    "max": 100,
+                    "min": 0,
+                    "idle": 10000
+                }
+            }
+        },
+        "port": 9003,
+        "root":"./"
+    }
 }

@@ -41,7 +41,7 @@ angular
 
   $http({
     method: 'GET',
-    url: '/account/fetch_accounts'
+    url: '/api/v2/account'
 
   }).then(function successCallback(response){
     var jiraAccounts = response.data;
@@ -74,7 +74,7 @@ angular
     $scope.addNote = function(note) {
       $http({
         method:   'POST',
-        url:      '/notes/add_note',
+        url:      '/api/v1/notes/add_note',
         params:  {
           description: note.message,
           task_id: note.task_id

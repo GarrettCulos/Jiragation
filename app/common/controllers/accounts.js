@@ -10,7 +10,7 @@ angular
  	syncAccounts();
   
 	Authenticate.getUserInformation(function(res){
-		console.log(res.data);
+		console.log(res);
 		$scope.user = res.data
 		$scope.userChanges.id = res.data.id
 
@@ -19,7 +19,7 @@ angular
 	function syncAccounts(){
 		$http({
 			method: 'GET',
-			url: '/account/fetch_accounts'
+			url: '/api/v2/accounts'
 
 		}).then(function successCallback(response){
 			$scope.JiraAccounts = response.data;
@@ -48,7 +48,7 @@ angular
 		console.log(data);
 		$http({
 			method: 'POST',
-			url: '/account/add_account',
+			url: '/api/v1/accounts',
 			data: {
 				url:data.jira_url.split('://')[1], 
 				user_name:data.user_name, 
@@ -59,7 +59,6 @@ angular
 		}).then(function successCallback(response){
 			$scope.JiraAccounts.push({
 				account_email:data.account_email,
-				password:data.password,
 				protocal:data.jira_url.split('://')[0],
 				url:data.jira_url.split('://')[1],
 				user_name:data.user_name
@@ -85,7 +84,7 @@ angular
             var account = $scope.JiraAccounts[id];
 			$http({
 				method: 'DELETE',
-				url: '/account/remove_account',
+				url: '/api/v2/account/'+account.id,
 				params: {url:account.url, user_name:account.user_name}
 			}).then(function successCallback(response){
 				$mdToast.show({

@@ -4,7 +4,7 @@ var taskManager			= express.Router();
 var TimeSheet			= require('../models/time_sheet.js');
 var fs 					= require('fs');
 
-taskManager.post('/trackTime', function(req, res, next) {
+taskManager.post('/trackTime', function(req, res) {
 	if(req.decoded != null){
 		TimeSheet.logTaskTime(req, function(req, result) {
 			console.log(result); 
@@ -16,7 +16,7 @@ taskManager.post('/trackTime', function(req, res, next) {
 	}
 });
 
-taskManager.get('/getTrackedTime',function(req, res, next) {
+taskManager.get('/getTrackedTime',function(req, res) {
 	if(req.decoded != null){
 		TimeSheet.getTrackedTime(req, function(time_logs) {
 			res.send({time_logs: time_logs});
@@ -27,7 +27,7 @@ taskManager.get('/getTrackedTime',function(req, res, next) {
 	}
 });
 
-taskManager.get('/getTaskTime',function(req, res, next) {
+taskManager.get('/getTaskTime',function(req, res) {
 	if(req.decoded != null){
 		TimeSheet.getTaskTime(req, function(time_logs) {
 			var todays_logged_time=0;
@@ -50,7 +50,7 @@ taskManager.get('/getTaskTime',function(req, res, next) {
 	}
 });
 
-taskManager.post('/add_accounts',function(req, res, next) {
+taskManager.post('/add_accounts',function(req, res) {
 	if(req.decoded != null){
 		Accounts.setAccount(req, function(result) {
 			// console.log('Account Set');

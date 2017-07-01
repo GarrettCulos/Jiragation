@@ -1,9 +1,11 @@
+var env           = process.env.NODE_ENV || "development";
+var config        = require('../config/config.json')[env];
 var express       = require('express');
 var api           = express.Router();
 var User          = require('../models/users');
-var bcrypt        = require('bcrypt');
+var bcrypt        = require('bcryptjs');
 var jwt           = require('jsonwebtoken');
-var config        = require('config').get('server');
+
 
 function sign_in(u, callback){
 
@@ -23,7 +25,7 @@ function sign_in(u, callback){
       } else {
         // if user is found and password is right
         // create a token
-        var token = jwt.sign(user, config.get('secret'), {
+        var token = jwt.sign(user, config.secret, {
           expiresIn: 1440*60 // expires in 24 hours
         });
 
@@ -66,7 +68,7 @@ api.post('/addUser',function(req, res, next){
 
 api.get('/tokenCheck', function(req,res,next){
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
-  jwt.verify(token,config.get('secret'),function(err, decoded) {
+  jwt.verify(token, config.secret,function(err, decoded) {
     if(err) res.status(401).send(false);
     res.send(decoded);
   });
