@@ -13,10 +13,11 @@ var Sequelize           = db.Sequelize;
 var sequelize           = db.sequelize;
 
 // POST: /api/v1/accounts
-exports.get = function( req, res, next ){
+exports.get = function( req, res ){
   
   var account_id = req.params.id || req.body.account_id
   var queryString = "SELECT ";
+    queryString += " ja.id as account_id , ";
     queryString += " ja.user_name as user_name , ";
     queryString += " ja.url as url,";
     queryString += " ja.protocal as protocal, ";
@@ -29,18 +30,17 @@ exports.get = function( req, res, next ){
     }
   
   sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
-    res.send({
+    return res.send({
       message:'get accounts api sucess',
       data: results
-    })
-    return next();
+    });
   }).catch(function(err){
-    res.status(400).send({
+    throw err;
+    return res.status(400).send({
       message:"query failed",
       data: err
     })
-    throw err;
-    return next();
+    
   });
   
 }
@@ -54,8 +54,8 @@ exports.add = function( req, res ){
   account.basic_auth = cryptoJS.AES.encrypt(new Buffer( account.user_name + ':' + account.password ).toString('base64'), config.secret).toString();
   
   // test that username and password are valid
-  JiraC.checkAuthentication(account, function(res){
-    if(res.total === 'undefined') {
+  JiraC.checkAuthentication(account, function(result){
+    if(result.total === 'undefined') {
       errors.push({message:'Authentication Failed',type:'general'});
       return res.status(400).send({
         message:'unable to access account', 
@@ -64,7 +64,7 @@ exports.add = function( req, res ){
     }
 
     sequelize.transaction(function (t) {
-      return model.accounts.findOrCreate({
+      return model.jira_accounts.findOrCreate({
         where: {
           user_name:  account.user_name,
           url:        account.url,
@@ -83,7 +83,8 @@ exports.add = function( req, res ){
         return newUser;
       });
     }).then(function (u) {
-      return res.send({message:'Account added', data:u});
+      u[0].dataValues.account_id = u[0].dataValues.id;
+      return res.send({message:'Account added', data:u[0]});
     }).catch(function (error) {
       errors.push(error);
       return res.status(400).send({message:'Error adding account', data:errors});
@@ -96,18 +97,19 @@ exports.add = function( req, res ){
 
 }
 
+exports.update = function( req, res ){
+  return res.status(400).send({message:'not done'})
+}
+
 exports.remove = function( req, res ){
-  var account_id = req.params.id
-  model.accounts.destroy({
+  var account_id = req.params.id;
+  model.jira_accounts.destroy({
     where: {
       id:account_id,
-      user_name:req.query.user_name,
-      url: req.query.url,
       user_id: req.decoded.id         
     }
-  }).then(function (res) {
-
-    if(res>0){
+  }).then(function (results) {
+    if(results>0){
       return res.send({
         message:"Account Removed"
       });
@@ -127,12 +129,11 @@ exports.remove = function( req, res ){
   }); 
 }
 
-exports.get_projects = function( req, res, next ){
-  res.send({
+exports.get_projects = function( req, res ){
+  return res.send({
     error:false,
     message:"not created"
-  })
-  return next();
+  });
 }
 
 

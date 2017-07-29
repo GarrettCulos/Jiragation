@@ -1,7 +1,9 @@
 var env = process.env.NODE_ENV || "development";
 var config = require('../config/config.json')[env];
 
-var tasks = require('../models/tasks');
+var model = require('../modelsV2');
+var JiraC = require('../services').jira;
+
 var winston = require('winston');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
@@ -15,12 +17,17 @@ exports.create = function( req, res, next ){
     return next();
 }
 
-exports.get = function( req, res, next ){
-    res.send({
-        error:false,
-        message:"not created"
-    })
-    return next();
+exports.get = function( req, res ){
+    JiraC.getTasks(req.decoded.id, function(response){
+        return res.send({
+            data:response,
+            message:'success'
+        });
+    }, function(error){
+        return res.status(400).status({
+            message:'error getting tasks'
+        })
+    });
 }
 
 exports.update = function( req, res, next ){
@@ -31,13 +38,6 @@ exports.update = function( req, res, next ){
     return next();
 }
 
-exports.get = function( req, res, next ){
-    res.send({
-        error:false,
-        message:"not created"
-    })
-    return next();
-}
 
 exports.add_time_log = function( req, res, next ){
     res.send({

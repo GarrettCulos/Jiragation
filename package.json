@@ -27,6 +27,7 @@
     "load-grunt-tasks": "^3.5.2",
     "moment": "^2.18.1",
     "mysql": "^2.13.0",
+    "promise": "^8.0.1",
     "sequelize": "^3.30.4",
     "winston": "^2.3.1"
   }

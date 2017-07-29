@@ -236,40 +236,47 @@ exports.update = function(req, res){
 exports.login = function (req, res) {
 
     // find the user
-    console.log(model.users)
-    console.log(req.body)
     model.users.find({
         where: {
             user_name: req.body.user_name
         }
     }).then(function (data) {
-        console.log(data.dataValues);
-        var comparePassword = bcrypt.compareSync(req.body.password, data.dataValues.password);
-        if (comparePassword) {
-            var token = jwt.sign(data.dataValues, config.secret, {
-                expiresIn: 1440*60 // expires in 24 hours
+        if(data == null){
+            return res.status(401).send({
+                field:'user_name',
+                message: 'User does not exist'
             });
+        }
+        else{
+            var comparePassword = bcrypt.compareSync(req.body.password, data.dataValues.password);
+            if (comparePassword) {
+                var token = jwt.sign(data.dataValues, config.secret, {
+                    expiresIn: 1440*60 // expires in 24 hours
+                });
 
-            // return the information including token as JSON
-            return res.send({
-                message: 'Enjoy your token!',
-                token: token
-            });
-        } else {
-            return res.send({
-                error: true,
-                message: 'Invalid Password'
-            });
+                // return the information including token as JSON
+                return res.send({
+                    message: 'Enjoy your token!',
+                    token: token
+                });
+            } else {
+                return res.status(401).send({
+                    field:'password',
+                    message: 'Invalid Password'
+                });
+            }
+
         }
        
     })
 };
 
-exports.get = function(req, res, next) {
+exports.get = function(req, res) {
     var user_name = req.params.user_name;
     var email_address = req.params.email_address;
 
     selectQuery = " SELECT ";
+    selectQuery +=" u.id as `id`,"
     selectQuery +=" u.user_name as `user_name`,";
     selectQuery +=" u.email_address as `user_email`,";
     selectQuery +=" u.first_name as `first_name`,";
@@ -277,35 +284,37 @@ exports.get = function(req, res, next) {
     selectQuery +=" u.is_admin as `is_admin`" ;
     selectQuery +=" FROM users u";
     selectQuery +=" WHERE 1=1";
-    if(user_name){
+
+    if(user_name != undefined){
         selectQuery +=" AND u.user_name ='"+user_name+"'";        
     }
-    if(email_address){
+    if(email_address != undefined){
         selectQuery +=" AND u.email_address ='"+email_address+"'";
+    }
+    if(req.decoded.id){
+        selectQuery +=" AND u.id ='"+req.decoded.id+"'";
     }
 
     sequelize.query( selectQuery, {type: Sequelize.QueryTypes.select}).then(function(results){
-        res.send({
+        return res.send({
             message: 'Successfully retrieved user information',
-            data: results[0][0]
+            data: results[0]
         });
-        return next();
     }, function(err){
-        res.status(400).send({
+        return res.status(400).send({
             message: 'Error retrieving user information',
             data: err
         });
-        return next();
     });
 };
 
-exports.remove = function (req, res, next) {
+exports.remove = function (req, res) {
 
-   res.send({
+   return res.send({
         error: false,
         message: 'controller not created'
     });
-    return next();
+    
 };
 
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
@@ -320,26 +329,26 @@ exports.getAll = function (req, res, next) {
 };
 
 // route to authenticate a user (POST http://localhost:8080/api/authenticate)
-exports.get = function (req, res, next) {
+// exports.get = function (req, res) {
+//     let data = {}
+//     if(req.body.user_name){ data.user_name = req.body.user_name }
+//     if(req.body.email_address){ data.email_address = req.body.email_address }
+//     if(req.decoded.id){ data.id = req.decoded.id }
 
-    // find the user
-    model.users.findAll({
-        where: {
-            username: req.body.username
-        }
-    }).then(function (data) {
-        // return the information including token as JSON
-        res.send(data);
-        return next();
-    });
-};
+//     // find the user
+//     model.users.findAll({
+//         where: data
+//     }).then(function (data) {
+//         // return the information including token as JSON
+//         return res.send(data);
+//     });
+// };
 
-exports.logout = function (req, res, next) {
-    res.send({
+exports.logout = function (req, res) {
+    return res.send({
         error: false,
         message: 'controller not created'
     });
-    return next();
 };
 
 // PRIVATE FUNCTIONS
