@@ -189,7 +189,7 @@ exports.update = function(req, res){
 
 
     sequelize.transaction(function (t) {
-        return model.userss.update(user,{
+        return model.users.update(user,{
             where:{ 
                 id: user.id 
             },

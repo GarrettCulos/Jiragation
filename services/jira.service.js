@@ -25,16 +25,15 @@ exports.getTasks = function(user_id, callback, callbackError) {
     
     let Tasks = [];
 
-    for(var i in results){
+    results.map((account)=>{
       var pp = new Promise(function (resolve, reject) {
-        account = results[i].dataValues;
         var basic_authBytes  = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
         var basic_auth = basic_authBytes.toString(cryptoJS.enc.Utf8);
         var options = {
           rejectUnauthorized: true,
           method: 'GET',
           host: account.url,
-          path: '/rest/api/latest/search?jql=assignee='+ account.user_name + '+order+by+duedate',
+          path: '/rest/api/latest/search?jql=assignee='+ account.user_name + '+order+by+duedate&maxResults=1000',
           headers:{
             'Content-Type':  'application/json',
             'Authorization': 'Basic '+ basic_auth
@@ -44,14 +43,17 @@ exports.getTasks = function(user_id, callback, callbackError) {
         requestData.account = account;
         
         jiraRequest(options, requestData, function(response){
-          resolve(response)
+          response = JSON.parse(response);
+          response.account = account;
+          // console.log(response);
+          resolve(JSON.stringify(response));
         }, function(error){
-          console.log(error);
+          console.error(error);
           reject(error);
         });
       });
       Tasks.push(pp);
-    }
+    });
 
     Promise.all(Tasks).then(function(resp){
       callback(resp);
@@ -64,6 +66,70 @@ exports.getTasks = function(user_id, callback, callbackError) {
   });
   
 }
+
+exports.getTaskComments = function(task_key, account_id, callback, errorCallback) {
+  // console.log(task_key, account_id);
+  model.jira_accounts.findAll({
+    where: { id: account_id }
+  }).then(function(results) {
+    // console.log(results[0].dataValues);
+    let account           = results[0].dataValues;
+    var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+    var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+    var options           = {
+                              rejectUnauthorized: true,
+                              method: 'GET',
+                              host: account.url,
+                              path: '/rest/api/2/issue/'+task_key+'/comment',
+                              headers:{
+                                'Content-Type':  'application/json',
+                                'Authorization': 'Basic '+ basic_auth
+                              }
+                            };
+
+    var requestData = {};
+    requestData.account = account;
+
+    jiraRequest(options, requestData, function(response){
+      // console.log(response);
+      callback(response)
+    }, function(error){
+      // console.log('error getting accout',error)
+      errorCallback(error);
+    });
+  });
+};
+
+exports.addTaskComments = function(task_key, account_id, data, callback, errorCallback) {
+  // console.log(task_key, account_id, data);
+  model.jira_accounts.findAll({
+    where: { id: account_id }
+  }).then(function(results) {
+    let account           = results[0].dataValues;
+    var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+    var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+    var options           = {
+                              rejectUnauthorized: true,
+                              method: 'POST',
+                              host: account.url,
+                              path: '/rest/api/2/issue/'+task_key+'/comment',
+                              headers:{
+                                'Content-Type':  'application/json',
+                                'Authorization': 'Basic '+ basic_auth
+                              }
+                            };
+
+    var requestData = {};
+    requestData.account = account;
+
+    jiraRequest(options, requestData, function(response){
+      // console.log(response);
+      callback(response)
+    }, function(error){
+      errorCallback(error);
+    });
+  });
+};
 
 exports.checkAuthentication = function(account, callback, errorCallback) {
   var basic_authBytes  = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
@@ -83,11 +149,14 @@ exports.checkAuthentication = function(account, callback, errorCallback) {
   requestData.account = account;
   
     jiraRequest(options, requestData, function(response){
+      if(response.errorMessages || resonse.errors){
+        return errorCallback(response);
+      }
       callback(response)
-  }, function(error){
-    // console.log('error getting accout',error)
-    errorCallback(error);
-  });
+    }, function(error){
+      // console.log('error getting accout',error)
+      errorCallback(error);
+    });
 };
 
 exports.jiraRequest = function(options, dataRequest, callback, errorCallback){
