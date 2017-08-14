@@ -127,6 +127,41 @@ exports.get_time_log = function( req, res ){
     });
 }
 
+exports.get_active_tasks = function( req, res ){
+    var queryString  = " SELECT "
+        queryString +=      " ts.id as id, ";
+        queryString +=      " ts.task_id as task_id, ";
+        queryString +=      " ts.start_time as start_time, ";
+        queryString +=      " ts.end_time as end_time, ";
+        queryString +=      " ts.account_id as account_id, ";
+        queryString +=      " ac.user_name as user_name, ";
+        queryString +=      " ac.url as url, ";
+        queryString +=      " ac.account_email as account_email, ";
+        queryString +=      " ac.protocal as protocal ";
+        queryString += " FROM time_sheet ts ";
+        queryString += " JOIN jira_accounts ac ON ac.id = ts.account_id"
+        queryString += " WHERE 1=1 "
+        queryString += " AND ts.end_time IS NULL ";
+        queryString += " AND ts.user_id = "+req.decoded.id;
+        
+    sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
+        return res.send({
+            error:false,
+            data:results,
+            message:"success"
+        });
+
+    }).catch(function(err){
+        throw err;
+        return res.status(400).send({
+            error:false,
+            data:err,
+            message:"Failed to retrieve time log"
+        });
+
+    });
+}
+
 exports.remove_time_log = function( req, res ){
     return res.send({
         error:false,

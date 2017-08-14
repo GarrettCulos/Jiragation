@@ -23,17 +23,17 @@ exports.get_time_log = function( req, res ){
         queryString += " ac.account_email as account_email, ";
         queryString += " ac.protocal as protocal ";
         queryString += " FROM time_sheet ts ";
-        queryString += " JOIN jira_accounts ac ON ac.id = ts.account_id"
-        queryString += " WHERE 1=1 "
-        if(req.params.startTime){
-            queryString += " AND ts.start_time >= '" + req.params.startTime + "' ";
+        queryString += " JOIN jira_accounts ac ON ac.id = ts.account_id";
+        queryString += " WHERE 1=1 ";
+        if(req.query.startTime){
+            queryString += " AND ts.start_time >= '" + req.query.startTime + "' ";
         }
-        
-        if(req.params.endTime){
-            queryString += " AND ts.start_time <= '" + req.params.endTime + "' ";
+        if(req.query.endTime){
+            queryString += " AND ts.start_time <= '" + req.query.endTime + "' ";
         }
         queryString += " AND ts.end_time IS NOT NULL ";
         queryString += " AND ts.user_id = "+req.decoded.id;
+
 
     sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
         return res.send({
@@ -51,4 +51,24 @@ exports.get_time_log = function( req, res ){
         });
 
     });
+}
+
+exports.post_log = function( req, res ){
+    console.log(req.data, req.params, req.query, req.body);
+
+    JiraC.logTaskTime(req.body.body.account_id, req.body.body, function(response){
+        return res.send({
+            error:false,
+            data: response,
+            message:"success"
+        });
+    }, function(error){
+        return res.status(400).send({
+            error:true,
+            data: error,
+            message:"success"
+        });    
+    })
+    
+
 }
