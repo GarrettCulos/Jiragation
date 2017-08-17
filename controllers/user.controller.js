@@ -71,7 +71,7 @@ exports.create = function(req, res) {
             });
         }
         else{
-            Users.getUserByUserName(user.user_name, function(no_user,user_exists){
+            Users.getUserByUserName(user.user_name, function(no_user, user_exists){
                 if(user_exists){
                     errors.push({message:'This username already exists.', type:'user_name'})
                     return res.status(400).send({
@@ -100,9 +100,15 @@ exports.create = function(req, res) {
                                         message:'Failed to retrieve user data'
                                     });
                                 }
-                                return res.status(200).send({
-                                    data:finalUser,
-                                    message:'Registration successful'
+                                
+                                var token = jwt.sign(finalUser, config.secret, {
+                                    expiresIn: 1440*60 // expires in 24 hours
+                                });
+
+                                // return the information including token as JSON
+                                return res.send({
+                                    message: 'Enjoy your token!',
+                                    token: token
                                 });
                             });
                         }
@@ -268,7 +274,7 @@ exports.login = function (req, res) {
 
         }
        
-    })
+    });
 };
 
 exports.get = function(req, res) {

@@ -201,7 +201,7 @@ exports.checkAuthentication = function(account, callback, errorCallback) {
   requestData.account = account;
   
     jiraRequest(options, requestData, function(response){
-      if(response.errorMessages || resonse.errors){
+      if(response.errorMessages || response.errors){
         return errorCallback(response);
       }
       callback(response)

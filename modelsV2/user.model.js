@@ -1,8 +1,8 @@
 module.exports = function (sequelize, DataTypes) {
   var users = sequelize.define('users', {
     id:               { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
-    first_name:       { type: DataTypes.STRING, allowNull:false},
-    last_name:        { type: DataTypes.STRING, allowNull: false},
+    first_name:       { type: DataTypes.STRING, allowNull:true},
+    last_name:        { type: DataTypes.STRING, allowNull: true},
     user_name:        { type: DataTypes.STRING, allowNull: false},
     password:         { type: DataTypes.STRING, allowNull: false},
     is_admin:         { type: DataTypes.INTEGER, allowNull: false},
