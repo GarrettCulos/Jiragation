@@ -45,7 +45,6 @@ exports.getTasks = function(user_id, callback, callbackError) {
         jiraRequest(options, requestData, function(response){
           response = JSON.parse(response);
           response.account = account;
-          // console.log(response);
           resolve(JSON.stringify(response));
         }, function(error){
           console.error(error);
@@ -68,11 +67,11 @@ exports.getTasks = function(user_id, callback, callbackError) {
 }
 
 exports.getTaskComments = function(task_key, account_id, callback, errorCallback) {
-  // console.log(task_key, account_id);
+
   model.jira_accounts.findAll({
     where: { id: account_id }
   }).then(function(results) {
-    // console.log(results[0].dataValues);
+  
     let account           = results[0].dataValues;
     var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
     var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
