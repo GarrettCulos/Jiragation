@@ -6,3 +6,4 @@ config/*
 !config/default.json
 !config/disallowedPasswords.js
 plugins/*
+app/*
