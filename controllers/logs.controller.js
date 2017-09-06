@@ -54,9 +54,7 @@ exports.get_time_log = function( req, res ){
 }
 
 exports.post_log = function( req, res ){
-    console.log(req.data, req.params, req.query, req.body);
-
-    JiraC.logTaskTime(req.body.body.account_id, req.body.body, function(response){
+    JiraC.logTaskTime(req.body.account_id, req.body, function(response){
         return res.send({
             error:false,
             data: response,
@@ -68,7 +66,5 @@ exports.post_log = function( req, res ){
             data: error,
             message:"success"
         });    
-    })
-    
-
+    });
 }

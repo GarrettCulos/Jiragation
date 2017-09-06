@@ -79,7 +79,7 @@ exports.getTaskComments = function(task_key, account_id, callback, errorCallback
                               rejectUnauthorized: true,
                               method: 'GET',
                               host: account.url,
-                              path: '/rest/api/2/issue/'+task_key+'/comment',
+                              path: '/rest/api/latest/issue/'+task_key+'/comment',
                               headers:{
                                 'Content-Type':  'application/json',
                                 'Authorization': 'Basic '+ basic_auth
@@ -100,11 +100,9 @@ exports.getTaskComments = function(task_key, account_id, callback, errorCallback
 };
 
 exports.logTaskTime = function(account_id, data, callback, errorCallback) {
-  // console.log(task_key, account_id, data);
   model.jira_accounts.findAll({
     where: { id: account_id }
   }).then(function(results) {
-    console.log()
     let account           = results[0].dataValues;
     var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
     var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
@@ -112,9 +110,9 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
                               rejectUnauthorized: true,
                               method: 'POST',
                               host: account.url,
-                              path: 'api/2/issue/'+data.key+'/worklog',
+                              path: '/rest/api/2/issue/'+data.key+'/worklog',
                               headers:{
-                                'Content-Type':  'application/json',
+                                'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+ basic_auth
                               }
                             };
@@ -128,21 +126,17 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
     //     date_string +=((data.date.getHours()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getMinutes()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getSeconds()<10)?"0"+data.date.getHours():data.date.getHours())+" ";
     //     date_string +=String(data.date).replace(/[\s\S]+\(/,"").replace(/\)/,"")+" ";
     //     date_string +=data.date.getFullYear();
+    
     var requestData = {};
     requestData.account = account;
     requestData.post_data = JSON.stringify({
       comment: data.comment,
-      visibility: {
-          type: "group",
-          value: "jira-developers"
-      },
       timeSpent: data.time,
       // timeSpentSeconds: data.time,
       // started: "2017-08-10T05:23:39.427+0000",
     });
 
     jiraRequest(options, requestData, function(response){
-      console.log(response);
       callback(response)
     }, function(error){
       console.log(error);
@@ -152,7 +146,6 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
 };
 
 exports.addTaskComments = function(task_key, account_id, data, callback, errorCallback) {
-  // console.log(task_key, account_id, data);
   model.jira_accounts.findAll({
     where: { id: account_id }
   }).then(function(results) {
@@ -172,9 +165,7 @@ exports.addTaskComments = function(task_key, account_id, data, callback, errorCa
 
     var requestData = {};
     requestData.account = account;
-
     jiraRequest(options, requestData, function(response){
-      // console.log(response);
       callback(response)
     }, function(error){
       errorCallback(error);
