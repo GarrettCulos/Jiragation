@@ -33,7 +33,7 @@ exports.getTasks = function(user_id, callback, callbackError) {
           rejectUnauthorized: true,
           method: 'GET',
           host: account.url,
-          path: '/rest/api/latest/search?jql=assignee='+ account.user_name + '+order+by+duedate&maxResults=1000',
+          path: '/rest/api/2/search?jql=assignee='+ account.user_name + '+order+by+duedate&maxResults=1000',
           headers:{
             'Content-Type':  'application/json',
             'Authorization': 'Basic '+ basic_auth
@@ -79,7 +79,7 @@ exports.getTaskComments = function(task_key, account_id, callback, errorCallback
                               rejectUnauthorized: true,
                               method: 'GET',
                               host: account.url,
-                              path: '/rest/api/latest/issue/'+task_key+'/comment',
+                              path: '/rest/api/2/issue/'+task_key+'/comment',
                               headers:{
                                 'Content-Type':  'application/json',
                                 'Authorization': 'Basic '+ basic_auth
@@ -117,16 +117,6 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
                               }
                             };
 
-    // var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    // var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-    // var date_string = days[data.date.getDay()]+" ";
-    //     date_string +=months[data.date.getMonth()]+" ";
-    //     date_string +=data.date.getDate()+" ";
-    //     date_string +=((data.date.getHours()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getMinutes()<10)?"0"+data.date.getHours():data.date.getHours())+":"+((data.date.getSeconds()<10)?"0"+data.date.getHours():data.date.getHours())+" ";
-    //     date_string +=String(data.date).replace(/[\s\S]+\(/,"").replace(/\)/,"")+" ";
-    //     date_string +=data.date.getFullYear();
-    
     var requestData = {};
     requestData.account = account;
     requestData.post_data = JSON.stringify({
@@ -146,6 +136,7 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
 };
 
 exports.addTaskComments = function(task_key, account_id, data, callback, errorCallback) {
+  console.log(data)
   model.jira_accounts.findAll({
     where: { id: account_id }
   }).then(function(results) {
@@ -165,6 +156,8 @@ exports.addTaskComments = function(task_key, account_id, data, callback, errorCa
 
     var requestData = {};
     requestData.account = account;
+    requestData.post_data = ""+data.comment
+
     jiraRequest(options, requestData, function(response){
       callback(response)
     }, function(error){
@@ -180,7 +173,7 @@ exports.checkAuthentication = function(account, callback, errorCallback) {
     rejectUnauthorized: true,
     method: 'GET',
     host: account.url,
-    path: '/rest/api/latest/search?jql=assignee='+ account.user_name + '+order+by+duedate',
+    path: '/rest/api/2/search?jql=assignee='+ account.user_name + '+order+by+duedate',
     headers:{
       'Content-Type':  'application/json',
       'Authorization': 'Basic '+ basic_auth

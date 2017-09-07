@@ -22,7 +22,7 @@ var accounts = sequelize.define('jira_accounts', {
 var timeSheet = sequelize.define('time_sheet', {
     task_id:      { type: Sequelize.STRING, allowNull: false},
     start_time:   { type: Sequelize.BIGINT, allowNull: false},
-    end_time:     { type: Sequelize.BIGINT, allowNull: false},
+    end_time:     { type: Sequelize.BIGINT, allowNull: true},
     account_id:   { type: Sequelize.INTEGER, allowNull: false},
     user_id:      { type: Sequelize.INTEGER, allowNull: false}
 },

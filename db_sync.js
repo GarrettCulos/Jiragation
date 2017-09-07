@@ -1,6 +1,6 @@
 var fs 					= require('fs');
 var db 					= require('./db.js');
-var model				= require('./models/jiragation.js');
+var model				= require('./modelsV2/index');
 var Sequelize 			= db.Sequelize;
 var sequelize 			= db.sequelize;
 

@@ -192,10 +192,19 @@ exports.get_comments = function( req, res ){
 }
 
 exports.add_comment = function( req, res ){
+  JiraC.addTaskComments(req.params.id, req.query.account_id, req.body, function(results){
+    console.log(results);
     return res.send({
-        error:false,
-        message:"not created"
-    })
+      error:false,
+      message:"success",
+      data: results
+    });
+  }, function(error){
+    return res.status(400).send({
+      error:true,
+      message:"Error when posting comments"
+    });
+  });
 }
 
 exports.remove_comment = function( req, res ){
