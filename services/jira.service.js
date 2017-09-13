@@ -156,7 +156,7 @@ exports.addTaskComments = function(task_key, account_id, data, callback, errorCa
 
     var requestData = {};
     requestData.account = account;
-    requestData.post_data = ""+data.comment
+    requestData.post_data = JSON.stringify({body:data.comment})
 
     jiraRequest(options, requestData, function(response){
       callback(response)
