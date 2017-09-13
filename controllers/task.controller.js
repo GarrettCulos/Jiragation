@@ -176,6 +176,22 @@ exports.update_time_log = function( req, res ){
     })
 }
 
+exports.get_attachments = function( req, res ){
+  JiraC.getTaskAttachments(req.params.id, req.query.account_id, function(results){
+    return res.send({
+      error:false,
+      message:"success",
+      data: results
+    });
+  }, function(error){
+    console.log(error);
+    return res.status(400).send({
+      error:true,
+      message:"Error when getting comments"
+    });
+  });
+}
+
 exports.get_comments = function( req, res ){
   JiraC.getTaskComments(req.params.id, req.query.account_id, function(results){
     return res.send({

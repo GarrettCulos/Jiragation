@@ -136,7 +136,6 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
 };
 
 exports.addTaskComments = function(task_key, account_id, data, callback, errorCallback) {
-  console.log(data)
   model.jira_accounts.findAll({
     where: { id: account_id }
   }).then(function(results) {
@@ -157,6 +156,35 @@ exports.addTaskComments = function(task_key, account_id, data, callback, errorCa
     var requestData = {};
     requestData.account = account;
     requestData.post_data = JSON.stringify({body:data.comment})
+
+    jiraRequest(options, requestData, function(response){
+      callback(response)
+    }, function(error){
+      errorCallback(error);
+    });
+  });
+};
+
+exports.getTaskAttachments = function(task_key, account_id, callback, errorCallback) {
+  model.jira_accounts.findAll({
+    where: { id: account_id }
+  }).then(function(results) {
+    let account           = results[0].dataValues;
+    var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+    var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+    var options           = {
+                              rejectUnauthorized: true,
+                              method: 'GET',
+                              host: account.url,
+                              path: '/rest/api/2/issue/'+task_key+'?fields=attachment',
+                              headers:{
+                                'Content-Type':  'application/json',
+                                'Authorization': 'Basic '+ basic_auth
+                              }
+                            };
+
+    var requestData = {};
+    requestData.account = account;
 
     jiraRequest(options, requestData, function(response){
       callback(response)

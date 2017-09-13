@@ -22,6 +22,8 @@ module.exports = function (end_b, app, contollers, authenticate, services, valid
   app.get(    end_b+'/tasks/:id/comments', validation.jwt.check, contollers.task.get_comments);
   app.post(   end_b+'/tasks/:id/comment', validation.jwt.check, contollers.task.add_comment);
   app.delete( end_b+'/tasks/:id/remove_comment', validation.jwt.check, contollers.task.remove_comment);
+  
+  app.get(    end_b+'/tasks/:id/attachments', validation.jwt.check, contollers.task.get_attachments);
 
   app.get(    end_b+'/tasks/:id/get_assets', validation.jwt.check, contollers.task.get_assets);
   app.put(    end_b+'/tasks/:id/add_asset', validation.jwt.check, contollers.task.add_asset);
