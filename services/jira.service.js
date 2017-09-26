@@ -193,6 +193,34 @@ exports.getTaskAttachments = function(task_key, account_id, callback, errorCallb
     });
   });
 };
+exports.getTask = function(task_key, account_id, callback, errorCallback) {
+  model.jira_accounts.findAll({
+    where: { id: account_id }
+  }).then(function(results) {
+    let account           = results[0].dataValues;
+    var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+    var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+    var options           = {
+                              rejectUnauthorized: true,
+                              method: 'GET',
+                              host: account.url,
+                              path: '/rest/api/2/issue/'+task_key,
+                              headers:{
+                                'Content-Type':  'application/json',
+                                'Authorization': 'Basic '+ basic_auth
+                              }
+                            };
+
+    var requestData = {};
+    requestData.account = account;
+
+    jiraRequest(options, requestData, function(response){
+      callback(response)
+    }, function(error){
+      errorCallback(error);
+    });
+  });
+};
 
 exports.checkAuthentication = function(account, callback, errorCallback) {
   var basic_authBytes  = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
@@ -230,6 +258,35 @@ exports.jiraRequest = function(options, dataRequest, callback, errorCallback){
   }); 
 }
 
+exports.getUserWorklogs = function(account_id, callback, errorCallback){
+  // rest/api/2/search?jql=fields=worklog&worklogAuthor=getAytg
+  model.jira_accounts.findAll({
+    where: { id: account_id }
+  }).then(function(results) {
+    let account           = results[0].dataValues;
+    var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+    var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+    var options           = {
+                              rejectUnauthorized: true,
+                              method: 'GET',
+                              host: account.url,
+                              path: '/rest/api/2/search?jql=fields=worklog&worklogAuthor='+account.user_name,
+                              headers:{
+                                'Content-Type':  'application/json',
+                                'Authorization': 'Basic '+ basic_auth
+                              }
+                            };
+
+    var requestData = {};
+    requestData.account = account;
+
+    jiraRequest(options, requestData, function(response){
+      callback(response)
+    }, function(error){
+      errorCallback(error);
+    });
+  });
+}
 jiraRequest = function(options, dataRequest, callback, errorCallback){
   var data ='';
   if(dataRequest.account.protocal === "http"){

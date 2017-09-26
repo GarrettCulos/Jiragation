@@ -68,3 +68,18 @@ exports.post_log = function( req, res ){
         });    
     });
 }
+exports.get_worklogs = function( req, res ){
+    JiraC.getUserWorklogs(req.query.account_id, function(response){
+        return res.send({
+            error:false,
+            data: response,
+            message:"success"
+        });
+    }, function(error){
+        return res.status(400).send({
+            error:true,
+            data: error,
+            message:"success"
+        });    
+    });
+}

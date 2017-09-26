@@ -32,6 +32,22 @@ exports.get = function( req, res ){
     });
 }
 
+exports.getTask = function( req, res ){
+  JiraC.getTask(req.params.id, req.query.account_id, function(results){
+    return res.send({
+      error:false,
+      message:"success",
+      data: results
+    });
+  }, function(error){
+    console.log(error);
+    return res.status(400).send({
+      error:true,
+      message:"Error when getting comments"
+    });
+  });
+}
+
 exports.update = function( req, res ){
     return res.send({
         error:false,

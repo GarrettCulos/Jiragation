@@ -3,10 +3,10 @@ var service=require("../../services");
 
 module.exports = function (end_b, app, contollers, authenticate, services, validations) {
 
+  app.get(    end_b+'/tasks/:id', validation.jwt.check, contollers.task.getTask);
+  app.post(   end_b+'/tasks/:id', validation.jwt.check, contollers.task.update);
   app.post(   end_b+'/tasks', validation.jwt.check, contollers.task.create);
   app.get(    end_b+'/tasks', validation.jwt.check, contollers.task.get);
-  app.post(   end_b+'/tasks/:id', validation.jwt.check, contollers.task.update);
-  app.get(    end_b+'/tasks/:id', validation.jwt.check, contollers.task.get);
 
   app.put(    end_b+'/tasks/:id/time_log', validation.jwt.check, contollers.task.add_time_log);
   app.post(   end_b+'/tasks/:id/udpateTracking', validation.jwt.check, contollers.task.updateTracking);
