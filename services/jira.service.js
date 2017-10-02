@@ -258,7 +258,7 @@ exports.jiraRequest = function(options, dataRequest, callback, errorCallback){
   }); 
 }
 
-exports.getUserWorklogs = function(account_id, callback, errorCallback){
+exports.getUserWorklogs = function(account_id, date, callback, errorCallback){
   // rest/api/2/search?jql=fields=worklog&worklogAuthor=getAytg
   model.jira_accounts.findAll({
     where: { id: account_id }
@@ -270,12 +270,13 @@ exports.getUserWorklogs = function(account_id, callback, errorCallback){
                               rejectUnauthorized: true,
                               method: 'GET',
                               host: account.url,
-                              path: '/rest/api/2/search?jql=fields=worklog&worklogAuthor='+account.user_name,
+                              path: '/rest/api/2/search?maxResults=1000&fields=worklog&jql=worklogAuthor='+account.user_name+"%20and%20worklogDate=\""+date+"\"",
                               headers:{
                                 'Content-Type':  'application/json',
                                 'Authorization': 'Basic '+ basic_auth
                               }
                             };
+                            console.log(options)
 
     var requestData = {};
     requestData.account = account;

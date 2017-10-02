@@ -69,7 +69,7 @@ exports.post_log = function( req, res ){
     });
 }
 exports.get_worklogs = function( req, res ){
-    JiraC.getUserWorklogs(req.query.account_id, function(response){
+    JiraC.getUserWorklogs(req.query.account_id, req.query.date, function(response){
         return res.send({
             error:false,
             data: response,
