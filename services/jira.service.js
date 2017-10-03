@@ -135,6 +135,35 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
   });
 };
 
+
+exports.getWorklog = function(account, key) {
+  var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+  var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+  var options           = {
+                            rejectUnauthorized: true,
+                            method: 'GET',
+                            host: account.url,
+                            path: '/rest/api/2/issue/'+key+'/worklog?maxResults=1000',
+                            headers:{
+                              'Content-Type': 'application/json',
+                              'Authorization': 'Basic '+ basic_auth
+                            }
+                          };
+
+  var requestData = {};
+
+  requestData.account = account;
+
+  return new Promise(function(resolve, reject){
+    jiraRequest(options, requestData, function(response){
+      return resolve(response)
+    }, function(error){
+      // console.log(error);
+      return reject(error);
+    });
+  })
+};
+
 exports.addTaskComments = function(task_key, account_id, data, callback, errorCallback) {
   model.jira_accounts.findAll({
     where: { id: account_id }
@@ -259,7 +288,7 @@ exports.jiraRequest = function(options, dataRequest, callback, errorCallback){
 }
 
 exports.getUserWorklogs = function(account_id, date, callback, errorCallback){
-  // rest/api/2/search?jql=fields=worklog&worklogAuthor=getAytg
+
   model.jira_accounts.findAll({
     where: { id: account_id }
   }).then(function(results) {
@@ -270,24 +299,25 @@ exports.getUserWorklogs = function(account_id, date, callback, errorCallback){
                               rejectUnauthorized: true,
                               method: 'GET',
                               host: account.url,
-                              path: '/rest/api/2/search?maxResults=1000&fields=worklog&jql=worklogAuthor='+account.user_name+"%20and%20worklogDate=\""+date+"\"",
+                              path: "/rest/api/2/search?maxResults=1000&jql=worklogAuthor="+account.user_name+"%20and%20worklogDate=\""+date+"\"",
                               headers:{
                                 'Content-Type':  'application/json',
                                 'Authorization': 'Basic '+ basic_auth
                               }
                             };
-                            console.log(options)
 
     var requestData = {};
     requestData.account = account;
 
     jiraRequest(options, requestData, function(response){
-      callback(response)
+      callback(response, account)
     }, function(error){
       errorCallback(error);
     });
   });
+
 }
+
 jiraRequest = function(options, dataRequest, callback, errorCallback){
   var data ='';
   if(dataRequest.account.protocal === "http"){
@@ -331,7 +361,6 @@ jiraRequest = function(options, dataRequest, callback, errorCallback){
   }
   if(dataRequest.post_data){
     post_req.write(dataRequest.post_data);
-    console.log(post_req)
   }
   post_req.end();
  }

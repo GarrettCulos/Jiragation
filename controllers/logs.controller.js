@@ -69,12 +69,26 @@ exports.post_log = function( req, res ){
     });
 }
 exports.get_worklogs = function( req, res ){
-    JiraC.getUserWorklogs(req.query.account_id, req.query.date, function(response){
-        return res.send({
-            error:false,
-            data: response,
-            message:"success"
-        });
+    JiraC.getUserWorklogs(req.query.account_id, req.query.date, function(response, account){
+        var promiseArray = []
+        
+        response = JSON.parse(response);
+        for(var i=0; i<response.issues.length; i++ ){
+            promiseArray.push(JiraC.getWorklog(account, response.issues[i].key))
+        }
+        
+        Promise.all(promiseArray).then(function(r){
+            var ret = []
+            for(var i=0; i<r.length; i++){
+                ret.push(r[i])
+            }
+            return res.send({
+                error:false,
+                data: ret,
+                message:"success"
+            });
+        })
+        
     }, function(error){
         return res.status(400).send({
             error:true,
