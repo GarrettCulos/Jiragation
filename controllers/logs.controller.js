@@ -55,17 +55,21 @@ exports.get_time_log = function( req, res ){
 
 exports.post_log = function( req, res ){
     JiraC.logTaskTime(req.body.account_id, req.body, function(response){
+
         return res.send({
             error:false,
             data: response,
             message:"success"
         });
+
     }, function(error){
+
         return res.status(400).send({
             error:true,
             data: error,
             message:"success"
-        });    
+        }); 
+
     });
 }
 exports.get_worklogs = function( req, res ){
@@ -77,10 +81,12 @@ exports.get_worklogs = function( req, res ){
             promiseArray.push(JiraC.getWorklog(account, response.issues[i].key))
         }
         
-        Promise.all(promiseArray).then(function(r){
+        Promise.all(promiseArray).then(function(r, key){
             var ret = []
-            for(var i=0; i<r.length; i++){
-                ret.push(r[i])
+            for(var j=0; j<r.length; j++){
+                r[j] = JSON.parse(r[j]);
+                r[j].key = response.issues[j].key
+                ret.push(JSON.stringify(r[j]))
             }
             return res.send({
                 error:false,
@@ -90,10 +96,12 @@ exports.get_worklogs = function( req, res ){
         })
         
     }, function(error){
+
         return res.status(400).send({
             error:true,
             data: error,
             message:"success"
-        });    
+        });
+
     });
 }

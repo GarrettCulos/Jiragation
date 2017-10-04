@@ -156,7 +156,7 @@ exports.getWorklog = function(account, key) {
 
   return new Promise(function(resolve, reject){
     jiraRequest(options, requestData, function(response){
-      return resolve(response)
+      return resolve(response, key);
     }, function(error){
       // console.log(error);
       return reject(error);
