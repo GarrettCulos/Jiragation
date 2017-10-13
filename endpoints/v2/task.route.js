@@ -25,6 +25,7 @@ module.exports = function (end_b, app, contollers, authenticate, services, valid
   
   app.get(    end_b+'/tasks/:id/attachments', validation.jwt.check, contollers.task.get_attachments);
 
+  // to do, update  /tasks/:id/attachments to use the below /get_assets endoint
   app.get(    end_b+'/tasks/:id/get_assets', validation.jwt.check, contollers.task.get_assets);
   app.put(    end_b+'/tasks/:id/add_asset', validation.jwt.check, contollers.task.add_asset);
   app.delete( end_b+'/tasks/:id/remove_asset', validation.jwt.check, contollers.task.remove_asset);

@@ -21,14 +21,14 @@
 		polygon,
 		rect,
 		path{
-			fill:rgba(0,0,0,1);
+			fill:rgba(0,0,0,0.15);
 		}
 		&:hover{
 			circle,
 			polygon,
 			rect,
 			path{
-				fill:rgba(0,0,0,1);
+				fill:rgba(0,0,0,0.15);
 			}
 		}	
 	}
