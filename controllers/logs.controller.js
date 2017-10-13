@@ -13,7 +13,7 @@ var sequelize           = db.sequelize;
 
 // POST: /api/v1/logs
 exports.remove_time_log = function( req, res ){
-  model.logs.destroy({
+  model.time_sheet.destroy({
     where: {
       id:req.params.id,
       user_id: req.decoded.id         
@@ -36,6 +36,13 @@ exports.remove_time_log = function( req, res ){
     });
   }); 
 };
+
+exports.update_time_log = function( req, res ){
+  return res.status(400).send({
+    message:"Error removing log",
+    data:err
+  });
+}
 
 exports.get_time_log = function( req, res ){
   var queryString  = " SELECT "
