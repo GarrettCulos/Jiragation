@@ -27,8 +27,10 @@
     "load-grunt-tasks": "^3.5.2",
     "moment": "^2.18.1",
     "mysql": "^2.13.0",
+    "nodejs-websocket": "^1.7.1",
     "promise": "^8.0.1",
     "sequelize": "^3.30.4",
-    "winston": "^2.3.1"
+    "winston": "^2.3.1",
+    "ws": "^3.2.0"
   }
 }

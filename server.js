@@ -1,19 +1,21 @@
-var env     = process.env.NODE_ENV || "development";
-var config    = require('./config/config.json')[env];
-var express   = require('express'); 
-var db      = require('./db.js');
+var env     		= process.env.NODE_ENV || "development";
+var config    	= require('./config/config.json')[env];
+var express   	= require('express'); 
+var db      		= require('./db.js');
 var auth_middle = require('./middleware/check_auth');
 var bodyParser  = require('body-parser');
 var Sequelize   = db.Sequelize;
 var sequelize   = db.sequelize;
-var app     = express();
-var auth    = express.Router();
+var app     		= express();
+var auth    		= express.Router();
 
-
+var WebSocket 	= require('ws');
+var webSocks = require('./controllers');
 var controllers = require('./controllers');
-var services  = require('./services');
+var services  	= require('./services');
 var validations = require('./validations');
 
+const wss = new WebSocket.Server({ port:config.wsPort });
 
 require('./db_sync.js');
 
@@ -33,9 +35,24 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Broadcast to all.
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+  	console.log(client);
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(data);
+    }
+  });
+};
+
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(message) {
+    console.log('received: %s', message);
+  });
+});
 
 /* Routes v2 */
-require('./endpoints/v2/')('/api/v2', app, controllers, auth, services, validations)
+require('./endpoints/v2/')('/api/v2', app, controllers, auth, services, validations, wss)
 
 
 /* Routes v1 */

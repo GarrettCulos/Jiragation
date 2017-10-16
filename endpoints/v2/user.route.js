@@ -1,7 +1,7 @@
 var validation=require("../../validations");
 var service=require("../../services");
 
-module.exports = function (end_b, app, controllers, authenticate, services, validations) {
+module.exports = function (end_b, app, controllers, authenticate, services, validations, wss) {
 
   app.post( 	end_b+'/user', controllers.user.create);
   app.put(  	end_b+'/user/login', controllers.user.login);
