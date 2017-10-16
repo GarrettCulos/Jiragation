@@ -15,7 +15,7 @@ var sequelize           = db.sequelize;
 exports.remove_time_log = function( req, res ){
   model.time_sheet.destroy({
     where: {
-      id:req.params.id,
+      id:req.params.log_id,
       user_id: req.decoded.id         
     }
   }).then(function (results) {
@@ -38,10 +38,35 @@ exports.remove_time_log = function( req, res ){
 };
 
 exports.update_time_log = function( req, res ){
-  return res.status(400).send({
-    message:"Error removing log",
-    data:err
-  });
+  model.time_sheet.update({
+    task_id:     req.body.task_id,
+    start_time:  req.body.start_time,
+    end_time:    req.body.end_time,
+    account_id:  req.body.account_id
+  },{
+    where: {
+      id:        req.params.log_id,
+      user_id:   req.decoded.id
+    }
+  }).then(function (results) {
+    if(results>0){
+      return res.send({
+        data:results,
+        message:"jria log updated"
+      });
+    };
+
+    return res.status(400).send({
+      data:results,
+      message:"jria log updated"
+    });
+  }, function(err){
+    throw err;
+    return res.status(400).send({
+      message:"Error removing log",
+      data:err
+    });
+  }); 
 }
 
 exports.get_time_log = function( req, res ){
