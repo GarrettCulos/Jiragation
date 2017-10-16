@@ -56,12 +56,12 @@ exports.update = function( req, res ){
 }
 
 
-exports.add_time_log = function( req, res ){
-    return res.send({
-        error:false,
-        message:"not created"
-    })
-}
+// exports.add_time_log = function( req, res ){
+//     return res.send({
+//         error:false,
+//         message:"not created"
+//     })
+// }
 
 exports.get_task_time_log = function( req, res ){
     var queryString  = " SELECT "
@@ -178,19 +178,19 @@ exports.get_active_tasks = function( req, res ){
     });
 }
 
-exports.remove_time_log = function( req, res ){
-    return res.send({
-        error:false,
-        message:"not created"
-    })
-}
+// exports.remove_time_log = function( req, res ){
+//     return res.send({
+//         error:false,
+//         message:"not created"
+//     })
+// }
 
-exports.update_time_log = function( req, res ){
-    return res.send({
-        error:false,
-        message:"not created"
-    })
-}
+// exports.update_time_log = function( req, res ){
+//     return res.send({
+//         error:false,
+//         message:"not created"
+//     })
+// }
 
 exports.get_attachments = function( req, res ){
   JiraC.getTaskAttachments(req.params.id, req.query.account_id, function(results){
@@ -260,7 +260,7 @@ exports.add_asset = function( req, res ){
     })
 }
 
-exports.updateTracking = function( req, res ){
+exports.updateTracking = function( req, res, next ){
     // var account_id = req.params.id;
     // console.log(model);
     if(req.body.start_time  != undefined){
@@ -271,10 +271,11 @@ exports.updateTracking = function( req, res ){
             user_id:     req.decoded.id
         },{}).then(function (results) {
               
-            return res.send({
+            res.send({
                 data:results,
                 message:"log started"
             });
+            next()
 
         }, function(err){
             throw err;
@@ -303,11 +304,13 @@ exports.updateTracking = function( req, res ){
                         })
                     });
         }).then(function (log) {
-            return res.status(200).send({
+            res.status(200).send({
                 data:log,
                 error:false,
                 message:"logged time"
             });
+
+            next();
 
         }).catch(function (error) {
             console.error(error)
@@ -319,10 +322,12 @@ exports.updateTracking = function( req, res ){
         });
     }
     else {
-        return res.send({
+        res.send({
             error:false,
             message:"not created"
-        });    
+        });
+
+        next();
     }
     
     
