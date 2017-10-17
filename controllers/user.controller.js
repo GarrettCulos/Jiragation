@@ -4,6 +4,7 @@ var passwords           = require('../config/disallowedPasswords');
 var db                  = require('../db');
 var model               = require('../modelsV2');
 var JiraC               = require('../services').jira;
+var uuidv4              = require('uuid/v4');
 
 var winston             = require('winston');
 var jwt                 = require('jsonwebtoken');
@@ -59,6 +60,7 @@ exports.create = function(req, res) {
     user.is_admin = 0;
     user.is_active = 1;
     user.join_date = new Date();
+    user.socket_guid = uuidv4();
 
     // Add user to database
     Users.getUserByEmail(user.email_address, function(no_user,user_exists){
@@ -284,6 +286,7 @@ exports.get = function(req, res) {
     selectQuery = " SELECT ";
     selectQuery +=" u.id as `id`,"
     selectQuery +=" u.user_name as `user_name`,";
+    selectQuery +=" u.socket_guid as `socket_guid`,";
     selectQuery +=" u.email_address as `user_email`,";
     selectQuery +=" u.first_name as `first_name`,";
     selectQuery +=" u.last_name as `last_name`,";
@@ -373,6 +376,7 @@ Users.getUserInformation = function(user_id, callback){
     selectQuery = " SELECT "
     selectQuery +=" u.id as `id`, "
     selectQuery +=" u.user_name as `user_name`, "
+    selectQuery +=" u.socket_guid as `socket_guid`,";
     selectQuery +=" u.email_address as `user_email`, "
     selectQuery +=" u.first_name as `first_name`, "
     selectQuery +=" u.last_name as `last_name`, "
@@ -390,6 +394,7 @@ Users.getUserInformation = function(user_id, callback){
 Users.getUserByUserName = function(user_name,callback){
     selectQuery = " SELECT "
     selectQuery +=" u.user_name as `user_name`,"
+    selectQuery +=" u.socket_guid as `socket_guid`,";
     selectQuery +=" u.email_address as `user_email`,"
     selectQuery +=" u.first_name as `first_name`,"
     selectQuery +=" u.last_name as `last_name`,"
@@ -406,6 +411,7 @@ Users.getUserByUserName = function(user_name,callback){
 Users.getUserByEmail = function(email_address,callback){
     selectQuery = " SELECT "
     selectQuery +=" u.user_name as `user_name`,"
+    selectQuery +=" u.socket_guid as `socket_guid`,";
     selectQuery +=" u.email_address as `user_email`,"
     selectQuery +=" u.first_name as `first_name`,"
     selectQuery +=" u.last_name as `last_name`,"

@@ -1,8 +1,9 @@
 var env     		= process.env.NODE_ENV || "development";
 var config    	= require('./config/config.json')[env];
-var express   	= require('express'); 
+var express   	= require('express');
+var uuidv4			= require('uuid/v4');
 var db      		= require('./db.js');
-var auth_middle = require('./middleware/check_auth');
+// var auth_middle = require('./middleware/check_auth');
 var bodyParser  = require('body-parser');
 var Sequelize   = db.Sequelize;
 var sequelize   = db.sequelize;
@@ -15,10 +16,11 @@ var controllers = require('./controllers');
 var services  	= require('./services');
 var validations = require('./validations');
 
+var web_sock_bundles = {}
+
 const wss = new WebSocket.Server({ port:config.wsPort });
 
 require('./db_sync.js');
-
 
 app.set('port', config.port);
 app.use(bodyParser.json({limit: "50mb"}));
@@ -37,18 +39,66 @@ app.use(function(req, res, next) {
 });
 
 wss.on('connection', function connection( ws, req ) {
-  web_socks.gen.connect( ws, req );
-  web_socks.gen.message( ws, req );
+  /**
+	 * Initialize bundlize handshake
+	**/
+	ws.send( JSON.stringify({type:'handshake'}) );
+
+	/**
+	 * When the ws closes remove it from the bundle
+	**/
+	ws.on('close', function close(data) {
+		console.log('ws close', data);
+		// for(var i in web_sock_bundles){
+		// 	if(var web_sock_bundles.hasOwnProperty())
+		// }
+		// var ind = web_sock_bundles[user.socket_guid].array.findIndex((function(e){ return e.ws_key === req.headers['sec-websocket-key'] }))
+	  // web_sock_bundles[user.socket_guid].array.splice(ind)
+	  // console.log(web_sock_bundles);
+	});
+
+	ws.on('open', function open(data) {
+		console.log('ws open', data);
+	})
+  
+  ws.on('message', function init(message) {
+    var data = JSON.parse(message)
+    /**
+		 * Set this websocket connection to a bundle based on user socket_guid
+		**/
+    if(data.type == "bundle"){
+      var user = data.user[0]
+      if(web_sock_bundles.hasOwnProperty(user.socket_guid)){
+        web_sock_bundles[user.socket_guid].array.push({ws:ws, ws_key:req.headers['sec-websocket-key']})
+      }
+      else{
+        web_sock_bundles[user.socket_guid] = {account:user, array:[{ws:ws, ws_key:req.headers['sec-websocket-key']}]}
+      }
+      console.log(web_sock_bundles);
+    }
+		
+		/**
+		 * websocket trigger to update all active logs for all bundle members
+		**/
+		web_socks.logs.activeLogUpdate(ws, web_sock_bundles);
+		
+		/**
+		 * websocket trigger to update filter settings for all bundle members
+		**/
+		web_socks.logs.taskFiltersUpdate(ws, web_sock_bundles);
+		
+		/**
+		 * websocket trigger to update task lsit items for all bundle members
+		**/
+		web_socks.logs.taskListUpdate(ws, web_sock_bundles);
+
+  });
+  
 });
-
-// wss.clients.forEach(function each(client) {
-//   console.log('client:', client._socket._peername);
-// });
-
-web_socks.gen.connectionHeartbeat(wss);
+// web_socks.gen.connectionHeartbeat(wss);
 
 /* Routes v2 */
-require('./endpoints/v2/')('/api/v2', app, controllers, auth, services, validations, wss)
+require('./endpoints/v2/')('/api/v2', app, controllers, auth, services, validations, web_sock_bundles)
 
 
 /* Routes v1 */

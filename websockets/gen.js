@@ -28,7 +28,7 @@ exports.connectionHeartbeat = function(wss){
 
       ws.isAlive = false;
       ws.ping('', false, true);
-      ws.send(JSON.stringify({data:{type:'message', message:ws._socket._peername}}))
+      ws.send(JSON.stringify({type:'message', message:ws._socket._peername}))
     });
   }, 10000);
 }
