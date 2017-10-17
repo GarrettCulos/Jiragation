@@ -2,7 +2,7 @@ var validation=require("../../validations");
 var service=require("../../services");
 
 // console.log(validation.user.login)
-module.exports = function (end_b, app, controller, authenticate, services, validations, wss) {
+module.exports = function (end_b, app, controller, authenticate, services, validations) {
 
   app.post(   end_b+'/accounts/:id/update', validation.jwt.check, controller.accounts.update);
   app.delete( end_b+'/accounts/:id/remove', validation.jwt.check, controller.accounts.remove);

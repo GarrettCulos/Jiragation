@@ -66,7 +66,8 @@ var users = sequelize.define('users', {
   password:         { type: Sequelize.STRING, allowNull: false},
   is_admin:         { type: Sequelize.INTEGER, allowNull: false},
   is_active:        { type: Sequelize.INTEGER, allowNull: false},
-  email_address:    { type: Sequelize.STRING, allowNull: false}
+  email_address:    { type: Sequelize.STRING, allowNull: false},
+  socket_guid:    { type: Sequelize.STRING, allowNull: false},
 },
 {
    timestamps : false,

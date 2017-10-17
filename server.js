@@ -49,12 +49,6 @@ wss.on('connection', function connection( ws, req ) {
 	**/
 	ws.on('close', function close(data) {
 		console.log('ws close', data);
-		// for(var i in web_sock_bundles){
-		// 	if(var web_sock_bundles.hasOwnProperty())
-		// }
-		// var ind = web_sock_bundles[user.socket_guid].array.findIndex((function(e){ return e.ws_key === req.headers['sec-websocket-key'] }))
-	  // web_sock_bundles[user.socket_guid].array.splice(ind)
-	  // console.log(web_sock_bundles);
 	});
 
 	ws.on('open', function open(data) {
@@ -68,37 +62,44 @@ wss.on('connection', function connection( ws, req ) {
 		**/
     if(data.type == "bundle"){
       var user = data.user[0]
-      if(web_sock_bundles.hasOwnProperty(user.socket_guid)){
-        web_sock_bundles[user.socket_guid].array.push({ws:ws, ws_key:req.headers['sec-websocket-key']})
-      }
-      else{
-        web_sock_bundles[user.socket_guid] = {account:user, array:[{ws:ws, ws_key:req.headers['sec-websocket-key']}]}
-      }
-      console.log(web_sock_bundles);
+      // alternative to bundles, set bundle_id and call forEach client and trigger bundle_id matchings
+      ws['ws-bundle-id'] = user.socket_guid
+
+      // if(web_sock_bundles.hasOwnProperty(user.socket_guid)){
+      //   web_sock_bundles[user.socket_guid].array.push({ws:ws, ws_key:req.headers['sec-websocket-key']})
+      // }
+      // else{
+      //   web_sock_bundles[user.socket_guid] = {account:user, array:[{ws:ws, ws_key:req.headers['sec-websocket-key']}]}
+      // }
     }
 		
 		/**
 		 * websocket trigger to update all active logs for all bundle members
 		**/
-		web_socks.logs.activeLogUpdate(ws, web_sock_bundles);
+    if(data.type == "activeTaskChange"){
+      web_socks.tasks.activeTaskChange(wss, web_sock_bundles, ws['ws-bundle-id']);
+    }
 		
 		/**
 		 * websocket trigger to update filter settings for all bundle members
 		**/
-		web_socks.logs.taskFiltersUpdate(ws, web_sock_bundles);
+    if(data.type == "taskFiltersUpdate"){
+		  web_socks.tasks.taskFiltersUpdate(ws, web_sock_bundles);
+    }
 		
 		/**
 		 * websocket trigger to update task lsit items for all bundle members
 		**/
-		web_socks.logs.taskListUpdate(ws, web_sock_bundles);
+    if(data.type == "taskListUpdate"){
+		  web_socks.tasks.taskListUpdate(ws, web_sock_bundles);
+    }
 
   });
   
 });
-// web_socks.gen.connectionHeartbeat(wss);
 
 /* Routes v2 */
-require('./endpoints/v2/')('/api/v2', app, controllers, auth, services, validations, web_sock_bundles)
+require('./endpoints/v2/')('/api/v2', app, controllers, auth, services, validations)
 
 
 /* Routes v1 */
