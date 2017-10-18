@@ -1,18 +1,18 @@
-var env     		= process.env.NODE_ENV || "development";
-var config    	= require('./config/config.json')[env];
-var express   	= require('express');
-var uuidv4			= require('uuid/v4');
-var db      		= require('./db.js');
+var env         = process.env.NODE_ENV || "development";
+var config      = require('./config/config.json')[env];
+var express     = require('express');
+var uuidv4      = require('uuid/v4');
+var db          = require('./db.js');
 var bodyParser  = require('body-parser');
 var Sequelize   = db.Sequelize;
 var sequelize   = db.sequelize;
-var app     		= express();
-var auth    		= express.Router();
+var app         = express();
+var auth        = express.Router();
 
-var WebSocket 	= require('ws');
+var WebSocket   = require('ws');
 var web_socks   = require('./websockets');
 var controllers = require('./controllers');
-var services  	= require('./services');
+var services    = require('./services');
 var validations = require('./validations');
 
 const wss = new WebSocket.Server({ port:config.wsPort });
@@ -36,51 +36,57 @@ app.use(function(req, res, next) {
 });
 
 wss.on('connection', function connection( ws, req ) {
+
   /**
-	 * Initialize bundlize handshake
-	**/
-	ws.send( JSON.stringify({type:'handshake'}) );
+   * Initialize bundlize handshake
+  **/
+  ws.send( JSON.stringify({type:'handshake'}) );
 
-	/**
-	 * When the ws closes remove it from the bundle
-	**/
-	ws.on('close', function close(data) {
-		console.log('ws close', data);
-	});
+  /**
+   * When the ws closes remove it from the bundle
+  **/
+  ws.on('close', function close(data) {
+    console.log('ws close', data);
+  });
 
-	ws.on('open', function open(data) {
-		console.log('ws open', data);
-	})
+  ws.on('open', function open(data) {
+    console.log('ws open', data);
+  })
   
   ws.on('message', function init(message) {
+
     var data = JSON.parse(message)
+  
+    web_socks.gen.connectLog(ws, req, data.type)
+    
     /**
-		 * Set this websocket connection to a bundle based on user socket_guid
-		**/
+     * Set this websocket connection to a bundle based on user id
+    **/
     if(data.type == "bundle"){
       // alternative to bundles, set bundle_id and call forEach client and trigger bundle_id matchings
-      ws['ws-bundle-id'] = data.user[0].socket_guid;
+      ws['ws-bundle-id'] = data.user[0].id;
     }
-		
-		/**
-		 * websocket trigger to update all active logs for all bundle members
-		**/
+    
+    /**
+     * websocket trigger to update all active logs for all bundle members
+    **/
     if(data.type == "activeTaskChange"){
-      web_socks.tasks.activeTaskChange(wss, ws['ws-bundle-id']);
+      console.log(ws._socket._peername);
+      web_socks.tasks.activeTaskChange(wss, ws['ws-bundle-id'], ws._socket._peername.port, data.data);
     }
-		
-		/**
-		 * websocket trigger to update filter settings for all bundle members
-		**/
+    
+    /**
+     * websocket trigger to update filter settings for all bundle members
+    **/
     if(data.type == "taskFiltersUpdate"){
-		  web_socks.tasks.taskFiltersUpdate(wss, ws['ws-bundle-id']);
+      web_socks.tasks.taskFiltersUpdate(wss, ws['ws-bundle-id'], ws._socket._peername.port, data.data);
     }
-		
-		/**
-		 * websocket trigger to update task lsit items for all bundle members
-		**/
+    
+    /**
+     * websocket trigger to update task lsit items for all bundle members
+    **/
     if(data.type == "taskListUpdate"){
-		  web_socks.tasks.taskListUpdate(wss, ws['ws-bundle-id']);
+      web_socks.tasks.taskListUpdate(wss, ws['ws-bundle-id'], data.data);
     }
 
   });

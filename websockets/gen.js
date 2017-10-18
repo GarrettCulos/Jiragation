@@ -7,9 +7,9 @@ exports.message = function( ws, req){
 }
 
 // parse message
-exports.connect = function( ws, req){
+exports.connectLog = function( ws, req, message){
   // console.log( '', req.connection );
-  console.log( 'ws connected - ip:', req.connection.remoteAddress );
+  console.log(new Date()+" WebSocket Request: " +  req.connection.remoteAddress + " - " + message);
 }
 
 exports.connectionHeartbeat = function(wss){
