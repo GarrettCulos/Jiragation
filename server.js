@@ -3,7 +3,6 @@ var config    	= require('./config/config.json')[env];
 var express   	= require('express');
 var uuidv4			= require('uuid/v4');
 var db      		= require('./db.js');
-// var auth_middle = require('./middleware/check_auth');
 var bodyParser  = require('body-parser');
 var Sequelize   = db.Sequelize;
 var sequelize   = db.sequelize;
@@ -11,12 +10,10 @@ var app     		= express();
 var auth    		= express.Router();
 
 var WebSocket 	= require('ws');
-var web_socks    = require('./websockets');
+var web_socks   = require('./websockets');
 var controllers = require('./controllers');
 var services  	= require('./services');
 var validations = require('./validations');
-
-var web_sock_bundles = {}
 
 const wss = new WebSocket.Server({ port:config.wsPort });
 
@@ -61,37 +58,29 @@ wss.on('connection', function connection( ws, req ) {
 		 * Set this websocket connection to a bundle based on user socket_guid
 		**/
     if(data.type == "bundle"){
-      var user = data.user[0]
       // alternative to bundles, set bundle_id and call forEach client and trigger bundle_id matchings
-      ws['ws-bundle-id'] = user.socket_guid
-
-      // if(web_sock_bundles.hasOwnProperty(user.socket_guid)){
-      //   web_sock_bundles[user.socket_guid].array.push({ws:ws, ws_key:req.headers['sec-websocket-key']})
-      // }
-      // else{
-      //   web_sock_bundles[user.socket_guid] = {account:user, array:[{ws:ws, ws_key:req.headers['sec-websocket-key']}]}
-      // }
+      ws['ws-bundle-id'] = data.user[0].socket_guid;
     }
 		
 		/**
 		 * websocket trigger to update all active logs for all bundle members
 		**/
     if(data.type == "activeTaskChange"){
-      web_socks.tasks.activeTaskChange(wss, web_sock_bundles, ws['ws-bundle-id']);
+      web_socks.tasks.activeTaskChange(wss, ws['ws-bundle-id']);
     }
 		
 		/**
 		 * websocket trigger to update filter settings for all bundle members
 		**/
     if(data.type == "taskFiltersUpdate"){
-		  web_socks.tasks.taskFiltersUpdate(ws, web_sock_bundles);
+		  web_socks.tasks.taskFiltersUpdate(wss, ws['ws-bundle-id']);
     }
 		
 		/**
 		 * websocket trigger to update task lsit items for all bundle members
 		**/
     if(data.type == "taskListUpdate"){
-		  web_socks.tasks.taskListUpdate(ws, web_sock_bundles);
+		  web_socks.tasks.taskListUpdate(wss, ws['ws-bundle-id']);
     }
 
   });
@@ -101,19 +90,7 @@ wss.on('connection', function connection( ws, req ) {
 /* Routes v2 */
 require('./endpoints/v2/')('/api/v2', app, controllers, auth, services, validations)
 
-
-/* Routes v1 */
-// app.use('/api/v1/', require('./routes/api').api);
-// app.use(auth_middle);
-// app.use('/api/v1/task', require('./routes/taskManager').taskManager);
-// app.use('/api/v1/account', require('./routes/accounts').accounts );
-// app.use('/api/v1/jira', require('./routes/jira').jira);
-// app.use('/api/v1/users', require('./routes/users').users);
-// app.use('/api/v1/notes', require('./routes/notes').notes);
-
-
 app.use('/', express.static(config.root + "/app"));
-
 
 app.get('*', function (req, res) {
     res.sendFile(__dirname+'/app/index.html');
