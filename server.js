@@ -36,32 +36,17 @@ app.use(function(req, res, next) {
 });
 
 wss.on('connection', function connection( ws, req ) {
-  /**
-   *
-   * Websocket Information
-   * - active tasks
-   * - task filters
-   * 
-  **/
 
   /**
+   *
    * Initialize bundlize handshake
+   *
   **/
   ws.send( JSON.stringify({type:'handshake'}) );
 
-  /**
-   * When the ws closes remove it from the bundle (done by default)
-  **/
-  ws.on('close', function close(data) {
-    console.log('ws close', data);
-  });
+  ws.on('close', function close(data) { console.log('ws close', data); });
 
-  ws.on('open', function open(data) {
-    console.log(data);
-    //res =  controllers.tasks.get_active_tasks( data, res)
-
-    console.log('ws open', data);
-  })
+  ws.on('open', function open(data) { console.log('ws open', data); })
   
   ws.on('message', function init(message) {
 
@@ -70,30 +55,65 @@ wss.on('connection', function connection( ws, req ) {
     web_socks.gen.connectLog(ws, req, data.type)
     
     /**
+     *
      * Set this websocket connection to a bundle based on user id
+     *
     **/
     if(data.type == "bundle"){
       // alternative to bundles, set bundle_id and call forEach client and trigger bundle_id matchings
       ws['ws-bundle-id'] = data.user[0].id;
+
+
+      /**
+       *
+       * Set a fake api request object to use when calling controller methods
+       *
+      **/
+      var apiRequestSpoof = {decoded:data.user[0]}
+
+      /**
+       *
+       * Send active tasks when bundling handshake is initiated
+       *
+      **/
+      controllers.task.get_active_tasks( apiRequestSpoof, {send:function(re){
+        ws.send(JSON.stringify({type:'updateActiveTask', data:re.data}))
+      }});
+
+      /**
+       *
+       * Send current filters tasks when bundling handshake is initiated
+       *
+      **/
+      // controllers.task.get_task_filters( apiRequestSpoof, {send:function(re){
+      //   ws.send(JSON.stringify({type:'updateActiveTask', data:re.data}))
+      // }});
+
     }
     
     /**
+     *
      * websocket trigger to update all active logs for all bundle members
+     *
     **/
     if(data.type == "activeTaskChange"){
       console.log(ws._socket._peername);
-      web_socks.tasks.activeTaskChange(wss, ws['ws-bundle-id'], ws._socket._peername.port, data.data);
+      web_socks.tasks.activeTaskChange(wss, ws['ws-bundle-id'], ws._socket._peername.address+ws._socket._peername.port, data.data);
     }
     
     /**
+     *
      * websocket trigger to update filter settings for all bundle members
+     *
     **/
     if(data.type == "taskFiltersUpdate"){
-      web_socks.tasks.taskFiltersUpdate(wss, ws['ws-bundle-id'], ws._socket._peername.port, data.data);
+      web_socks.tasks.taskFiltersUpdate(wss, ws['ws-bundle-id'], ws._socket._peername.address+ws._socket._peername.port, data.data);
     }
     
     /**
+     *
      * websocket trigger to update task lsit items for all bundle members
+     *
     **/
     if(data.type == "taskListUpdate"){
       web_socks.tasks.taskListUpdate(wss, ws['ws-bundle-id'], data.data);
@@ -104,7 +124,7 @@ wss.on('connection', function connection( ws, req ) {
 });
 
 /* Routes v2 */
-require('./endpoints/v2/')('/api/v2', app, controllers, auth, services, validations)
+require('./endpoints/v2/')('/api/v2', app, controllers, auth, services, validations, wss)
 
 app.use('/', express.static(config.root + "/app"));
 

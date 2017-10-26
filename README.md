@@ -42,6 +42,12 @@ folders in your project.
 changes this location through the `.bowerrc` file.  Putting it in the app folder makes
 it easier to serve the files by a webserver.*
 
+Start mysql server mac:
+``` mysql.server start ```
+or
+``` cd /usr/local/Cellar/mysql56/5.6.37/support-files/ ```
+``` ./mysql.server start ```
+
 # Configuring 
 
 Before running the application make sure the following is set up:
@@ -51,7 +57,7 @@ Before running the application make sure the following is set up:
 
 ## Run the Application
 
-We have preconfigured the project with a simple development web server.  The simplest way to start
+We have pre-configured the project with a simple development web server.  The simplest way to start
 this server is:
 
 ```
@@ -86,19 +92,9 @@ This will find the latest versions that match the version ranges specified in th
 # Contact
 For more information about this application contact garrett@highwaythreesoutions.com
 
-For more information on AngularJS please check out http://angularjs.org/
-
 [git]: http://git-scm.com/
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
 [node]: http://nodejs.org
 [protractor]: https://github.com/angular/protractor
-[travis]: https://travis-ci.org/
 [http-server]: https://github.com/nodeapps/http-server
-
-
-## Known Issues and Task Log
-- extend authorization token after performing verified http request.
-- multi-day log, left date, styling issue.
-- adding comments work intermittently.
-- hash account passwords for db storage.

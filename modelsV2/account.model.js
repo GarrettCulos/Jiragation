@@ -6,7 +6,7 @@ module.exports = function (sequelize, DataTypes) {
     url:           { type: DataTypes.STRING, allowNull: false},
     basic_auth:    { type: DataTypes.STRING, allowNull: false},
     account_email: { type: DataTypes.STRING, allowNull: false},
-    user_id:       { type: DataTypes.INTEGER, allowNull: false}
+    user_id:       { type: DataTypes.INTEGER, allowNull: false},
   },
   {
      timestamps : true,
