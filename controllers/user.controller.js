@@ -132,8 +132,9 @@ exports.update = function(req, res){
     var errors = [];
     var warnings = [];
     var easy_passwords = passwords.passwords();
+    var user = req.body;
 
-    if(user.password && user.passwordConfirm){      
+    if(user.password && user.passwordConfirm){
         // check password is not too simple.
         if(easy_passwords.indexOf(user.password)!= -1 || user.password.length <= 5){
             errors.push({message: 'The password you\'ve selected is to simple.', type:'password'});
@@ -164,12 +165,6 @@ exports.update = function(req, res){
         }
     }
 
-
-    // check email is unique
-    user.is_admin = 0;
-    user.is_active = 0;
-
-    // Add user to database
     if(user.email_address){
         Users.getUserByEmail(user.email_address, function(no_user,user_exists){
             if(user_exists){
@@ -202,10 +197,7 @@ exports.update = function(req, res){
             },
             transaction: t
         }).then(function(newUser) {
-            return res.send({
-                data:newUser,
-                message:'User Updated'
-            });
+            return newUser
         });
     }).then(function (u) {
         // return user information
@@ -216,8 +208,9 @@ exports.update = function(req, res){
             });
         }
         else{
-            return Users.getUserInformation(u[0], function(err, finalUser) {
-                if(err){
+            return Users.getUserInformation(user.id, function(err, finalUser) {
+                
+                if(err != null){
                     return res.status(400).send({
                         data:err,
                         message:'Update failed'
@@ -225,7 +218,7 @@ exports.update = function(req, res){
                 }
                 else{
                     return res.send({
-                        data:finalUser,
+                        data: finalUser,
                         message:'Update successful'
                     });
                 }

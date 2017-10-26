@@ -36,6 +36,13 @@ app.use(function(req, res, next) {
 });
 
 wss.on('connection', function connection( ws, req ) {
+  /**
+   *
+   * Websocket Information
+   * - active tasks
+   * - task filters
+   * 
+  **/
 
   /**
    * Initialize bundlize handshake
@@ -43,13 +50,16 @@ wss.on('connection', function connection( ws, req ) {
   ws.send( JSON.stringify({type:'handshake'}) );
 
   /**
-   * When the ws closes remove it from the bundle
+   * When the ws closes remove it from the bundle (done by default)
   **/
   ws.on('close', function close(data) {
     console.log('ws close', data);
   });
 
   ws.on('open', function open(data) {
+    console.log(data);
+    //res =  controllers.tasks.get_active_tasks( data, res)
+
     console.log('ws open', data);
   })
   

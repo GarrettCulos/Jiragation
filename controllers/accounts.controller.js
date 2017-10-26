@@ -98,10 +98,61 @@ exports.add = function( req, res ){
 }
 
 exports.update = function( req, res ){
-  return res.status(400).send({message:'not done'})
+
+  var account = req.body;
+  var errors = [];
+  var warnings = [];
+  // encrypt user:pass as base64 then encrypt
+  account.basic_auth = cryptoJS.AES.encrypt(new Buffer( account.user_name + ':' + account.password ).toString('base64'), config.secret).toString();
+  
+  // test that username and password are valid
+  JiraC.checkAuthentication(account, function(result){
+    if(result.total === 'undefined') {
+      errors.push({message:'Authentication Failed',type:'general'});
+      return res.status(400).send({
+        message:'unable to access account', 
+        data:errors
+      });
+    }
+    sequelize.transaction(function (t) {
+      return model.jira_accounts.update({
+        protocal:       account.protocal,
+        user_name:      account.user_name,
+        url:            account.url,
+        basic_auth:     account.basic_auth,
+        account_email:  account.account_email,
+      },{
+        where: {
+          id:         account.account_id,
+          user_id:    req.decoded.id      
+        },
+        transaction: t
+      }).then(function(results) {
+        return model.jira_accounts.findById(
+          account.account_id,
+          {
+            transaction:t
+          }).then(function(jiraaccounts){
+            return jiraaccounts
+          });
+      });
+    }).then(function (u) {
+      u.dataValues.account_id = u.dataValues.id;
+      return res.send({message:'Account updated', data:u.dataValues});
+    }).catch(function (error) {
+      errors.push(error);
+      return res.status(400).send({message:'Error updating account', data:errors});
+    });
+
+  }, function(error){
+    errors.push({message:'Authentication Failed',type:'general'});
+    return res.status(400).send({message:'Error updating account', data:errors});
+  });
+
 }
 
 exports.remove = function( req, res ){
+
   var account_id = req.params.id;
   model.jira_accounts.destroy({
     where: {
@@ -127,13 +178,16 @@ exports.remove = function( req, res ){
     })
 
   }); 
+
 }
 
 exports.get_projects = function( req, res ){
+  
   return res.send({
     error:false,
     message:"not created"
   });
+  
 }
 
 
