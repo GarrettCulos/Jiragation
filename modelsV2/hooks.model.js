@@ -7,7 +7,7 @@ module.exports = function (sequelize, DataTypes) {
     hook_info:     { type: DataTypes.STRING, allowNull: false},
   },
   {
-     timestamps : true,
+     timestamps : false,
      freezeTableName: true
   });
 

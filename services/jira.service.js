@@ -287,6 +287,55 @@ exports.jiraRequest = function(options, dataRequest, callback, errorCallback){
   }); 
 }
 
+exports.initJiraHook = function( options, callback, errorCallback){
+  var account = options.account
+  // <JIRA_URL>/rest/webhooks/1.0/webhook
+  // Show me an example (JSON)...
+  // {
+  //   "name": "my first webhook via rest",
+  //   "url": "http://www.example.com/webhooks",
+  //   "events": [
+  //     "jira:issue_created",
+  //     "jira:issue_updated"
+  //   ],
+  //   "jqlFilter": "",
+  //   "excludeIssueDetails" : false
+  // }
+  var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+  var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+  var options           = {
+                            rejectUnauthorized: true,
+                            method: 'POST',
+                            host: account.url,
+                            path: '/rest/webhooks/1.0/webhook',
+                            headers:{
+                              'Content-Type': 'application/json',
+                              'Authorization': 'Basic '+ basic_auth
+                            }
+                          };
+
+  var requestData = {};
+  requestData.account = account;
+  requestData.post_data = JSON.stringify({
+    "name": "Jiragation my-issue updates",
+    "url": config.external_ip+":"+config.port+"/hooks/jira/"+options.hash,
+    "events": [
+      "jira:issue_created",
+      "jira:issue_updated"
+    ],
+    "jqlFilter": "assignee="+account.user_name,
+    "excludeIssueDetails" : false
+  });
+
+  jiraRequest(options, requestData, function(response){
+    callback(response)
+  }, function(error){
+    console.log('jira hook error');
+    errorCallback(error);
+  });
+
+}
+
 exports.getUserWorklogs = function(account_id, date, callback, errorCallback){
 
   model.jira_accounts.findAll({
