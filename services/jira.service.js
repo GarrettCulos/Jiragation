@@ -118,12 +118,13 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
                             };
 
     var requestData = {};
+    
     requestData.account = account;
     requestData.post_data = JSON.stringify({
       comment: data.comment,
       timeSpent: data.time,
       // timeSpentSeconds: data.time,
-      // started: "2017-08-10T05:23:39.427+0000",
+      started: data.started, 
     });
 
     jiraRequest(options, requestData, function(response){
