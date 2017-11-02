@@ -16,134 +16,155 @@ var sequelize           = db.sequelize;
 // POST: /api/v1/accounts
 exports.get = function( req, res ){
   
- 
+  var queryString  = " SELECT "
+    queryString += " n.id as time_log_id, ";
+    queryString += " n.id as note_id,";
+    queryString += " n.note as note,";
+    queryString += " n.createdAt as created_at,";
+    queryString += " n.updatedAt as updated_at,";
+
+    queryString += " nm.meta_relation as linked_to,";
+    queryString += " nt.type as note_type,";
+    queryString += " nt.type_description as type_description";
+
+    queryString += " FROM note n ";
+    queryString += " JOIN note_meta nm ON n.id = nm.note_id";
+    queryString += " JOIN note_type nt ON nm.type_id = nt.id";
+    queryString += " WHERE n.user_id = "+req.decoded.id;
+    if(req.query.note_type){
+      queryString += " AND nt.type = '" + req.query.note_type + "' ";
+    }
+    if(req.query.note_meta){
+      queryString += " AND nm.meta_relation = '" + req.query.note_meta + "' ";
+    }
+
+  sequelize.query(queryString, { type: Sequelize.QueryTypes.SELECT }).then(function(results){
+    
+    return res.send({
+      error:false,
+      data:results[0],
+      message:"success"
+    });
+
+  }).catch(function(err){
+    
+    throw err;
     return res.status(400).send({
-      message:"query failed",
-      data: err
-    })
- 
+      error:true,
+      data:err,
+      message:"Failed to retrieve time log"
+    });
+
+  });
   
 }
 
 exports.add = function( req, res ){
   
-  return res.status(400).send({
-    message:'unable to access account', 
-    data:errors
+  console.log(req.body);
+
+  return sequelize.transaction().then(function(t) {
+
+    return model.note.create({
+      note:req.body.note,
+      is_active:true,
+      user_id:req.decoded.id
+    }, 
+    { 
+      transaction: t 
+    }).then(function(note) {
+
+      return model.note_meta.createBulk(
+        req.body.note_meta.map(function(e){ return {
+          note_id: note.dataValues.id,
+          meta_relation: e.meta_relation,
+          type_id: e.type_id
+        }}),
+      { 
+        transaction:t 
+      }).then(function(noteMeta){
+
+        return note;
+        t.commit();
+
+      }).catch(function(err){
+        
+        return err;
+        t.rollback();
+
+      })
+
+    }).catch(function(err){ 
+
+      return err;
+      t.rollback();
+
+    });
+
+  }).then(function (u) {
+    
+    return res.send({message:'Note added', data:u[0]});
+
+  }).catch(function (error) {
+    
+    return res.status(400).send({message:'Error adding account', data:error});
+
   });
-  
-  // // encrypt user:pass as base64 then encrypt
-  // account.basic_auth = cryptoJS.AES.encrypt(new Buffer( account.user_name + ':' + account.password ).toString('base64'), config.secret).toString();
-  
-  // // test that username and password are valid
-  // JiraC.checkAuthentication(account, function(result){
-  //   if(result.total === 'undefined') {
-  //     errors.push({message:'Authentication Failed',type:'general'});
-  //     return res.status(400).send({
-  //       message:'unable to access account', 
-  //       data:errors
-  //     });
-  //   }
-
-  //   return sequelize.transaction().then(function(t) {
-
-  //     return model.jira_accounts.findOrCreate({
-  //       where: {
-  //         user_name:  account.user_name,
-  //         url:        account.url,
-  //         user_id:    req.decoded.id      
-  //       },
-  //       defaults: {
-  //         protocal:       account.protocal,
-  //         user_name:      account.user_name,
-  //         url:            account.url,
-  //         basic_auth:     account.basic_auth,
-  //         account_email:  account.account_email,
-  //         user_id:        req.decoded.id
-  //       },
-  //       transaction: t
-  //     }).then(function(newAccount) {
-
-  //       return Account.resetAccountHooks({account_id: newAccount[0].dataValues.id, transaction:t}).then(function(hookRes){
-  //         t.commit(newAccount);
-  //         return newAccount;
-  //       }, function(err){
-  //         return t.rollback();
-  //       });
-
-  //     }).catch(function (err) { 
-  //       return t.rollback();
-  //     });
-
-  //   }).then(function (u) {
-  //     u[0].dataValues.account_id = u[0].dataValues.id;
-  //     return res.send({message:'Account added', data:u[0]});
-
-  //   }).catch(function (error) {
-      
-  //     errors.push(error);
-  //     return res.status(400).send({message:'Error adding account', data:errors});
-
-  //   });
-
-  // }, function(error){
-
-  //   errors.push({message:'Authentication Failed',type:'general'});
-  //   return res.status(400).send({message:'Error adding account', data:errors});
-
-  // });
 
 }
 
 
 exports.update = function ( req, res ){
 
-  
+  return res.status(400).send({message:'not created'});
 
 }
 
 exports.remove = function( req, res ){
   // expire do not remove
-  // var account_id = req.params.id;
-  // return sequelize.transaction().then(function (t) {
-  //   return model.jira_accounts.destroy({
-  //     where: {
-  //       id:account_id,
-  //       user_id: req.decoded.id         
-  //     },
-  //     transaction:t
-  //   }).then(function (results) {
+  
+  return sequelize.transaction().then(function (t) {
 
-  //     return model.hooks.destroy({
-  //       where: {
-  //         account_id:account_id,
-  //         hook_type:'jira'
-  //       },
-  //       transaction:t
-  //     }).then(function (removed) {
-  //       t.commit(results);
-  //       return results;
-  //     }).catch(function (err) {
-  //       t.rollback(err);
-  //       throw err;
-  //     });
+    return model.note.destroy({
+      where: {
+        id:req.param.id,
+        user_id: req.decoded.id
+      },
+      transaction:t
+    }).then(function (results) {
 
-  //   }).catch(function (err) {
-  //     t.rollback(err);
-  //     throw err;
-  //   })
+      return model.note_meta.destroy({
+        where: {
+          note_id:req.param.id
+        },
+        transaction:t
+      }).then(function (removed) {
 
-  // }).then(function (results) {
+        t.commit(results);
+        return results;
 
-  //   if(results>0){
-  //     return res.send({ message:"Account Removed" });
-  //   };
-  //   return res.status(400).send({ message:"Account dosnt exist" });
+      }).catch(function (err) {
 
-  // }).catch(function (error) {
+        t.rollback(err);
+        throw err;
+
+      });
+
+    }).catch(function (err) {
+
+      t.rollback(err);
+      throw err;
+
+    })
+
+  }).then(function (results) {
+
+    return res.send({ message:"Note removed" });
+
+  }).catch(function (error) {
     
-  //   return res.status(400).send({ message:"Error removing account", data:error });
+    return res.status(400).send({ message:"Note note removed" });
 
-  // });
+  });
 
 }
