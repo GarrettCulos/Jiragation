@@ -4,6 +4,7 @@ var cryptoJS      = require('crypto-js')
 var async         = require('async');
 var winston       = require('winston');
 var model         = require('../modelsV2');
+var request       = require('request');
 var Promise       = require('promise')
 const http        = require('http');
 const https       = require('https');
@@ -319,48 +320,66 @@ exports.getUserWorklogs = function(account_id, date, callback, errorCallback){
 }
 
 jiraRequest = function(options, dataRequest, callback, errorCallback){
-  var data ='';
-  if(dataRequest.account.protocal === "http"){
+  // var data ='';
+  // if(dataRequest.account.protocal === "http"){
 
-    var post_req = http.request(options, function(response) {
-      response.setEncoding('utf8')
-      response.on('data', function(d) {
-        data += d
-      });
-      response.on('end', function(d) {
-        if(checkJson(data) && data != null && data != undefined && data.length>0){
-          callback(data);
-        }
-        else{
-          errorCallback(data);
-        }
-      });
-    }).on('error', (error) => {
-      errorCallback(error); 
-    });
+  //   var post_req = http.request(options, function(response) {
+  //     response.setEncoding('utf8')
+  //     response.on('data', function(d) {
+  //       data += d
+  //     });
+  //     response.on('end', function(d) {
+  //       if(checkJson(data) && data != null && data != undefined && data.length>0){
+  //         callback(data);
+  //       }
+  //       else{
+  //         errorCallback(data);
+  //       }
+  //     });
+  //   }).on('error', (error) => {
+  //     errorCallback(error); 
+  //   });
 
-  } else {
+  // } else {
 
-    var post_req = https.request(options, function(response) {  
-      response.setEncoding('utf8')
-      response.on('data', function(d) {
-        data += d
-      });
-      response.on('end', function(d) {
-        if(checkJson(data) && data != null && data != undefined && data.length>0){
-          callback(data);
-        }
-        else{
-          errorCallback(data);
-        }
-      });
-    }).on('error', (error) => {
-      errorCallback(error); 
-    });
+  //   var post_req = https.request(options, function(response) {  
+  //     response.setEncoding('utf8')
+  //     response.on('data', function(d) {
+  //       data += d
+  //     });
+  //     response.on('end', function(d) {
+  //       if(checkJson(data) && data != null && data != undefined && data.length>0){
+  //         callback(data);
+  //       }
+  //       else{
+  //         errorCallback(data);
+  //       }
+  //     });
+  //   }).on('error', (error) => {
+  //     errorCallback(error); 
+  //   });
       
+  // }
+  // if(dataRequest.post_data){
+  //   post_req.write(dataRequest.post_data);
+  // }
+  // post_req.end();
+  
+  var option = {
+    method: options.method,
+    url: dataRequest.account.protocal+"://"+options.host + options.path,
+    headers: options.headers
   }
   if(dataRequest.post_data){
-    post_req.write(dataRequest.post_data);
+    option.body = dataRequest.post_data
   }
-  post_req.end();
+  console.log(option)
+  request(option, function (error, response, body) {
+    if (error) {
+      console.error('upload failed:', error);
+      errorCallback(error)
+    }
+    // console.log('Upload successful!  Server responded with:', body);
+    callback(body)
+  })
  }

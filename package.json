@@ -29,6 +29,7 @@
     "mysql": "^2.13.0",
     "nodejs-websocket": "^1.7.1",
     "promise": "^8.0.1",
+    "request": "^2.83.0",
     "sequelize": "^3.30.4",
     "uuid": "^3.1.0",
     "winston": "^2.3.1",
