@@ -44,12 +44,17 @@ exports.getTasks = function(user_id, callback, callbackError) {
         requestData.account = account;
         
         jiraRequest(options, requestData, function(response){
-          response = JSON.parse(response);
-          response.account = account;
-          resolve(JSON.stringify(response));
+          try{
+            response = JSON.parse(response);
+            response.account = account;
+            return resolve(JSON.stringify(response));  
+          }
+          catch(error){
+            return resolve(JSON.stringify({error:response}))
+          }
+          
         }, function(error){
-          console.error(error);
-          reject(error);
+          return resolve(JSON.stringify({error:error}));
         });
       });
       Tasks.push(pp);
@@ -119,12 +124,13 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
                             };
 
     var requestData = {};
+    
     requestData.account = account;
     requestData.post_data = JSON.stringify({
       comment: data.comment,
       timeSpent: data.time,
       // timeSpentSeconds: data.time,
-      // started: "2017-08-10T05:23:39.427+0000",
+      started: data.started, 
     });
 
     jiraRequest(options, requestData, function(response){
@@ -135,7 +141,6 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
     });
   });
 };
-
 
 exports.getWorklog = function(account, key) {
   var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
@@ -288,6 +293,55 @@ exports.jiraRequest = function(options, dataRequest, callback, errorCallback){
   }); 
 }
 
+exports.initJiraHook = function( options, callback, errorCallback){
+  var account = options.account
+  // <JIRA_URL>/rest/webhooks/1.0/webhook
+  // Show me an example (JSON)...
+  // {
+  //   "name": "my first webhook via rest",
+  //   "url": "http://www.example.com/webhooks",
+  //   "events": [
+  //     "jira:issue_created",
+  //     "jira:issue_updated"
+  //   ],
+  //   "jqlFilter": "",
+  //   "excludeIssueDetails" : false
+  // }
+  var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+  var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+  var options           = {
+                            rejectUnauthorized: true,
+                            method: 'POST',
+                            host: account.url,
+                            path: '/rest/webhooks/1.0/webhook',
+                            headers:{
+                              'Content-Type': 'application/json',
+                              'Authorization': 'Basic '+ basic_auth
+                            }
+                          };
+
+  var requestData = {};
+  requestData.account = account;
+  requestData.post_data = JSON.stringify({
+    "name": "Jiragation my-issue updates",
+    "url": config.external_ip+":"+config.port+"/hooks/jira/"+options.hash,
+    "events": [
+      "jira:issue_created",
+      "jira:issue_updated"
+    ],
+    "jqlFilter": "assignee="+account.user_name,
+    "excludeIssueDetails" : false
+  });
+
+  jiraRequest(options, requestData, function(response){
+    callback(response)
+  }, function(error){
+    console.log('jira hook error');
+    errorCallback(error);
+  });
+
+}
+
 exports.getUserWorklogs = function(account_id, date, callback, errorCallback){
 
   model.jira_accounts.findAll({
@@ -373,13 +427,13 @@ jiraRequest = function(options, dataRequest, callback, errorCallback){
   if(dataRequest.post_data){
     option.body = dataRequest.post_data
   }
-  console.log(option)
+  
   request(option, function (error, response, body) {
     if (error) {
       console.error('upload failed:', error);
-      errorCallback(error)
+      return errorCallback(error)
     }
     // console.log('Upload successful!  Server responded with:', body);
-    callback(body)
+    return callback(body)
   })
  }
