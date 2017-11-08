@@ -44,12 +44,17 @@ exports.getTasks = function(user_id, callback, callbackError) {
         requestData.account = account;
         
         jiraRequest(options, requestData, function(response){
-          response = JSON.parse(response);
-          response.account = account;
-          resolve(JSON.stringify(response));
+          try{
+            response = JSON.parse(response);
+            response.account = account;
+            return resolve(JSON.stringify(response));  
+          }
+          catch(error){
+            return resolve(JSON.stringify({error:response}))
+          }
+          
         }, function(error){
-          console.error(error);
-          reject(error);
+          return resolve(JSON.stringify({error:error}));
         });
       });
       Tasks.push(pp);
@@ -136,7 +141,6 @@ exports.logTaskTime = function(account_id, data, callback, errorCallback) {
     });
   });
 };
-
 
 exports.getWorklog = function(account, key) {
   var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
@@ -423,13 +427,13 @@ jiraRequest = function(options, dataRequest, callback, errorCallback){
   if(dataRequest.post_data){
     option.body = dataRequest.post_data
   }
-  console.log(option)
+  
   request(option, function (error, response, body) {
     if (error) {
       console.error('upload failed:', error);
-      errorCallback(error)
+      return errorCallback(error)
     }
     // console.log('Upload successful!  Server responded with:', body);
-    callback(body)
+    return callback(body)
   })
  }

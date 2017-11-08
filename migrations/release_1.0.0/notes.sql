@@ -2,6 +2,7 @@ CREATE TABLE note (
 	id int not null AUTO_INCREMENT PRIMARY KEY,
 	note varchar(3000) not null,
 	is_active int not null,
+	reminder_time datetime,
 	expired_to int,
 	user_id int not null,
 	createdAt datetime not null,
@@ -22,7 +23,7 @@ CREATE TABLE note_type (
 );
 
 INSERT INTO note_type (id, type, type_description)
-VALUES (1, "general", "Notes not accociated with any specific task, project, release, or sprint.");
+VALUES (1, "general", "Notes not associated with any specific task, project, release, or sprint.");
 
 INSERT INTO note_type (id, type, type_description)
 VALUES (2, "task", "Notes associated to a specific task.");
