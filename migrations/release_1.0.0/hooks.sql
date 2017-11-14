@@ -1,9 +1,9 @@
 CREATE TABLE hooks (
- 	id not null INTEGER PRIMARY KEY,
-    account_id not null INTEGER,
-    hash not null VARCHAR(255),
-    hook_type not null VARCHAR(255),
-    hook_info not null VARCHAR(3000),
+ 	id INTEGER PRIMARY KEY,
+    account_id INTEGER not null,
+    hash VARCHAR(255) not null,
+    hook_type VARCHAR(255) not null,
+    hook_info VARCHAR(3000) not null,
 	createdAt datetime not null,
 	updatedAt datetime not null
 );
