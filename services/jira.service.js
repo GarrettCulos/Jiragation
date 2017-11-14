@@ -336,8 +336,9 @@ exports.initJiraHook = function( options, callback, errorCallback){
   jiraRequest(options, requestData, function(response){
     callback(response)
   }, function(error){
-    console.log('jira hook error');
-    errorCallback(error);
+    // console.log('jira hook error');
+    callback(error);
+    // errorCallback(error);
   });
 
 }
