@@ -70,7 +70,6 @@ wss.on('connection', function connection( ws, req ) {
        *
       **/
       var apiRequestSpoof = {decoded:data.user[0]}
-
       /**
        *
        * Send active tasks when bundling handshake is initiated
@@ -97,8 +96,16 @@ wss.on('connection', function connection( ws, req ) {
      *
     **/
     if(data.type == "activeTaskChange"){
-      console.log(ws._socket._peername);
-      web_socks.tasks.activeTaskChange(wss, ws['ws-bundle-id'], ws._socket._peername.address+ws._socket._peername.port, data.data);
+      
+      /**
+       *
+       * Set a fake api request object to use when calling controller methods
+       *
+      **/
+      controllers.task.get_active_tasks( {decoded:{id:ws['ws-bundle-id']}}, {send:function(re){
+        console.log(data.data, re);
+        web_socks.tasks.activeTaskChange(wss, ws['ws-bundle-id'], ws._socket._peername.address+ws._socket._peername.port, re.data);
+      }});
     }
     
     /**
