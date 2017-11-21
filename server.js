@@ -103,7 +103,6 @@ wss.on('connection', function connection( ws, req ) {
        *
       **/
       controllers.task.get_active_tasks( {decoded:{id:ws['ws-bundle-id']}}, {send:function(re){
-        console.log(data.data, re);
         web_socks.tasks.activeTaskChange(wss, ws['ws-bundle-id'], ws._socket._peername.address+ws._socket._peername.port, re.data);
       }});
     }
