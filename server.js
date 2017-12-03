@@ -1,6 +1,7 @@
 var env         = process.env.NODE_ENV || "development";
 var config      = require('./config/config.json')[env];
 var express     = require('express');
+var cron        = require('cron');
 var uuidv4      = require('uuid/v4');
 var db          = require('./db.js');
 var bodyParser  = require('body-parser');
@@ -14,6 +15,10 @@ var web_socks   = require('./websockets');
 var controllers = require('./controllers');
 var services    = require('./services');
 var validations = require('./validations');
+var polling     = {};
+
+const min_polling_time = 10; //min
+const max_polling_time = 60; //min
 
 const wss = new WebSocket.Server({ port:config.wsPort });
 
@@ -39,7 +44,7 @@ wss.on('connection', function connection( ws, req ) {
 
   /**
    *
-   * Initialize bundlize handshake
+   * Initialize bundle handshake
    *
   **/
   ws.send( JSON.stringify({type:'handshake'}) );
@@ -88,6 +93,17 @@ wss.on('connection', function connection( ws, req ) {
       //   ws.send(JSON.stringify({type:'updateActiveTask', data:re.data}))
       // }});
 
+
+      /**
+       *
+       * Initialize bundle-cron (polling services); polling object of user id's withf polling time data.
+       *
+      **/
+      if(polling[data.user[0].id] === undefined) {
+        //
+      }
+
+
     }
     
     /**
@@ -118,7 +134,7 @@ wss.on('connection', function connection( ws, req ) {
     
     /**
      *
-     * websocket trigger to update task lsit items for all bundle members
+     * websocket trigger to update task list items for all bundle members
      *
     **/
     if(data.type == "taskListUpdate"){
