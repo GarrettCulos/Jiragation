@@ -2,6 +2,7 @@ var env         = process.env.NODE_ENV || "development";
 var config      = require('./config/config.json')[env];
 var express     = require('express');
 var cron        = require('cron');
+var cs          = require('./cron/jobsService');
 var uuidv4      = require('uuid/v4');
 var db          = require('./db.js');
 var bodyParser  = require('body-parser');
@@ -16,9 +17,6 @@ var controllers = require('./controllers');
 var services    = require('./services');
 var validations = require('./validations');
 var polling     = {};
-
-const min_polling_time = 10; //min
-const max_polling_time = 60; //min
 
 const wss = new WebSocket.Server({ port:config.wsPort });
 
@@ -49,7 +47,13 @@ wss.on('connection', function connection( ws, req ) {
   **/
   ws.send( JSON.stringify({type:'handshake'}) );
 
-  ws.on('close', function close(data) { console.log('ws close', data); });
+  ws.on('close', function close(data) { 
+    console.log(ws['ws-bundle-id']);
+    polling[ws['ws-bundle-id']].ws_watchers += -1;
+    if(polling[ws['ws-bundle-id']].ws_watchers === 0){
+      polling[ws['ws-bundle-id']] = undefined;
+    }
+  });
 
   ws.on('open', function open(data) { console.log('ws open', data); })
   
@@ -96,12 +100,45 @@ wss.on('connection', function connection( ws, req ) {
 
       /**
        *
-       * Initialize bundle-cron (polling services); polling object of user id's withf polling time data.
+       * Initialize bundle-cron (polling services); polling object of user id's with polling time data.
        *
       **/
       if(polling[data.user[0].id] === undefined) {
-        //
-      }
+
+        polling[data.user[0].id] = {};
+        cs.init(data.user[0].id).then( function(accountCrons) {
+
+          polling[data.user[0].id].ws_watchers = 1;
+          polling[data.user[0].id].accounts = accountCrons.map( function(account) {
+            
+            account.last_cronned = new Date();
+            account.job = new cron.CronJob({
+                cronTime: '0 */10 * * * *',
+                onTick: function() {
+                  services.jira.getUpdatedTasks(account, function(re) {
+                    var d = JSON.parse(re)
+                    account.last_cronned = new Date();
+                    if(d.issues.length > 0){
+                      web_socks.tasks.updatedTasks(wss, data.user[0].id, d.issues);
+                    }
+                    
+                  }, function(error) {
+                    console.log(error);
+                  });
+                  
+                },
+                start: true,
+              });
+            return account;
+
+          });
+
+        });
+
+      } else {
+        // increment watchers count
+        polling[data.user[0].id].ws_watchers += 1;
+      } 
 
 
     }

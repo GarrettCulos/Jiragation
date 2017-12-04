@@ -5,6 +5,7 @@ var async         = require('async');
 var winston       = require('winston');
 var model         = require('../modelsV2');
 var request       = require('request');
+var moment        = require('moment-timezone');
 var Promise       = require('promise')
 const http        = require('http');
 const https       = require('https');
@@ -26,7 +27,7 @@ exports.getTasks = function(user_id, callback, callbackError) {
     
     let Tasks = [];
 
-    results.map((account)=>{
+    results.map( function(account){
       var pp = new Promise(function (resolve, reject) {
         var basic_authBytes  = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
         var basic_auth = basic_authBytes.toString(cryptoJS.enc.Utf8);
@@ -71,6 +72,62 @@ exports.getTasks = function(user_id, callback, callbackError) {
   });
   
 }
+
+exports.getUpdatedTasks = function(account, callback, errorCallback) {
+  
+  var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+  var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+  var last_cronned      = moment(account.last_cronned.getTime()).tz(account.self.timeZone).format('YYYY-MM-DD HH:mm');
+  
+  var options           = {
+                          rejectUnauthorized: true,
+                          method: 'GET',
+                          host: account.url,
+                          path: '/rest/api/2/search?jql=assignee='+ account.user_name + '%20and%20updated>=\"'+last_cronned+'\"',
+                          headers:{
+                            'Content-Type':  'application/json',
+                            'Authorization': 'Basic '+ basic_auth
+                          }
+                        };
+
+  var requestData = {};
+  requestData.account = account;
+
+  jiraRequest(options, requestData, function(response){
+    callback(response)
+  }, function(error){
+    // console.log('error getting accout',error)
+    errorCallback(error);
+  });
+
+}
+
+exports.self = function(account, callback, errorCallback) {
+
+  var basic_authBytes   = cryptoJS.AES.decrypt(account.basic_auth.toString(), config.secret);
+  var basic_auth        = basic_authBytes.toString(cryptoJS.enc.Utf8);
+  var options           = {
+                            rejectUnauthorized: true,
+                            method: 'GET',
+                            host: account.url,
+                            path: '/rest/api/2/myself',
+                            headers:{
+                              'Content-Type':  'application/json',
+                              'Authorization': 'Basic '+ basic_auth
+                            }
+                          };
+
+  var requestData = {};
+  requestData.account = account;
+
+  jiraRequest(options, requestData, function(response){
+    callback(response)
+  }, function(error){
+    // console.log('error getting accout',error)
+    errorCallback(error);
+  });
+
+};
 
 exports.getTaskComments = function(task_key, account_id, callback, errorCallback) {
 
