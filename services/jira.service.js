@@ -83,7 +83,8 @@ exports.getUpdatedTasks = function(account, callback, errorCallback) {
                           rejectUnauthorized: true,
                           method: 'GET',
                           host: account.url,
-                          path: '/rest/api/2/search?jql=assignee='+ account.user_name + '%20and%20updated>=\"'+last_cronned+'\"',
+                          path: '/rest/api/2/search?jql=assignee='+ account.user_name + '%20and%20updated>=\"'+last_cronned+'\"&expand=changelog',
+                          // %20and%20changelogDate>=\""+date+"\""
                           headers:{
                             'Content-Type':  'application/json',
                             'Authorization': 'Basic '+ basic_auth
@@ -285,6 +286,7 @@ exports.getTaskAttachments = function(task_key, account_id, callback, errorCallb
     });
   });
 };
+
 exports.getTask = function(task_key, account_id, callback, errorCallback) {
   model.jira_accounts.findAll({
     where: { id: account_id }

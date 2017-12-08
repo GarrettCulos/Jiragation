@@ -48,11 +48,16 @@ wss.on('connection', function connection( ws, req ) {
   ws.send( JSON.stringify({type:'handshake'}) );
 
   ws.on('close', function close(data) { 
-    console.log(ws['ws-bundle-id']);
-    polling[ws['ws-bundle-id']].ws_watchers += -1;
-    if(polling[ws['ws-bundle-id']].ws_watchers === 0){
-      polling[ws['ws-bundle-id']] = undefined;
+    
+    if( ws['ws-bundle-id'] !== undefined ) {
+    
+      polling[ws['ws-bundle-id']].ws_watchers += -1 || 0;
+      if(polling[ws['ws-bundle-id']].ws_watchers === 0){
+        polling[ws['ws-bundle-id']] = undefined;
+      }
+    
     }
+
   });
 
   ws.on('open', function open(data) { console.log('ws open', data); })
@@ -113,22 +118,26 @@ wss.on('connection', function connection( ws, req ) {
             
             account.last_cronned = new Date();
             account.job = new cron.CronJob({
-                cronTime: '0 */10 * * * *',
+                cronTime: '0 */1 * * * *',
                 onTick: function() {
+
                   services.jira.getUpdatedTasks(account, function(re) {
                     var d = JSON.parse(re)
                     account.last_cronned = new Date();
                     if(d.issues.length > 0){
-                      web_socks.tasks.updatedTasks(wss, data.user[0].id, d.issues);
+                      controllers.notifications.bulk_import( {notifications:d.issues, account_id:account.id, user_id:data.user[0].id}, {send:function(re){
+                        web_socks.tasks.updatedTasks(wss, data.user[0].id, re);
+                      }});
                     }
                     
                   }, function(error) {
-                    console.log(error);
+                    console.error(error);
                   });
                   
                 },
                 start: true,
               });
+
             return account;
 
           });
