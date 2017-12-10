@@ -50,10 +50,15 @@ wss.on('connection', function connection( ws, req ) {
   ws.on('close', function close(data) { 
     
     if( ws['ws-bundle-id'] !== undefined ) {
-    
-      polling[ws['ws-bundle-id']].ws_watchers += -1 || 0;
-      if(polling[ws['ws-bundle-id']].ws_watchers === 0){
-        polling[ws['ws-bundle-id']] = undefined;
+      try {
+
+        polling[ws['ws-bundle-id']].ws_watchers += -1 || 0;
+        if(polling[ws['ws-bundle-id']].ws_watchers === 0){
+          polling[ws['ws-bundle-id']] = undefined;
+        }
+
+      } catch (error) {
+        console.error('websocket error', error);
       }
     
     }
@@ -118,16 +123,21 @@ wss.on('connection', function connection( ws, req ) {
             
             account.last_cronned = new Date();
             account.job = new cron.CronJob({
-                cronTime: '0 */1 * * * *',
+                cronTime: '0 */10 * * * *',
                 onTick: function() {
 
                   services.jira.getUpdatedTasks(account, function(re) {
-                    var d = JSON.parse(re)
-                    account.last_cronned = new Date();
-                    if(d.issues.length > 0){
-                      controllers.notifications.bulk_import( {notifications:d.issues, account_id:account.id, user_id:data.user[0].id}, {send:function(re){
-                        web_socks.tasks.updatedTasks(wss, data.user[0].id, re);
-                      }});
+                    
+                    try {
+                      var d = JSON.parse(re);
+                      account.last_cronned = new Date();
+                      if(d.issues.length > 0) {
+                        controllers.notifications.bulk_import( {notifications:d.issues, account_id:account.id, user_id:data.user[0].id}, {send:function(re){
+                          web_socks.tasks.updatedTasks(wss, data.user[0].id, re);
+                        }});
+                      }
+                    } catch (error) {
+                      console.error(error);
                     }
                     
                   }, function(error) {
