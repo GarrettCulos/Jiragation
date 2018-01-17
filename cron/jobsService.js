@@ -27,8 +27,13 @@ init = function(user_id) {
       var pp = new Promise( function(resolve, reject) {
         
         services.jira.self(account, function(response) {
-          account.dataValues.self = JSON.parse(response);
-          resolve(account.dataValues);
+          try {
+            account.dataValues.self = JSON.parse(response);
+            resolve(account.dataValues);
+          } catch(error) {
+            console.log(error);
+            reject(error)
+          }
         }, function(error){
           reject(error);
         });
